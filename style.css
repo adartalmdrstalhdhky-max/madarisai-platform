@@ -1,36 +1,48 @@
+/* ملف الأناقة العالمي لمشروع مدارس آل */
+:root {
+    --primary: #00d2ff;
+    --secondary: #3a7bd5;
+    --dark-bg: #050a18;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-color: #ffffff;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f9;
     margin: 0;
-    padding: 0;
-    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
-header {
-    background-color: #004aad;
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #112240 0%, #050a18 100%);
+    text-align: center;
+}
+
+h1 {
+    font-size: 4rem;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.cta-button {
+    padding: 15px 40px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
     color: white;
-    padding: 40px 20px;
-}
-
-header .logo {
-    width: 100px;
-    height: auto;
-}
-
-main {
-    padding: 40px 20px;
-}
-
-.cta a {
-    color: #004aad;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
+    box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
+    transition: 0.3s;
 }
 
-footer {
-    background-color: #222;
-    color: white;
-    padding: 20px;
-    margin-top: 40px;
+.cta-button:hover {
+    transform: scale(1.1);
 }
