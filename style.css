@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color: #004aad;
+    color: white;
+    padding: 40px 20px;
+}
+
+header .logo {
+    width: 100px;
+    height: auto;
+}
+
+main {
+    padding: 40px 20px;
+}
+
+.cta a {
+    color: #004aad;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    background-color: #222;
+    color: white;
+    padding: 20px;
+    margin-top: 40px;
+}
