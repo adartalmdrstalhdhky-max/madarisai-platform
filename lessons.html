@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>منصة مدارس آل | الدرس التفاعلي</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .lesson-container { max-width: 800px; margin: 100px auto; padding: 20px; }
+        .progress-bar { width: 100%; height: 10px; background: #1e293b; border-radius: 5px; margin-bottom: 30px; }
+        .progress-fill { height: 100%; background: #00d2ff; width: 30%; border-radius: 5px; transition: 0.5s; }
+        .step { background: #112240; padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 210, 255, 0.2); display: none; }
+        .step.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="lesson-container">
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+    <div class="step active" id="step1">
+        <h2 style="color: #00d2ff;"><i class="fas fa-lightbulb"></i> مقدمة في الذكاء الاصطناعي</h2>
+        <p style="font-size: 1.2rem;">هل تعلم أن الذكاء الاصطناعي يحاكي طريقة تفكير البشر لحل المشكلات المعقدة؟</p>
+        <button class="cta-button" onclick="nextStep(2)">فهمت، التالي <i class="fas fa-arrow-left"></i></button>
+    </div>
+
+    <div class="step" id="step2">
+        <h2 style="color: #d4af37;"><i class="fas fa-microchip"></i> كيف يتعلم الآلة؟</h2>
+        <p style="font-size: 1.2rem;">الآلة تتعلم من خلال "البيانات". كلما أعطيناها بيانات أكثر، أصبحت أذكى في التوقع.</p>
+        <button class="cta-button" onclick="nextStep(3)">اختبرني الآن! <i class="fas fa-check"></i></button>
+    </div>
+
+    <div class="step" id="step3">
+        <h2 style="color: #00ff00;"><i class="fas fa-question-circle"></i> سؤال سريع</h2>
+        <p>ما هو الوقود الأساسي للذكاء الاصطناعي؟</p>
+        <div style="display: grid; gap: 10px;">
+            <button class="cta-button" style="background: #1e293b;" onclick="wrong()">الكهرباء فقط</button>
+            <button class="cta-button" onclick="correct()">البيانات والمعلومات</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function nextStep(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step' + n).classList.add('active');
+        document.getElementById('progress').style.width = (n * 33) + '%';
+    }
+    function correct() { alert('عبقري! إجابة صحيحة. تم تسجيل تقدمك بنجاح.'); window.location.href = 'dashboard.html'; }
+    function wrong() { alert('حاول مرة أخرى، تذكر ما قرأناه في الخطوة السابقة!'); }
+</script>
+
+</body>
+</html>
+
