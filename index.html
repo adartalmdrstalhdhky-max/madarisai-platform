@@ -92,3 +92,50 @@
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madaris AI | مدارس آل - المنصة الذكية</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav style="padding: 15px 10%; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 10, 24, 0.95); position: fixed; width: 80%; z-index: 1000; border-bottom: 1px solid rgba(0, 210, 255, 0.1);">
+        <div style="display: flex; align-items: center;">
+            <img src="logo.png" alt="Logo" style="height: 40px; margin-left: 10px;">
+            <span style="font-size: 1.5rem; font-weight: bold; color: #00d2ff;">Madaris AI</span>
+        </div>
+        <div>
+            <a href="register.html" style="color: white; text-decoration: none; margin-left: 15px;">بوابة الطلاب</a>
+            <a href="teachers.html" style="color: #d4af37; text-decoration: none;">بوابة المعلمين</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <img src="logo.png" alt="مدارس آل" style="width: 200px; margin-bottom: 20px;">
+            <h1>منصة مدارس آل</h1>
+            <p class="tagline">نظام تعليمي ذكي يعمل بكفاءة مطلقة مع أو بدون إنترنت.</p>
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
+                <a href="register.html" class="cta-button">ابدأ التعلم الآن</a>
+                <a href="dashboard.html" class="cta-button" style="background: transparent; border: 2px solid #00d2ff;">لوحة التحكم</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        جميع الحقوق محفوظة &copy; 2026 - مشروع مدارس آل (Madaris AI)
+    </footer>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+            .then(() => console.log("نظام الأوفلاين نشط وجاهز!"));
+        }
+    </script>
+</body>
+</html>
