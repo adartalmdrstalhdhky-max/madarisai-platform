@@ -6,31 +6,37 @@
     <title>تسجيل طالب | Madaris AI</title>
     <style>
         body { background: #050a18; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: #112240; padding: 30px; border-radius: 20px; border: 1px solid #00d2ff; width: 85%; max-width: 400px; text-align: center; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #1e293b; background: #0f172a; color: white; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; background: #00d2ff; border: none; border-radius: 10px; color: #050a18; font-weight: bold; cursor: pointer; }
+        .card { background: #112240; padding: 40px; border-radius: 25px; border: 1px solid #00d2ff; width: 85%; max-width: 400px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        input { width: 100%; padding: 15px; margin: 12px 0; border-radius: 12px; border: 1px solid #1e293b; background: #0f172a; color: white; box-sizing: border-box; font-size: 1rem; }
+        .btn { width: 100%; padding: 18px; background: linear-gradient(45deg, #00d2ff, #d4af37); border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; font-size: 1.1rem; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="card">
-        <img src="logo.png" style="width: 80px; margin-bottom: 15px;">
-        <h2>انضم إلينا</h2>
-        <input type="text" id="name" placeholder="الاسم الكامل">
+        <img src="logo.png" style="width: 90px; margin-bottom: 20px;">
+        <h2 style="color: #00d2ff;">بوابة الطالب الذكي</h2>
+        <p style="color: #64748b;">سجل بياناتك للبدء فوراً</p>
+        <input type="text" id="name" placeholder="الاسم الرباعي">
         <input type="text" id="level" placeholder="الصف الدراسي">
-        <button class="btn" onclick="save()">إنشاء حساب</button>
+        <button class="btn" onclick="saveData()">إنشاء حسابي</button>
         <br><br>
-        <a href="index.html" style="color: #64748b; text-decoration: none;">إلغاء</a>
+        <a href="index.html" style="color: #64748b; text-decoration: none; font-size: 0.9rem;">العودة للرئيسية</a>
     </div>
+
     <script src="database.js"></script>
     <script>
-        function save() {
+        function saveData() {
             const n = document.getElementById('name').value;
             const l = document.getElementById('level').value;
             if(n && l) {
-                if(window.MadarisDB) MadarisDB.saveStudent(n, l);
-                alert('تم التسجيل بنجاح!');
-                window.location.href = 'dashboard.html';
-            } else { alert('أكمل البيانات'); }
+                if(window.MadarisDB) {
+                    MadarisDB.saveStudent(n, l);
+                    alert('أهلاً بك يا ' + n + '! تم تسجيلك بنجاح.');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('تم التسجيل محلياً! تأكد من وجود ملف database.js');
+                }
+            } else { alert('يرجى كتابة الاسم والصف'); }
         }
     </script>
 </body>
