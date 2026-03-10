@@ -5,42 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مدارس آل | Madaris AI</title>
     <style>
-        body { background: #050a18; color: white; margin: 0; font-family: 'Segoe UI', sans-serif; text-align: center; }
-        nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: #112240; }
-        .hero { padding: 100px 20px; }
-        .btn { 
-            display: inline-block; width: 220px; padding: 15px; margin: 10px; 
-            border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;
-            transition: 0.3s;
+        :root {
+            --primary-bg: #050a18;
+            --card-bg: #112240;
+            --accent-blue: #00d2ff;
+            --accent-gold: #d4af37;
+            --text-main: #ffffff;
+            --text-dim: #cbd5e1;
         }
-        .btn-primary { background: linear-gradient(45deg, #00d2ff, #d4af37); color: white; }
-        .btn-outline { border: 2px solid #00d2ff; color: white; }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        nav {
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(17, 34, 64, 0.95);
+            position: fixed;
+            width: 90%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+        }
+
+        .hero {
+            padding: 160px 20px 60px;
+            text-align: center;
+        }
+
+        .hero img {
+            width: 180px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.3));
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            display: block;
+            width: 260px;
+            padding: 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-gold));
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 210, 255, 0.5);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--accent-blue);
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 210, 255, 0.1);
+        }
+
+        /* بوت المساعد */
+        .chat-bot {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .chat-bot:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
 
     <nav>
         <div style="display: flex; align-items: center;">
-            <img src="logo.png" alt="Logo" style="height: 40px; margin-left: 10px;">
-            <span style="font-size: 1.3rem; font-weight: bold; color: #00d2ff;">Madaris AI</span>
+            <img src="logo.png" alt="Logo" style="height: 45px; margin-left: 12px;">
+            <span style="font-size: 1.4rem; font-weight: bold; color: var(--accent-blue);">Madaris AI</span>
         </div>
-        <div>
-            <a href="register.html" style="color: white; text-decoration: none; margin-left: 15px;">بوابة الطلاب</a>
-            <a href="teachers.html" style="color: #d4af37; text-decoration: none;">بوابة المعلمين</a>
+        <div style="display: flex; gap: 15px;">
+            <a href="https://madarisai.com/register.html" style="color: white; text-decoration: none; font-size: 0.9rem;">الطلاب</a>
+            <a href="https://madarisai.com/teachers.html" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem;">المعلمون</a>
         </div>
     </nav>
 
     <section class="hero">
-        <img src="logo.png" alt="مدارس آل" style="width: 180px; margin-bottom: 20px;">
-        <h1>منصة مدارس آل</h1>
-        <p>نظام تعليمي ذكي مصمم لليمن</p>
+        <img src="logo.png" alt="مدارس آل">
+        <h1>منصة مدارس آل الذكية</h1>
+        <p>مستقبل التعليم الرقمي في اليمن.. تعلم، ابدع، وتفوق بدون قيود الإنترنت.</p>
         
-        <div style="margin-top: 30px;">
-            <a href="register.html" class="btn btn-primary">تسجيل الطلاب</a>
-            <a href="dashboard.html" class="btn btn-outline">تجربة المنصة</a>
+        <div class="btn-container">
+            <a href="https://madarisai.com/register.html" class="btn btn-primary">ابدأ التعلم الآن</a>
+            <a href="https://madarisai.com/dashboard.html" class="btn btn-outline">لوحة التحكم</a>
         </div>
     </section>
 
+    <div class="chat-bot" onclick="alert('مساعد مدارس آل الذكي: أهلاً بك يا بطل! أنا هنا لمساعدتك في رحلتك التعليمية.')">
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" style="width: 70px; filter: drop-shadow(0 0 15px var(--accent-blue));">
+    </div>
+
 </body>
-                             </html>
-                             
+</html>
