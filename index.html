@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدارس آل | Madaris AI</title>
+    
+    <title>Madaris AI | منصة مدارس آل التعليمية الذكية</title>
+    <meta name="description" content="أول منصة تعليمية ذكية في اليمن تعمل بدون إنترنت، تهدف لتطوير التعليم باستخدام الذكاء الاصطناعي.">
+    <meta name="keywords" content="مدارس آل، تعليم ذكي، اليمن، ذكاء اصطناعي، Madaris AI">
+    
+    <link rel="icon" type="image/png" href="logo.png">
+
     <style>
         :root {
-            --primary-bg: #050a18;
-            --card-bg: #112240;
-            --accent-blue: #00d2ff;
-            --accent-gold: #d4af37;
-            --text-main: #ffffff;
-            --text-dim: #cbd5e1;
+            --bg-dark: #050a18;
+            --card-blue: #112240;
+            --cyan: #00d2ff;
+            --gold: #d4af37;
         }
 
         body {
-            background-color: var(--primary-bg);
-            color: var(--text-main);
+            background-color: var(--bg-dark);
+            color: white;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             line-height: 1.6;
         }
 
+        /* القائمة العلوية */
         nav {
             padding: 15px 5%;
             display: flex;
@@ -35,116 +40,108 @@
             border-bottom: 1px solid rgba(0, 210, 255, 0.1);
         }
 
+        .logo-area { display: flex; align-items: center; }
+        .logo-area img { height: 45px; margin-left: 12px; }
+
+        /* القسم الرئيسي */
         .hero {
             padding: 160px 20px 60px;
             text-align: center;
         }
 
         .hero img {
-            width: 180px;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.3));
+            width: 200px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 15px var(--cyan));
         }
 
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            background: linear-gradient(45deg, #fff, var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        h1 { font-size: 2.5rem; margin-bottom: 15px; color: var(--cyan); }
+        .tagline { font-size: 1.2rem; color: #cbd5e1; max-width: 700px; margin: 0 auto 40px; }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            max-width: 700px;
-            margin: 0 auto 40px;
-        }
-
-        .btn-container {
+        /* الأزرار الحقيقية */
+        .btn-group {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             gap: 20px;
-            align-items: center;
+            justify-content: center;
         }
 
         .btn {
-            display: block;
-            width: 260px;
-            padding: 18px;
+            padding: 16px 35px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
+            transition: 0.3s;
+            min-width: 180px;
             text-align: center;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, var(--accent-blue), var(--accent-gold));
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+        .btn-student { background: linear-gradient(45deg, var(--cyan), var(--gold)); color: white; }
+        .btn-teacher { border: 2px solid var(--cyan); color: white; }
+        .btn-admin { border: 2px solid #4a5568; color: #a0aec0; font-size: 0.9rem; }
+
+        .btn:hover { transform: translateY(-5px); opacity: 0.9; }
+
+        /* قسم شرح الفكرة */
+        .features {
+            padding: 60px 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 210, 255, 0.5);
+        .feature-card {
+            background: var(--card-blue);
+            padding: 30px;
+            border-radius: 20px;
+            border-top: 4px solid var(--cyan);
         }
 
-        .btn-outline {
-            border: 2px solid var(--accent-blue);
-            color: white;
-        }
-
-        .btn-outline:hover {
-            background: rgba(0, 210, 255, 0.1);
-        }
-
-        /* بوت المساعد */
-        .chat-bot {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .chat-bot:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-        }
+        footer { padding: 40px; text-align: center; color: #4a5568; border-top: 1px solid #112240; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div style="display: flex; align-items: center;">
-            <img src="logo.png" alt="Logo" style="height: 45px; margin-left: 12px;">
-            <span style="font-size: 1.4rem; font-weight: bold; color: var(--accent-blue);">Madaris AI</span>
+        <div class="logo-area">
+            <img src="logo.png" alt="Madaris AI">
+            <span style="font-size: 1.5rem; font-weight: bold; color: var(--cyan);">Madaris AI</span>
         </div>
-        <div style="display: flex; gap: 15px;">
-            <a href="https://madarisai.com/register.html" style="color: white; text-decoration: none; font-size: 0.9rem;">الطلاب</a>
-            <a href="https://madarisai.com/teachers.html" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem;">المعلمون</a>
+        <div>
+            <a href="register.html" style="color: white; text-decoration: none; margin-left: 20px;">دخول</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <img src="logo.png" alt="مدارس آل">
-        <h1>منصة مدارس آل الذكية</h1>
-        <p>مستقبل التعليم الرقمي في اليمن.. تعلم، ابدع، وتفوق بدون قيود الإنترنت.</p>
+    <header class="hero">
+        <img src="logo.png" alt="شعار مدارس آل">
+        <h1>منصة مدارس آل (BarakatEdu)</h1>
+        <p class="tagline">نهج تعليمي ذكي يعمل بكفاءة مع أو بدون إنترنت، مخصص لدعم الطلاب والمعلمين في اليمن.</p>
         
-        <div class="btn-container">
-            <a href="https://madarisai.com/register.html" class="btn btn-primary">ابدأ التعلم الآن</a>
-            <a href="https://madarisai.com/dashboard.html" class="btn btn-outline">لوحة التحكم</a>
+        <div class="btn-group">
+            <a href="register.html" class="btn btn-student">بوابة الطلاب</a>
+            <a href="teachers.html" class="btn btn-teacher">بوابة المعلمين</a>
+            <a href="admin.html" class="btn btn-admin">لوحة الإدارة</a>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="feature-card">
+            <h3>🌐 بدون إنترنت</h3>
+            <p>تقنيات PWA تضمن عمل المنصة في المناطق الريفية والنائية بدون الحاجة لاتصال مستمر.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🤖 ذكاء اصطناعي</h3>
+            <p>مساعد ذكي يرافق الطالب في دروسه ويقوم بتقييم مستواه بشكل آلي.</p>
+        </div>
+        <div class="feature-card">
+            <h3>📈 تتبع المعلم</h3>
+            <p>لوحة تحكم كاملة للمعلمين لمتابعة سير العملية التعليمية بدقة.</p>
         </div>
     </section>
 
-    <div class="chat-bot" onclick="alert('مساعد مدارس آل الذكي: أهلاً بك يا بطل! أنا هنا لمساعدتك في رحلتك التعليمية.')">
-        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" style="width: 70px; filter: drop-shadow(0 0 15px var(--accent-blue));">
-    </div>
+    <footer>
+        جميع الحقوق محفوظة &copy; 2026 - مشروع مدارس آل الرقمية
+    </footer>
 
 </body>
 </html>
