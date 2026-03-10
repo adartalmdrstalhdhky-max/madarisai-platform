@@ -3,86 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل طالب جديد | Madaris AI</title>
+    <title>تسجيل طالب | Madaris AI</title>
     <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: #050a18;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .register-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px solid rgba(0, 210, 255, 0.3);
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-        input {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 12px;
-            border: 1px solid #1e293b;
-            background: #0f172a;
-            color: white;
-            box-sizing: border-box;
-            font-size: 1rem;
-        }
-        .btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #00d2ff, #d4af37);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-            font-size: 1.1rem;
-        }
+        body { background: #050a18; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: #112240; padding: 30px; border-radius: 20px; border: 1px solid #00d2ff; width: 85%; max-width: 400px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #1e293b; background: #0f172a; color: white; box-sizing: border-box; }
+        .btn { width: 100%; padding: 15px; background: #00d2ff; border: none; border-radius: 10px; color: #050a18; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-
-    <div class="register-card">
-        <img src="logo.png" alt="Madaris AI" style="width: 100px; margin-bottom: 20px;">
-        <h2 style="color: #00d2ff; margin-bottom: 10px;">بوابة الطالب الذكي</h2>
-        <p style="color: #64748b; margin-bottom: 30px;">سجل بياناتك للبدء في رحلة التعلم</p>
-
-        <form id="regForm">
-            <input type="text" id="studentName" placeholder="اسمك الرباعي" required>
-            <input type="text" id="studentLevel" placeholder="الصف الدراسي" required>
-            <button type="button" class="btn" onclick="handleRegister()">إنشاء حسابي الآن</button>
-        </form>
-        
-        <a href="index.html" style="color: #64748b; text-decoration: none; font-size: 0.9rem; display: block; margin-top: 20px;">العودة للرئيسية</a>
+    <div class="card">
+        <img src="logo.png" style="width: 80px; margin-bottom: 15px;">
+        <h2>انضم إلينا</h2>
+        <input type="text" id="name" placeholder="الاسم الكامل">
+        <input type="text" id="level" placeholder="الصف الدراسي">
+        <button class="btn" onclick="save()">إنشاء حساب</button>
+        <br><br>
+        <a href="index.html" style="color: #64748b; text-decoration: none;">إلغاء</a>
     </div>
-
     <script src="database.js"></script>
     <script>
-        function handleRegister() {
-            const name = document.getElementById('studentName').value;
-            const level = document.getElementById('studentLevel').value;
-            
-            if(name && level) {
-                if(typeof MadarisDB !== 'undefined') {
-                    MadarisDB.saveStudent(name, level);
-                    alert('أهلاً بك يا ' + name + '! تم تسجيلك بنجاح في نظام مدارس آل.');
-                    window.location.href = 'dashboard.html';
-                } else {
-                    alert('تم الحفظ! (يرجى التأكد من رفع ملف database.js)');
-                }
-            } else {
-                alert('فضلاً اكمل بياناتك يا بطل!');
-            }
+        function save() {
+            const n = document.getElementById('name').value;
+            const l = document.getElementById('level').value;
+            if(n && l) {
+                if(window.MadarisDB) MadarisDB.saveStudent(n, l);
+                alert('تم التسجيل بنجاح!');
+                window.location.href = 'dashboard.html';
+            } else { alert('أكمل البيانات'); }
         }
     </script>
 </body>
