@@ -1,40 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'screens/login_screen.dart';
+import 'firebase_options.dart'; // الملف الذي يولده FlutterFire CLI
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MadarisAI());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MadarisAIApp());
 }
 
-class MadarisAI extends StatelessWidget {
-  const MadarisAI({super.key});
+class MadarisAIApp extends StatelessWidget {
+  const MadarisAIApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MadarisAI',
-      debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MadarisAI'),
-      ),
-      body: const Center(
-        child: Text(
-          'MadarisAI Platform Ready',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const LoginScreen(),
     );
   }
 }
