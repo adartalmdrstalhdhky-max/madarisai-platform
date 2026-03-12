@@ -92,3 +92,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# Firebase dependencies
+firebase_core: ^2.24.0
+firebase_auth: ^4.16.0
+cloud_firestore: ^4.13.0
