@@ -1,18 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 import '../models/school_model.dart';
 
 class SchoolService {
-  final CollectionReference schoolsCollection =
-      FirebaseFirestore.instance.collection('schools');
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final String collectionName = 'schools';
 
-  Future<void> addSchool(School school) async {
-    await schoolsCollection.doc(school.schoolId).set(school.toMap());
+  Future<void> addSchool(String name, String address) async {
+    String id = const Uuid().v4();
+    School school = School(id: id, name: name, address: address);
+    await _firestore.collection(collectionName).doc(id).set(school.toMap());
   }
 
-  Future<List<School>> getSchools() async {
-    QuerySnapshot snapshot = await schoolsCollection.get();
-    return snapshot.docs
-        .map((doc) => School.fromMap(doc.data() as Map<String, dynamic>))
-        .toList();
+  Stream<List<School>> getSchools() {
+    return _firestore.collection(collectionName).snapshots().map(
+        (snapshot) => snapshot.docs
+            .map((doc) => School.fromMap(doc.data()))
+            .toList());
   }
 }

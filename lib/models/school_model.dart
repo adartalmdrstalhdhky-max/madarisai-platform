@@ -1,17 +1,17 @@
 class School {
-  String schoolId;
-  String name;
-  String address;
+  final String id;
+  final String name;
+  final String address;
 
   School({
-    required this.schoolId,
+    required this.id,
     required this.name,
     required this.address,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'schoolId': schoolId,
+      'id': id,
       'name': name,
       'address': address,
     };
@@ -19,7 +19,7 @@ class School {
 
   factory School.fromMap(Map<String, dynamic> map) {
     return School(
-      schoolId: map['schoolId'] ?? '',
+      id: map['id'] ?? '',
       name: map['name'] ?? '',
       address: map['address'] ?? '',
     );
