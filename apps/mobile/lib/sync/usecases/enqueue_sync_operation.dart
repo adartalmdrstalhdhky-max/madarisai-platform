@@ -6,7 +6,7 @@ class EnqueueSyncOperation {
 
   EnqueueSyncOperation(this.repository);
 
-  Future<void> call(SyncOperation operation) async {
-    await repository.enqueue(operation);
+  Future<void> call(SyncOperation operation) {
+    return repository.enqueue(operation);
   }
 }

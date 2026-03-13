@@ -1,127 +1,122 @@
-enum SyncEntityType {
-  student,
-  teacher,
-  classroom,
-  attendance,
-  exam,
-  grade,
-  assignment,
-  lesson,
-  announcement,
-  unknown,
-}
+enum SyncOperationStatus { pending, processing, completed, failed }
 
-enum SyncOperationType {
-  create,
-  update,
-  delete,
-}
+extension SyncOperationStatusX on SyncOperationStatus {
+  String get value {
+    switch (this) {
+      case SyncOperationStatus.pending:
+        return 'pending';
+      case SyncOperationStatus.processing:
+        return 'processing';
+      case SyncOperationStatus.completed:
+        return 'completed';
+      case SyncOperationStatus.failed:
+        return 'failed';
+    }
+  }
 
-enum SyncStatus {
-  pending,
-  syncing,
-  synced,
-  failed,
-  conflict,
+  static SyncOperationStatus fromValue(String value) {
+    switch (value) {
+      case 'pending':
+        return SyncOperationStatus.pending;
+      case 'processing':
+        return SyncOperationStatus.processing;
+      case 'completed':
+        return SyncOperationStatus.completed;
+      case 'failed':
+        return SyncOperationStatus.failed;
+      default:
+        return SyncOperationStatus.pending;
+    }
+  }
 }
 
 class SyncOperation {
   final String id;
-  final SyncEntityType entityType;
+  final String entityType;
   final String entityId;
-  final SyncOperationType operationType;
+  final String action;
   final Map<String, dynamic> payload;
+  final SyncOperationStatus status;
+  final int retryCount;
+  final int maxRetries;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final SyncStatus status;
-  final int retryCount;
   final String? errorMessage;
-  final String? deviceId;
-  final String? userId;
 
   const SyncOperation({
     required this.id,
     required this.entityType,
     required this.entityId,
-    required this.operationType,
+    required this.action,
     required this.payload,
+    required this.status,
+    required this.retryCount,
+    required this.maxRetries,
     required this.createdAt,
     required this.updatedAt,
-    required this.status,
-    this.retryCount = 0,
     this.errorMessage,
-    this.deviceId,
-    this.userId,
   });
 
   SyncOperation copyWith({
     String? id,
-    SyncEntityType? entityType,
+    String? entityType,
     String? entityId,
-    SyncOperationType? operationType,
+    String? action,
     Map<String, dynamic>? payload,
+    SyncOperationStatus? status,
+    int? retryCount,
+    int? maxRetries,
     DateTime? createdAt,
     DateTime? updatedAt,
-    SyncStatus? status,
-    int? retryCount,
     String? errorMessage,
-    String? deviceId,
-    String? userId,
+    bool clearErrorMessage = false,
   }) {
     return SyncOperation(
       id: id ?? this.id,
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
-      operationType: operationType ?? this.operationType,
+      action: action ?? this.action,
       payload: payload ?? this.payload,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
       status: status ?? this.status,
       retryCount: retryCount ?? this.retryCount,
-      errorMessage: errorMessage ?? this.errorMessage,
-      deviceId: deviceId ?? this.deviceId,
-      userId: userId ?? this.userId,
+      maxRetries: maxRetries ?? this.maxRetries,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      errorMessage: clearErrorMessage
+          ? null
+          : (errorMessage ?? this.errorMessage),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'entityType': entityType.name,
+      'entityType': entityType,
       'entityId': entityId,
-      'operationType': operationType.name,
+      'action': action,
       'payload': payload,
+      'status': status.value,
+      'retryCount': retryCount,
+      'maxRetries': maxRetries,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
-      'status': status.name,
-      'retryCount': retryCount,
       'errorMessage': errorMessage,
-      'deviceId': deviceId,
-      'userId': userId,
     };
   }
 
   factory SyncOperation.fromMap(Map<String, dynamic> map) {
     return SyncOperation(
       id: map['id'] as String,
-      entityType: SyncEntityType.values.firstWhere(
-        (e) => e.name == map['entityType'],
-        orElse: () => SyncEntityType.unknown,
-      ),
+      entityType: map['entityType'] as String,
       entityId: map['entityId'] as String,
-      operationType: SyncOperationType.values.firstWhere(
-        (e) => e.name == map['operationType'],
-      ),
+      action: map['action'] as String,
       payload: Map<String, dynamic>.from(map['payload'] as Map),
+      status: SyncOperationStatusX.fromValue(map['status'] as String),
+      retryCount: map['retryCount'] as int,
+      maxRetries: map['maxRetries'] as int,
       createdAt: DateTime.parse(map['createdAt'] as String),
       updatedAt: DateTime.parse(map['updatedAt'] as String),
-      status: SyncStatus.values.firstWhere(
-        (e) => e.name == map['status'],
-      ),
-      retryCount: (map['retryCount'] as num?)?.toInt() ?? 0,
       errorMessage: map['errorMessage'] as String?,
-      deviceId: map['deviceId'] as String?,
-      userId: map['userId'] as String?,
     );
   }
 }

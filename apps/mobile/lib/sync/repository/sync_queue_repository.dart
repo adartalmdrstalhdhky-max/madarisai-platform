@@ -3,15 +3,15 @@ import '../models/sync_operation.dart';
 abstract class SyncQueueRepository {
   Future<void> enqueue(SyncOperation operation);
 
-  Future<List<SyncOperation>> getPendingOperations();
+  Future<List<SyncOperation>> getQueuedOperations({int limit = 100});
 
-  Future<void> markAsSyncing(String operationId);
+  Future<SyncOperation?> getById(String id);
 
-  Future<void> markAsSynced(String operationId);
+  Future<void> markProcessing(String id);
 
-  Future<void> markAsFailed(String operationId, String error);
+  Future<void> markCompleted(String id);
 
-  Future<void> deleteOperation(String operationId);
+  Future<void> markFailed(String id, {required String errorMessage});
 
-  Future<void> clearQueue();
+  Future<void> deleteCompleted();
 }
