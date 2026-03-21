@@ -1,0 +1,392 @@
+/* =========================================
+   Madaris AI - Responsive Styles
+   ========================================= */
+
+/* Large tablets / small laptops */
+@media (max-width: 1200px) {
+  .container {
+    width: min(var(--max), calc(100% - 28px));
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .preview-box {
+    min-height: auto;
+  }
+
+  .grid-4,
+  .metrics-grid,
+  .problem-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+  :root {
+    --nav-height: auto;
+  }
+
+  body {
+    line-height: 1.7;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 14px 0;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .brand-text {
+    align-items: center;
+    text-align: center;
+  }
+
+  .nav-links {
+    justify-content: center;
+    gap: 12px;
+    row-gap: 10px;
+    font-size: 0.95rem;
+  }
+
+  .nav-cta {
+    width: 100%;
+  }
+
+  .hero {
+    padding: 44px 0 28px;
+  }
+
+  .hero-card,
+  .preview-card,
+  .cta-box,
+  .feature-card,
+  .audience-card,
+  .impact-card,
+  .timeline-card,
+  .partner-card,
+  .opportunity-card,
+  .section-card,
+  .panel {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  }
+
+  .hero-text,
+  .lead {
+    font-size: 1rem;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .container {
+    width: min(var(--max), calc(100% - 20px));
+  }
+
+  .section {
+    padding: 26px 0;
+  }
+
+  .section-lg {
+    padding: 40px 0;
+  }
+
+  .section-xl {
+    padding: 54px 0;
+  }
+
+  .section-head {
+    margin-bottom: 16px;
+  }
+
+  .section-head .eyebrow,
+  .eyebrow {
+    font-size: 0.82rem;
+    padding: 7px 12px;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+  }
+
+  .nav {
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .brand {
+    gap: 10px;
+  }
+
+  .brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 1.15rem;
+  }
+
+  .brand-text span:first-child {
+    font-size: 1rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.72rem;
+  }
+
+  .nav-links {
+    gap: 10px 14px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .nav-links a {
+    white-space: nowrap;
+  }
+
+  .nav-cta {
+    min-height: 46px;
+    padding: 0 16px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+  }
+
+  .hero {
+    padding: 28px 0 20px;
+  }
+
+  .hero-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .preview-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .preview-box {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    line-height: 1.18;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 1.45rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+  }
+
+  .hero-text,
+  .lead,
+  p,
+  .feature-card p,
+  .audience-card p,
+  .impact-card p,
+  .timeline-card p,
+  .partner-card p,
+  .opportunity-card p,
+  .section-card p,
+  .panel p,
+  .metric-card span,
+  .stat span {
+    font-size: 0.96rem;
+  }
+
+  .hero-actions {
+    margin-top: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    min-height: 50px;
+    padding: 0 18px;
+    font-size: 0.98rem;
+    border-radius: 14px;
+  }
+
+  .hero-stats,
+  .grid-4,
+  .grid-3,
+  .grid-2,
+  .metrics-grid,
+  .problem-strip {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .stat,
+  .metric-card,
+  .feature-card,
+  .audience-card,
+  .impact-card,
+  .timeline-card,
+  .partner-card,
+  .opportunity-card,
+  .section-card,
+  .panel {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .preview-tag,
+  .badge {
+    font-size: 0.8rem;
+  }
+
+  .mini-grid {
+    gap: 10px;
+  }
+
+  .mini-item {
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  .warning-box {
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 0.95rem;
+  }
+
+  .cta {
+    padding: 34px 0 46px;
+  }
+
+  .cta-box {
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+
+  .cta-box h2 {
+    font-size: 1.6rem;
+    line-height: 1.25;
+  }
+
+  .cta-box p {
+    font-size: 0.96rem;
+    margin-bottom: 18px;
+  }
+
+  .footer {
+    padding: 0 0 28px;
+    font-size: 0.88rem;
+  }
+
+  .footer-links {
+    gap: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 13px 13px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+  }
+
+  textarea {
+    min-height: 120px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 420px) {
+  .container {
+    width: min(var(--max), calc(100% - 16px));
+  }
+
+  .hero-card,
+  .preview-card,
+  .preview-box,
+  .cta-box,
+  .feature-card,
+  .audience-card,
+  .impact-card,
+  .timeline-card,
+  .partner-card,
+  .opportunity-card,
+  .section-card,
+  .panel,
+  .stat,
+  .metric-card {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 1.78rem;
+  }
+
+  h2 {
+    font-size: 1.32rem;
+  }
+
+  .nav-links {
+    font-size: 0.88rem;
+    gap: 8px 12px;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .btn {
+    min-height: 48px;
+    font-size: 0.95rem;
+  }
+
+  .icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+    }
