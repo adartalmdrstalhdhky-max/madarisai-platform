@@ -1,0 +1,278 @@
+/* =========================================
+   Madaris AI - Animation Styles
+   ========================================= */
+
+/* Base motion tokens */
+:root {
+  --motion-fast: 0.18s ease;
+  --motion-base: 0.28s ease;
+  --motion-slow: 0.45s ease;
+}
+
+/* Global fade-in on page load */
+body {
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hero entry */
+.hero-card,
+.preview-card {
+  animation: riseUp 0.55s ease both;
+}
+
+.preview-card {
+  animation-delay: 0.08s;
+}
+
+@keyframes riseUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Section cards soft hover */
+.feature-card,
+.audience-card,
+.impact-card,
+.timeline-card,
+.partner-card,
+.opportunity-card,
+.section-card,
+.metric-card,
+.stat,
+.panel,
+.mini-item,
+.cta-box,
+.preview-box {
+  transition:
+    transform var(--motion-base),
+    box-shadow var(--motion-base),
+    border-color var(--motion-base),
+    background var(--motion-base);
+}
+
+.feature-card:hover,
+.audience-card:hover,
+.impact-card:hover,
+.timeline-card:hover,
+.partner-card:hover,
+.opportunity-card:hover,
+.section-card:hover,
+.metric-card:hover,
+.stat:hover,
+.panel:hover,
+.mini-item:hover,
+.preview-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Buttons */
+.btn,
+.nav-cta {
+  transition:
+    transform var(--motion-fast),
+    box-shadow var(--motion-fast),
+    opacity var(--motion-fast),
+    background var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.btn:hover,
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+}
+
+.btn:active,
+.nav-cta:active {
+  transform: translateY(0);
+}
+
+/* Links */
+.nav-links a,
+.footer-links a {
+  position: relative;
+  transition: color var(--motion-fast), opacity var(--motion-fast);
+}
+
+.nav-links a::after,
+.footer-links a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: width var(--motion-base);
+}
+
+.nav-links a:hover::after,
+.footer-links a:hover::after {
+  width: 100%;
+}
+
+/* Brand logo glow */
+.brand-logo {
+  transition:
+    transform var(--motion-base),
+    box-shadow var(--motion-base),
+    filter var(--motion-base);
+}
+
+.brand:hover .brand-logo {
+  transform: translateY(-1px) scale(1.02);
+  filter: saturate(1.05);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.22);
+}
+
+/* Icon lift */
+.icon {
+  transition:
+    transform var(--motion-base),
+    box-shadow var(--motion-base),
+    border-color var(--motion-base);
+}
+
+.feature-card:hover .icon,
+.audience-card:hover .icon,
+.impact-card:hover .icon,
+.timeline-card:hover .icon,
+.partner-card:hover .icon,
+.opportunity-card:hover .icon,
+.section-card:hover .icon {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Hero stats emphasis */
+.stat strong,
+.metric-card strong {
+  transition: transform var(--motion-base), color var(--motion-base);
+}
+
+.stat:hover strong,
+.metric-card:hover strong {
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+/* Mini items */
+.mini-item strong,
+.mini-item span {
+  transition: color var(--motion-fast), transform var(--motion-fast);
+}
+
+.mini-item:hover strong {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.mini-item:hover span {
+  color: var(--text-soft);
+}
+
+/* CTA subtle emphasis */
+.cta-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-box::before {
+  content: "";
+  position: absolute;
+  inset: auto auto -90px -90px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(57, 217, 138, 0.16), transparent 70%);
+  pointer-events: none;
+  transition: transform var(--motion-slow), opacity var(--motion-slow);
+  opacity: 0.85;
+}
+
+.cta-box:hover::before {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+/* Eyebrow pulse on hero only */
+.hero .eyebrow {
+  animation: softPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(57, 217, 138, 0);
+  }
+  50% {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 6px rgba(57, 217, 138, 0.03);
+  }
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+  transition:
+    border-color var(--motion-fast),
+    box-shadow var(--motion-fast),
+    background var(--motion-fast),
+    transform var(--motion-fast);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  transform: translateY(-1px);
+}
+
+/* Smooth section reveal helper (for future JS use) */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+    }
