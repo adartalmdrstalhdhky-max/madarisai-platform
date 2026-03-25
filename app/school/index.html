@@ -8,9 +8,19 @@
 <title>Madaris AI | إدارة المدرسة</title>
 
 <script>
+
+/* التحقق من تسجيل الدخول */
+
 if(!localStorage.getItem("madaris_logged_in")){
 window.location.href="../login.html"
 }
+
+/* التحقق من الدور */
+
+if(localStorage.getItem("madaris_role")!=="school"){
+window.location.href="../login.html"
+}
+
 </script>
 
 <link rel="stylesheet" href="../../assets/css/main.css">
@@ -33,36 +43,13 @@ justify-content:space-between;
 align-items:center;
 }
 
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
 .container{
 padding:30px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-}
-
-.card{
-background:#0b1930;
-padding:25px;
-border-radius:15px;
-transition:.3s;
-cursor:pointer;
-}
-
-.card:hover{
-transform:translateY(-5px);
-background:#0f2242;
-}
-
-.logout{
-background:#ff4d4d;
-padding:10px 15px;
-border:none;
-border-radius:8px;
-color:white;
-cursor:pointer;
 }
 
 .stats{
@@ -81,16 +68,43 @@ text-align:center;
 
 .stat h2{
 margin:0;
-font-size:28px;
 color:#00d4ff;
 }
 
 .stat p{
-margin:5px 0 0 0;
 opacity:.7;
 }
 
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.card{
+background:#0b1930;
+padding:25px;
+border-radius:15px;
+cursor:pointer;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+background:#0f2242;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
+
 @media(max-width:900px){
+
 .grid{
 grid-template-columns:1fr;
 }
@@ -98,6 +112,7 @@ grid-template-columns:1fr;
 .stats{
 grid-template-columns:1fr 1fr;
 }
+
 }
 
 </style>
@@ -108,7 +123,9 @@ grid-template-columns:1fr 1fr;
 
 <div class="header">
 
-<h2>لوحة إدارة المدرسة</h2>
+<div class="logo">
+Madaris AI | إدارة المدرسة
+</div>
 
 <button class="logout" onclick="logout()">
 تسجيل الخروج
@@ -118,7 +135,7 @@ grid-template-columns:1fr 1fr;
 
 <div class="container">
 
-<h1>مدرسة المستقبل | Madaris AI</h1>
+<h1>لوحة إدارة المدرسة</h1>
 
 <div class="stats">
 
@@ -133,12 +150,12 @@ grid-template-columns:1fr 1fr;
 </div>
 
 <div class="stat">
-<h2>22</h2>
-<p>عدد الفصول</p>
+<h2>18</h2>
+<p>الفصول</p>
 </div>
 
 <div class="stat">
-<h2>97%</h2>
+<h2>94%</h2>
 <p>نسبة الحضور</p>
 </div>
 
@@ -148,32 +165,32 @@ grid-template-columns:1fr 1fr;
 
 <div class="card">
 <h3>إدارة الطلاب</h3>
-<p>إضافة وتعديل بيانات الطلاب</p>
+<p>عرض وإدارة الطلاب</p>
 </div>
 
 <div class="card">
 <h3>إدارة المعلمين</h3>
-<p>إدارة طاقم التدريس</p>
+<p>إدارة المعلمين</p>
 </div>
 
 <div class="card">
 <h3>الفصول الدراسية</h3>
-<p>تنظيم الفصول</p>
+<p>إدارة الفصول</p>
 </div>
 
 <div class="card">
-<h3>الحضور والانصراف</h3>
-<p>متابعة الحضور اليومي</p>
+<h3>الحضور</h3>
+<p>متابعة الحضور</p>
 </div>
 
 <div class="card">
-<h3>النتائج والتقييم</h3>
-<p>متابعة نتائج الطلاب</p>
+<h3>النتائج</h3>
+<p>إدارة النتائج</p>
 </div>
 
 <div class="card">
-<h3>الجدول الدراسي</h3>
-<p>إدارة الجداول</p>
+<h3>الجداول</h3>
+<p>تنظيم الجداول</p>
 </div>
 
 <div class="card">
@@ -183,7 +200,7 @@ grid-template-columns:1fr 1fr;
 
 <div class="card">
 <h3>الإشعارات</h3>
-<p>إرسال إشعارات للطلاب</p>
+<p>إرسال إشعارات</p>
 </div>
 
 <div class="card">
@@ -198,8 +215,12 @@ grid-template-columns:1fr 1fr;
 <script>
 
 function logout(){
+
 localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+
 window.location.href="../login.html"
+
 }
 
 </script>
