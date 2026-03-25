@@ -5,22 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Madaris AI | إدارة المدرسة</title>
+<title>Madaris AI | لوحة المدرسة</title>
 
 <script>
-
-/* التحقق من تسجيل الدخول */
-
 if(!localStorage.getItem("madaris_logged_in")){
 window.location.href="../login.html"
 }
 
-/* التحقق من الدور */
-
 if(localStorage.getItem("madaris_role")!=="school"){
 window.location.href="../login.html"
 }
-
 </script>
 
 <link rel="stylesheet" href="../../assets/css/main.css">
@@ -48,8 +42,32 @@ font-size:20px;
 font-weight:600;
 }
 
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+font-weight:600;
+}
+
 .container{
 padding:30px;
+}
+
+.top-section{
+margin-bottom:25px;
+}
+
+.top-section h1{
+margin:0;
+font-size:32px;
+}
+
+.top-section p{
+margin:8px 0 0 0;
+opacity:.75;
 }
 
 .stats{
@@ -68,11 +86,18 @@ text-align:center;
 
 .stat h2{
 margin:0;
+font-size:28px;
 color:#00d4ff;
 }
 
 .stat p{
+margin-top:6px;
 opacity:.7;
+}
+
+.section-title{
+font-size:22px;
+margin-bottom:18px;
 }
 
 .grid{
@@ -87,6 +112,7 @@ padding:25px;
 border-radius:15px;
 cursor:pointer;
 transition:.3s;
+border:1px solid rgba(255,255,255,.04);
 }
 
 .card:hover{
@@ -94,13 +120,15 @@ transform:translateY(-5px);
 background:#0f2242;
 }
 
-.logout{
-background:#ff4d4d;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-color:white;
-cursor:pointer;
+.card h3{
+margin-top:0;
+margin-bottom:10px;
+}
+
+.card p{
+margin:0;
+opacity:.75;
+line-height:1.7;
 }
 
 @media(max-width:900px){
@@ -111,6 +139,18 @@ grid-template-columns:1fr;
 
 .stats{
 grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.container{
+padding:20px;
 }
 
 }
@@ -135,7 +175,10 @@ Madaris AI | إدارة المدرسة
 
 <div class="container">
 
+<div class="top-section">
 <h1>لوحة إدارة المدرسة</h1>
+<p>إدارة الطلاب، المعلمين، التقارير، ومتابعة الأداء العام للمدرسة.</p>
+</div>
 
 <div class="stats">
 
@@ -150,62 +193,49 @@ Madaris AI | إدارة المدرسة
 </div>
 
 <div class="stat">
-<h2>18</h2>
+<h2>22</h2>
 <p>الفصول</p>
 </div>
 
 <div class="stat">
 <h2>94%</h2>
-<p>نسبة الحضور</p>
+<p>معدل الحضور</p>
 </div>
 
 </div>
+
+<h2 class="section-title">إدارة المدرسة</h2>
 
 <div class="grid">
 
-<div class="card">
+<div class="card" onclick="goStudents()">
 <h3>إدارة الطلاب</h3>
-<p>عرض وإدارة الطلاب</p>
+<p>عرض جميع الطلاب، الحضور، الأداء، والمتابعة الأكاديمية.</p>
 </div>
 
-<div class="card">
-<h3>إدارة المعلمين</h3>
-<p>إدارة المعلمين</p>
+<div class="card" onclick="goStaff()">
+<h3>المعلمين والموظفين</h3>
+<p>إدارة الكادر التعليمي والإداري ومتابعة الأداء.</p>
+</div>
+
+<div class="card" onclick="goReports()">
+<h3>تقارير المدرسة</h3>
+<p>تقارير شاملة عن الأداء والحضور والتحصيل.</p>
 </div>
 
 <div class="card">
 <h3>الفصول الدراسية</h3>
-<p>إدارة الفصول</p>
+<p>إدارة الصفوف وتنظيم توزيع الطلاب.</p>
 </div>
 
 <div class="card">
-<h3>الحضور</h3>
-<p>متابعة الحضور</p>
-</div>
-
-<div class="card">
-<h3>النتائج</h3>
-<p>إدارة النتائج</p>
-</div>
-
-<div class="card">
-<h3>الجداول</h3>
-<p>تنظيم الجداول</p>
-</div>
-
-<div class="card">
-<h3>التقارير</h3>
-<p>تقارير المدرسة</p>
-</div>
-
-<div class="card">
-<h3>الإشعارات</h3>
-<p>إرسال إشعارات</p>
+<h3>الجدول المدرسي</h3>
+<p>عرض وتنظيم الجدول الدراسي للمدرسة.</p>
 </div>
 
 <div class="card">
 <h3>الإعدادات</h3>
-<p>إعدادات المدرسة</p>
+<p>إعدادات المدرسة وإدارة الحسابات.</p>
 </div>
 
 </div>
@@ -215,12 +245,21 @@ Madaris AI | إدارة المدرسة
 <script>
 
 function logout(){
-
 localStorage.removeItem("madaris_logged_in")
 localStorage.removeItem("madaris_role")
-
 window.location.href="../login.html"
+}
 
+function goStudents(){
+window.location.href="students.html"
+}
+
+function goStaff(){
+window.location.href="staff.html"
+}
+
+function goReports(){
+window.location.href="reports.html"
 }
 
 </script>
