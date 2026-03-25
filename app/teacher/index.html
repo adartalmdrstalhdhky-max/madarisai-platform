@@ -4,7 +4,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Madaris AI | بوابة المعلم</title>
+
+<title>Madaris AI | لوحة المعلم</title>
+
+<script>
+
+/* التحقق من تسجيل الدخول */
+
+if(!localStorage.getItem("madaris_logged_in")){
+window.location.href="../login.html"
+}
+
+/* التحقق من الدور */
+
+if(localStorage.getItem("madaris_role")!=="teacher"){
+window.location.href="../login.html"
+}
+
+</script>
 
 <link rel="stylesheet" href="../../assets/css/main.css">
 <link rel="stylesheet" href="../../assets/css/responsive.css">
@@ -14,97 +31,86 @@
 body{
 margin:0;
 font-family:"Tajawal",sans-serif;
-background:linear-gradient(135deg,#071120,#0b1930);
+background:#071120;
 color:white;
-}
-
-.teacher-shell{
-display:flex;
-min-height:100vh;
-}
-
-.sidebar{
-width:250px;
-background:rgba(255,255,255,0.04);
-border-left:1px solid rgba(255,255,255,0.08);
-padding:24px;
-}
-
-.brand{
-font-size:26px;
-font-weight:800;
-margin-bottom:30px;
-}
-
-.brand span{
-color:#00d4ff;
-}
-
-.teacher-card{
-background:rgba(255,255,255,0.05);
-padding:16px;
-border-radius:16px;
-margin-bottom:20px;
-}
-
-.nav-links{
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.nav-links a{
-color:white;
-text-decoration:none;
-padding:12px;
-border-radius:10px;
-background:rgba(255,255,255,0.03);
-}
-
-.nav-links a:hover{
-background:linear-gradient(90deg,#00d4ff,#1f6fff);
-}
-
-.main{
-flex:1;
-padding:30px;
 }
 
 .header{
-margin-bottom:20px;
+background:#0b1930;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.cards{
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+.container{
+padding:30px;
+}
+
+.stats{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:15px;
-margin-bottom:20px;
+gap:20px;
+margin-bottom:30px;
+}
+
+.stat{
+background:#0b1930;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.stat h2{
+margin:0;
+color:#00d4ff;
+}
+
+.stat p{
+opacity:.7;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.05);
-padding:20px;
-border-radius:16px;
+background:#0b1930;
+padding:25px;
+border-radius:15px;
+cursor:pointer;
+transition:.3s;
 }
 
-.panel{
-background:rgba(255,255,255,0.05);
-padding:20px;
-border-radius:16px;
-margin-bottom:15px;
+.card:hover{
+transform:translateY(-5px);
+background:#0f2242;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+cursor:pointer;
 }
 
 @media(max-width:900px){
-.cards{
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.stats{
 grid-template-columns:1fr 1fr;
-}
-
-.teacher-shell{
-flex-direction:column;
-}
-
-.sidebar{
-width:100%;
 }
 
 }
@@ -115,79 +121,94 @@ width:100%;
 
 <body>
 
-<div class="teacher-shell">
-
-<aside class="sidebar">
-
-<div class="brand">
-Madaris <span>AI</span>
-</div>
-
-<div class="teacher-card">
-<strong>أحمد محمد</strong>
-<br>
-معلم رياضيات
-</div>
-
-<div class="nav-links">
-<a href="#">لوحة المعلم</a>
-<a href="#">طلابي</a>
-<a href="#">الدروس</a>
-<a href="#">الواجبات</a>
-<a href="#">النتائج</a>
-<a href="../dashboard.html">العودة للوحة التحكم</a>
-</div>
-
-</aside>
-
-<main class="main">
-
 <div class="header">
-<h1>بوابة المعلم</h1>
-<p>إدارة الطلاب والدروس والواجبات</p>
+
+<div class="logo">
+Madaris AI | المعلم
 </div>
 
-<div class="cards">
+<button class="logout" onclick="logout()">
+تسجيل الخروج
+</button>
+
+</div>
+
+<div class="container">
+
+<h1>لوحة تحكم المعلم</h1>
+
+<div class="stats">
+
+<div class="stat">
+<h2>120</h2>
+<p>عدد الطلاب</p>
+</div>
+
+<div class="stat">
+<h2>5</h2>
+<p>الفصول</p>
+</div>
+
+<div class="stat">
+<h2>12</h2>
+<p>الدروس</p>
+</div>
+
+<div class="stat">
+<h2>3</h2>
+<p>الاختبارات</p>
+</div>
+
+</div>
+
+<div class="grid">
 
 <div class="card">
-<h3>الطلاب</h3>
-<strong>128</strong>
+<h3>إدارة الطلاب</h3>
+<p>عرض الطلاب</p>
 </div>
 
 <div class="card">
 <h3>الدروس</h3>
-<strong>24</strong>
+<p>إدارة الدروس</p>
+</div>
+
+<div class="card">
+<h3>الاختبارات</h3>
+<p>إدارة الاختبارات</p>
+</div>
+
+<div class="card">
+<h3>الحضور</h3>
+<p>تسجيل الحضور</p>
 </div>
 
 <div class="card">
 <h3>الواجبات</h3>
-<strong>12</strong>
+<p>إدارة الواجبات</p>
 </div>
 
 <div class="card">
-<h3>الفصول</h3>
-<strong>4</strong>
+<h3>التقارير</h3>
+<p>تقارير المعلم</p>
 </div>
 
 </div>
 
-<div class="panel">
-<h2>آخر النشاطات</h2>
-<p>تم رفع واجب جديد للصف التاسع</p>
-<p>تم إضافة درس جديد</p>
-<p>تم تصحيح الاختبار الأخير</p>
 </div>
 
-<div class="panel">
-<h2>إجراءات سريعة</h2>
-<button>إضافة درس</button>
-<button>إضافة واجب</button>
-<button>إضافة اختبار</button>
-</div>
+<script>
 
-</main>
+function logout(){
 
-</div>
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+
+window.location.href="../login.html"
+
+}
+
+</script>
 
 </body>
 
