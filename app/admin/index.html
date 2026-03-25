@@ -8,19 +8,13 @@
 <title>Madaris AI | الإدارة العليا</title>
 
 <script>
-
-/* التحقق من تسجيل الدخول */
-
 if(!localStorage.getItem("madaris_logged_in")){
 window.location.href="../login.html"
 }
 
-/* التحقق من الدور */
-
 if(localStorage.getItem("madaris_role")!=="admin"){
 window.location.href="../login.html"
 }
-
 </script>
 
 <link rel="stylesheet" href="../../assets/css/main.css">
@@ -46,11 +40,35 @@ border-bottom:1px solid rgba(255,255,255,.05);
 
 .logo{
 font-size:20px;
+font-weight:700;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+cursor:pointer;
 font-weight:600;
 }
 
 .container{
 padding:30px;
+}
+
+.top-section{
+margin-bottom:25px;
+}
+
+.top-section h1{
+margin:0;
+font-size:32px;
+}
+
+.top-section p{
+margin:8px 0 0 0;
+opacity:.75;
 }
 
 .stats{
@@ -69,17 +87,25 @@ text-align:center;
 
 .stat h2{
 margin:0;
+font-size:28px;
 color:#00d4ff;
 }
 
 .stat p{
+margin-top:6px;
 opacity:.7;
+}
+
+.section-title{
+font-size:22px;
+margin:0 0 18px 0;
 }
 
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:20px;
+margin-bottom:28px;
 }
 
 .card{
@@ -88,6 +114,7 @@ padding:25px;
 border-radius:15px;
 cursor:pointer;
 transition:.3s;
+border:1px solid rgba(255,255,255,.04);
 }
 
 .card:hover{
@@ -95,144 +122,38 @@ transform:translateY(-5px);
 background:#0f2242;
 }
 
-.logout{
-background:#ff4d4d;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-color:white;
-cursor:pointer;
-}
-
-.section-title{
-margin:30px 0 15px 0;
+.card h3{
+margin-top:0;
+margin-bottom:10px;
 font-size:20px;
 }
 
-@media(max-width:900px){
-
-.grid{
-grid-template-columns:1fr;
+.card p{
+margin:0;
+opacity:.78;
+line-height:1.7;
 }
 
-.stats{
-grid-template-columns:1fr 1fr;
+.panel{
+background:#0b1930;
+padding:22px;
+border-radius:18px;
+margin-bottom:22px;
+overflow:auto;
 }
 
+.panel h2{
+margin:0 0 16px 0;
+font-size:22px;
 }
 
-</style>
-
-</head>
-
-<body>
-
-<div class="header">
-
-<div class="logo">
-Madaris AI | الإدارة العليا
-</div>
-
-<button class="logout" onclick="logout()">
-تسجيل الخروج
-</button>
-
-</div>
-
-<div class="container">
-
-<h1>لوحة الإدارة المركزية</h1>
-
-<div class="stats">
-
-<div class="stat">
-<h2>15</h2>
-<p>عدد المدارس</p>
-</div>
-
-<div class="stat">
-<h2>3,200</h2>
-<p>عدد الطلاب</p>
-</div>
-
-<div class="stat">
-<h2>210</h2>
-<p>عدد المعلمين</p>
-</div>
-
-<div class="stat">
-<h2>45</h2>
-<p>عدد المديرين</p>
-</div>
-
-</div>
-
-<h2 class="section-title">إدارة المنصة</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>إدارة المدارس</h3>
-<p>إدارة جميع المدارس</p>
-</div>
-
-<div class="card">
-<h3>إدارة المستخدمين</h3>
-<p>الطلاب والمعلمين</p>
-</div>
-
-<div class="card">
-<h3>المناهج</h3>
-<p>إدارة المناهج التعليمية</p>
-</div>
-
-<div class="card">
-<h3>الذكاء الاصطناعي</h3>
-<p>إعداد المعلم الذكي</p>
-</div>
-
-<div class="card">
-<h3>التقارير العامة</h3>
-<p>تقارير شاملة</p>
-</div>
-
-<div class="card">
-<h3>الإشعارات العامة</h3>
-<p>إرسال إشعارات</p>
-</div>
-
-<div class="card">
-<h3>الإعدادات العامة</h3>
-<p>إعدادات النظام</p>
-</div>
-
-<div class="card">
-<h3>الأمان</h3>
-<p>إدارة الأمان</p>
-</div>
-
-<div class="card">
-<h3>النسخ الاحتياطي</h3>
-<p>إدارة النسخ الاحتياطي</p>
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-function logout(){
-
-localStorage.removeItem("madaris_logged_in")
-localStorage.removeItem("madaris_role")
-
-window.location.href="../login.html"
-
+table{
+width:100%;
+border-collapse:collapse;
+min-width:760px;
 }
 
-</script>
-
-</body>
-
-</html>
+th, td{
+padding:14px 12px;
+text-align:right;
+border-bottom:1px solid rgba(
