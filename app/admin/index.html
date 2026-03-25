@@ -8,9 +8,19 @@
 <title>Madaris AI | الإدارة العليا</title>
 
 <script>
+
+/* التحقق من تسجيل الدخول */
+
 if(!localStorage.getItem("madaris_logged_in")){
 window.location.href="../login.html"
 }
+
+/* التحقق من الدور */
+
+if(localStorage.getItem("madaris_role")!=="admin"){
+window.location.href="../login.html"
+}
+
 </script>
 
 <link rel="stylesheet" href="../../assets/css/main.css">
@@ -60,12 +70,10 @@ text-align:center;
 .stat h2{
 margin:0;
 color:#00d4ff;
-font-size:26px;
 }
 
 .stat p{
 opacity:.7;
-margin-top:5px;
 }
 
 .grid{
@@ -97,7 +105,7 @@ cursor:pointer;
 }
 
 .section-title{
-margin:25px 0 15px 0;
+margin:30px 0 15px 0;
 font-size:20px;
 }
 
@@ -122,7 +130,7 @@ grid-template-columns:1fr 1fr;
 <div class="header">
 
 <div class="logo">
-Madaris AI — الإدارة العليا
+Madaris AI | الإدارة العليا
 </div>
 
 <button class="logout" onclick="logout()">
@@ -133,17 +141,17 @@ Madaris AI — الإدارة العليا
 
 <div class="container">
 
-<h1>لوحة التحكم المركزية</h1>
+<h1>لوحة الإدارة المركزية</h1>
 
 <div class="stats">
 
 <div class="stat">
-<h2>12</h2>
+<h2>15</h2>
 <p>عدد المدارس</p>
 </div>
 
 <div class="stat">
-<h2>3,250</h2>
+<h2>3,200</h2>
 <p>عدد الطلاب</p>
 </div>
 
@@ -153,7 +161,7 @@ Madaris AI — الإدارة العليا
 </div>
 
 <div class="stat">
-<h2>18</h2>
+<h2>45</h2>
 <p>عدد المديرين</p>
 </div>
 
@@ -165,7 +173,7 @@ Madaris AI — الإدارة العليا
 
 <div class="card">
 <h3>إدارة المدارس</h3>
-<p>إضافة وإدارة المدارس</p>
+<p>إدارة جميع المدارس</p>
 </div>
 
 <div class="card">
@@ -174,28 +182,23 @@ Madaris AI — الإدارة العليا
 </div>
 
 <div class="card">
-<h3>الأدوار والصلاحيات</h3>
-<p>تحديد صلاحيات المستخدمين</p>
-</div>
-
-<div class="card">
-<h3>المحتوى التعليمي</h3>
-<p>إدارة المناهج والدروس</p>
+<h3>المناهج</h3>
+<p>إدارة المناهج التعليمية</p>
 </div>
 
 <div class="card">
 <h3>الذكاء الاصطناعي</h3>
-<p>إعدادات المعلم الذكي</p>
-</div>
-
-<div class="card">
-<h3>الإشعارات العامة</h3>
-<p>إرسال تنبيهات للمنصة</p>
+<p>إعداد المعلم الذكي</p>
 </div>
 
 <div class="card">
 <h3>التقارير العامة</h3>
-<p>تقارير شاملة للمنصة</p>
+<p>تقارير شاملة</p>
+</div>
+
+<div class="card">
+<h3>الإشعارات العامة</h3>
+<p>إرسال إشعارات</p>
 </div>
 
 <div class="card">
@@ -204,24 +207,8 @@ Madaris AI — الإدارة العليا
 </div>
 
 <div class="card">
-<h3>السجلات</h3>
-<p>سجل النشاطات</p>
-</div>
-
-</div>
-
-<h2 class="section-title">إدارة النظام</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>الخوادم</h3>
-<p>حالة النظام</p>
-</div>
-
-<div class="card">
 <h3>الأمان</h3>
-<p>إعدادات الأمان</p>
+<p>إدارة الأمان</p>
 </div>
 
 <div class="card">
@@ -236,8 +223,12 @@ Madaris AI — الإدارة العليا
 <script>
 
 function logout(){
+
 localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+
 window.location.href="../login.html"
+
 }
 
 </script>
