@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | تقارير المدرسة</title>
+
+<script>
+if(!localStorage.getItem("madaris_logged_in")){
+window.location.href="../login.html"
+}
+
+if(localStorage.getItem("madaris_role")!=="school"){
+window.location.href="../login.html"
+}
+</script>
+
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/responsive.css">
+
+<style>
+
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:#071120;
+color:white;
+}
+
+.header{
+background:#0b1930;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+.container{
+padding:30px;
+}
+
+.toolbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:24px;
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.back{
+background:#00d4ff;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+color:white;
+font-weight:600;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-bottom:28px;
+}
+
+.stat{
+background:#0b1930;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.stat h2{
+margin:0;
+font-size:28px;
+color:#00d4ff;
+}
+
+.stat p{
+margin:6px 0 0 0;
+opacity:.75;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-bottom:24px;
+}
+
+.report-card{
+background:#0b1930;
+padding:22px;
+border-radius:15px;
+border:1px solid rgba(255,255,255,.04);
+transition:.3s;
+cursor:pointer;
+}
+
+.report-card:hover{
+transform:translateY(-5px);
+background:#0f2242;
+}
+
+.report-card h3{
+margin:0 0 10px 0;
+}
+
+.report-card p{
+margin:0;
+opacity:.8;
+line-height:1.7;
+}
+
+.panel{
+background:#0b1930;
+padding:22px;
+border-radius:18px;
+margin-bottom:22px;
+overflow:auto;
+}
+
+.panel h2{
+margin:0 0 16px 0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:760px;
+}
+
+th, td{
+padding:14px 12px;
+text-align:right;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+th{
+color:#8fe8ff;
+font-size:14px;
+font-weight:700;
+}
+
+td{
+font-size:14px;
+}
+
+.status{
+padding:7px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+display:inline-block;
+}
+
+.status.good{
+background:rgba(34,197,94,.12);
+color:#6ee7a3;
+}
+
+.status.mid{
+background:rgba(255,193,7,.12);
+color:#ffd666;
+}
+
+.status.low{
+background:rgba(255,77,77,.12);
+color:#ff9a9a;
+}
+
+.note{
+opacity:.8;
+line-height:1.8;
+}
+
+@media(max-width:900px){
+.stats{
+grid-template-columns:1fr 1fr;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+Madaris AI | تقارير المدرسة
+</div>
+
+<div class="actions">
+<button class="back" onclick="goBack()">رجوع</button>
+<button class="logout" onclick="logout()">خروج</button>
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="toolbar">
+  <div>
+    <h1>التقارير المدرسية</h1>
+    <p>مراجعة نظرة عامة على أداء المدرسة، الحضور، التحصيل الأكاديمي، والانضباط العام.</p>
+  </div>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2>94%</h2>
+<p>معدل الحضور العام</p>
+</div>
+
+<div class="stat">
+<h2>86%</h2>
+<p>متوسط التحصيل</p>
+</div>
+
+<div class="stat">
+<h2>35</h2>
+<p>عدد المعلمين</p>
+</div>
+
+<div class="stat">
+<h2>540</h2>
+<p>عدد الطلاب</p>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="report-card">
+<h3>تقرير الحضور</h3>
+<p>ملخص حضور الطلاب والمعلمين، ونسب الغياب والتأخر خلال الفترة الحالية.</p>
+</div>
+
+<div class="report-card">
+<h3>تقرير النتائج</h3>
+<p>نظرة عامة على متوسط الدرجات، المواد الأقوى، والمواد التي تحتاج دعمًا إضافيًا.</p>
+</div>
+
+<div class="report-card">
+<h3>تقرير الانضباط</h3>
+<p>مراجعة السلوك المدرسي، الالتزام، ومستوى الانضباط في الصفوف المختلفة.</p>
+</div>
+
+<div class="report-card">
+<h3>تقرير الكادر</h3>
+<p>أداء المعلمين والموظفين، الحضور، وملاحظات الإدارة على الكادر المدرسي.</p>
+</div>
+
+<div class="report-card">
+<h3>تقرير الفصول</h3>
+<p>مقارنة بين الفصول الدراسية من حيث الأداء والحضور والتفاعل الأكاديمي.</p>
+</div>
+
+<div class="report-card">
+<h3>تقرير المتابعة</h3>
+<p>قائمة بالحالات التي تحتاج متابعة خاصة من الإدارة أو أولياء الأمور.</p>
+</div>
+
+</div>
+
+<div class="panel">
+<h2>ملخص الأداء حسب الصفوف</h2>
+
+<table>
+<thead>
+<tr>
+<th>الصف</th>
+<th>عدد الطلاب</th>
+<th>الحضور</th>
+<th>متوسط النتائج</th>
+<th>الحالة</th>
+<th>ملاحظات</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>الصف التاسع</td>
+<td>96</td>
+<td>95%</td>
+<td>89%</td>
+<td><span class="status good">جيد جدًا</span></td>
+<td>أداء قوي مع استقرار في الانضباط</td>
+</tr>
+
+<tr>
+<td>الصف الثامن</td>
+<td>88</td>
+<td>92%</td>
+<td>84%</td>
+<td><span class="status good">جيد</span></td>
+<td>يحتاج بعض الطلاب دعمًا في العلوم</td>
+</tr>
+
+<tr>
+<td>الصف السابع</td>
+<td>102</td>
+<td>90%</td>
+<td>78%</td>
+<td><span class="status mid">متوسط</span></td>
+<td>تفاوت واضح بين الفصول</td>
+</tr>
+
+<tr>
+<td>الصف السادس</td>
+<td>110</td>
+<td>88%</td>
+<td>74%</td>
+<td><span class="status mid">متابعة</span></td>
+<td>انخفاض في بعض المواد الأساسية</td>
+</tr>
+
+<tr>
+<td>الصف الخامس</td>
+<td>144</td>
+<td>85%</td>
+<td>69%</td>
+<td><span class="status low">تنبيه</span></td>
+<td>يحتاج تدخل أكاديمي وإداري عاجل</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="panel">
+<h2>ملاحظات الإدارة</h2>
+<p class="note">
+- مستوى الصف التاسع مشجع ويُظهر جاهزية عالية في المواد الأساسية.  
+- الصفوف الدنيا تحتاج إلى تركيز أكبر على الانضباط والحضور المنتظم.  
+- هناك حاجة إلى دعم إضافي لبعض المواد مثل العلوم واللغة الإنجليزية في بعض الصفوف.  
+- مؤشرات الحضور جيدة إجمالًا، لكن توجد حالات غياب متكرر تحتاج إلى متابعة مباشرة.  
+</p>
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+window.location.href="../login.html"
+}
+
+function goBack(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+
+</html>
