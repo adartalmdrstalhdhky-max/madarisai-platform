@@ -4,437 +4,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Madaris AI | بوابة الطالب</title>
+
+<title>Madaris AI | المعلم</title>
+
+<script>
+if(!localStorage.getItem("madaris_logged_in")){
+window.location.href="../login.html"
+}
+</script>
 
 <link rel="stylesheet" href="../../assets/css/main.css">
 <link rel="stylesheet" href="../../assets/css/responsive.css">
 
 <style>
+
 body{
 margin:0;
 font-family:"Tajawal",sans-serif;
-background:linear-gradient(135deg,#071120,#0b1930);
+background:#071120;
 color:white;
 }
 
-.student-shell{
-display:flex;
-min-height:100vh;
-}
-
-.sidebar{
-width:250px;
-background:rgba(255,255,255,0.04);
-border-left:1px solid rgba(255,255,255,0.08);
-backdrop-filter:blur(14px);
-padding:24px 18px;
-box-sizing:border-box;
-}
-
-.brand{
-font-size:26px;
-font-weight:800;
-margin-bottom:28px;
-}
-
-.brand span{
-color:#00d4ff;
-}
-
-.student-card{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:16px;
-padding:16px;
-margin-bottom:24px;
-}
-
-.student-card strong{
-display:block;
-font-size:18px;
-margin-bottom:6px;
-}
-
-.student-card small{
-color:#b9c2df;
-}
-
-.nav-links{
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.nav-links a{
-text-decoration:none;
-color:white;
-padding:13px 15px;
-border-radius:12px;
-background:rgba(255,255,255,0.03);
-transition:0.2s ease;
-}
-
-.nav-links a:hover,
-.nav-links a.active{
-background:linear-gradient(90deg,#00d4ff,#1f6fff);
-}
-
-.main-content{
-flex:1;
-padding:28px;
-box-sizing:border-box;
-}
-
-.hero{
+.header{
+background:#0b1930;
+padding:20px;
 display:flex;
 justify-content:space-between;
-align-items:center;
-gap:16px;
-flex-wrap:wrap;
-margin-bottom:24px;
 }
 
-.hero h1{
-margin:0;
-font-size:32px;
+.container{
+padding:30px;
 }
 
-.hero p{
-margin:8px 0 0;
-color:#b9c2df;
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
 }
 
-.hero-actions{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
+.card{
+background:#0b1930;
+padding:25px;
+border-radius:15px;
 }
 
-.hero-actions button{
+.logout{
+background:#ff4d4d;
+padding:10px 15px;
 border:none;
-padding:12px 16px;
-border-radius:12px;
-font-weight:700;
+border-radius:8px;
+color:white;
 cursor:pointer;
 }
 
-.btn-primary{
-background:linear-gradient(90deg,#00d4ff,#1f6fff);
-color:white;
-}
-
-.btn-secondary{
-background:rgba(255,255,255,0.08);
-color:white;
-}
-
-.stats-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px;
-margin-bottom:24px;
-}
-
-.stat-card{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:18px;
-padding:20px;
-}
-
-.stat-card h3{
-margin:0 0 8px;
-font-size:14px;
-font-weight:500;
-color:#b9c2df;
-}
-
-.stat-card strong{
-display:block;
-font-size:28px;
-margin-bottom:6px;
-}
-
-.stat-card span{
-font-size:13px;
-color:#8fe8ff;
-}
-
-.content-grid{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:18px;
-}
-
-.panel{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:18px;
-padding:22px;
-}
-
-.panel h2{
-margin:0 0 16px;
-font-size:22px;
-}
-
-.lesson-list,
-.activity-list{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.lesson-item,
-.activity-item{
-background:rgba(255,255,255,0.04);
-border-radius:14px;
-padding:14px 16px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-}
-
-.lesson-item strong,
-.activity-item strong{
-display:block;
-margin-bottom:4px;
-}
-
-.lesson-item small,
-.activity-item small{
-color:#b9c2df;
-}
-
-.tag{
-padding:8px 12px;
-border-radius:999px;
-font-size:12px;
-font-weight:700;
-white-space:nowrap;
-}
-
-.tag.live{
-background:rgba(34,197,94,0.15);
-color:#6ee7a3;
-}
-
-.tag.pending{
-background:rgba(250,204,21,0.15);
-color:#fde68a;
-}
-
-.tag.done{
-background:rgba(0,212,255,0.15);
-color:#8fe8ff;
-}
-
-.quick-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-margin-top:18px;
-}
-
-.quick-card{
-background:rgba(255,255,255,0.04);
-border-radius:14px;
-padding:16px;
-text-align:center;
-font-weight:700;
-}
-
-@media (max-width: 980px){
-.student-shell{
-flex-direction:column;
-}
-
-.sidebar{
-width:100%;
-border-left:none;
-border-bottom:1px solid rgba(255,255,255,0.08);
-}
-
-.stats-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.content-grid{
+@media(max-width:900px){
+.grid{
 grid-template-columns:1fr;
 }
 }
 
-@media (max-width: 640px){
-.main-content{
-padding:18px;
-}
-
-.hero h1{
-font-size:26px;
-}
-
-.stats-grid{
-grid-template-columns:1fr;
-}
-
-.quick-grid{
-grid-template-columns:1fr;
-}
-
-.lesson-item,
-.activity-item{
-flex-direction:column;
-align-items:flex-start;
-}
-}
 </style>
+
 </head>
 
 <body>
 
-<div class="student-shell">
+<div class="header">
 
-  <aside class="sidebar">
-    <div class="brand">Madaris <span>AI</span></div>
+<h2>لوحة المعلم</h2>
 
-    <div class="student-card">
-      <strong>مرحبًا، محمد</strong>
-      <small>طالب • الصف التاسع</small>
-    </div>
-
-    <nav class="nav-links">
-      <a href="#" class="active">الرئيسية</a>
-      <a href="../dashboard.html">لوحة التحكم</a>
-      <a href="lessons.html">الدروس</a>
-      <a href="assignments.html">الواجبات</a>
-      <a href="results.html">النتائج</a>
-      <a href="../../index.html">العودة إلى الموقع</a>
-    </nav>
-  </aside>
-
-  <main class="main-content">
-    <div class="hero">
-      <div>
-        <h1>بوابة الطالب</h1>
-        <p>مرحبًا بك في مساحة التعلم الخاصة بك داخل Madaris AI.</p>
-      </div>
-
-      <div class="hero-actions">
-        <button class="btn-primary">ابدأ الدرس الحالي</button>
-        <button class="btn-secondary">عرض النتائج</button>
-      </div>
-    </div>
-
-    <section class="stats-grid">
-      <div class="stat-card">
-        <h3>الدروس النشطة</h3>
-        <strong>8</strong>
-        <span>مواد قيد الدراسة</span>
-      </div>
-
-      <div class="stat-card">
-        <h3>الواجبات القادمة</h3>
-        <strong>3</strong>
-        <span>بحاجة إلى تسليم</span>
-      </div>
-
-      <div class="stat-card">
-        <h3>متوسط الأداء</h3>
-        <strong>87%</strong>
-        <span>تحسن مستمر</span>
-      </div>
-
-      <div class="stat-card">
-        <h3>ساعات التعلم</h3>
-        <strong>42</strong>
-        <span>هذا الفصل</span>
-      </div>
-    </section>
-
-    <section class="content-grid">
-      <div class="panel">
-        <h2>دروسي الحالية</h2>
-
-        <div class="lesson-list">
-          <div class="lesson-item">
-            <div>
-              <strong>الرياضيات</strong>
-              <small>المعادلات الخطية - الدرس 4</small>
-            </div>
-            <span class="tag live">جاري الآن</span>
-          </div>
-
-          <div class="lesson-item">
-            <div>
-              <strong>العلوم</strong>
-              <small>الجهاز التنفسي - مراجعة</small>
-            </div>
-            <span class="tag pending">قادم</span>
-          </div>
-
-          <div class="lesson-item">
-            <div>
-              <strong>اللغة العربية</strong>
-              <small>النصوص الأدبية - اختبار قصير</small>
-            </div>
-            <span class="tag done">مكتمل</span>
-          </div>
-
-          <div class="lesson-item">
-            <div>
-              <strong>اللغة الإنجليزية</strong>
-              <small>Vocabulary Unit 3</small>
-            </div>
-            <span class="tag live">نشط</span>
-          </div>
-        </div>
-
-        <div class="quick-grid">
-          <div class="quick-card">فتح الدرس الأخير</div>
-          <div class="quick-card">حل الواجبات</div>
-          <div class="quick-card">مراجعة النتائج</div>
-          <div class="quick-card">جدول الحصص</div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>آخر النشاطات</h2>
-
-        <div class="activity-list">
-          <div class="activity-item">
-            <div>
-              <strong>تم تسليم واجب العلوم</strong>
-              <small>قبل ساعتين</small>
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div>
-              <strong>تم فتح درس الرياضيات</strong>
-              <small>اليوم 8:30 صباحًا</small>
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div>
-              <strong>نتيجة اختبار العربية</strong>
-              <small>حصلت على 92%</small>
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div>
-              <strong>إشعار جديد</strong>
-              <small>تم إضافة واجب جديد</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+<button class="logout" onclick="logout()">
+تسجيل الخروج
+</button>
 
 </div>
 
+<div class="container">
+
+<h1>لوحة تحكم المعلم</h1>
+
+<div class="grid">
+
+<div class="card">
+<h3>الطلاب</h3>
+<p>إدارة الطلاب</p>
+</div>
+
+<div class="card">
+<h3>الدروس</h3>
+<p>إدارة الدروس</p>
+</div>
+
+<div class="card">
+<h3>الاختبارات</h3>
+<p>إدارة الاختبارات</p>
+</div>
+
+<div class="card">
+<h3>الحضور</h3>
+<p>تسجيل الحضور</p>
+</div>
+
+<div class="card">
+<h3>النتائج</h3>
+<p>عرض النتائج</p>
+</div>
+
+<div class="card">
+<h3>التقارير</h3>
+<p>تقارير المعلم</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+localStorage.removeItem("madaris_logged_in")
+window.location.href="../login.html"
+}
+
+</script>
+
 </body>
-  </html>
+
+</html>
