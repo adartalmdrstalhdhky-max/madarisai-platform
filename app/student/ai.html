@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | المعلم الذكي</title>
+
+<script>
+
+/* التحقق من تسجيل الدخول */
+
+if(!localStorage.getItem("madaris_logged_in")){
+window.location.href="../login.html"
+}
+
+/* التحقق من الدور */
+
+if(localStorage.getItem("madaris_role")!=="student"){
+window.location.href="../login.html"
+}
+
+</script>
+
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/responsive.css">
+
+<style>
+
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:#071120;
+color:white;
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+
+.header{
+background:#0b1930;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+.container{
+flex:1;
+display:flex;
+flex-direction:column;
+padding:20px;
+}
+
+.chat-box{
+flex:1;
+background:#0b1930;
+border-radius:15px;
+padding:20px;
+overflow-y:auto;
+margin-bottom:15px;
+}
+
+.message{
+margin-bottom:15px;
+padding:15px;
+border-radius:12px;
+max-width:80%;
+}
+
+.ai{
+background:#0f2242;
+}
+
+.user{
+background:#00d4ff;
+color:black;
+margin-right:auto;
+}
+
+.input-area{
+display:flex;
+gap:10px;
+}
+
+.input-area input{
+flex:1;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#0b1930;
+color:white;
+}
+
+.input-area button{
+background:#00d4ff;
+border:none;
+padding:14px 20px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+color:white;
+}
+
+.back{
+background:#00d4ff;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+Madaris AI | المعلم الذكي
+</div>
+
+<div>
+<button class="back" onclick="goBack()">رجوع</button>
+<button class="logout" onclick="logout()">خروج</button>
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="chat-box" id="chat">
+
+<div class="message ai">
+مرحباً 👋  
+أنا المعلم الذكي Madaris AI  
+كيف أستطيع مساعدتك اليوم؟
+</div>
+
+</div>
+
+<div class="input-area">
+
+<input type="text" id="message" placeholder="اكتب سؤالك هنا...">
+
+<button onclick="sendMessage()">
+إرسال
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+
+window.location.href="../login.html"
+
+}
+
+function goBack(){
+window.location.href="index.html"
+}
+
+function sendMessage(){
+
+let input=document.getElementById("message")
+let chat=document.getElementById("chat")
+
+if(input.value.trim()=="") return
+
+let userMessage=document.createElement("div")
+userMessage.className="message user"
+userMessage.innerText=input.value
+
+chat.appendChild(userMessage)
+
+let aiMessage=document.createElement("div")
+aiMessage.className="message ai"
+aiMessage.innerText="جاري التفكير..."
+
+chat.appendChild(aiMessage)
+
+chat.scrollTop=chat.scrollHeight
+
+setTimeout(function(){
+
+aiMessage.innerText="هذا رد تجريبي من المعلم الذكي. سيتم ربط الذكاء الاصطناعي الحقيقي قريباً."
+
+chat.scrollTop=chat.scrollHeight
+
+},1000)
+
+input.value=""
+
+}
+
+</script>
+
+</body>
+
+</html>
