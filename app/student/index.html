@@ -8,19 +8,13 @@
 <title>Madaris AI | لوحة الطالب</title>
 
 <script>
-
-/* التحقق من تسجيل الدخول */
-
 if(!localStorage.getItem("madaris_logged_in")){
 window.location.href="../login.html"
 }
 
-/* التحقق من الدور */
-
 if(localStorage.getItem("madaris_role")!=="student"){
 window.location.href="../login.html"
 }
-
 </script>
 
 <link rel="stylesheet" href="../../assets/css/main.css">
@@ -52,6 +46,35 @@ font-weight:600;
 padding:30px;
 }
 
+.top-section{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:25px;
+}
+
+.top-section h1{
+margin:0;
+font-size:32px;
+}
+
+.top-section p{
+margin:8px 0 0 0;
+opacity:.75;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+font-weight:600;
+}
+
 .stats{
 display:grid;
 grid-template-columns:repeat(4,1fr);
@@ -69,10 +92,12 @@ text-align:center;
 .stat h2{
 margin:0;
 color:#00d4ff;
+font-size:28px;
 }
 
 .stat p{
 opacity:.7;
+margin:6px 0 0 0;
 }
 
 .grid{
@@ -87,6 +112,7 @@ padding:25px;
 border-radius:15px;
 cursor:pointer;
 transition:.3s;
+border:1px solid rgba(255,255,255,.04);
 }
 
 .card:hover{
@@ -94,13 +120,21 @@ transform:translateY(-5px);
 background:#0f2242;
 }
 
-.logout{
-background:#ff4d4d;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-color:white;
-cursor:pointer;
+.card h3{
+margin-top:0;
+margin-bottom:10px;
+font-size:20px;
+}
+
+.card p{
+margin:0;
+opacity:.75;
+line-height:1.7;
+}
+
+.section-title{
+font-size:22px;
+margin-bottom:18px;
 }
 
 @media(max-width:900px){
@@ -111,6 +145,22 @@ grid-template-columns:1fr;
 
 .stats{
 grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.top-section h1{
+font-size:26px;
+}
+
+.container{
+padding:20px;
 }
 
 }
@@ -135,7 +185,12 @@ Madaris AI | الطالب
 
 <div class="container">
 
-<h1>لوحة الطالب</h1>
+<div class="top-section">
+  <div>
+    <h1>لوحة الطالب</h1>
+    <p>مرحبًا بك في مساحتك التعليمية داخل Madaris AI.</p>
+  </div>
+</div>
 
 <div class="stats">
 
@@ -161,36 +216,38 @@ Madaris AI | الطالب
 
 </div>
 
+<h2 class="section-title">أدوات الطالب</h2>
+
 <div class="grid">
 
 <div class="card" onclick="goLessons()">
 <h3>الدروس</h3>
-<p>عرض جميع الدروس</p>
+<p>استعرض الدروس المتاحة وتابع تقدمك داخل كل مادة.</p>
 </div>
 
 <div class="card" onclick="goAssignments()">
 <h3>الواجبات</h3>
-<p>عرض الواجبات</p>
+<p>راجع الواجبات الحالية، مواعيد التسليم، وحالة كل مهمة.</p>
 </div>
 
 <div class="card" onclick="goResults()">
 <h3>النتائج</h3>
-<p>عرض النتائج</p>
+<p>اطلع على نتائجك ومعدل أدائك الأكاديمي في الفصل الحالي.</p>
 </div>
 
-<div class="card">
+<div class="card" onclick="goAI()">
 <h3>المعلم الذكي</h3>
-<p>AI Teacher</p>
+<p>تفاعل مع المعلم الذكي للحصول على شرح ومساعدة تعليمية.</p>
 </div>
 
 <div class="card">
 <h3>التقدم الدراسي</h3>
-<p>مستوى التقدم</p>
+<p>تابع مستوى إنجازك العام في المواد والاختبارات والواجبات.</p>
 </div>
 
 <div class="card">
 <h3>الإعدادات</h3>
-<p>إدارة الحساب</p>
+<p>إدارة الحساب والبيانات الشخصية وتفضيلات الاستخدام.</p>
 </div>
 
 </div>
@@ -215,6 +272,10 @@ window.location.href="assignments.html"
 
 function goResults(){
 window.location.href="results.html"
+}
+
+function goAI(){
+window.location.href="ai.html"
 }
 
 </script>
