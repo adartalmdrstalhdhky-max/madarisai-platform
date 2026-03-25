@@ -10,11 +10,13 @@
 <script>
 
 /* التحقق من تسجيل الدخول */
+
 if(!localStorage.getItem("madaris_logged_in")){
 window.location.href="../login.html"
 }
 
 /* التحقق من الدور */
+
 if(localStorage.getItem("madaris_role")!=="student"){
 window.location.href="../login.html"
 }
@@ -50,6 +52,29 @@ font-weight:600;
 padding:30px;
 }
 
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-bottom:30px;
+}
+
+.stat{
+background:#0b1930;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.stat h2{
+margin:0;
+color:#00d4ff;
+}
+
+.stat p{
+opacity:.7;
+}
+
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -76,29 +101,6 @@ padding:10px 15px;
 border-radius:8px;
 color:white;
 cursor:pointer;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
-margin-bottom:30px;
-}
-
-.stat{
-background:#0b1930;
-padding:20px;
-border-radius:15px;
-text-align:center;
-}
-
-.stat h2{
-margin:0;
-color:#00d4ff;
-}
-
-.stat p{
-opacity:.7;
 }
 
 @media(max-width:900px){
@@ -133,7 +135,7 @@ Madaris AI | الطالب
 
 <div class="container">
 
-<h1>مرحباً بك في لوحة الطالب</h1>
+<h1>لوحة الطالب</h1>
 
 <div class="stats">
 
@@ -143,37 +145,37 @@ Madaris AI | الطالب
 </div>
 
 <div class="stat">
-<h2>3</h2>
-<p>الاختبارات</p>
-</div>
-
-<div class="stat">
-<h2>92%</h2>
-<p>التقدم</p>
-</div>
-
-<div class="stat">
 <h2>5</h2>
 <p>الواجبات</p>
+</div>
+
+<div class="stat">
+<h2>87%</h2>
+<p>المعدل</p>
+</div>
+
+<div class="stat">
+<h2>6</h2>
+<p>المواد</p>
 </div>
 
 </div>
 
 <div class="grid">
 
-<div class="card">
+<div class="card" onclick="goLessons()">
 <h3>الدروس</h3>
 <p>عرض جميع الدروس</p>
 </div>
 
-<div class="card">
-<h3>الاختبارات</h3>
-<p>بدء الاختبارات</p>
-</div>
-
-<div class="card">
+<div class="card" onclick="goAssignments()">
 <h3>الواجبات</h3>
 <p>عرض الواجبات</p>
+</div>
+
+<div class="card" onclick="goResults()">
+<h3>النتائج</h3>
+<p>عرض النتائج</p>
 </div>
 
 <div class="card">
@@ -198,12 +200,21 @@ Madaris AI | الطالب
 <script>
 
 function logout(){
-
 localStorage.removeItem("madaris_logged_in")
 localStorage.removeItem("madaris_role")
-
 window.location.href="../login.html"
+}
 
+function goLessons(){
+window.location.href="lessons.html"
+}
+
+function goAssignments(){
+window.location.href="assignments.html"
+}
+
+function goResults(){
+window.location.href="results.html"
 }
 
 </script>
