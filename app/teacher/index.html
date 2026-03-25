@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madaris AI | بوابة المعلم</title>
+
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/responsive.css">
+
+<style>
+
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:linear-gradient(135deg,#071120,#0b1930);
+color:white;
+}
+
+.teacher-shell{
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+width:250px;
+background:rgba(255,255,255,0.04);
+border-left:1px solid rgba(255,255,255,0.08);
+padding:24px;
+}
+
+.brand{
+font-size:26px;
+font-weight:800;
+margin-bottom:30px;
+}
+
+.brand span{
+color:#00d4ff;
+}
+
+.teacher-card{
+background:rgba(255,255,255,0.05);
+padding:16px;
+border-radius:16px;
+margin-bottom:20px;
+}
+
+.nav-links{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+padding:12px;
+border-radius:10px;
+background:rgba(255,255,255,0.03);
+}
+
+.nav-links a:hover{
+background:linear-gradient(90deg,#00d4ff,#1f6fff);
+}
+
+.main{
+flex:1;
+padding:30px;
+}
+
+.header{
+margin-bottom:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:16px;
+}
+
+.panel{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:16px;
+margin-bottom:15px;
+}
+
+@media(max-width:900px){
+.cards{
+grid-template-columns:1fr 1fr;
+}
+
+.teacher-shell{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="teacher-shell">
+
+<aside class="sidebar">
+
+<div class="brand">
+Madaris <span>AI</span>
+</div>
+
+<div class="teacher-card">
+<strong>أحمد محمد</strong>
+<br>
+معلم رياضيات
+</div>
+
+<div class="nav-links">
+<a href="#">لوحة المعلم</a>
+<a href="#">طلابي</a>
+<a href="#">الدروس</a>
+<a href="#">الواجبات</a>
+<a href="#">النتائج</a>
+<a href="../dashboard.html">العودة للوحة التحكم</a>
+</div>
+
+</aside>
+
+<main class="main">
+
+<div class="header">
+<h1>بوابة المعلم</h1>
+<p>إدارة الطلاب والدروس والواجبات</p>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>الطلاب</h3>
+<strong>128</strong>
+</div>
+
+<div class="card">
+<h3>الدروس</h3>
+<strong>24</strong>
+</div>
+
+<div class="card">
+<h3>الواجبات</h3>
+<strong>12</strong>
+</div>
+
+<div class="card">
+<h3>الفصول</h3>
+<strong>4</strong>
+</div>
+
+</div>
+
+<div class="panel">
+<h2>آخر النشاطات</h2>
+<p>تم رفع واجب جديد للصف التاسع</p>
+<p>تم إضافة درس جديد</p>
+<p>تم تصحيح الاختبار الأخير</p>
+</div>
+
+<div class="panel">
+<h2>إجراءات سريعة</h2>
+<button>إضافة درس</button>
+<button>إضافة واجب</button>
+<button>إضافة اختبار</button>
+</div>
+
+</main>
+
+</div>
+
+</body>
+
+</html>
