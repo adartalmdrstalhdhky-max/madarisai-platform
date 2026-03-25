@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | دروس الطالب</title>
+
+<script>
+
+/* التحقق من تسجيل الدخول */
+
+if(!localStorage.getItem("madaris_logged_in")){
+window.location.href="../login.html"
+}
+
+/* التحقق من الدور */
+
+if(localStorage.getItem("madaris_role")!=="student"){
+window.location.href="../login.html"
+}
+
+</script>
+
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/responsive.css">
+
+<style>
+
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:#071120;
+color:white;
+}
+
+.header{
+background:#0b1930;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+.container{
+padding:30px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.lesson{
+background:#0b1930;
+padding:25px;
+border-radius:15px;
+cursor:pointer;
+transition:.3s;
+}
+
+.lesson:hover{
+transform:translateY(-5px);
+background:#0f2242;
+}
+
+.subject{
+color:#00d4ff;
+font-size:14px;
+margin-bottom:10px;
+}
+
+.progress{
+background:#071120;
+height:8px;
+border-radius:5px;
+margin-top:10px;
+overflow:hidden;
+}
+
+.progress span{
+display:block;
+height:100%;
+background:#00d4ff;
+}
+
+.back{
+background:#00d4ff;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+color:white;
+}
+
+@media(max-width:900px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+Madaris AI | الدروس
+</div>
+
+<div>
+<button class="back" onclick="goBack()">رجوع</button>
+<button class="logout" onclick="logout()">خروج</button>
+</div>
+
+</div>
+
+<div class="container">
+
+<h1>الدروس المتاحة</h1>
+
+<div class="grid">
+
+<div class="lesson">
+<div class="subject">رياضيات</div>
+<h3>الجبر الأساسي</h3>
+<p>تعلم أساسيات الجبر</p>
+
+<div class="progress">
+<span style="width:70%"></span>
+</div>
+
+</div>
+
+<div class="lesson">
+<div class="subject">علوم</div>
+<h3>الطاقة والحركة</h3>
+<p>مفاهيم الفيزياء الأساسية</p>
+
+<div class="progress">
+<span style="width:45%"></span>
+</div>
+
+</div>
+
+<div class="lesson">
+<div class="subject">لغة عربية</div>
+<h3>القواعد النحوية</h3>
+<p>تعلم القواعد الأساسية</p>
+
+<div class="progress">
+<span style="width:80%"></span>
+</div>
+
+</div>
+
+<div class="lesson">
+<div class="subject">انجليزي</div>
+<h3>المحادثة الأساسية</h3>
+<p>تعلم أساسيات المحادثة</p>
+
+<div class="progress">
+<span style="width:20%"></span>
+</div>
+
+</div>
+
+<div class="lesson">
+<div class="subject">تاريخ</div>
+<h3>الحضارات القديمة</h3>
+<p>التاريخ القديم</p>
+
+<div class="progress">
+<span style="width:50%"></span>
+</div>
+
+</div>
+
+<div class="lesson">
+<div class="subject">جغرافيا</div>
+<h3>القارات</h3>
+<p>تعلم الجغرافيا</p>
+
+<div class="progress">
+<span style="width:30%"></span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+
+window.location.href="../login.html"
+
+}
+
+function goBack(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+
+</html>
