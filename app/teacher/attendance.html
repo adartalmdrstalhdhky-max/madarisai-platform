@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | حضور الطلاب</title>
+
+<script>
+if(!localStorage.getItem("madaris_logged_in")){
+window.location.href="../login.html"
+}
+
+if(localStorage.getItem("madaris_role")!=="teacher"){
+window.location.href="../login.html"
+}
+</script>
+
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/responsive.css">
+
+<style>
+
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:#071120;
+color:white;
+}
+
+.header{
+background:#0b1930;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+.container{
+padding:30px;
+}
+
+.toolbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:24px;
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.back{
+background:#00d4ff;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+color:white;
+font-weight:600;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-bottom:28px;
+}
+
+.stat{
+background:#0b1930;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.stat h2{
+margin:0;
+font-size:28px;
+color:#00d4ff;
+}
+
+.stat p{
+margin:6px 0 0 0;
+opacity:.75;
+}
+
+.panel{
+background:#0b1930;
+padding:22px;
+border-radius:18px;
+margin-bottom:22px;
+overflow:auto;
+}
+
+.panel h2{
+margin:0 0 16px 0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:760px;
+}
+
+th, td{
+padding:14px 12px;
+text-align:right;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+th{
+color:#8fe8ff;
+font-size:14px;
+font-weight:700;
+}
+
+td{
+font-size:14px;
+}
+
+.status{
+padding:7px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+display:inline-block;
+}
+
+.status.present{
+background:rgba(34,197,94,.12);
+color:#6ee7a3;
+}
+
+.status.absent{
+background:rgba(255,77,77,.12);
+color:#ff9a9a;
+}
+
+.status.late{
+background:rgba(255,193,7,.12);
+color:#ffd666;
+}
+
+.quick-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.quick-card{
+background:#0b1930;
+padding:20px;
+border-radius:15px;
+}
+
+.quick-card h3{
+margin:0 0 10px 0;
+}
+
+.quick-card p{
+margin:0;
+opacity:.8;
+line-height:1.7;
+}
+
+@media(max-width:900px){
+.stats{
+grid-template-columns:1fr 1fr;
+}
+
+.quick-grid{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+Madaris AI | الحضور
+</div>
+
+<div class="actions">
+<button class="back" onclick="goBack()">رجوع</button>
+<button class="logout" onclick="logout()">خروج</button>
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="toolbar">
+  <div>
+    <h1>سجل الحضور</h1>
+    <p>راجع حضور الطلاب، حالات التأخر، والغياب اليومي لكل فصل.</p>
+  </div>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2>128</h2>
+<p>إجمالي الطلاب</p>
+</div>
+
+<div class="stat">
+<h2>117</h2>
+<p>حاضرون اليوم</p>
+</div>
+
+<div class="stat">
+<h2>7</h2>
+<p>غياب اليوم</p>
+</div>
+
+<div class="stat">
+<h2>4</h2>
+<p>متأخرون</p>
+</div>
+
+</div>
+
+<div class="panel">
+<h2>حضور الصف التاسع - أ</h2>
+
+<table>
+<thead>
+<tr>
+<th>اسم الطالب</th>
+<th>الفصل</th>
+<th>الحالة</th>
+<th>وقت الوصول</th>
+<th>ملاحظات</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>محمد علي</td>
+<td>الصف التاسع - أ</td>
+<td><span class="status present">حاضر</span></td>
+<td>7:55 صباحًا</td>
+<td>وصل في الوقت المحدد</td>
+</tr>
+
+<tr>
+<td>أحمد صالح</td>
+<td>الصف التاسع - أ</td>
+<td><span class="status late">متأخر</span></td>
+<td>8:12 صباحًا</td>
+<td>تأخر 12 دقيقة</td>
+</tr>
+
+<tr>
+<td>سليم خالد</td>
+<td>الصف التاسع - أ</td>
+<td><span class="status present">حاضر</span></td>
+<td>7:58 صباحًا</td>
+<td>—</td>
+</tr>
+
+<tr>
+<td>خالد ناصر</td>
+<td>الصف التاسع - أ</td>
+<td><span class="status absent">غائب</span></td>
+<td>—</td>
+<td>لم يحضر اليوم</td>
+</tr>
+
+<tr>
+<td>عبدالله حسن</td>
+<td>الصف التاسع - أ</td>
+<td><span class="status present">حاضر</span></td>
+<td>7:50 صباحًا</td>
+<td>مبكر</td>
+</tr>
+
+<tr>
+<td>مروان فؤاد</td>
+<td>الصف التاسع - أ</td>
+<td><span class="status present">حاضر</span></td>
+<td>8:00 صباحًا</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="quick-grid">
+
+<div class="quick-card">
+<h3>الطلاب المتغيبون</h3>
+<p>راجع قائمة الغياب اليومية لتحديد الطلاب الذين يحتاجون متابعة أو تواصل مع المدرسة.</p>
+</div>
+
+<div class="quick-card">
+<h3>التأخر الصباحي</h3>
+<p>تابع الطلاب المتأخرين بشكل متكرر لمعالجة أسباب التأخر وتحسين الانضباط.</p>
+</div>
+
+<div class="quick-card">
+<h3>تقارير الحضور</h3>
+<p>أنشئ تقارير سريعة أو دورية عن الحضور والانضباط لكل صف أو مادة.</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+window.location.href="../login.html"
+}
+
+function goBack(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+
+</html>
