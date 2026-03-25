@@ -8,19 +8,13 @@
 <title>Madaris AI | لوحة المعلم</title>
 
 <script>
-
-/* التحقق من تسجيل الدخول */
-
 if(!localStorage.getItem("madaris_logged_in")){
 window.location.href="../login.html"
 }
 
-/* التحقق من الدور */
-
 if(localStorage.getItem("madaris_role")!=="teacher"){
 window.location.href="../login.html"
 }
-
 </script>
 
 <link rel="stylesheet" href="../../assets/css/main.css">
@@ -52,6 +46,35 @@ font-weight:600;
 padding:30px;
 }
 
+.top-section{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:25px;
+}
+
+.top-section h1{
+margin:0;
+font-size:32px;
+}
+
+.top-section p{
+margin:8px 0 0 0;
+opacity:.75;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+font-weight:600;
+}
+
 .stats{
 display:grid;
 grid-template-columns:repeat(4,1fr);
@@ -69,10 +92,12 @@ text-align:center;
 .stat h2{
 margin:0;
 color:#00d4ff;
+font-size:28px;
 }
 
 .stat p{
 opacity:.7;
+margin:6px 0 0 0;
 }
 
 .grid{
@@ -87,6 +112,7 @@ padding:25px;
 border-radius:15px;
 cursor:pointer;
 transition:.3s;
+border:1px solid rgba(255,255,255,.04);
 }
 
 .card:hover{
@@ -94,13 +120,21 @@ transform:translateY(-5px);
 background:#0f2242;
 }
 
-.logout{
-background:#ff4d4d;
-border:none;
-padding:10px 15px;
-border-radius:8px;
-color:white;
-cursor:pointer;
+.card h3{
+margin-top:0;
+margin-bottom:10px;
+font-size:20px;
+}
+
+.card p{
+margin:0;
+opacity:.75;
+line-height:1.7;
+}
+
+.section-title{
+font-size:22px;
+margin-bottom:18px;
 }
 
 @media(max-width:900px){
@@ -111,6 +145,22 @@ grid-template-columns:1fr;
 
 .stats{
 grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.top-section h1{
+font-size:26px;
+}
+
+.container{
+padding:20px;
 }
 
 }
@@ -135,7 +185,12 @@ Madaris AI | المعلم
 
 <div class="container">
 
-<h1>لوحة تحكم المعلم</h1>
+<div class="top-section">
+  <div>
+    <h1>لوحة المعلم</h1>
+    <p>إدارة الصفوف، التقييم، الحضور، ومتابعة العملية التعليمية اليومية.</p>
+  </div>
+</div>
 
 <div class="stats">
 
@@ -161,36 +216,38 @@ Madaris AI | المعلم
 
 </div>
 
+<h2 class="section-title">أدوات المعلم</h2>
+
 <div class="grid">
 
-<div class="card">
-<h3>إدارة الطلاب</h3>
-<p>عرض الطلاب</p>
+<div class="card" onclick="goClasses()">
+<h3>الفصول الدراسية</h3>
+<p>إدارة الفصول، المواد، والصفوف التي تقوم بتدريسها.</p>
+</div>
+
+<div class="card" onclick="goGrading()">
+<h3>التقييم والدرجات</h3>
+<p>مراجعة درجات الطلاب، التقديرات، والملاحظات الأكاديمية.</p>
+</div>
+
+<div class="card" onclick="goAttendance()">
+<h3>الحضور والانصراف</h3>
+<p>متابعة الحضور اليومي، حالات الغياب، والتأخر.</p>
 </div>
 
 <div class="card">
 <h3>الدروس</h3>
-<p>إدارة الدروس</p>
-</div>
-
-<div class="card">
-<h3>الاختبارات</h3>
-<p>إدارة الاختبارات</p>
-</div>
-
-<div class="card">
-<h3>الحضور</h3>
-<p>تسجيل الحضور</p>
+<p>إدارة الدروس والمحتوى التعليمي لكل فصل ومادة.</p>
 </div>
 
 <div class="card">
 <h3>الواجبات</h3>
-<p>إدارة الواجبات</p>
+<p>إضافة الواجبات، تتبع التسليم، ومراجعة الإنجاز.</p>
 </div>
 
 <div class="card">
 <h3>التقارير</h3>
-<p>تقارير المعلم</p>
+<p>تقارير أداء الطلاب والفصول ونظرة عامة على سير التدريس.</p>
 </div>
 
 </div>
@@ -200,12 +257,21 @@ Madaris AI | المعلم
 <script>
 
 function logout(){
-
 localStorage.removeItem("madaris_logged_in")
 localStorage.removeItem("madaris_role")
-
 window.location.href="../login.html"
+}
 
+function goClasses(){
+window.location.href="classes.html"
+}
+
+function goGrading(){
+window.location.href="grading.html"
+}
+
+function goAttendance(){
+window.location.href="attendance.html"
 }
 
 </script>
