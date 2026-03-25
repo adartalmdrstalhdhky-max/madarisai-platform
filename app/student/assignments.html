@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | واجبات الطالب</title>
+
+<script>
+if(!localStorage.getItem("madaris_logged_in")){
+window.location.href="../login.html"
+}
+
+if(localStorage.getItem("madaris_role")!=="student"){
+window.location.href="../login.html"
+}
+</script>
+
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/responsive.css">
+
+<style>
+
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:#071120;
+color:white;
+}
+
+.header{
+background:#0b1930;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+.container{
+padding:30px;
+}
+
+.toolbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:24px;
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.back{
+background:#00d4ff;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+color:white;
+font-weight:600;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-bottom:28px;
+}
+
+.stat{
+background:#0b1930;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.stat h2{
+margin:0;
+font-size:28px;
+color:#00d4ff;
+}
+
+.stat p{
+margin:6px 0 0 0;
+opacity:.75;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.assignment{
+background:#0b1930;
+padding:22px;
+border-radius:15px;
+transition:.3s;
+cursor:pointer;
+border:1px solid rgba(255,255,255,.04);
+}
+
+.assignment:hover{
+transform:translateY(-5px);
+background:#0f2242;
+}
+
+.subject{
+color:#00d4ff;
+font-size:14px;
+margin-bottom:10px;
+}
+
+.assignment h3{
+margin:0 0 10px 0;
+}
+
+.assignment p{
+margin:0 0 14px 0;
+opacity:.8;
+line-height:1.7;
+}
+
+.meta{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.badge{
+padding:8px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+}
+
+.badge.pending{
+background:rgba(255,193,7,.12);
+color:#ffd666;
+}
+
+.badge.submitted{
+background:rgba(0,212,255,.12);
+color:#8fe8ff;
+}
+
+.badge.overdue{
+background:rgba(255,77,77,.12);
+color:#ff9a9a;
+}
+
+.deadline{
+font-size:13px;
+opacity:.75;
+}
+
+@media(max-width:900px){
+.grid{
+grid-template-columns:1fr;
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+Madaris AI | الواجبات
+</div>
+
+<div class="actions">
+<button class="back" onclick="goBack()">رجوع</button>
+<button class="logout" onclick="logout()">خروج</button>
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="toolbar">
+  <div>
+    <h1>واجباتي</h1>
+    <p>راجع الواجبات الحالية، مواعيد التسليم، وحالة كل مهمة.</p>
+  </div>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2>5</h2>
+<p>إجمالي الواجبات</p>
+</div>
+
+<div class="stat">
+<h2>2</h2>
+<p>قيد التنفيذ</p>
+</div>
+
+<div class="stat">
+<h2>2</h2>
+<p>تم التسليم</p>
+</div>
+
+<div class="stat">
+<h2>1</h2>
+<p>متأخر</p>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="assignment">
+<div class="subject">رياضيات</div>
+<h3>حل تمارين المعادلات</h3>
+<p>أكمل التمارين من الصفحة 24 إلى 27، ثم أرسل الحلول قبل نهاية اليوم.</p>
+<div class="meta">
+<span class="badge pending">قيد التنفيذ</span>
+<span class="deadline">آخر موعد: اليوم 8:00 مساءً</span>
+</div>
+</div>
+
+<div class="assignment">
+<div class="subject">علوم</div>
+<h3>تلخيص درس الطاقة</h3>
+<p>اكتب ملخصًا قصيرًا من 10 أسطر يشرح الفرق بين الطاقة الحركية وطاقة الوضع.</p>
+<div class="meta">
+<span class="badge submitted">تم التسليم</span>
+<span class="deadline">تم الإرسال أمس</span>
+</div>
+</div>
+
+<div class="assignment">
+<div class="subject">لغة عربية</div>
+<h3>إعراب 5 جمل</h3>
+<p>قم بإعراب الجمل المحددة في الدرس الأخير وارفع الإجابة قبل الغد صباحًا.</p>
+<div class="meta">
+<span class="badge pending">قيد التنفيذ</span>
+<span class="deadline">آخر موعد: غدًا 9:00 صباحًا</span>
+</div>
+</div>
+
+<div class="assignment">
+<div class="subject">لغة إنجليزية</div>
+<h3>Vocabulary Quiz Prep</h3>
+<p>راجع كلمات الوحدة الثالثة واستعد للاختبار القصير القادم.</p>
+<div class="meta">
+<span class="badge submitted">تم التسليم</span>
+<span class="deadline">تم الإرسال قبل يومين</span>
+</div>
+</div>
+
+<div class="assignment">
+<div class="subject">تاريخ</div>
+<h3>بحث قصير عن الحضارات القديمة</h3>
+<p>اكتب فقرة مختصرة عن إحدى الحضارات القديمة مع ذكر أهم إنجازاتها.</p>
+<div class="meta">
+<span class="badge overdue">متأخر</span>
+<span class="deadline">انتهى الموعد أمس</span>
+</div>
+</div>
+
+<div class="assignment">
+<div class="subject">جغرافيا</div>
+<h3>خريطة القارات</h3>
+<p>ارسم خريطة مبسطة للعالم وسمّ القارات السبع بوضوح.</p>
+<div class="meta">
+<span class="badge pending">قيد التنفيذ</span>
+<span class="deadline">آخر موعد: بعد غد</span>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+window.location.href="../login.html"
+}
+
+function goBack(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+
+</html>
