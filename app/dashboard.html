@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madaris AI | لوحة التحكم</title>
+
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/responsive.css">
+
+<style>
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:linear-gradient(135deg,#071120,#0b1930);
+color:white;
+}
+
+.dashboard-shell{
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+width:260px;
+background:rgba(255,255,255,0.04);
+backdrop-filter:blur(16px);
+padding:24px 18px;
+box-sizing:border-box;
+border-left:1px solid rgba(255,255,255,0.08);
+}
+
+.brand{
+font-size:26px;
+font-weight:800;
+margin-bottom:30px;
+}
+
+.brand span{
+color:#00d4ff;
+}
+
+.user-card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:16px;
+padding:16px;
+margin-bottom:24px;
+}
+
+.user-card strong{
+display:block;
+font-size:18px;
+margin-bottom:6px;
+}
+
+.user-card small{
+color:#b9c2df;
+}
+
+.nav-links{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+padding:14px 16px;
+border-radius:12px;
+background:rgba(255,255,255,0.03);
+transition:0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+background:linear-gradient(90deg,#00d4ff,#1f6fff);
+color:white;
+}
+
+.main-content{
+flex:1;
+padding:28px;
+box-sizing:border-box;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+margin-bottom:24px;
+flex-wrap:wrap;
+}
+
+.topbar h1{
+margin:0;
+font-size:32px;
+}
+
+.topbar p{
+margin:8px 0 0;
+color:#b9c2df;
+}
+
+.top-actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.top-actions button{
+border:none;
+padding:12px 16px;
+border-radius:12px;
+cursor:pointer;
+font-weight:700;
+}
+
+.btn-primary{
+background:linear-gradient(90deg,#00d4ff,#1f6fff);
+color:white;
+}
+
+.btn-secondary{
+background:rgba(255,255,255,0.08);
+color:white;
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-bottom:24px;
+}
+
+.stat-card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:18px;
+padding:20px;
+}
+
+.stat-card h3{
+margin:0 0 8px;
+font-size:15px;
+color:#b9c2df;
+font-weight:500;
+}
+
+.stat-card strong{
+font-size:30px;
+display:block;
+margin-bottom:6px;
+}
+
+.stat-card span{
+font-size:13px;
+color:#8fd8ff;
+}
+
+.content-grid{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:18px;
+}
+
+.panel{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:18px;
+padding:22px;
+}
+
+.panel h2{
+margin:0 0 16px;
+font-size:22px;
+}
+
+.lesson-list,
+.activity-list{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.lesson-item,
+.activity-item{
+background:rgba(255,255,255,0.04);
+border-radius:14px;
+padding:14px 16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+}
+
+.lesson-item strong,
+.activity-item strong{
+display:block;
+margin-bottom:4px;
+}
+
+.lesson-item small,
+.activity-item small{
+color:#b9c2df;
+}
+
+.tag{
+padding:8px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+white-space:nowrap;
+}
+
+.tag.live{
+background:rgba(34,197,94,0.15);
+color:#6ee7a3;
+}
+
+.tag.pending{
+background:rgba(250,204,21,0.15);
+color:#fde68a;
+}
+
+.tag.done{
+background:rgba(0,212,255,0.15);
+color:#8fe8ff;
+}
+
+.quick-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:18px;
+}
+
+.quick-card{
+background:rgba(255,255,255,0.04);
+border-radius:14px;
+padding:16px;
+text-align:center;
+font-weight:700;
+}
+
+@media (max-width: 980px){
+.dashboard-shell{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+border-left:none;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.stats-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.content-grid{
+grid-template-columns:1fr;
+}
+}
+
+@media (max-width: 640px){
+.main-content{
+padding:18px;
+}
+
+.topbar h1{
+font-size:26px;
+}
+
+.stats-grid{
+grid-template-columns:1fr;
+}
+
+.quick-grid{
+grid-template-columns:1fr;
+}
+
+.lesson-item,
+.activity-item{
+flex-direction:column;
+align-items:flex-start;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard-shell">
+
+  <aside class="sidebar">
+    <div class="brand">Madaris <span>AI</span></div>
+
+    <div class="user-card">
+      <strong>مرحبًا، عصام</strong>
+      <small>مدير المنصة • School Admin</small>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#" class="active">لوحة التحكم</a>
+      <a href="student/index.html">بوابة الطلاب</a>
+      <a href="teacher/index.html">بوابة المعلمين</a>
+      <a href="school/index.html">إدارة المدرسة</a>
+      <a href="admin/index.html">الإدارة العامة</a>
+      <a href="../index.html">العودة إلى الموقع</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div>
+        <h1>لوحة التحكم الرئيسية</h1>
+        <p>نظرة عامة سريعة على المنصة، المستخدمين، والأنشطة الحالية.</p>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn-primary">إضافة مدرسة</button>
+        <button class="btn-secondary">تقرير سريع</button>
+      </div>
+    </div>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <h3>إجمالي الطلاب</h3>
+        <strong>1,280</strong>
+        <span>+12% هذا الشهر</span>
+      </div>
+
+      <div class="stat-card">
+        <h3>إجمالي المعلمين</h3>
+        <strong>64</strong>
+        <span>نشطون حاليًا</span>
+      </div>
+
+      <div class="stat-card">
+        <h3>المدارس المرتبطة</h3>
+        <strong>12</strong>
+        <span>ضمن المرحلة الحالية</span>
+      </div>
+
+      <div class="stat-card">
+        <h3>الدروس النشطة</h3>
+        <strong>348</strong>
+        <span>محتوى متاح الآن</span>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <div class="panel">
+        <h2>أحدث الدروس والأنشطة</h2>
+
+        <div class="lesson-list">
+          <div class="lesson-item">
+            <div>
+              <strong>الرياضيات - الصف الثامن</strong>
+              <small>درس جديد: المعادلات الخطية</small>
+            </div>
+            <span class="tag live">نشط</span>
+          </div>
+
+          <div class="lesson-item">
+            <div>
+              <strong>العلوم - الصف السابع</strong>
+              <small>تم رفع واجب جديد للطلاب</small>
+            </div>
+            <span class="tag pending">قيد المتابعة</span>
+          </div>
+
+          <div class="lesson-item">
+            <div>
+              <strong>اللغة العربية - الصف التاسع</strong>
+              <small>تم اعتماد نتائج الاختبار الأخير</small>
+            </div>
+            <span class="tag done">مكتمل</span>
+          </div>
+
+          <div class="lesson-item">
+            <div>
+              <strong>اللغة الإنجليزية - الصف السادس</strong>
+              <small>تمت إضافة أسئلة مراجعة</small>
+            </div>
+            <span class="tag live">نشط</span>
+          </div>
+        </div>
+
+        <div class="quick-grid">
+          <div class="quick-card">إضافة طالب جديد</div>
+          <div class="quick-card">إضافة معلم جديد</div>
+          <div class="quick-card">رفع درس جديد</div>
+          <div class="quick-card">إصدار تقرير المدرسة</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>النشاط الأخير</h2>
+
+        <div class="activity-list">
+          <div class="activity-item">
+            <div>
+              <strong>مدرسة الأمل</strong>
+              <small>تم تسجيل 24 طالبًا جديدًا</small>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div>
+              <strong>المعلم أحمد</strong>
+              <small>أضاف اختبارًا جديدًا</small>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div>
+              <strong>الصف التاسع</strong>
+              <small>نتائج الاختبار تم اعتمادها</small>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div>
+              <strong>إدارة النظام</strong>
+              <small>تحديث إعدادات المنصة</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</div>
+
+</body>
+</html>
