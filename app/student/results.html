@@ -210,4 +210,134 @@ Madaris AI | النتائج
 
 <div class="toolbar">
   <div>
-    <
+    <h1>نتائج الطالب</h1>
+    <p>راجع نتائجك حسب المادة، وتابع مستواك الأكاديمي في الفصل الحالي.</p>
+  </div>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2>87%</h2>
+<p>المعدل العام</p>
+</div>
+
+<div class="stat">
+<h2>6</h2>
+<p>عدد المواد</p>
+</div>
+
+<div class="stat">
+<h2>2</h2>
+<p>نتائج ممتازة</p>
+</div>
+
+<div class="stat">
+<h2>1</h2>
+<p>مواد تحتاج تحسين</p>
+</div>
+
+</div>
+
+<div class="results-table">
+<table>
+<thead>
+<tr>
+<th>المادة</th>
+<th>الدرجة</th>
+<th>التقدير</th>
+<th>الحالة</th>
+<th>ملاحظات</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>الرياضيات</td>
+<td>94</td>
+<td class="grade excellent">ممتاز</td>
+<td>مستقر</td>
+<td>أداء قوي جدًا في الاختبارات</td>
+</tr>
+
+<tr>
+<td>العلوم</td>
+<td>88</td>
+<td class="grade good">جيد جدًا</td>
+<td>مستقر</td>
+<td>مستوى جيد مع تحسن واضح</td>
+</tr>
+
+<tr>
+<td>اللغة العربية</td>
+<td>92</td>
+<td class="grade excellent">ممتاز</td>
+<td>مستقر</td>
+<td>تميّز في القواعد والنصوص</td>
+</tr>
+
+<tr>
+<td>اللغة الإنجليزية</td>
+<td>81</td>
+<td class="grade good">جيد جدًا</td>
+<td>جيد</td>
+<td>يحتاج مراجعة مفردات إضافية</td>
+</tr>
+
+<tr>
+<td>التاريخ</td>
+<td>73</td>
+<td class="grade average">جيد</td>
+<td>يحتاج تحسين</td>
+<td>التركيز على المراجعة الأسبوعية</td>
+</tr>
+
+<tr>
+<td>الجغرافيا</td>
+<td>84</td>
+<td class="grade good">جيد جدًا</td>
+<td>جيد</td>
+<td>أداء جيد ومستقر</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="summary-grid">
+
+<div class="summary-card">
+<h3>أفضل مادة</h3>
+<p>الرياضيات هي أفضل مادة لديك حاليًا بدرجة 94، مع أداء ممتاز في الواجبات والاختبارات.</p>
+</div>
+
+<div class="summary-card">
+<h3>المادة التي تحتاج تركيزًا</h3>
+<p>مادة التاريخ تحتاج عناية أكبر خلال الفترة القادمة لرفع الدرجة وتحسين الفهم.</p>
+</div>
+
+<div class="summary-card">
+<h3>التوصية العامة</h3>
+<p>استمر بنفس المستوى في المواد الأساسية، وخصص وقتًا إضافيًا للمراجعة الأسبوعية في المواد الأضعف.</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+window.location.href="../login.html"
+}
+
+function goBack(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+
+</html>
