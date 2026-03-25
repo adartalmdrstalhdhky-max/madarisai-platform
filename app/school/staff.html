@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | طاقم المدرسة</title>
+
+<script>
+if(!localStorage.getItem("madaris_logged_in")){
+window.location.href="../login.html"
+}
+
+if(localStorage.getItem("madaris_role")!=="school"){
+window.location.href="../login.html"
+}
+</script>
+
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/responsive.css">
+
+<style>
+
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:#071120;
+color:white;
+}
+
+.header{
+background:#0b1930;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+.container{
+padding:30px;
+}
+
+.toolbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:24px;
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.back{
+background:#00d4ff;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
+
+.logout{
+background:#ff4d4d;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+color:white;
+font-weight:600;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-bottom:28px;
+}
+
+.stat{
+background:#0b1930;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.stat h2{
+margin:0;
+font-size:28px;
+color:#00d4ff;
+}
+
+.stat p{
+margin:6px 0 0 0;
+opacity:.75;
+}
+
+.panel{
+background:#0b1930;
+padding:22px;
+border-radius:18px;
+margin-bottom:22px;
+overflow:auto;
+}
+
+.panel h2{
+margin:0 0 16px 0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:840px;
+}
+
+th, td{
+padding:14px 12px;
+text-align:right;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+th{
+color:#8fe8ff;
+font-size:14px;
+font-weight:700;
+}
+
+td{
+font-size:14px;
+}
+
+.status{
+padding:7px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+display:inline-block;
+}
+
+.status.active{
+background:rgba(34,197,94,.12);
+color:#6ee7a3;
+}
+
+.status.review{
+background:rgba(255,193,7,.12);
+color:#ffd666;
+}
+
+.status.leave{
+background:rgba(255,77,77,.12);
+color:#ff9a9a;
+}
+
+.quick-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.quick-card{
+background:#0b1930;
+padding:20px;
+border-radius:15px;
+}
+
+.quick-card h3{
+margin:0 0 10px 0;
+}
+
+.quick-card p{
+margin:0;
+opacity:.8;
+line-height:1.7;
+}
+
+@media(max-width:900px){
+.stats{
+grid-template-columns:1fr 1fr;
+}
+
+.quick-grid{
+grid-template-columns:1fr;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+Madaris AI | طاقم المدرسة
+</div>
+
+<div class="actions">
+<button class="back" onclick="goBack()">رجوع</button>
+<button class="logout" onclick="logout()">خروج</button>
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="toolbar">
+  <div>
+    <h1>إدارة المعلمين والموظفين</h1>
+    <p>راجع بيانات الكادر التعليمي والإداري، المواد، الحضور، والحالة التشغيلية لكل عضو.</p>
+  </div>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2>35</h2>
+<p>إجمالي المعلمين</p>
+</div>
+
+<div class="stat">
+<h2>8</h2>
+<p>الإدارة والموظفون</p>
+</div>
+
+<div class="stat">
+<h2>91%</h2>
+<p>معدل الحضور</p>
+</div>
+
+<div class="stat">
+<h2>4</h2>
+<p>يحتاجون متابعة</p>
+</div>
+
+</div>
+
+<div class="panel">
+<h2>قائمة طاقم المدرسة</h2>
+
+<table>
+<thead>
+<tr>
+<th>الاسم</th>
+<th>الدور</th>
+<th>المادة / القسم</th>
+<th>الحضور</th>
+<th>الحالة</th>
+<th>الأداء</th>
+<th>ملاحظات</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>أحمد محمد</td>
+<td>معلم</td>
+<td>رياضيات</td>
+<td>96%</td>
+<td><span class="status active">نشط</span></td>
+<td>ممتاز</td>
+<td>ملتزم ويحقق نتائج قوية</td>
+</tr>
+
+<tr>
+<td>خالد ناصر</td>
+<td>معلم</td>
+<td>علوم</td>
+<td>92%</td>
+<td><span class="status active">نشط</span></td>
+<td>جيد جدًا</td>
+<td>متابعة ممتازة للطلاب</td>
+</tr>
+
+<tr>
+<td>سليم عبدالله</td>
+<td>معلم</td>
+<td>لغة عربية</td>
+<td>84%</td>
+<td><span class="status review">متابعة</span></td>
+<td>جيد</td>
+<td>يحتاج دعمًا في الانضباط الزمني</td>
+</tr>
+
+<tr>
+<td>مروان فؤاد</td>
+<td>إداري</td>
+<td>شؤون الطلاب</td>
+<td>95%</td>
+<td><span class="status active">نشط</span></td>
+<td>جيد جدًا</td>
+<td>تنظيم ممتاز للملفات</td>
+</tr>
+
+<tr>
+<td>عبدالله حسن</td>
+<td>معلم</td>
+<td>لغة إنجليزية</td>
+<td>78%</td>
+<td><span class="status review">تنبيه</span></td>
+<td>متوسط</td>
+<td>تأخر متكرر في بعض الأيام</td>
+</tr>
+
+<tr>
+<td>محمد علي</td>
+<td>وكيل مدرسة</td>
+<td>الإدارة</td>
+<td>89%</td>
+<td><span class="status active">نشط</span></td>
+<td>جيد جدًا</td>
+<td>متابع جيد للعمليات اليومية</td>
+</tr>
+
+<tr>
+<td>فؤاد صالح</td>
+<td>معلم</td>
+<td>تاريخ</td>
+<td>0%</td>
+<td><span class="status leave">إجازة</span></td>
+<td>—</td>
+<td>في إجازة هذا الأسبوع</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="quick-grid">
+
+<div class="quick-card">
+<h3>المعلمون المتفوقون</h3>
+<p>راجع المعلمين الأعلى أداءً من حيث الحضور، الالتزام، ونتائج الصفوف التي يديرونها.</p>
+</div>
+
+<div class="quick-card">
+<h3>المتابعة الإدارية</h3>
+<p>حدد أعضاء الكادر الذين يحتاجون متابعة إضافية في الانضباط، الأداء، أو توزيع المهام.</p>
+</div>
+
+<div class="quick-card">
+<h3>تقارير الطاقم</h3>
+<p>استخرج تقارير عن الحضور، التوزيع على المواد، والحالة العامة للكادر التعليمي والإداري.</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+window.location.href="../login.html"
+}
+
+function goBack(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+
+</html>
