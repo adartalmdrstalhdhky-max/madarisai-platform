@@ -1,405 +1,308 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | إعادة بناء التعليم من الأساس</title>
-  <meta name="description" content="Madaris AI منصة تعليمية ذكية تعمل حتى بدون إنترنت، مصممة للمدارس والطلاب والمعلمين في البيئات الصعبة، وقابلة للتوسع من اليمن إلى العالم." />
-  <link rel="stylesheet" href="assets/css/main.css" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | مستقبل التعليم الذكي</title>
+
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+
+<style>
+
+body{
+margin:0;
+font-family:"Tajawal",sans-serif;
+background:#071120;
+color:white;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 30px;
+background:#071830;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.logo{
+font-size:22px;
+font-weight:700;
+}
+
+.nav{
+display:flex;
+gap:25px;
+}
+
+.nav a{
+color:white;
+text-decoration:none;
+opacity:.85;
+transition:.3s;
+}
+
+.nav a:hover{
+opacity:1;
+color:#00d4ff;
+}
+
+.hero{
+padding:80px 30px;
+text-align:center;
+background:linear-gradient(180deg,#071120,#020611);
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.hero p{
+opacity:.75;
+max-width:700px;
+margin:auto;
+line-height:1.8;
+}
+
+.hero-buttons{
+margin-top:30px;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn-primary{
+background:#00d4ff;
+border:none;
+padding:14px 25px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+font-weight:600;
+}
+
+.btn-secondary{
+background:transparent;
+border:1px solid #00d4ff;
+padding:14px 25px;
+border-radius:10px;
+color:#00d4ff;
+cursor:pointer;
+font-weight:600;
+}
+
+.section{
+padding:70px 30px;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:40px;
+font-size:32px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.card{
+background:#0b1930;
+padding:30px;
+border-radius:15px;
+transition:.3s;
+border:1px solid rgba(255,255,255,.04);
+}
+
+.card:hover{
+transform:translateY(-5px);
+background:#0f2242;
+}
+
+.card h3{
+margin-top:0;
+}
+
+.card p{
+opacity:.8;
+line-height:1.7;
+}
+
+.platform{
+text-align:center;
+background:#020611;
+}
+
+.footer{
+padding:30px;
+text-align:center;
+opacity:.6;
+border-top:1px solid rgba(255,255,255,.05);
+}
+
+@media(max-width:900px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.hero h1{
+font-size:30px;
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-<header class="topbar">
-  <div class="container nav">
-    <div class="brand">
-      <div class="brand-logo">AI</div>
-      <div class="brand-text">
-        <span>Madaris AI</span>
-        <span class="brand-subtitle">منصة التعليم الذكي الشامل</span>
-      </div>
-    </div>
+<header class="header">
 
-    <nav class="nav-links">
-      <a href="index.html">الرئيسية</a>
-      <a href="platform.html">المنصة</a>
-      <a href="vision.html">الرؤية</a>
-      <a href="schools.html">المدارس</a>
-      <a href="about.html">من نحن</a>
-      <a href="contact.html">تواصل</a>
-      <a href="partners.html">الشراكات</a>
-    </nav>
+<div class="logo">
+Madaris AI
+</div>
 
-    <a class="nav-cta" href="contact.html">تواصل معنا</a>
-  </div>
+<nav class="nav">
+<a href="platform.html">المنصة</a>
+<a href="vision.html">الرؤية</a>
+<a href="schools.html">المدارس</a>
+<a href="partners.html">الشراكات</a>
+<a href="contact.html">تواصل</a>
+</nav>
+
 </header>
 
-<main>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container hero-grid">
+<section class="hero">
 
-      <div class="hero-card">
-        <div class="eyebrow">منصة تعليمية تعمل حتى بدون إنترنت</div>
+<h1>
+مستقبل التعليم يبدأ من هنا
+</h1>
 
-        <h1>
-          بنية تعليمية تعمل<br>
-          حتى عندما يفشل كل شيء
-        </h1>
+<p>
+منصة تعليمية ذكية تربط المدارس والطلاب والمعلمين والإدارة
+في نظام واحد متكامل يعمل حتى في أصعب البيئات.
+</p>
 
-        <p class="hero-text">
-          Madaris AI ليست تطبيقًا عاديًا، بل طبقة تشغيل تعليمية مصممة للبيئات التي لا تعمل فيها الحلول التقليدية.
-        </p>
+<div class="hero-buttons">
 
-        <div class="hero-actions">
-          <a href="platform.html" class="btn btn-primary">استكشف المنصة</a>
-          <a href="partners.html" class="btn btn-secondary">فرص الشراكة</a>
-        </div>
+<button class="btn-primary" onclick="goPlatform()">
+دخول المنصة
+</button>
 
-        <div class="hero-stats">
-          <div class="stat">
-            <strong>Offline First</strong>
-            <span>تشغيل محلي مستمر دون اعتماد دائم على الإنترنت</span>
-          </div>
+<button class="btn-secondary" onclick="goVision()">
+اكتشف المشروع
+</button>
 
-          <div class="stat">
-            <strong>Smart Sync</strong>
-            <span>مزامنة تدريجية وآمنة عند توفر الشبكة</span>
-          </div>
+</div>
 
-          <div class="stat">
-            <strong>Built for Reality</strong>
-            <span>مصممة للبيئات الصعبة لا للعرض فقط</span>
-          </div>
-        </div>
-      </div>
+</section>
 
-      <div class="preview-card">
-        <div class="preview-box">
-          <div class="preview-tag">ما الذي تبنيه Madaris AI؟</div>
 
-          <h3>منصة موحدة للطالب والمعلم والمدرسة والجهة</h3>
-          <p>
-            نحن نبني بنية تشغيل تعليمية تربط عناصر العملية التعليمية في نظام واحد
-            قابل للإدارة والتوسع والعمل في الظروف الواقعية.
-          </p>
+<section class="section">
 
-          <div class="mini-grid">
-            <div class="mini-item">
-              <strong>بوابة الطلاب</strong>
-              <span>تعلم، واجبات، محتوى، ونتائج ضمن تجربة مستقرة.</span>
-            </div>
+<h2 class="section-title">
+منصة تعليمية متكاملة
+</h2>
 
-            <div class="mini-item">
-              <strong>بوابة المعلمين</strong>
-              <span>إدارة الصفوف، المتابعة، والتقييم اليومي.</span>
-            </div>
+<div class="grid">
 
-            <div class="mini-item">
-              <strong>إدارة المدارس</strong>
-              <span>تشغيل أوضح، تنظيم أفضل، ومتابعة أكثر دقة.</span>
-            </div>
+<div class="card">
+<h3>للطلاب</h3>
+<p>
+دروس ذكية، واجبات، نتائج، ومعلم ذكاء اصطناعي يعمل مع الطالب خطوة بخطوة.
+</p>
+</div>
 
-            <div class="mini-item">
-              <strong>مسار التوسع</strong>
-              <span>حل قابل للتكرار في أسواق وبيئات مشابهة عالميًا.</span>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="card">
+<h3>للمعلمين</h3>
+<p>
+إدارة الفصول، التقييم، الحضور، والتفاعل مع الطلاب بسهولة.
+</p>
+</div>
 
-    </div>
-  </section>
+<div class="card">
+<h3>للإدارة المدرسية</h3>
+<p>
+لوحة تحكم كاملة لإدارة الطلاب والمعلمين والتقارير.
+</p>
+</div>
 
-  <!-- TRUST / CREDIBILITY -->
-  <section class="section">
-    <div class="container">
-      <div class="metrics-grid">
+<div class="card">
+<h3>للوزارة</h3>
+<p>
+تقارير مركزية عن جميع المدارس والأداء التعليمي.
+</p>
+</div>
 
-        <div class="metric-card">
-          <strong>Offline First</strong>
-          <span>تشغيل مستمر حتى بدون إنترنت</span>
-        </div>
+<div class="card">
+<h3>ذكاء اصطناعي تعليمي</h3>
+<p>
+معلم ذكي يساعد الطلاب في التعلم الفردي.
+</p>
+</div>
 
-        <div class="metric-card">
-          <strong>Smart Sync</strong>
-          <span>مزامنة آمنة عند توفر الشبكة</span>
-        </div>
+<div class="card">
+<h3>عمل بدون إنترنت</h3>
+<p>
+مصمم للعمل في المناطق ذات الإنترنت الضعيف.
+</p>
+</div>
 
-        <div class="metric-card">
-          <strong>Real-World Ready</strong>
-          <span>مصممة للبيئات الصعبة والموارد المحدودة</span>
-        </div>
+</div>
 
-        <div class="metric-card">
-          <strong>Scalable System</strong>
-          <span>نموذج قابل للتوسع من اليمن إلى أسواق مشابهة عالميًا</span>
-        </div>
+</section>
 
-      </div>
-    </div>
-  </section>
 
-  <!-- PROBLEM -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="tagline">المشكلة الحقيقية</div>
-        <h2>نحن لا نواجه نقص تطبيقات… بل انهيارًا في البنية التعليمية نفسها</h2>
-        <p>
-          التحدي ليس فقط عدم وجود أداة رقمية، بل غياب نظام قادر على الاستمرار عندما تكون
-          المدرسة تحت ضغط، والموارد محدودة، والاتصال غير موثوق.
-        </p>
-      </div>
+<section class="section platform">
 
-      <div class="problem-strip">
-        <div class="impact-card">
-          <div class="icon icon-danger">🏫</div>
-          <h3>مدارس بلا معلمين كفاية</h3>
-          <p>نقص الكادر التعليمي يضعف جودة التعليم ويخلق فجوات معرفية متراكمة.</p>
-        </div>
+<h2 class="section-title">
+ابدأ الآن
+</h2>
 
-        <div class="impact-card">
-          <div class="icon icon-danger">📚</div>
-          <h3>طلاب بلا كتب ومحتوى</h3>
-          <p>الوصول إلى المادة التعليمية محدود أو متقطع، خصوصًا في البيئات الأضعف.</p>
-        </div>
+<p>
+الدخول إلى منصة Madaris AI
+</p>
 
-        <div class="impact-card">
-          <div class="icon icon-danger">📉</div>
-          <h3>تعليم يتدهور يومًا بعد يوم</h3>
-          <p>التراجع ينعكس على التحصيل والانضباط والفرص المستقبلية.</p>
-        </div>
+<br>
 
-        <div class="impact-card">
-          <div class="icon icon-danger">🌐</div>
-          <h3>حلول لا تصمد أمام الواقع</h3>
-          <p>معظم المنصات تفشل فورًا لأنها تعتمد على الإنترنت كشرط أساسي للعمل.</p>
-        </div>
-      </div>
+<button class="btn-primary" onclick="goPlatform()">
+دخول المنصة
+</button>
 
-      <div class="warning-box">
-        Madaris AI تبدأ من فهم أن المشكلة ليست رقمنة سطحية، بل إعادة بناء قدرة التعليم على الاستمرار تحت أصعب الظروف.
-      </div>
-    </div>
-  </section>
+</section>
 
-  <!-- SOLUTION -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="tagline">الحل</div>
-        <h2>Madaris AI تبني بنية تعليمية جديدة: تعمل محليًا أولًا، وتتوسع عالميًا لاحقًا</h2>
-        <p>
-          المنصة مصممة لتعمل داخل المدرسة أو الجهاز بشكل محلي، وتحافظ على سير العمل،
-          ثم تُزامن البيانات لاحقًا عند توفر الشبكة دون تعطيل العملية التعليمية.
-        </p>
-      </div>
-
-      <div class="grid-4">
-        <div class="feature-card">
-          <div class="icon">💾</div>
-          <h3>تشغيل محلي أولًا</h3>
-          <p>العمل لا يتوقف عند غياب الإنترنت، لأن النظام مصمم ليستمر محليًا.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="icon">🔁</div>
-          <h3>مزامنة ذكية</h3>
-          <p>التحديثات تنتقل تدريجيًا وبشكل آمن عند توفر الشبكة دون فقدان البيانات.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="icon">⚙️</div>
-          <h3>منصة موحدة</h3>
-          <p>طلاب، معلمون، إدارة مدرسية، وجهات ضمن بنية واحدة قابلة للإدارة.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="icon">🌍</div>
-          <h3>حل محلي بأفق عالمي</h3>
-          <p>يبدأ من اليمن، لكنه مصمم ليستجيب لأسواق وبيئات مشابهة حول العالم.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY MADARIS AI -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="tagline">لماذا Madaris AI؟</div>
-        <h2>لأننا لا نبدأ من العرض… بل من الواقع</h2>
-        <p>
-          الفرق بين Madaris AI والحلول التقليدية ليس في الشكل، بل في طريقة التفكير:
-          نحن نبني على أساس التحديات الفعلية، لا على افتراض أن البيئة مثالية.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <div class="section-card">
-          <div class="icon">📍</div>
-          <h3>نقطة بداية حقيقية</h3>
-          <p>البدء من بيئة صعبة يمنح الحل قوة تشغيلية لا توفرها البيئات السهلة.</p>
-        </div>
-
-        <div class="section-card">
-          <div class="icon">🧠</div>
-          <h3>تفكير على مستوى المنظومة</h3>
-          <p>نحن لا نبني ميزة واحدة، بل طبقة تشغيل تعليمية كاملة قابلة للنمو.</p>
-        </div>
-
-        <div class="section-card">
-          <div class="icon">📈</div>
-          <h3>قابلية للتوسع</h3>
-          <p>ما ينجح في البيئات الهشة يمكن تكراره في أسواق مشابهة إقليميًا وعالميًا.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY NOW -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="tagline">لماذا الآن؟</div>
-        <h2>لأن الفجوة التعليمية تتسع… والسوق يحتاج حلًا يعمل في الواقع، لا في العروض فقط</h2>
-        <p>
-          هناك حاجة متزايدة إلى حلول تعليمية تجمع بين التقنية، المرونة، والاستدامة،
-          خصوصًا في البيئات التي تعاني من ضعف البنية الأساسية أو هشاشة التشغيل.
-        </p>
-      </div>
-
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <strong>تدهور مستمر</strong>
-          <span>كل تأخير في الحل يعني خسارة جيل جديد من فرص التعليم الفعلي.</span>
-        </div>
-
-        <div class="metric-card">
-          <strong>حلول غير مناسبة</strong>
-          <span>معظم الأدوات الحالية بُنيت للمدن المتصلة، لا للمناطق الأضعف.</span>
-        </div>
-
-        <div class="metric-card">
-          <strong>طلب حقيقي</strong>
-          <span>المدارس والجهات تحتاج أنظمة تعمل، لا مجرد واجهات عرض.</span>
-        </div>
-
-        <div class="metric-card">
-          <strong>فرصة توسع</strong>
-          <span>النموذج قابل للتكرار في أسواق مشابهة داخل المنطقة وخارجها.</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHO WE SERVE -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="tagline">من نخدم؟</div>
-        <h2>Madaris AI صممت لتخدم المنظومة كلها، لا طرفًا واحدًا فقط</h2>
-        <p>
-          المنصة لا تستهدف الطالب فقط أو الإدارة فقط، بل تبني بيئة موحدة تربط كل عناصر العملية التعليمية.
-        </p>
-      </div>
-
-      <div class="grid-4">
-        <div class="audience-card">
-          <div class="icon">🎓</div>
-          <h3>الطلاب</h3>
-          <p>وصول أفضل للمحتوى، الواجبات، النتائج، والمتابعة في تجربة أكثر استقرارًا.</p>
-        </div>
-
-        <div class="audience-card">
-          <div class="icon">👨‍🏫</div>
-          <h3>المعلمون</h3>
-          <p>إدارة الصفوف، التقييم، والإشراف التعليمي ضمن مسار يومي أوضح.</p>
-        </div>
-
-        <div class="audience-card">
-          <div class="icon">🏫</div>
-          <h3>المدارس</h3>
-          <p>تشغيل أوضح، تقارير أفضل، وقدرة أعلى على التنظيم والمتابعة.</p>
-        </div>
-
-        <div class="audience-card">
-          <div class="icon">🤝</div>
-          <h3>الجهات والشركاء</h3>
-          <p>فرصة للمساهمة في حل تعليمي قابل للأثر والتوسع طويل المدى.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GLOBAL POTENTIAL -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="tagline">الإمكان العالمي</div>
-        <h2>نبدأ من اليمن… لكننا لا نبني لليمن فقط</h2>
-        <p>
-          Madaris AI تنطلق من بيئة تحتاج حلًا فعليًا، لكنها مصممة لتخدم تحديات تتكرر
-          في مناطق كثيرة حول العالم حيث الاتصال محدود أو البنية التعليمية هشة.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <div class="opportunity-card">
-          <div class="icon">📍</div>
-          <h3>نقطة انطلاق قوية</h3>
-          <p>بناء الحل في بيئة صعبة يثبت قدرته من البداية.</p>
-        </div>
-
-        <div class="opportunity-card">
-          <div class="icon">🌐</div>
-          <h3>قابلية تكرار عالمية</h3>
-          <p>النموذج مناسب لأسواق ناشئة ومناطق مشابهة في التحديات.</p>
-        </div>
-
-        <div class="opportunity-card">
-          <div class="icon">🧩</div>
-          <h3>منصة يمكن البناء فوقها</h3>
-          <p>يمكن تطويرها لاحقًا بالتحليلات، الذكاء الاصطناعي، ومزايا أوسع.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <div class="container">
-      <div class="cta-box">
-        <h2>Madaris AI ليست مجرد منصة تعليمية… بل بداية معيار جديد</h2>
-        <p>
-          إذا كنت مدرسة، جهة، أو شريكًا يرى أن التعليم يحتاج بنية أقوى من المعتاد،
-          فهذه هي نقطة الدخول الصحيحة للتعرف على ما نبنيه.
-        </p>
-
-        <div class="hero-actions" style="justify-content:center;">
-          <a href="platform.html" class="btn btn-primary">استكشف المنصة</a>
-          <a href="contact.html" class="btn btn-secondary">تواصل معنا</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
 
 <footer class="footer">
-  <div class="container">
-    <div class="divider"></div>
-    <p>© 2026 Madaris AI — منصة تعليمية ذكية لإعادة بناء التعليم من الأساس</p>
-    <div class="footer-links">
-      <a href="platform.html">المنصة</a>
-      <a href="vision.html">الرؤية</a>
-      <a href="schools.html">المدارس</a>
-      <a href="about.html">من نحن</a>
-      <a href="contact.html">تواصل</a>
-    </div>
-  </div>
+
+Madaris AI © 2026  
+منصة تعليمية ذكية لمستقبل أفضل
+
 </footer>
 
+
+<script>
+
+function goPlatform(){
+window.location.href="app/login.html"
+}
+
+function goVision(){
+window.location.href="vision.html"
+}
+
+</script>
+
 </body>
+
 </html>
