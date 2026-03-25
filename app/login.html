@@ -11,147 +11,123 @@
 <link rel="stylesheet" href="../assets/css/responsive.css">
 
 <style>
-body {
+
+body{
 margin:0;
-padding:0;
 font-family:"Tajawal",sans-serif;
-background:linear-gradient(135deg,#0a0f2c,#0f1b4c);
+background:linear-gradient(135deg,#071120,#0b1930);
+color:white;
 height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-color:white;
 }
 
-.login-container {
-width:100%;
-max-width:420px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
+.login-box{
+background:#0b1930;
 padding:40px;
-border-radius:20px;
-box-shadow:0 20px 60px rgba(0,0,0,0.5);
+border-radius:15px;
+width:400px;
+max-width:90%;
 }
 
-.logo {
+.logo{
 text-align:center;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
-.logo h1 {
+.logo h1{
 margin:0;
 font-size:28px;
-font-weight:700;
-}
-
-.logo span {
 color:#00d4ff;
 }
 
-.logo p {
-margin-top:10px;
-color:#c8d2f0;
-font-size:15px;
-}
-
-.input-group {
+.input{
 margin-bottom:20px;
 }
 
-.input-group label {
+.input label{
 display:block;
 margin-bottom:8px;
-font-size:14px;
-opacity:0.8;
 }
 
-.input-group input {
+.input input,
+.input select{
 width:100%;
-padding:14px;
-border-radius:10px;
+padding:12px;
+border-radius:8px;
 border:none;
-background:rgba(255,255,255,0.08);
+background:#071120;
 color:white;
-font-size:14px;
-outline:none;
-box-sizing:border-box;
 }
 
-.input-group input:focus {
-border:1px solid #00d4ff;
-}
-
-.login-btn {
+.button{
+background:#00d4ff;
+border:none;
+padding:14px;
 width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-background:linear-gradient(90deg,#00d4ff,#0066ff);
-color:white;
-font-size:16px;
+border-radius:8px;
 cursor:pointer;
-transition:0.3s;
+font-weight:600;
 }
 
-.login-btn:hover {
-transform:translateY(-2px);
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
+.button:hover{
+opacity:.9;
 }
 
-.options {
-margin-top:20px;
-display:flex;
-justify-content:space-between;
-font-size:13px;
-opacity:0.8;
-}
-
-.options a {
-color:#00d4ff;
-text-decoration:none;
-}
-
-.footer {
+.footer{
 text-align:center;
-margin-top:30px;
-font-size:12px;
-opacity:0.6;
+margin-top:20px;
+opacity:.6;
+font-size:13px;
 }
+
 </style>
 
 </head>
 
 <body>
 
-<div class="login-container">
+<div class="login-box">
 
 <div class="logo">
-<h1>Madaris <span>AI</span></h1>
+<h1>Madaris AI</h1>
 <p>منصة التعليم الذكي</p>
 </div>
 
 <form onsubmit="return login()">
 
-<div class="input-group">
+<div class="input">
 <label>البريد الإلكتروني</label>
-<input type="email" id="email" placeholder="example@email.com">
+<input type="email" required>
 </div>
 
-<div class="input-group">
+<div class="input">
 <label>كلمة المرور</label>
-<input type="password" id="password" placeholder="********">
+<input type="password" required>
 </div>
 
-<button class="login-btn" type="submit">
+<div class="input">
+<label>نوع الحساب</label>
+<select id="role">
+
+<option value="student">طالب</option>
+
+<option value="teacher">معلم</option>
+
+<option value="school">إدارة مدرسة</option>
+
+<option value="admin">الإدارة العليا</option>
+
+</select>
+
+</div>
+
+<button class="button" type="submit">
 تسجيل الدخول
 </button>
 
 </form>
-
-<div class="options">
-<a href="#">نسيت كلمة المرور؟</a>
-<a href="#">إنشاء حساب</a>
-</div>
 
 <div class="footer">
 Madaris AI © 2026
@@ -160,12 +136,34 @@ Madaris AI © 2026
 </div>
 
 <script>
-function login() {
-  localStorage.setItem("madaris_logged_in", "true");
-  localStorage.setItem("madaris_user_role", "admin");
-  window.location.href = "dashboard.html";
-  return false;
+
+function login(){
+
+let role=document.getElementById("role").value
+
+localStorage.setItem("madaris_logged_in","true")
+localStorage.setItem("madaris_role",role)
+
+if(role==="student"){
+window.location.href="student/index.html"
 }
+
+if(role==="teacher"){
+window.location.href="teacher/index.html"
+}
+
+if(role==="school"){
+window.location.href="school/index.html"
+}
+
+if(role==="admin"){
+window.location.href="admin/index.html"
+}
+
+return false
+
+}
+
 </script>
 
 </body>
