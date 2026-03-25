@@ -156,4 +156,257 @@ min-width:760px;
 th, td{
 padding:14px 12px;
 text-align:right;
-border-bottom:1px solid rgba(
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+th{
+color:#8fe8ff;
+font-size:14px;
+font-weight:700;
+}
+
+td{
+font-size:14px;
+}
+
+.status{
+padding:7px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+display:inline-block;
+}
+
+.status.good{
+background:rgba(34,197,94,.12);
+color:#6ee7a3;
+}
+
+.status.mid{
+background:rgba(255,193,7,.12);
+color:#ffd666;
+}
+
+.status.low{
+background:rgba(255,77,77,.12);
+color:#ff9a9a;
+}
+
+.note{
+opacity:.8;
+line-height:1.8;
+}
+
+@media(max-width:900px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.container{
+padding:20px;
+}
+
+.top-section h1{
+font-size:26px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+Madaris AI | الإدارة العليا
+</div>
+
+<button class="logout" onclick="logout()">
+تسجيل الخروج
+</button>
+
+</div>
+
+<div class="container">
+
+<div class="top-section">
+<h1>لوحة الإدارة المركزية</h1>
+<p>إدارة المدارس، المستخدمين، المحتوى، والتحكم العام في منصة Madaris AI.</p>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2>15</h2>
+<p>عدد المدارس</p>
+</div>
+
+<div class="stat">
+<h2>3,200</h2>
+<p>عدد الطلاب</p>
+</div>
+
+<div class="stat">
+<h2>210</h2>
+<p>عدد المعلمين</p>
+</div>
+
+<div class="stat">
+<h2>45</h2>
+<p>عدد المديرين</p>
+</div>
+
+</div>
+
+<h2 class="section-title">إدارة المنصة</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>إدارة المدارس</h3>
+<p>إضافة المدارس، مراجعة الأداء، ومتابعة الحالة التشغيلية لكل مدرسة.</p>
+</div>
+
+<div class="card">
+<h3>إدارة المستخدمين</h3>
+<p>إدارة الطلاب، المعلمين، المديرين، والصلاحيات المرتبطة بكل حساب.</p>
+</div>
+
+<div class="card">
+<h3>المحتوى التعليمي</h3>
+<p>إدارة المناهج، المواد، الدروس، والهيكل العام للمحتوى داخل المنصة.</p>
+</div>
+
+<div class="card">
+<h3>الذكاء الاصطناعي</h3>
+<p>مراقبة وإدارة خصائص المعلم الذكي والمسارات التعليمية المدعومة بالذكاء الاصطناعي.</p>
+</div>
+
+<div class="card">
+<h3>التقارير العامة</h3>
+<p>تقارير شاملة عن المدارس، الحضور، الأداء، والنتائج على مستوى المنصة كلها.</p>
+</div>
+
+<div class="card">
+<h3>الإشعارات العامة</h3>
+<p>إدارة التنبيهات والإشعارات التي تصل إلى المدارس والمعلمين والطلاب.</p>
+</div>
+
+<div class="card">
+<h3>الإعدادات العامة</h3>
+<p>إدارة إعدادات النظام، اللغة، البنية، والسياسات العامة للمنصة.</p>
+</div>
+
+<div class="card">
+<h3>الأمان والصلاحيات</h3>
+<p>إدارة سياسات الوصول، الأمان، وسجل الدخول وحماية الحسابات.</p>
+</div>
+
+<div class="card">
+<h3>النسخ الاحتياطي</h3>
+<p>متابعة النسخ الاحتياطية، استرجاع البيانات، وضمان الاستمرارية التشغيلية.</p>
+</div>
+
+</div>
+
+<div class="panel">
+<h2>ملخص المدارس المرتبطة</h2>
+
+<table>
+<thead>
+<tr>
+<th>المدرسة</th>
+<th>عدد الطلاب</th>
+<th>عدد المعلمين</th>
+<th>الحضور</th>
+<th>متوسط النتائج</th>
+<th>الحالة</th>
+<th>ملاحظات</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>مدرسة المستقبل</td>
+<td>540</td>
+<td>35</td>
+<td>94%</td>
+<td>86%</td>
+<td><span class="status good">مستقرة</span></td>
+<td>أداء جيد مع مؤشرات إيجابية</td>
+</tr>
+
+<tr>
+<td>مدرسة الأمل</td>
+<td>420</td>
+<td>28</td>
+<td>91%</td>
+<td>81%</td>
+<td><span class="status good">جيدة</span></td>
+<td>تحتاج تحسينًا في بعض الصفوف</td>
+</tr>
+
+<tr>
+<td>مدرسة الريادة</td>
+<td>610</td>
+<td>40</td>
+<td>88%</td>
+<td>77%</td>
+<td><span class="status mid">متابعة</span></td>
+<td>تذبذب في الحضور والتحصيل</td>
+</tr>
+
+<tr>
+<td>مدرسة النور</td>
+<td>300</td>
+<td>22</td>
+<td>84%</td>
+<td>71%</td>
+<td><span class="status low">تنبيه</span></td>
+<td>تحتاج تدخلًا إداريًا وأكاديميًا</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="panel">
+<h2>ملاحظات الإدارة العليا</h2>
+<p class="note">
+- المنصة بدأت تتشكل على مستوى المدارس والطلاب والمعلمين والإدارة.  
+- بعض المدارس تحتاج متابعة إضافية في الحضور والتحصيل والانضباط.  
+- هناك فرصة واضحة لتحسين المحتوى والتقارير ورفع جودة التفاعل داخل النظام.  
+- الخطوة التالية يجب أن تركز على ربط الوحدات الداخلية ببعضها وتحويلها من صفحات ثابتة إلى تجربة تشغيل أكثر واقعية.  
+</p>
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+localStorage.removeItem("madaris_logged_in")
+localStorage.removeItem("madaris_role")
+window.location.href="../login.html"
+}
+
+</script>
+
+</body>
+
+</html>
