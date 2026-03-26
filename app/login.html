@@ -16,6 +16,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
+margin:0;
 }
 
 .box{
@@ -27,20 +28,25 @@ width:300px;
 
 input{
 width:100%;
-padding:10px;
+padding:12px;
 margin:8px 0;
 border:none;
-border-radius:5px;
+border-radius:6px;
 }
 
 button{
 width:100%;
-padding:10px;
+padding:12px;
 background:#2563eb;
 color:white;
 border:none;
-border-radius:5px;
+border-radius:6px;
 cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#1e4ed8;
 }
 
 </style>
@@ -93,9 +99,7 @@ try{
 
 await signInWithEmailAndPassword(auth,email,password);
 
-alert("تم تسجيل الدخول بنجاح");
-
-window.location.href="dashboard.html";
+window.location.href="/app/dashboard.html";
 
 }catch(error){
 
