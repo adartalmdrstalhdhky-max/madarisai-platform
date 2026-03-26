@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | إنشاء حساب</title>
+
+<link rel="stylesheet" href="../assets/css/main.css">
+
+<style>
+
+body{
+margin:0;
+background:#071120;
+color:white;
+font-family:Tajawal,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.card{
+background:#0b1930;
+padding:40px;
+border-radius:15px;
+width:350px;
+text-align:center;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:none;
+background:#071120;
+color:white;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#00d4ff;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+margin-top:10px;
+}
+
+a{
+color:#00d4ff;
+text-decoration:none;
+font-size:14px;
+}
+
+#msg{
+margin-top:15px;
+font-size:14px;
+color:#ffd166;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Madaris AI</h2>
+<p>إنشاء حساب جديد</p>
+
+<input type="text" id="name" placeholder="الاسم الكامل">
+
+<input type="email" id="email" placeholder="البريد الإلكتروني">
+
+<input type="password" id="password" placeholder="كلمة المرور">
+
+<input type="password" id="confirm" placeholder="تأكيد كلمة المرور">
+
+<select id="role">
+<option value="student">طالب</option>
+<option value="teacher">معلم</option>
+<option value="school">إدارة مدرسة</option>
+<option value="admin">الإدارة العليا</option>
+</select>
+
+<button onclick="register()">إنشاء الحساب</button>
+
+<br><br>
+
+<a href="login.html">لديك حساب؟ تسجيل الدخول</a>
+
+<div id="msg"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+updateProfile
+}
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+authDomain: "madaris-ai.firebaseapp.com",
+projectId: "madaris-ai",
+storageBucket: "madaris-ai.firebasestorage.app",
+messagingSenderId: "915394447224",
+appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+measurementId: "G-SC7VE6F20S"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
+function showMessage(text){
+document.getElementById("msg").innerText = text;
+}
+
+
+window.register = async function(){
+
+const name = document.getElementById("name").value.trim();
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value;
+const confirm = document.getElementById("confirm").value;
+const role = document.getElementById("role").value;
+
+if(!name || !email || !password || !confirm){
+showMessage("يرجى تعبئة جميع الحقول");
+return;
+}
+
+if(password.length < 6){
+showMessage("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
+return;
+}
+
+if(password !== confirm){
+showMessage("كلمتا المرور غير متطابقتين");
+return;
+}
+
+try{
+
+const userCredential =
+await createUserWithEmailAndPassword(auth,email,password);
+
+await updateProfile(userCredential.user,{
+displayName: name
+});
+
+localStorage.setItem("madaris_role",role);
+localStorage.setItem("madaris_name",name);
+
+showMessage("تم إنشاء الحساب بنجاح");
+
+setTimeout(()=>{
+window.location.href="login.html";
+},1500);
+
+}
+catch(error){
+
+showMessage("خطأ: "+error.message);
+
+}
+
+}
+
+</script>
+
+</body>
+  </html>
