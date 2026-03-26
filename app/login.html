@@ -1,175 +1,110 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Madaris AI | تسجيل الدخول</title>
 
-<link rel="stylesheet" href="../assets/css/main.css">
+<title>تسجيل الدخول - Madaris AI</title>
 
 <style>
+
 body{
-margin:0;
-background:#071120;
+font-family:Arial;
+background:#0b0f1a;
 color:white;
-font-family:Tajawal,sans-serif;
 display:flex;
 justify-content:center;
 align-items:center;
-min-height:100vh;
+height:100vh;
 }
 
-.card{
-background:#0b1930;
-padding:40px;
-border-radius:15px;
-width:350px;
-text-align:center;
-box-sizing:border-box;
+.box{
+background:#12182b;
+padding:25px;
+border-radius:10px;
+width:300px;
 }
 
-input,select{
+input{
 width:100%;
-padding:12px;
-margin:10px 0;
-border-radius:8px;
+padding:10px;
+margin:8px 0;
 border:none;
-background:#071120;
-color:white;
-box-sizing:border-box;
+border-radius:5px;
 }
 
 button{
 width:100%;
-padding:12px;
-background:#00d4ff;
+padding:10px;
+background:#2563eb;
+color:white;
 border:none;
-border-radius:8px;
-font-weight:600;
+border-radius:5px;
 cursor:pointer;
-margin-top:10px;
 }
 
-.secondary-btn{
-background:transparent;
-border:1px solid #00d4ff;
-color:#00d4ff;
-}
-
-#msg{
-margin-top:15px;
-font-size:14px;
-line-height:1.7;
-color:#ffd166;
-word-break:break-word;
-}
-
-.small-link{
-display:block;
-margin-top:16px;
-color:#8fe8ff;
-text-decoration:none;
-font-size:14px;
-}
 </style>
+
 </head>
 
 <body>
 
-<div class="card">
-<h2>Madaris AI</h2>
-<p>تسجيل الدخول إلى المنصة</p>
+<div class="box">
+
+<h2>تسجيل الدخول</h2>
 
 <input type="email" id="email" placeholder="البريد الإلكتروني">
-<input type="password" id="password" placeholder="كلمة المرور">
 
-<select id="role">
-  <option value="student">طالب</option>
-  <option value="teacher">معلم</option>
-  <option value="school">إدارة مدرسة</option>
-  <option value="admin">الإدارة العليا</option>
-</select>
+<input type="password" id="password" placeholder="كلمة المرور">
 
 <button onclick="login()">تسجيل الدخول</button>
 
-<button class="secondary-btn" onclick="goRegister()">إنشاء حساب جديد</button>
-
-<a class="small-link" href="../index.html">العودة إلى الموقع الرئيسي</a>
-
-<div id="msg"></div>
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+
 import { 
-  getAuth,
-  signInWithEmailAndPassword
+getAuth,
+signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-  authDomain: "madaris-ai.firebaseapp.com",
-  projectId: "madaris-ai",
-  storageBucket: "madaris-ai.firebasestorage.app",
-  messagingSenderId: "915394447224",
-  appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
-  measurementId: "G-SC7VE6F20S"
+apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+authDomain: "madaris-ai.firebaseapp.com",
+projectId: "madaris-ai",
+storageBucket: "madaris-ai.firebasestorage.app",
+messagingSenderId: "915394447224",
+appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+measurementId: "G-SC7VE6F20S"
 };
 
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
 
-function showMessage(text){
-  document.getElementById("msg").textContent = text;
-}
-
-window.goRegister = function(){
-  window.location.href = "register.html";
-}
-
 window.login = async function(){
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const selectedRole = document.getElementById("role").value;
 
-  if(!email || !password){
-    showMessage("أدخل البريد الإلكتروني وكلمة المرور.");
-    return;
-  }
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-  try{
-    const result = await signInWithEmailAndPassword(auth, email, password);
+try{
 
-    let role = localStorage.getItem("madaris_role") || selectedRole || "student";
-    localStorage.setItem("madaris_logged_in", "true");
-    localStorage.setItem("madaris_role", role);
+await signInWithEmailAndPassword(auth,email,password);
 
-    if(role === "student"){
-      window.location.href = "student/index.html";
-      return;
-    }
+alert("تم تسجيل الدخول بنجاح");
 
-    if(role === "teacher"){
-      window.location.href = "teacher/index.html";
-      return;
-    }
+window.location.href="dashboard.html";
 
-    if(role === "school"){
-      window.location.href = "school/index.html";
-      return;
-    }
+}catch(error){
 
-    if(role === "admin"){
-      window.location.href = "admin/index.html";
-      return;
-    }
+alert("خطأ: "+error.message);
 
-    window.location.href = "dashboard.html";
-  }catch(error){
-    showMessage("خطأ تسجيل الدخول: " + error.code);
-  }
 }
+
+}
+
 </script>
 
 </body>
