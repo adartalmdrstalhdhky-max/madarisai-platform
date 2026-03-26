@@ -1,67 +1,44 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Madaris AI | إنشاء حساب</title>
-
-<link rel="stylesheet" href="../assets/css/main.css">
+<title>تسجيل حساب - Madaris AI</title>
 
 <style>
-
 body{
-margin:0;
-background:#071120;
+font-family:Arial;
+background:#0b0f1a;
 color:white;
-font-family:Tajawal,sans-serif;
 display:flex;
 justify-content:center;
 align-items:center;
-min-height:100vh;
+height:100vh;
 }
 
-.card{
-background:#0b1930;
-padding:40px;
-border-radius:15px;
-width:350px;
-text-align:center;
+.box{
+background:#12182b;
+padding:25px;
+border-radius:10px;
+width:300px;
 }
 
 input,select{
 width:100%;
-padding:12px;
-margin:10px 0;
-border-radius:8px;
+padding:10px;
+margin:8px 0;
 border:none;
-background:#071120;
-color:white;
-box-sizing:border-box;
+border-radius:5px;
 }
 
 button{
 width:100%;
-padding:12px;
-background:#00d4ff;
+padding:10px;
+background:#2563eb;
+color:white;
 border:none;
-border-radius:8px;
-font-weight:600;
+border-radius:5px;
 cursor:pointer;
-margin-top:10px;
-}
-
-a{
-color:#00d4ff;
-text-decoration:none;
-font-size:14px;
-}
-
-#msg{
-margin-top:15px;
-font-size:14px;
-color:#ffd166;
 }
 
 </style>
@@ -70,10 +47,9 @@ color:#ffd166;
 
 <body>
 
-<div class="card">
+<div class="box">
 
-<h2>Madaris AI</h2>
-<p>إنشاء حساب جديد</p>
+<h2>إنشاء حساب</h2>
 
 <input type="text" id="name" placeholder="الاسم الكامل">
 
@@ -81,22 +57,13 @@ color:#ffd166;
 
 <input type="password" id="password" placeholder="كلمة المرور">
 
-<input type="password" id="confirm" placeholder="تأكيد كلمة المرور">
-
 <select id="role">
 <option value="student">طالب</option>
 <option value="teacher">معلم</option>
-<option value="school">إدارة مدرسة</option>
-<option value="admin">الإدارة العليا</option>
+<option value="school">مدرسة</option>
 </select>
 
-<button onclick="register()">إنشاء الحساب</button>
-
-<br><br>
-
-<a href="login.html">لديك حساب؟ تسجيل الدخول</a>
-
-<div id="msg"></div>
+<button onclick="register()">إنشاء حساب</button>
 
 </div>
 
@@ -104,13 +71,11 @@ color:#ffd166;
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 
-import {
-getAuth,
-createUserWithEmailAndPassword,
-updateProfile
-}
-from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-
+import { 
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 const firebaseConfig = {
 apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
@@ -123,59 +88,32 @@ measurementId: "G-SC7VE6F20S"
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-
-function showMessage(text){
-document.getElementById("msg").innerText = text;
-}
-
+const db = getFirestore(app);
 
 window.register = async function(){
 
-const name = document.getElementById("name").value.trim();
-const email = document.getElementById("email").value.trim();
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
-const confirm = document.getElementById("confirm").value;
 const role = document.getElementById("role").value;
-
-if(!name || !email || !password || !confirm){
-showMessage("يرجى تعبئة جميع الحقول");
-return;
-}
-
-if(password.length < 6){
-showMessage("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
-return;
-}
-
-if(password !== confirm){
-showMessage("كلمتا المرور غير متطابقتين");
-return;
-}
 
 try{
 
-const userCredential =
-await createUserWithEmailAndPassword(auth,email,password);
-
-await updateProfile(userCredential.user,{
-displayName: name
+await addDoc(collection(db,"users"),{
+name:name,
+email:email,
+password:password,
+role:role,
+created:new Date()
 });
 
-localStorage.setItem("madaris_role",role);
-localStorage.setItem("madaris_name",name);
+alert("تم إنشاء الحساب بنجاح");
 
-showMessage("تم إنشاء الحساب بنجاح");
-
-setTimeout(()=>{
 window.location.href="login.html";
-},1500);
 
-}
-catch(error){
+}catch(error){
 
-showMessage("خطأ: "+error.message);
+alert("خطأ: "+error.message);
 
 }
 
@@ -184,4 +122,4 @@ showMessage("خطأ: "+error.message);
 </script>
 
 </body>
-  </html>
+</html>
