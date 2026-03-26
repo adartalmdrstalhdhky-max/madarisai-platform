@@ -2,84 +2,54 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Madaris AI | تسجيل الدخول</title>
 
 <link rel="stylesheet" href="../assets/css/main.css">
-<link rel="stylesheet" href="../assets/css/responsive.css">
 
 <style>
 
 body{
 margin:0;
-font-family:"Tajawal",sans-serif;
-background:linear-gradient(135deg,#071120,#0b1930);
+background:#071120;
 color:white;
-height:100vh;
+font-family:Tajawal,sans-serif;
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-.login-box{
+.card{
 background:#0b1930;
 padding:40px;
 border-radius:15px;
-width:400px;
-max-width:90%;
-}
-
-.logo{
+width:350px;
 text-align:center;
-margin-bottom:25px;
 }
 
-.logo h1{
-margin:0;
-font-size:28px;
-color:#00d4ff;
-}
-
-.input{
-margin-bottom:20px;
-}
-
-.input label{
-display:block;
-margin-bottom:8px;
-}
-
-.input input,
-.input select{
+input{
 width:100%;
 padding:12px;
+margin:10px 0;
 border-radius:8px;
 border:none;
 background:#071120;
 color:white;
 }
 
-.button{
+button{
+width:100%;
+padding:12px;
 background:#00d4ff;
 border:none;
-padding:14px;
-width:100%;
 border-radius:8px;
-cursor:pointer;
 font-weight:600;
-}
-
-.button:hover{
-opacity:.9;
-}
-
-.footer{
-text-align:center;
-margin-top:20px;
-opacity:.6;
-font-size:13px;
+cursor:pointer;
+margin-top:10px;
 }
 
 </style>
@@ -88,79 +58,79 @@ font-size:13px;
 
 <body>
 
-<div class="login-box">
+<div class="card">
 
-<div class="logo">
-<h1>Madaris AI</h1>
-<p>منصة التعليم الذكي</p>
-</div>
+<h2>Madaris AI</h2>
 
-<form onsubmit="return login()">
+<input type="email" id="email" placeholder="البريد الإلكتروني">
 
-<div class="input">
-<label>البريد الإلكتروني</label>
-<input type="email" required>
-</div>
+<input type="password" id="password" placeholder="كلمة المرور">
 
-<div class="input">
-<label>كلمة المرور</label>
-<input type="password" required>
-</div>
+<button onclick="login()">تسجيل الدخول</button>
 
-<div class="input">
-<label>نوع الحساب</label>
-<select id="role">
+<br><br>
 
-<option value="student">طالب</option>
-
-<option value="teacher">معلم</option>
-
-<option value="school">إدارة مدرسة</option>
-
-<option value="admin">الإدارة العليا</option>
-
-</select>
+<button onclick="register()">إنشاء حساب</button>
 
 </div>
 
-<button class="button" type="submit">
-تسجيل الدخول
-</button>
 
-</form>
+<script type="module">
 
-<div class="footer">
-Madaris AI © 2026
-</div>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 
-</div>
+const firebaseConfig = {
+apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+authDomain: "madaris-ai.firebaseapp.com",
+projectId: "madaris-ai",
+storageBucket: "madaris-ai.firebasestorage.app",
+messagingSenderId: "915394447224",
+appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+measurementId: "G-SC7VE6F20S"
+};
 
-<script>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-function login(){
 
-let role=document.getElementById("role").value
+window.login = function(){
 
-localStorage.setItem("madaris_logged_in","true")
-localStorage.setItem("madaris_role",role)
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-if(role==="student"){
-window.location.href="student/index.html"
+signInWithEmailAndPassword(auth,email,password)
+.then(()=>{
+
+window.location.href="dashboard.html";
+
+})
+.catch((error)=>{
+
+alert("خطأ في تسجيل الدخول");
+
+})
+
 }
 
-if(role==="teacher"){
-window.location.href="teacher/index.html"
-}
 
-if(role==="school"){
-window.location.href="school/index.html"
-}
+window.register = function(){
 
-if(role==="admin"){
-window.location.href="admin/index.html"
-}
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-return false
+createUserWithEmailAndPassword(auth,email,password)
+.then(()=>{
+
+alert("تم إنشاء الحساب");
+
+})
+.catch((error)=>{
+
+alert("خطأ في إنشاء الحساب");
+
+})
 
 }
 
