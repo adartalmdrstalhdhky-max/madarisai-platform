@@ -17,16 +17,19 @@ font-family:Tajawal,sans-serif;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
+min-height:100vh;
 }
+
 .card{
 background:#0b1930;
 padding:40px;
 border-radius:15px;
 width:350px;
 text-align:center;
+box-sizing:border-box;
 }
-input, select{
+
+input,select{
 width:100%;
 padding:12px;
 margin:10px 0;
@@ -36,6 +39,7 @@ background:#071120;
 color:white;
 box-sizing:border-box;
 }
+
 button{
 width:100%;
 padding:12px;
@@ -46,12 +50,27 @@ font-weight:600;
 cursor:pointer;
 margin-top:10px;
 }
+
+.secondary-btn{
+background:transparent;
+border:1px solid #00d4ff;
+color:#00d4ff;
+}
+
 #msg{
 margin-top:15px;
 font-size:14px;
 line-height:1.7;
 color:#ffd166;
 word-break:break-word;
+}
+
+.small-link{
+display:block;
+margin-top:16px;
+color:#8fe8ff;
+text-decoration:none;
+font-size:14px;
 }
 </style>
 </head>
@@ -60,6 +79,7 @@ word-break:break-word;
 
 <div class="card">
 <h2>Madaris AI</h2>
+<p>تسجيل الدخول إلى المنصة</p>
 
 <input type="email" id="email" placeholder="البريد الإلكتروني">
 <input type="password" id="password" placeholder="كلمة المرور">
@@ -71,19 +91,20 @@ word-break:break-word;
   <option value="admin">الإدارة العليا</option>
 </select>
 
-<button onclick="register()">إنشاء حساب</button>
 <button onclick="login()">تسجيل الدخول</button>
+
+<button class="secondary-btn" onclick="goRegister()">إنشاء حساب جديد</button>
+
+<a class="small-link" href="../index.html">العودة إلى الموقع الرئيسي</a>
 
 <div id="msg"></div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import {
+import { 
   getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  updateProfile
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -103,30 +124,8 @@ function showMessage(text){
   document.getElementById("msg").textContent = text;
 }
 
-window.register = async function(){
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const role = document.getElementById("role").value;
-
-  if(!email || !password){
-    showMessage("أدخل البريد الإلكتروني وكلمة المرور.");
-    return;
-  }
-
-  if(password.length < 6){
-    showMessage("كلمة المرور يجب أن تكون 6 أحرف أو أكثر.");
-    return;
-  }
-
-  try{
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(result.user, { displayName: role });
-
-    localStorage.setItem("madaris_role", role);
-    showMessage("تم إنشاء الحساب بنجاح. يمكنك الآن تسجيل الدخول.");
-  }catch(error){
-    showMessage("خطأ إنشاء الحساب: " + error.code + " | " + error.message);
-  }
+window.goRegister = function(){
+  window.location.href = "register.html";
 }
 
 window.login = async function(){
@@ -142,7 +141,7 @@ window.login = async function(){
   try{
     const result = await signInWithEmailAndPassword(auth, email, password);
 
-    let role = result.user.displayName || selectedRole;
+    let role = localStorage.getItem("madaris_role") || selectedRole || "student";
     localStorage.setItem("madaris_logged_in", "true");
     localStorage.setItem("madaris_role", role);
 
@@ -150,14 +149,17 @@ window.login = async function(){
       window.location.href = "student/index.html";
       return;
     }
+
     if(role === "teacher"){
       window.location.href = "teacher/index.html";
       return;
     }
+
     if(role === "school"){
       window.location.href = "school/index.html";
       return;
     }
+
     if(role === "admin"){
       window.location.href = "admin/index.html";
       return;
@@ -165,7 +167,7 @@ window.login = async function(){
 
     window.location.href = "dashboard.html";
   }catch(error){
-    showMessage("خطأ تسجيل الدخول: " + error.code + " | " + error.message);
+    showMessage("خطأ تسجيل الدخول: " + error.code);
   }
 }
 </script>
