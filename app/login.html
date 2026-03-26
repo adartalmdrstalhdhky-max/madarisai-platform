@@ -100,8 +100,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
     import {
       getAuth,
-      signInWithEmailAndPassword,
-      onAuthStateChanged
+      signInWithEmailAndPassword
     } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
     import {
       getFirestore,
@@ -128,42 +127,44 @@
     }
 
     async function routeByRole(uid){
-      try{
-        const userRef = doc(db, "users", uid);
-        const userSnap = await getDoc(userRef);
+      const userRef = doc(db, "users", uid);
+      const userSnap = await getDoc(userRef);
 
-        if(!userSnap.exists()){
-          showMessage("لم يتم العثور على بيانات المستخدم في قاعدة البيانات.");
-          return;
-        }
-
-        const userData = userSnap.data();
-        const role = userData.role || "";
-
-        if(role === "admin"){
-          window.location.href = "/app/admin/index.html";
-          return;
-        }
-
-        if(role === "school"){
-          window.location.href = "/app/school/index.html";
-          return;
-        }
-
-        if(role === "teacher"){
-          window.location.href = "/app/teacher/index.html";
-          return;
-        }
-
-        if(role === "student"){
-          window.location.href = "/app/student/index.html";
-          return;
-        }
-
-        window.location.href = "/app/dashboard.html";
-      }catch(error){
-        showMessage("خطأ في قراءة بيانات الدور: " + error.message);
+      if(!userSnap.exists()){
+        showMessage("لم يتم العثور على بيانات المستخدم في قاعدة البيانات.");
+        return;
       }
+
+      const userData = userSnap.data();
+      const role = userData.role || "";
+
+      localStorage.setItem("madaris_logged_in", "true");
+      localStorage.setItem("madaris_role", role);
+      localStorage.setItem("madaris_uid", uid);
+      localStorage.setItem("madaris_name", userData.name || "");
+      localStorage.setItem("madaris_email", userData.email || "");
+
+      if(role === "admin"){
+        window.location.href = "/app/admin/index.html";
+        return;
+      }
+
+      if(role === "school"){
+        window.location.href = "/app/school/index.html";
+        return;
+      }
+
+      if(role === "teacher"){
+        window.location.href = "/app/teacher/index.html";
+        return;
+      }
+
+      if(role === "student"){
+        window.location.href = "/app/student/index.html";
+        return;
+      }
+
+      window.location.href = "/app/dashboard.html";
     }
 
     window.loginUser = async function(){
@@ -183,12 +184,6 @@
         showMessage("خطأ: " + error.message);
       }
     };
-
-    onAuthStateChanged(auth, async (user) => {
-      if(user){
-        await routeByRole(user.uid);
-      }
-    });
   </script>
 
 </body>
