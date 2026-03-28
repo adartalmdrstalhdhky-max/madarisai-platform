@@ -3,12 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <title>المعلمين</title>
+
 <style>
-body{background:#081226;color:white;font-family:Tahoma;}
+body {
+background:#0b1220;
+color:white;
+font-family:Tahoma;
+padding:20px;
+}
+
+table {
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td {
+border:1px solid #333;
+padding:12px;
+text-align:right;
+}
+
+th {
+background:#111827;
+}
+
+.ai {
+color:#22c55e;
+font-weight:bold;
+}
+
+.human {
+color:#60a5fa;
+font-weight:bold;
+}
+
 </style>
+
 </head>
+
 <body>
-<h1>بوابة المعلمين</h1>
-<p>إدارة الصفوف والتقييم</p>
+
+<h1>إدارة المعلمين</h1>
+
+<table>
+<thead>
+<tr>
+<th>الاسم</th>
+<th>النوع</th>
+<th>المادة</th>
+<th>الحالة</th>
+</tr>
+</thead>
+
+<tbody id="teachersTable">
+</tbody>
+
+</table>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_DOMAIN",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_BUCKET",
+messagingSenderId: "YOUR_SENDER",
+appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadTeachers(){
+
+const querySnapshot = await getDocs(collection(db,"teachers"));
+
+const table = document.getElementById("teachersTable");
+
+querySnapshot.forEach((doc)=>{
+
+const teacher = doc.data();
+
+const row = `
+<tr>
+<td>${teacher.name}</td>
+<td class="${teacher.teacherType}">
+${teacher.teacherType === "ai" ? "معلم ذكي" : "معلم بشري"}
+</td>
+<td>${teacher.subjectId}</td>
+<td>${teacher.status}</td>
+</tr>
+`;
+
+table.innerHTML += row;
+
+});
+
+}
+
+loadTeachers();
+
+</script>
+
 </body>
 </html>
