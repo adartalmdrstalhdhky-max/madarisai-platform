@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Madaris AI | طلاب المدرسة</title>
 
   <script>
@@ -16,233 +16,269 @@
     }
   </script>
 
-  <link rel="stylesheet" href="../../assets/css/main.css" />
-  <link rel="stylesheet" href="../../assets/css/responsive.css" />
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/responsive.css">
 
   <style>
-    body {
-      margin: 0;
-      font-family: "Tajawal", sans-serif;
-      background: #071120;
-      color: white;
+    body{
+      margin:0;
+      font-family:"Tajawal",sans-serif;
+      background:#071120;
+      color:#ffffff;
     }
 
-    .header {
-      background: #0b1930;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+    .header{
+      background:#0b1930;
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    .logo {
-      font-size: 20px;
-      font-weight: 600;
+    .logo{
+      font-size:20px;
+      font-weight:700;
     }
 
-    .container {
-      padding: 30px;
+    .header-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
+    .back-btn,
+    .logout{
+      border:none;
+      padding:10px 16px;
+      border-radius:10px;
+      color:#fff;
+      cursor:pointer;
+      font-weight:700;
+      font-size:15px;
     }
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .back-btn{
+      background:#20c7ee;
     }
 
-    .back {
-      background: #00d4ff;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
+    .logout{
+      background:#ff4d4d;
     }
 
-    .logout {
-      background: #ff4d4d;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: white;
-      font-weight: 600;
+    .container{
+      padding:30px;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-bottom: 28px;
+    .top-section{
+      margin-bottom:25px;
     }
 
-    .stat {
-      background: #0b1930;
-      padding: 20px;
-      border-radius: 15px;
-      text-align: center;
+    .top-section h1{
+      margin:0;
+      font-size:32px;
     }
 
-    .stat h2 {
-      margin: 0;
-      font-size: 28px;
-      color: #00d4ff;
+    .top-section p{
+      margin:10px 0 0 0;
+      opacity:.82;
+      line-height:1.9;
     }
 
-    .stat p {
-      margin: 6px 0 0 0;
-      opacity: 0.75;
+    .loading-box{
+      background:#0b1930;
+      padding:18px;
+      border-radius:12px;
+      margin-bottom:20px;
+      color:#8fe8ff;
+      display:none;
     }
 
-    .panel {
-      background: #0b1930;
-      padding: 22px;
-      border-radius: 18px;
-      margin-bottom: 22px;
-      overflow: auto;
+    .error-box{
+      background:rgba(255,77,77,.12);
+      border:1px solid rgba(255,77,77,.25);
+      padding:18px;
+      border-radius:12px;
+      margin-bottom:20px;
+      color:#ffb3b3;
+      display:none;
+      line-height:1.9;
     }
 
-    .panel h2 {
-      margin: 0 0 16px 0;
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+      margin-bottom:30px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 900px;
+    .stat{
+      background:#0b1930;
+      padding:24px;
+      border-radius:18px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,.05);
     }
 
-    th,
-    td {
-      padding: 14px 12px;
-      text-align: right;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    .stat h2{
+      margin:0;
+      font-size:30px;
+      color:#00d4ff;
     }
 
-    th {
-      color: #8fe8ff;
-      font-size: 14px;
-      font-weight: 700;
+    .stat p{
+      margin-top:10px;
+      opacity:.75;
+      line-height:1.8;
     }
 
-    td {
-      font-size: 14px;
+    .table-card,
+    .note-card{
+      background:#0b1930;
+      border-radius:18px;
+      padding:24px;
+      margin-bottom:24px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.05);
     }
 
-    .status {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      display: inline-block;
+    .table-title,
+    .note-card h3{
+      margin-top:0;
+      margin-bottom:14px;
+      font-size:20px;
     }
 
-    .status.active {
-      background: rgba(34, 197, 94, 0.12);
-      color: #6ee7a3;
+    .note-card p{
+      margin:0;
+      opacity:.8;
+      line-height:1.9;
     }
 
-    .status.review {
-      background: rgba(255, 193, 7, 0.12);
-      color: #ffd666;
+    .table-wrap{
+      overflow-x:auto;
     }
 
-    .status.alert {
-      background: rgba(255, 77, 77, 0.12);
-      color: #ff9a9a;
+    .students-table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:980px;
     }
 
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+    .students-table th,
+    .students-table td{
+      padding:18px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      text-align:right;
+      vertical-align:middle;
     }
 
-    .quick-card {
-      background: #0b1930;
-      padding: 20px;
-      border-radius: 15px;
+    .students-table th{
+      color:#8fe8ff;
+      font-size:15px;
+      font-weight:700;
     }
 
-    .quick-card h3 {
-      margin: 0 0 10px 0;
+    .students-table td{
+      font-size:15px;
+      line-height:1.9;
     }
 
-    .quick-card p {
-      margin: 0;
-      opacity: 0.8;
-      line-height: 1.7;
+    .status-badge{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      white-space:nowrap;
     }
 
-    .message-box {
-      background: #0b1930;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 20px;
-      line-height: 1.8;
-      display: none;
+    .status-active{
+      background:rgba(46,204,113,.16);
+      color:#7ef0a7;
+      border:1px solid rgba(46,204,113,.24);
     }
 
-    .message-box.show {
-      display: block;
+    .status-inactive{
+      background:rgba(255,77,77,.12);
+      color:#ffb3b3;
+      border:1px solid rgba(255,77,77,.25);
     }
 
-    .message-box.error {
-      border: 1px solid rgba(255, 77, 77, 0.35);
-      color: #ffb4b4;
+    .gender-badge{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      white-space:nowrap;
     }
 
-    .message-box.info {
-      border: 1px solid rgba(0, 212, 255, 0.25);
-      color: #b7f3ff;
+    .gender-male{
+      background:rgba(64,140,255,.16);
+      color:#b9d7ff;
+      border:1px solid rgba(64,140,255,.24);
     }
 
-    .loading {
-      opacity: 0.75;
+    .gender-female{
+      background:rgba(255,105,180,.14);
+      color:#ffc1df;
+      border:1px solid rgba(255,105,180,.22);
     }
 
-    @media (max-width: 900px) {
-      .stats {
-        grid-template-columns: 1fr 1fr;
+    .muted{
+      opacity:.7;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:600px){
+      .stats{
+        grid-template-columns:1fr;
       }
 
-      .quick-grid {
-        grid-template-columns: 1fr;
+      .container{
+        padding:20px;
+      }
+
+      .top-section h1{
+        font-size:28px;
+      }
+
+      .header{
+        align-items:flex-start;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="header">
-    <div class="logo">Madaris AI | طلاب المدرسة</div>
 
-    <div class="actions">
-      <button class="back" onclick="goBack()">رجوع</button>
+  <div class="header">
+    <div class="logo" id="studentsHeaderTitle">Madaris AI | طلاب المدرسة</div>
+
+    <div class="header-actions">
+      <button class="back-btn" onclick="goBack()">رجوع</button>
       <button class="logout" onclick="logout()">خروج</button>
     </div>
   </div>
 
   <div class="container">
-    <div class="toolbar">
-      <div>
-        <h1>إدارة الطلاب</h1>
-        <p>راجع بيانات الطلاب الحقيقية القادمة من قاعدة البيانات.</p>
-      </div>
-    </div>
 
-    <div id="messageBox" class="message-box info"></div>
+    <div id="loadingBox" class="loading-box">جاري تحميل بيانات الطلاب...</div>
+    <div id="errorBox" class="error-box"></div>
+
+    <div class="top-section">
+      <h1 id="pageTitle">إدارة الطلاب</h1>
+      <p id="pageSubtitle">
+        راجع بيانات الطلاب الحقيقية القادمة من Firestore حسب المدرسة المرتبطة بحسابك.
+      </p>
+    </div>
 
     <div class="stats">
       <div class="stat">
@@ -266,59 +302,62 @@
       </div>
     </div>
 
-    <div class="panel">
-      <h2>قائمة الطلاب</h2>
+    <div class="table-card">
+      <h2 class="table-title">قائمة طلاب المدرسة</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th>اسم الطالب</th>
-            <th>رقم الطالب</th>
-            <th>الصف / classId</th>
-            <th>العمر</th>
-            <th>الجنس</th>
-            <th>الهاتف</th>
-            <th>هاتف ولي الأمر</th>
-            <th>الحالة</th>
-          </tr>
-        </thead>
-
-        <tbody id="studentsTableBody">
-          <tr>
-            <td colspan="8" class="loading">جاري تحميل الطلاب...</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="quick-grid">
-      <div class="quick-card">
-        <h3>بيانات حقيقية</h3>
-        <p>هذه الصفحة تقرأ الطلاب مباشرة من Firestore حسب المدرسة المرتبطة بحساب المدرسة.</p>
-      </div>
-
-      <div class="quick-card">
-        <h3>المرحلة التالية</h3>
-        <p>بعد نجاح قراءة الطلاب، سنربط الصفوف والمواد والتقارير بنفس الأسلوب.</p>
-      </div>
-
-      <div class="quick-card">
-        <h3>مهم</h3>
-        <p>يجب أن تحتوي وثيقة المستخدم المدرسي في مجموعة users على schoolId صحيح.</p>
+      <div class="table-wrap">
+        <table class="students-table">
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>رقم الطالب</th>
+              <th>العمر</th>
+              <th>الجنس</th>
+              <th>الصف</th>
+              <th>الحالة</th>
+              <th>الهاتف</th>
+              <th>هاتف ولي الأمر</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <tr>
+              <td colspan="8" class="muted">لا توجد بيانات حالياً.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+
+    <div class="note-card">
+      <h3>بيانات حقيقية</h3>
+      <p>
+        هذه الصفحة تقرأ الطلاب مباشرة من Firestore حسب المدرسة المرتبطة بحساب المدرسة.
+      </p>
+    </div>
+
+    <div class="note-card">
+      <h3>المرحلة التالية</h3>
+      <p>
+        بعد نجاح قراءة الطلاب سنربط الصفوف والمواد والتقارير بنفس الأسلوب.
+      </p>
+    </div>
+
+    <div class="note-card">
+      <h3>مهم</h3>
+      <p>
+        يجب أن تحتوي وثيقة الطالب على schoolId صحيح و classId صحيح حتى يظهر الربط بشكل سليم.
+      </p>
+    </div>
+
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
     import {
-      getAuth
-    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-    import {
       getFirestore,
-      collection,
       doc,
       getDoc,
+      collection,
       getDocs,
       query,
       where
@@ -335,28 +374,42 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const messageBox = document.getElementById("messageBox");
-    const studentsTableBody = document.getElementById("studentsTableBody");
+    const loadingBox = document.getElementById("loadingBox");
+    const errorBox = document.getElementById("errorBox");
+
+    const studentsHeaderTitle = document.getElementById("studentsHeaderTitle");
+    const pageTitle = document.getElementById("pageTitle");
+
     const totalStudentsEl = document.getElementById("totalStudents");
     const activeStudentsEl = document.getElementById("activeStudents");
     const maleStudentsEl = document.getElementById("maleStudents");
     const femaleStudentsEl = document.getElementById("femaleStudents");
 
-    function showMessage(message, type = "info") {
-      messageBox.className = `message-box show ${type}`;
-      messageBox.textContent = message;
+    const studentsTableBody = document.getElementById("studentsTableBody");
+
+    function showLoading(show){
+      loadingBox.style.display = show ? "block" : "none";
     }
 
-    function clearMessage() {
-      messageBox.className = "message-box info";
-      messageBox.textContent = "";
+    function showError(message){
+      errorBox.textContent = message;
+      errorBox.style.display = "block";
     }
 
-    function escapeHtml(value) {
-      if (value === null || value === undefined) return "";
+    function hideError(){
+      errorBox.style.display = "none";
+      errorBox.textContent = "";
+    }
+
+    function safeText(value, fallback = "-"){
+      if (value === null || value === undefined) return fallback;
+      const str = String(value).trim();
+      return str === "" ? fallback : str;
+    }
+
+    function escapeHtml(value){
       return String(value)
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
@@ -365,134 +418,227 @@
         .replaceAll("'", "&#039;");
     }
 
-    function formatStatus(statusValue) {
-      const normalized = String(statusValue || "").toLowerCase();
-
-      if (normalized === "active") {
-        return '<span class="status active">نشط</span>';
+    function normalizeNumber(value){
+      if (typeof value === "number") return value;
+      if (typeof value === "string" && value.trim() !== "") {
+        const parsed = Number(value);
+        if (!Number.isNaN(parsed)) return parsed;
       }
-
-      if (normalized === "review") {
-        return '<span class="status review">مراجعة</span>';
-      }
-
-      if (normalized === "alert") {
-        return '<span class="status alert">تنبيه</span>';
-      }
-
-      return `<span class="status review">${escapeHtml(statusValue || "غير محدد")}</span>`;
+      return 0;
     }
 
-    async function resolveSchoolId() {
-      const cachedSchoolId = localStorage.getItem("madaris_school_id");
-      if (cachedSchoolId) {
-        return cachedSchoolId;
+    function normalizeStatus(statusValue){
+      const value = String(statusValue || "").trim().toLowerCase();
+
+      if (value === "active" || value === "نشط") {
+        return {
+          text: "نشط",
+          className: "status-active"
+        };
       }
 
-      const uid = localStorage.getItem("madaris_uid");
-      if (!uid) {
-        throw new Error("لم يتم العثور على معرف المستخدم الحالي في localStorage.");
-      }
-
-      const userRef = doc(db, "users", uid);
-      const userSnap = await getDoc(userRef);
-
-      if (!userSnap.exists()) {
-        throw new Error("وثيقة المستخدم غير موجودة داخل users.");
-      }
-
-      const userData = userSnap.data();
-      const schoolId = userData.schoolId;
-
-      if (!schoolId) {
-        throw new Error("وثيقة المستخدم لا تحتوي على schoolId.");
-      }
-
-      localStorage.setItem("madaris_school_id", schoolId);
-      return schoolId;
+      return {
+        text: safeText(statusValue, "غير نشط"),
+        className: "status-inactive"
+      };
     }
 
-    async function loadStudents() {
+    function normalizeGender(genderValue){
+      const value = String(genderValue || "").trim().toLowerCase();
+
+      if (value === "male" || value === "ذكر") {
+        return {
+          text: "ذكر",
+          className: "gender-male"
+        };
+      }
+
+      if (value === "female" || value === "أنثى" || value === "انثى") {
+        return {
+          text: "أنثى",
+          className: "gender-female"
+        };
+      }
+
+      return {
+        text: safeText(genderValue, "-"),
+        className: "gender-male"
+      };
+    }
+
+    function setEmptyState(message){
+      studentsTableBody.innerHTML = `
+        <tr>
+          <td colspan="8" class="muted">${escapeHtml(message)}</td>
+        </tr>
+      `;
+    }
+
+    async function buildClassMap(schoolId){
+      const map = {};
+
+      const classesRef = collection(db, "classes");
+      const classesQuery = query(classesRef, where("schoolId", "==", schoolId));
+      const classesSnap = await getDocs(classesQuery);
+
+      classesSnap.forEach((docSnap) => {
+        const data = docSnap.data();
+        map[docSnap.id] = data.name || docSnap.id;
+      });
+
+      return map;
+    }
+
+    function renderTableRows(students, classMap){
+      if (!students.length) {
+        setEmptyState("لا توجد بيانات طلاب مرتبطة بهذه المدرسة حالياً.");
+        return;
+      }
+
+      const rows = students.map((student) => {
+        const statusInfo = normalizeStatus(student.status);
+        const genderInfo = normalizeGender(student.gender);
+
+        const className = student.classId
+          ? safeText(classMap[student.classId] || student.classId)
+          : "-";
+
+        const studentNumber = safeText(student.studentNumber || student.studentId || "-");
+        const age = normalizeNumber(student.age);
+
+        return `
+          <tr>
+            <td>${escapeHtml(safeText(student.name))}</td>
+            <td>${escapeHtml(studentNumber)}</td>
+            <td>${escapeHtml(age || "-")}</td>
+            <td><span class="gender-badge ${genderInfo.className}">${escapeHtml(genderInfo.text)}</span></td>
+            <td>${escapeHtml(className)}</td>
+            <td><span class="status-badge ${statusInfo.className}">${escapeHtml(statusInfo.text)}</span></td>
+            <td>${escapeHtml(safeText(student.phone))}</td>
+            <td>${escapeHtml(safeText(student.parentPhone))}</td>
+          </tr>
+        `;
+      }).join("");
+
+      studentsTableBody.innerHTML = rows;
+    }
+
+    async function loadStudentsPage(){
+      showLoading(true);
+      hideError();
+
       try {
-        showMessage("جاري تحميل بيانات الطلاب الحقيقية من Firestore...", "info");
+        const uid = localStorage.getItem("madaris_uid");
 
-        const schoolId = await resolveSchoolId();
+        if (!uid) {
+          showError("لم يتم العثور على UID المستخدم داخل المتصفح. سجل الدخول من جديد.");
+          setEmptyState("لا يمكن تحميل الصفحة بدون UID المستخدم.");
+          showLoading(false);
+          return;
+        }
+
+        const userRef = doc(db, "users", uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          showError("لم يتم العثور على مستند المستخدم داخل قاعدة البيانات.");
+          setEmptyState("مستند المستخدم غير موجود.");
+          showLoading(false);
+          return;
+        }
+
+        const userData = userSnap.data();
+        const schoolId = userData.schoolId;
+
+        if (!schoolId) {
+          showError("لم يتم العثور على schoolId داخل بيانات المستخدم.");
+          setEmptyState("هذا المستخدم غير مربوط بمدرسة.");
+          showLoading(false);
+          return;
+        }
+
+        const schoolRef = doc(db, "schools", schoolId);
+        const schoolSnap = await getDoc(schoolRef);
+
+        if (!schoolSnap.exists()) {
+          showError("لم يتم العثور على بيانات المدرسة المرتبطة بهذا المستخدم.");
+          setEmptyState("بيانات المدرسة غير موجودة.");
+          showLoading(false);
+          return;
+        }
+
+        const schoolData = schoolSnap.data();
+        const schoolName = schoolData.name || "المدرسة";
+
+        studentsHeaderTitle.textContent = "Madaris AI | طلاب " + schoolName;
+        pageTitle.textContent = "إدارة الطلاب";
+
+        localStorage.setItem("madaris_school_id", schoolId);
+        localStorage.setItem("madaris_school_name", schoolName);
+
+        const classMap = await buildClassMap(schoolId);
 
         const studentsRef = collection(db, "students");
         const studentsQuery = query(studentsRef, where("schoolId", "==", schoolId));
-        const snapshot = await getDocs(studentsQuery);
+        const studentsSnap = await getDocs(studentsQuery);
 
         const students = [];
-        snapshot.forEach((docSnap) => {
+        studentsSnap.forEach((docSnap) => {
           students.push({
             id: docSnap.id,
             ...docSnap.data()
           });
         });
 
-        totalStudentsEl.textContent = students.length;
+        const totalStudents = students.length;
 
-        const activeCount = students.filter(student => (student.status || "").toLowerCase() === "active").length;
-        const maleCount = students.filter(student => (student.gender || "").toLowerCase() === "male").length;
-        const femaleCount = students.filter(student => (student.gender || "").toLowerCase() === "female").length;
+        const activeStudents = students.filter((student) => {
+          const statusInfo = normalizeStatus(student.status);
+          return statusInfo.text === "نشط";
+        }).length;
 
-        activeStudentsEl.textContent = activeCount;
-        maleStudentsEl.textContent = maleCount;
-        femaleStudentsEl.textContent = femaleCount;
+        const maleStudents = students.filter((student) => {
+          const genderInfo = normalizeGender(student.gender);
+          return genderInfo.text === "ذكر";
+        }).length;
 
-        if (students.length === 0) {
-          studentsTableBody.innerHTML = `
-            <tr>
-              <td colspan="8">لا يوجد طلاب حالياً لهذه المدرسة داخل مجموعة students.</td>
-            </tr>
-          `;
-          showMessage(`تم الاتصال بقاعدة البيانات بنجاح، لكن لا توجد طلاب مرتبطون بـ schoolId = ${schoolId}`, "info");
-          return;
-        }
+        const femaleStudents = students.filter((student) => {
+          const genderInfo = normalizeGender(student.gender);
+          return genderInfo.text === "أنثى";
+        }).length;
 
-        students.sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ar"));
+        totalStudentsEl.textContent = totalStudents;
+        activeStudentsEl.textContent = activeStudents;
+        maleStudentsEl.textContent = maleStudents;
+        femaleStudentsEl.textContent = femaleStudents;
 
-        studentsTableBody.innerHTML = students.map(student => `
-          <tr>
-            <td>${escapeHtml(student.name || "-")}</td>
-            <td>${escapeHtml(student.studentId || student.id || "-")}</td>
-            <td>${escapeHtml(student.classId || student.className || "-")}</td>
-            <td>${escapeHtml(student.age ?? "-")}</td>
-            <td>${escapeHtml(student.gender || "-")}</td>
-            <td>${escapeHtml(student.phone || "-")}</td>
-            <td>${escapeHtml(student.parentPhone || "-")}</td>
-            <td>${formatStatus(student.status)}</td>
-          </tr>
-        `).join("");
+        renderTableRows(students, classMap);
 
-        clearMessage();
       } catch (error) {
-        console.error(error);
-        studentsTableBody.innerHTML = `
-          <tr>
-            <td colspan="8">حدث خطأ أثناء تحميل البيانات.</td>
-          </tr>
-        `;
-        showMessage(`خطأ في تحميل الطلاب: ${error.message}`, "error");
+        showError("حدث خطأ أثناء تحميل بيانات الطلاب: " + error.message);
+        setEmptyState("تعذر تحميل بيانات الطلاب حالياً.");
+      } finally {
+        showLoading(false);
       }
     }
 
-    window.logout = function () {
+    window.goBack = function(){
+      window.location.href = "index.html";
+    };
+
+    window.logout = function(){
       localStorage.removeItem("madaris_logged_in");
       localStorage.removeItem("madaris_role");
       localStorage.removeItem("madaris_uid");
       localStorage.removeItem("madaris_name");
       localStorage.removeItem("madaris_email");
       localStorage.removeItem("madaris_school_id");
+      localStorage.removeItem("madaris_school_name");
       window.location.href = "../login.html";
     };
 
-    window.goBack = function () {
-      window.location.href = "index.html";
-    };
-
-    loadStudents();
+    loadStudentsPage();
   </script>
-</body>
 
+</body>
 </html>
