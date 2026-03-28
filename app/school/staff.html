@@ -22,157 +22,228 @@ if (localStorage.getItem("madaris_role") !== "school") {
 
 <style>
 body{
-margin:0;
-font-family:"Tajawal",sans-serif;
-background:#071120;
-color:white;
+  margin:0;
+  font-family:"Tajawal",sans-serif;
+  background:#071120;
+  color:white;
 }
 
 .header{
-background:#0b1930;
-padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:12px;
-flex-wrap:wrap;
+  background:#0b1930;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
 .logo{
-font-size:20px;
-font-weight:600;
+  font-size:20px;
+  font-weight:600;
 }
 
 .header-actions{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
 .back-btn,
 .logout{
-border:none;
-padding:10px 16px;
-border-radius:10px;
-color:white;
-cursor:pointer;
-font-weight:700;
-font-size:15px;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  color:white;
+  cursor:pointer;
+  font-weight:700;
+  font-size:15px;
 }
 
 .back-btn{
-background:#20c7ee;
+  background:#20c7ee;
 }
 
 .logout{
-background:#ff4d4d;
+  background:#ff4d4d;
 }
 
 .container{
-padding:30px;
+  padding:30px;
 }
 
 .top-section{
-margin-bottom:25px;
+  margin-bottom:25px;
 }
 
 .top-section h1{
-margin:0;
-font-size:32px;
+  margin:0;
+  font-size:32px;
 }
 
 .top-section p{
-margin:10px 0 0 0;
-opacity:.82;
-line-height:1.9;
+  margin:10px 0 0 0;
+  opacity:.82;
+  line-height:1.9;
 }
 
 .loading-box{
-background:#0b1930;
-padding:18px;
-border-radius:12px;
-margin-bottom:20px;
-color:#8fe8ff;
-display:none;
+  background:#0b1930;
+  padding:18px;
+  border-radius:12px;
+  margin-bottom:20px;
+  color:#8fe8ff;
+  display:none;
 }
 
 .error-box{
-background:rgba(255,77,77,.12);
-border:1px solid rgba(255,77,77,.25);
-padding:18px;
-border-radius:12px;
-margin-bottom:20px;
-color:#ffb3b3;
-display:none;
+  background:rgba(255,77,77,.12);
+  border:1px solid rgba(255,77,77,.25);
+  padding:18px;
+  border-radius:12px;
+  margin-bottom:20px;
+  color:#ffb3b3;
+  display:none;
+  line-height:1.9;
 }
 
 .stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
-margin-bottom:30px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  margin-bottom:30px;
 }
 
 .stat{
-background:#0b1930;
-padding:24px;
-border-radius:18px;
-text-align:center;
+  background:#0b1930;
+  padding:24px;
+  border-radius:18px;
+  text-align:center;
 }
 
 .stat h2{
-margin:0;
-font-size:30px;
-color:#00d4ff;
+  margin:0;
+  font-size:30px;
+  color:#00d4ff;
 }
 
-.table-card{
-background:#0b1930;
-border-radius:18px;
-padding:24px;
-margin-bottom:24px;
-border:1px solid rgba(255,255,255,.05);
+.stat p{
+  margin-top:10px;
+  opacity:.75;
+}
+
+.table-card,
+.note-card{
+  background:#0b1930;
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:24px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.table-title,
+.note-card h3{
+  margin-top:0;
+  margin-bottom:14px;
+  font-size:20px;
+}
+
+.note-card p{
+  margin:0;
+  opacity:.8;
+  line-height:1.9;
+}
+
+.table-wrap{
+  overflow-x:auto;
 }
 
 .staff-table{
-width:100%;
-border-collapse:collapse;
+  width:100%;
+  border-collapse:collapse;
+  min-width:980px;
 }
 
 .staff-table th,
 .staff-table td{
-padding:18px 14px;
-border-bottom:1px solid rgba(255,255,255,.08);
-text-align:right;
+  padding:18px 14px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  text-align:right;
+  vertical-align:middle;
+}
+
+.staff-table th{
+  color:#8fe8ff;
+  font-size:15px;
+  font-weight:700;
+}
+
+.staff-table td{
+  font-size:15px;
+  line-height:1.9;
 }
 
 .staff-type-badge,
 .status-badge{
-display:inline-block;
-padding:8px 14px;
-border-radius:999px;
-font-size:14px;
-font-weight:700;
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
 }
 
 .staff-type-human{
-background:rgba(64,140,255,.16);
-color:#b9d7ff;
+  background:rgba(64,140,255,.16);
+  color:#b9d7ff;
+  border:1px solid rgba(64,140,255,.24);
 }
 
 .staff-type-ai{
-background:rgba(159,106,255,.18);
-color:#d8c2ff;
+  background:rgba(159,106,255,.18);
+  color:#d8c2ff;
+  border:1px solid rgba(159,106,255,.26);
 }
 
 .status-active{
-background:rgba(46,204,113,.16);
-color:#7ef0a7;
+  background:rgba(46, 204, 113, .16);
+  color:#7ef0a7;
+  border:1px solid rgba(46, 204, 113, .24);
 }
 
 .status-inactive{
-background:rgba(255,77,77,.12);
-color:#ffb3b3;
+  background:rgba(255,77,77,.12);
+  color:#ffb3b3;
+  border:1px solid rgba(255,77,77,.25);
+}
+
+.muted{
+  opacity:.7;
+}
+
+@media(max-width:900px){
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:600px){
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .container{
+    padding:20px;
+  }
+
+  .top-section h1{
+    font-size:28px;
+  }
+
+  .header{
+    align-items:flex-start;
+  }
 }
 </style>
 
@@ -181,268 +252,483 @@ color:#ffb3b3;
 <body>
 
 <div class="header">
-<div class="logo" id="staffHeaderTitle">Madaris AI | طاقم المدرسة</div>
 
-<div class="header-actions">
-<button class="back-btn" onclick="goBack()">رجوع</button>
-<button class="logout" onclick="logout()">خروج</button>
-</div>
+  <div class="logo" id="staffHeaderTitle">Madaris AI | طاقم المدرسة</div>
+
+  <div class="header-actions">
+    <button class="back-btn" onclick="goBack()">رجوع</button>
+    <button class="logout" onclick="logout()">خروج</button>
+  </div>
 
 </div>
 
 <div class="container">
 
-<div id="loadingBox" class="loading-box">جاري تحميل بيانات الطاقم...</div>
-<div id="errorBox" class="error-box"></div>
+  <div id="loadingBox" class="loading-box">جاري تحميل بيانات الطاقم...</div>
+  <div id="errorBox" class="error-box"></div>
 
-<div class="top-section">
-<h1 id="pageTitle">إدارة المعلمين والموظفين</h1>
-</div>
+  <div class="top-section">
+    <h1 id="pageTitle">إدارة المعلمين والموظفين</h1>
+    <p id="pageSubtitle">
+      هذه الصفحة تقرأ بيانات الطاقم مباشرة من Firestore حسب المدرسة المرتبطة بحسابك.
+      حالياً نحن نعرض بيانات مجموعة المعلمين teachers، وبعدها نضيف الموظفين الإداريين.
+    </p>
+  </div>
 
-<div class="stats">
-<div class="stat">
-<h2 id="totalTeachers">0</h2>
-<p>إجمالي المعلمين</p>
-</div>
+  <div class="stats">
 
-<div class="stat">
-<h2 id="humanTeachers">0</h2>
-<p>المعلمون البشريون</p>
-</div>
+    <div class="stat">
+      <h2 id="totalTeachers">0</h2>
+      <p>إجمالي المعلمين</p>
+    </div>
 
-<div class="stat">
-<h2 id="aiTeachers">0</h2>
-<p>المعلمون الأذكياء</p>
-</div>
+    <div class="stat">
+      <h2 id="humanTeachers">0</h2>
+      <p>المعلمون البشريون</p>
+    </div>
 
-<div class="stat">
-<h2 id="activeTeachers">0</h2>
-<p>النشطون</p>
-</div>
+    <div class="stat">
+      <h2 id="aiTeachers">0</h2>
+      <p>المعلمون الأذكياء</p>
+    </div>
 
-</div>
+    <div class="stat">
+      <h2 id="activeTeachers">0</h2>
+      <p>النشطون</p>
+    </div>
 
-<div class="table-card">
+  </div>
 
-<h2>قائمة طاقم المدرسة</h2>
+  <div class="table-card">
+    <h2 class="table-title">قائمة طاقم المدرسة</h2>
 
-<table class="staff-table">
+    <div class="table-wrap">
+      <table class="staff-table">
+        <thead>
+          <tr>
+            <th>الاسم</th>
+            <th>النوع</th>
+            <th>الدور</th>
+            <th>المادة</th>
+            <th>الصف</th>
+            <th>الحالة</th>
+            <th>البريد</th>
+            <th>الهاتف</th>
+          </tr>
+        </thead>
+        <tbody id="staffTableBody">
+          <tr>
+            <td colspan="8" class="muted">لا توجد بيانات حالياً.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<thead>
-<tr>
-<th>الاسم</th>
-<th>النوع</th>
-<th>الدور</th>
-<th>المادة</th>
-<th>الصف</th>
-<th>الحالة</th>
-<th>البريد</th>
-<th>الهاتف</th>
-</tr>
-</thead>
+  <div class="note-card">
+    <h3>المعلمون المتفوقون</h3>
+    <p>
+      لاحقاً سنربط الأداء والحضور والنتائج الفعلية لاستخراج أفضل المعلمين تلقائياً.
+    </p>
+  </div>
 
-<tbody id="staffTableBody">
-<tr>
-<td colspan="8">لا توجد بيانات</td>
-</tr>
-</tbody>
+  <div class="note-card">
+    <h3>المتابعة الإدارية</h3>
+    <p>
+      بعد إضافة الموظفين الإداريين سنعرض الوكلاء والسكرتارية وشؤون الطلاب وبقية الطاقم.
+    </p>
+  </div>
 
-</table>
-
-</div>
+  <div class="note-card">
+    <h3>تقارير الطاقم</h3>
+    <p>
+      هذه الصفحة أصبحت الآن مرتبطة فعلياً بـ Firestore، وليست بيانات ثابتة فقط.
+    </p>
+  </div>
 
 </div>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-
 import {
-getFirestore,
-doc,
-getDoc,
-collection,
-getDocs,
-query,
-where
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-
 const firebaseConfig = {
-apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-authDomain: "madaris-ai.firebaseapp.com",
-projectId: "madaris-ai",
-storageBucket: "madaris-ai.firebasestorage.app",
-messagingSenderId: "915394447224",
-appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+  apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+  authDomain: "madaris-ai.firebaseapp.com",
+  projectId: "madaris-ai",
+  storageBucket: "madaris-ai.firebasestorage.app",
+  messagingSenderId: "915394447224",
+  appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+  measurementId: "G-SC7VE6F20S"
 };
-
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const loadingBox = document.getElementById("loadingBox");
+const errorBox = document.getElementById("errorBox");
+
+const staffHeaderTitle = document.getElementById("staffHeaderTitle");
+const pageTitle = document.getElementById("pageTitle");
+
+const totalTeachersEl = document.getElementById("totalTeachers");
+const humanTeachersEl = document.getElementById("humanTeachers");
+const aiTeachersEl = document.getElementById("aiTeachers");
+const activeTeachersEl = document.getElementById("activeTeachers");
 
 const staffTableBody = document.getElementById("staffTableBody");
 
+function showLoading(show){
+  loadingBox.style.display = show ? "block" : "none";
+}
+
+function showError(message){
+  errorBox.textContent = message;
+  errorBox.style.display = "block";
+}
+
+function hideError(){
+  errorBox.style.display = "none";
+  errorBox.textContent = "";
+}
+
+function safeText(value, fallback = "-"){
+  if (value === null || value === undefined) return fallback;
+  const str = String(value).trim();
+  return str === "" ? fallback : str;
+}
+
+function escapeHtml(value){
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function normalizeStatus(statusValue){
+  const value = String(statusValue || "").trim().toLowerCase();
+
+  if (value === "active" || value === "نشط") {
+    return {
+      text: "نشط",
+      className: "status-active"
+    };
+  }
+
+  return {
+    text: safeText(statusValue, "غير نشط"),
+    className: "status-inactive"
+  };
+}
 
 function normalizeTeacherType(teacher){
+  const teacherType = String(teacher.teacherType || "").trim().toLowerCase();
+  const isAI = teacher.isAI === true;
 
-if (teacher.isAI === true || teacher.teacherType === "ai") {
+  if (teacherType === "ai" || isAI) {
+    return {
+      text: "معلم ذكي",
+      className: "staff-type-ai"
+    };
+  }
 
-return {
-text:"معلم ذكي",
-className:"staff-type-ai"
-};
-
+  return {
+    text: "معلم بشري",
+    className: "staff-type-human"
+  };
 }
 
-return {
-text:"معلم بشري",
-className:"staff-type-human"
-};
+function normalizeRole(roleValue){
+  const value = String(roleValue || "").trim().toLowerCase();
 
+  if (value === "teacher") return "معلم";
+  if (value === "admin") return "إداري";
+  if (value === "supervisor") return "مشرف";
+
+  return safeText(roleValue, "-");
 }
 
-
-function normalizeStatus(status){
-
-if(status === "active"){
-return {
-text:"نشط",
-className:"status-active"
-};
+function setEmptyState(message){
+  staffTableBody.innerHTML = `
+    <tr>
+      <td colspan="8" class="muted">${escapeHtml(message)}</td>
+    </tr>
+  `;
 }
 
-return {
-text:"غير نشط",
-className:"status-inactive"
-};
+async function buildClassMap(schoolId){
+  const map = {};
 
+  const classesRef = collection(db, "classes");
+  const classesQuery = query(classesRef, where("schoolId", "==", schoolId));
+  const classesSnap = await getDocs(classesQuery);
+
+  classesSnap.forEach((docSnap) => {
+    const data = docSnap.data();
+    map[docSnap.id] = data.name || docSnap.id;
+  });
+
+  return map;
 }
 
+async function resolveSubjectNameForTeacher(teacher, schoolId){
+  try{
+    if (!teacher.subjectId) {
+      return "-";
+    }
 
+    const subjectId = String(teacher.subjectId).trim();
+    if (!subjectId) {
+      return "-";
+    }
+
+    const directDocRef = doc(db, "subjects", subjectId);
+    const directDocSnap = await getDoc(directDocRef);
+
+    if (directDocSnap.exists()) {
+      const directData = directDocSnap.data();
+      if (directData && directData.name) {
+        return directData.name;
+      }
+    }
+
+    let subjectQuery = query(
+      collection(db, "subjects"),
+      where("schoolId", "==", schoolId),
+      where("name", "==", subjectId)
+    );
+
+    let subjectSnap = await getDocs(subjectQuery);
+
+    if (!subjectSnap.empty) {
+      const subjectData = subjectSnap.docs[0].data();
+      return safeText(subjectData.name, subjectId);
+    }
+
+    if (teacher.classId) {
+      subjectQuery = query(
+        collection(db, "subjects"),
+        where("schoolId", "==", schoolId),
+        where("classId", "==", teacher.classId)
+      );
+
+      subjectSnap = await getDocs(subjectQuery);
+
+      if (!subjectSnap.empty) {
+        const matchedDoc = subjectSnap.docs.find((docItem) => {
+          const docIdMatch = docItem.id === subjectId;
+          const data = docItem.data();
+          const nameMatch = String(data.name || "").trim() === subjectId;
+          return docIdMatch || nameMatch;
+        });
+
+        if (matchedDoc) {
+          return safeText(matchedDoc.data().name, subjectId);
+        }
+
+        if (subjectSnap.docs.length === 1) {
+          return safeText(subjectSnap.docs[0].data().name, subjectId);
+        }
+      }
+    }
+
+    subjectQuery = query(
+      collection(db, "subjects"),
+      where("schoolId", "==", schoolId)
+    );
+
+    subjectSnap = await getDocs(subjectQuery);
+
+    if (!subjectSnap.empty) {
+      const matchedDoc = subjectSnap.docs.find((docItem) => {
+        const data = docItem.data();
+        return docItem.id === subjectId || String(data.name || "").trim() === subjectId;
+      });
+
+      if (matchedDoc) {
+        return safeText(matchedDoc.data().name, subjectId);
+      }
+    }
+
+    return subjectId;
+  }catch(error){
+    return safeText(teacher.subjectId, "-");
+  }
+}
+
+async function enrichTeachersSubjects(teachers, schoolId){
+  const enrichedTeachers = [];
+
+  for (const teacher of teachers) {
+    const subjectName = await resolveSubjectNameForTeacher(teacher, schoolId);
+    enrichedTeachers.push({
+      ...teacher,
+      subjectName
+    });
+  }
+
+  return enrichedTeachers;
+}
+
+function renderTableRows(teachers, classMap){
+  if (!teachers.length) {
+    setEmptyState("لا توجد بيانات طاقم مرتبطة بهذه المدرسة حالياً.");
+    return;
+  }
+
+  const rows = teachers.map((teacher) => {
+    const typeInfo = normalizeTeacherType(teacher);
+    const statusInfo = normalizeStatus(teacher.status);
+
+    const subjectName = safeText(teacher.subjectName, safeText(teacher.subjectId, "-"));
+
+    const className = teacher.classId
+      ? safeText(classMap[teacher.classId] || teacher.classId)
+      : "-";
+
+    return `
+      <tr>
+        <td>${escapeHtml(safeText(teacher.name))}</td>
+        <td><span class="staff-type-badge ${typeInfo.className}">${escapeHtml(typeInfo.text)}</span></td>
+        <td>${escapeHtml(normalizeRole(teacher.role))}</td>
+        <td>${escapeHtml(subjectName)}</td>
+        <td>${escapeHtml(className)}</td>
+        <td><span class="status-badge ${statusInfo.className}">${escapeHtml(statusInfo.text)}</span></td>
+        <td>${escapeHtml(safeText(teacher.email))}</td>
+        <td>${escapeHtml(safeText(teacher.phone))}</td>
+      </tr>
+    `;
+  }).join("");
+
+  staffTableBody.innerHTML = rows;
+}
 
 async function loadStaffPage(){
+  showLoading(true);
+  hideError();
 
-const uid = localStorage.getItem("madaris_uid");
+  try {
+    const uid = localStorage.getItem("madaris_uid");
 
-const userRef = doc(db,"users",uid);
-const userSnap = await getDoc(userRef);
+    if (!uid) {
+      showError("لم يتم العثور على UID المستخدم داخل المتصفح. سجل الدخول من جديد.");
+      setEmptyState("لا يمكن تحميل الصفحة بدون UID المستخدم.");
+      showLoading(false);
+      return;
+    }
 
-const schoolId = userSnap.data().schoolId;
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
 
+    if (!userSnap.exists()) {
+      showError("لم يتم العثور على مستند المستخدم داخل قاعدة البيانات.");
+      setEmptyState("مستند المستخدم غير موجود.");
+      showLoading(false);
+      return;
+    }
 
-const teachersRef = collection(db,"teachers");
+    const userData = userSnap.data();
+    const schoolId = userData.schoolId;
 
-const q = query(teachersRef,where("schoolId","==",schoolId));
+    if (!schoolId) {
+      showError("لم يتم العثور على schoolId داخل بيانات المستخدم.");
+      setEmptyState("هذا المستخدم غير مربوط بمدرسة.");
+      showLoading(false);
+      return;
+    }
 
-const querySnapshot = await getDocs(q);
+    const schoolRef = doc(db, "schools", schoolId);
+    const schoolSnap = await getDoc(schoolRef);
 
-const teachers=[];
+    if (!schoolSnap.exists()) {
+      showError("لم يتم العثور على بيانات المدرسة المرتبطة بهذا المستخدم.");
+      setEmptyState("بيانات المدرسة غير موجودة.");
+      showLoading(false);
+      return;
+    }
 
-querySnapshot.forEach(docSnap=>{
-teachers.push({
-id:docSnap.id,
-...docSnap.data()
-});
-});
+    const schoolData = schoolSnap.data();
+    const schoolName = schoolData.name || "المدرسة";
 
+    staffHeaderTitle.textContent = "Madaris AI | طاقم " + schoolName;
+    pageTitle.textContent = "إدارة المعلمين والموظفين";
 
-/* إصلاح عرض اسم المادة نهائياً */
+    localStorage.setItem("madaris_school_id", schoolId);
+    localStorage.setItem("madaris_school_name", schoolName);
 
-for(const teacher of teachers){
+    const classMap = await buildClassMap(schoolId);
 
-if(teacher.subjectId){
+    const teachersRef = collection(db, "teachers");
+    const teachersQuery = query(teachersRef, where("schoolId", "==", schoolId));
+    const teachersSnap = await getDocs(teachersQuery);
 
-const subjectRef = doc(db,"subjects",teacher.subjectId);
+    const rawTeachers = [];
+    teachersSnap.forEach((docSnap) => {
+      rawTeachers.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
+    });
 
-const subjectSnap = await getDoc(subjectRef);
+    const teachers = await enrichTeachersSubjects(rawTeachers, schoolId);
 
-if(subjectSnap.exists()){
-teacher.subjectName = subjectSnap.data().name;
-}else{
-teacher.subjectName = teacher.subjectId;
+    const totalTeachers = teachers.length;
+    const humanTeachers = teachers.filter((teacher) => {
+      const typeInfo = normalizeTeacherType(teacher);
+      return typeInfo.text === "معلم بشري";
+    }).length;
+
+    const aiTeachers = teachers.filter((teacher) => {
+      const typeInfo = normalizeTeacherType(teacher);
+      return typeInfo.text === "معلم ذكي";
+    }).length;
+
+    const activeTeachers = teachers.filter((teacher) => {
+      const statusInfo = normalizeStatus(teacher.status);
+      return statusInfo.text === "نشط";
+    }).length;
+
+    totalTeachersEl.textContent = totalTeachers;
+    humanTeachersEl.textContent = humanTeachers;
+    aiTeachersEl.textContent = aiTeachers;
+    activeTeachersEl.textContent = activeTeachers;
+
+    renderTableRows(teachers, classMap);
+
+  } catch (error) {
+    showError("حدث خطأ أثناء تحميل بيانات الطاقم: " + error.message);
+    setEmptyState("تعذر تحميل بيانات الطاقم حالياً.");
+  } finally {
+    showLoading(false);
+  }
 }
-
-}
-
-
-if(teacher.classId){
-
-const classRef = doc(db,"classes",teacher.classId);
-
-const classSnap = await getDoc(classRef);
-
-if(classSnap.exists()){
-teacher.className = classSnap.data().name;
-}else{
-teacher.className = teacher.classId;
-}
-
-}
-
-}
-
-
-
-staffTableBody.innerHTML = teachers.map(teacher=>{
-
-const typeInfo = normalizeTeacherType(teacher);
-const statusInfo = normalizeStatus(teacher.status);
-
-return `
-
-<tr>
-
-<td>${teacher.name || "-"}</td>
-
-<td>
-<span class="staff-type-badge ${typeInfo.className}">
-${typeInfo.text}
-</span>
-</td>
-
-<td>${teacher.role || "-"}</td>
-
-<td>${teacher.subjectName || "-"}</td>
-
-<td>${teacher.className || "-"}</td>
-
-<td>
-<span class="status-badge ${statusInfo.className}">
-${statusInfo.text}
-</span>
-</td>
-
-<td>${teacher.email || "-"}</td>
-
-<td>${teacher.phone || "-"}</td>
-
-</tr>
-
-`;
-
-}).join("");
-
-}
-
 
 window.goBack = function(){
-window.location.href="index.html";
+  window.location.href = "index.html";
 };
-
 
 window.logout = function(){
-
-localStorage.clear();
-
-window.location.href="../login.html";
-
+  localStorage.removeItem("madaris_logged_in");
+  localStorage.removeItem("madaris_role");
+  localStorage.removeItem("madaris_uid");
+  localStorage.removeItem("madaris_name");
+  localStorage.removeItem("madaris_email");
+  localStorage.removeItem("madaris_school_id");
+  localStorage.removeItem("madaris_school_name");
+  window.location.href = "../login.html";
 };
 
-
 loadStaffPage();
-
 </script>
 
 </body>
