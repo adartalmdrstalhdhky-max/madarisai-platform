@@ -9,11 +9,11 @@
 
 <script>
 if(!localStorage.getItem("madaris_logged_in")){
-window.location.href="../login.html"
+window.location.href="../login.html";
 }
 
-if(localStorage.getItem("madaris_role")!=="school"){
-window.location.href="../login.html"
+if(localStorage.getItem("madaris_role") !== "school"){
+window.location.href="../login.html";
 }
 </script>
 
@@ -35,6 +35,8 @@ padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+gap:12px;
+flex-wrap:wrap;
 }
 
 .logo{
@@ -131,6 +133,26 @@ opacity:.75;
 line-height:1.7;
 }
 
+.loading-box{
+background:#0b1930;
+padding:18px;
+border-radius:12px;
+margin-bottom:20px;
+color:#8fe8ff;
+display:none;
+}
+
+.error-box{
+background:rgba(255,77,77,.12);
+border:1px solid rgba(255,77,77,.25);
+padding:18px;
+border-radius:12px;
+margin-bottom:20px;
+color:#ffb3b3;
+display:none;
+line-height:1.8;
+}
+
 @media(max-width:900px){
 
 .grid{
@@ -163,7 +185,7 @@ padding:20px;
 
 <div class="header">
 
-<div class="logo">
+<div class="logo" id="schoolHeaderTitle">
 Madaris AI | إدارة المدرسة
 </div>
 
@@ -175,30 +197,36 @@ Madaris AI | إدارة المدرسة
 
 <div class="container">
 
+<div id="loadingBox" class="loading-box">
+جاري تحميل بيانات المدرسة...
+</div>
+
+<div id="errorBox" class="error-box"></div>
+
 <div class="top-section">
-<h1>لوحة إدارة المدرسة</h1>
-<p>إدارة الطلاب، المعلمين، التقارير، ومتابعة الأداء العام للمدرسة.</p>
+<h1 id="pageTitle">لوحة إدارة المدرسة</h1>
+<p id="pageSubtitle">إدارة الطلاب، المعلمين، التقارير، ومتابعة الأداء العام للمدرسة.</p>
 </div>
 
 <div class="stats">
 
 <div class="stat">
-<h2>540</h2>
+<h2 id="studentsCount">0</h2>
 <p>عدد الطلاب</p>
 </div>
 
 <div class="stat">
-<h2>35</h2>
+<h2 id="teachersCount">0</h2>
 <p>عدد المعلمين</p>
 </div>
 
 <div class="stat">
-<h2>22</h2>
+<h2 id="classesCount">0</h2>
 <p>الفصول</p>
 </div>
 
 <div class="stat">
-<h2>94%</h2>
+<h2 id="attendanceRate">0%</h2>
 <p>معدل الحضور</p>
 </div>
 
@@ -242,26 +270,161 @@ Madaris AI | إدارة المدرسة
 
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import {
+getFirestore,
+doc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-function logout(){
-localStorage.removeItem("madaris_logged_in")
-localStorage.removeItem("madaris_role")
-window.location.href="../login.html"
+const firebaseConfig = {
+apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+authDomain: "madaris-ai.firebaseapp.com",
+projectId: "madaris-ai",
+storageBucket: "madaris-ai.firebasestorage.app",
+messagingSenderId: "915394447224",
+appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+measurementId: "G-SC7VE6F20S"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const loadingBox = document.getElementById("loadingBox");
+const errorBox = document.getElementById("errorBox");
+
+const schoolHeaderTitle = document.getElementById("schoolHeaderTitle");
+const pageTitle = document.getElementById("pageTitle");
+const pageSubtitle = document.getElementById("pageSubtitle");
+
+const studentsCountEl = document.getElementById("studentsCount");
+const teachersCountEl = document.getElementById("teachersCount");
+const classesCountEl = document.getElementById("classesCount");
+const attendanceRateEl = document.getElementById("attendanceRate");
+
+function showLoading(show){
+loadingBox.style.display = show ? "block" : "none";
 }
 
-function goStudents(){
-window.location.href="students.html"
+function showError(message){
+errorBox.textContent = message;
+errorBox.style.display = "block";
 }
 
-function goStaff(){
-window.location.href="staff.html"
+function hideError(){
+errorBox.style.display = "none";
+errorBox.textContent = "";
 }
 
-function goReports(){
-window.location.href="reports.html"
+function setText(id, value){
+document.getElementById(id).textContent = value;
 }
 
+function normalizeNumber(value){
+if(typeof value === "number"){
+return value;
+}
+if(typeof value === "string" && value.trim() !== ""){
+const parsed = Number(value);
+if(!Number.isNaN(parsed)){
+return parsed;
+}
+}
+return 0;
+}
+
+async function loadSchoolDashboard(){
+showLoading(true);
+hideError();
+
+try{
+const uid = localStorage.getItem("madaris_uid");
+
+if(!uid){
+showError("لم يتم العثور على UID المستخدم داخل المتصفح. سجل الدخول من جديد.");
+showLoading(false);
+return;
+}
+
+const userRef = doc(db, "users", uid);
+const userSnap = await getDoc(userRef);
+
+if(!userSnap.exists()){
+showError("لم يتم العثور على مستند المستخدم داخل قاعدة البيانات.");
+showLoading(false);
+return;
+}
+
+const userData = userSnap.data();
+const schoolId = userData.schoolId;
+
+if(!schoolId){
+showError("لم يتم العثور على schoolId داخل بيانات المستخدم.");
+showLoading(false);
+return;
+}
+
+const schoolRef = doc(db, "schools", schoolId);
+const schoolSnap = await getDoc(schoolRef);
+
+if(!schoolSnap.exists()){
+showError("لم يتم العثور على بيانات المدرسة المرتبطة بهذا المستخدم.");
+showLoading(false);
+return;
+}
+
+const schoolData = schoolSnap.data();
+
+const schoolName = schoolData.name || "المدرسة";
+const studentsCount = normalizeNumber(schoolData.studentsCount);
+const teachersCount = normalizeNumber(schoolData.teachersCount);
+const classesCount = normalizeNumber(schoolData.classesCount);
+const attendanceRate = normalizeNumber(schoolData.attendanceRate);
+
+schoolHeaderTitle.textContent = "Madaris AI | " + schoolName;
+pageTitle.textContent = "لوحة " + schoolName;
+pageSubtitle.textContent = "إدارة الطلاب، المعلمين، التقارير، ومتابعة الأداء العام للمدرسة.";
+
+studentsCountEl.textContent = studentsCount;
+teachersCountEl.textContent = teachersCount;
+classesCountEl.textContent = classesCount;
+attendanceRateEl.textContent = attendanceRate + "%";
+
+localStorage.setItem("madaris_school_id", schoolId);
+localStorage.setItem("madaris_school_name", schoolName);
+
+}catch(error){
+showError("حدث خطأ أثناء تحميل بيانات المدرسة: " + error.message);
+}finally{
+showLoading(false);
+}
+}
+
+window.logout = function(){
+localStorage.removeItem("madaris_logged_in");
+localStorage.removeItem("madaris_role");
+localStorage.removeItem("madaris_uid");
+localStorage.removeItem("madaris_name");
+localStorage.removeItem("madaris_email");
+localStorage.removeItem("madaris_school_id");
+localStorage.removeItem("madaris_school_name");
+window.location.href = "../login.html";
+};
+
+window.goStudents = function(){
+window.location.href = "students.html";
+};
+
+window.goStaff = function(){
+window.location.href = "staff.html";
+};
+
+window.goReports = function(){
+window.location.href = "reports.html";
+};
+
+loadSchoolDashboard();
 </script>
 
 </body>
