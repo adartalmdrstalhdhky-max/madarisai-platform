@@ -2,9 +2,9 @@
 <html lang="ar" dir="rtl">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Madaris AI | الفصول الدراسية</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI | فصول المدرسة</title>
 
   <script>
     if (!localStorage.getItem("madaris_logged_in")) {
@@ -16,232 +16,234 @@
     }
   </script>
 
-  <link rel="stylesheet" href="../../assets/css/main.css">
-  <link rel="stylesheet" href="../../assets/css/responsive.css">
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/responsive.css" />
 
   <style>
-    body{
-      margin:0;
-      font-family:"Tajawal",sans-serif;
-      background:#071120;
-      color:white;
+    body {
+      margin: 0;
+      font-family: "Tajawal", sans-serif;
+      background: #071120;
+      color: #ffffff;
     }
 
-    .header{
-      background:#0b1930;
-      padding:20px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
+    .header {
+      background: #0b1930;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .logo{
-      font-size:20px;
-      font-weight:600;
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.6;
     }
 
-    .header-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .back-btn,
-    .logout{
-      border:none;
-      padding:10px 16px;
-      border-radius:10px;
-      color:white;
-      cursor:pointer;
-      font-weight:700;
-      font-size:15px;
+    .logout {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
     }
 
-    .back-btn{
-      background:#20c7ee;
+    .back-btn {
+      background: #20c7ee;
     }
 
-    .logout{
-      background:#ff4d4d;
+    .logout {
+      background: #ff4d4d;
     }
 
-    .container{
-      padding:30px;
+    .container {
+      padding: 30px;
     }
 
-    .top-section{
-      margin-bottom:25px;
+    .loading-box {
+      background: #0b1930;
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      color: #8fe8ff;
+      display: none;
+      line-height: 1.9;
     }
 
-    .top-section h1{
-      margin:0;
-      font-size:32px;
+    .error-box {
+      background: rgba(255, 77, 77, 0.12);
+      border: 1px solid rgba(255, 77, 77, 0.25);
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      color: #ffb3b3;
+      display: none;
+      line-height: 1.9;
     }
 
-    .top-section p{
-      margin:10px 0 0 0;
-      opacity:.82;
-      line-height:1.9;
+    .top-section {
+      margin-bottom: 25px;
     }
 
-    .loading-box{
-      background:#0b1930;
-      padding:18px;
-      border-radius:12px;
-      margin-bottom:20px;
-      color:#8fe8ff;
-      display:none;
+    .top-section h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.5;
     }
 
-    .error-box{
-      background:rgba(255,77,77,.12);
-      border:1px solid rgba(255,77,77,.25);
-      padding:18px;
-      border-radius:12px;
-      margin-bottom:20px;
-      color:#ffb3b3;
-      display:none;
-      line-height:1.9;
+    .top-section p {
+      margin: 10px 0 0 0;
+      opacity: 0.82;
+      line-height: 1.9;
+      font-size: 18px;
     }
 
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:20px;
-      margin-bottom:30px;
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
     }
 
-    .stat{
-      background:#0b1930;
-      padding:24px;
-      border-radius:18px;
-      text-align:center;
-      border:1px solid rgba(255,255,255,.05);
+    .stat {
+      background: #0b1930;
+      padding: 24px;
+      border-radius: 18px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .stat h2{
-      margin:0;
-      font-size:30px;
-      color:#00d4ff;
+    .stat h2 {
+      margin: 0;
+      font-size: 30px;
+      color: #00d4ff;
     }
 
-    .stat p{
-      margin-top:10px;
-      opacity:.75;
+    .stat p {
+      margin-top: 10px;
+      opacity: 0.75;
+      font-size: 18px;
+      line-height: 1.8;
     }
 
     .table-card,
-    .note-card{
-      background:#0b1930;
-      border-radius:18px;
-      padding:24px;
-      margin-bottom:24px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.05);
+    .note-card {
+      background: #0b1930;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .table-title,
-    .note-card h3{
-      margin-top:0;
-      margin-bottom:14px;
-      font-size:20px;
+    .note-card h3 {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 20px;
+      line-height: 1.7;
     }
 
-    .note-card p{
-      margin:0;
-      opacity:.8;
-      line-height:1.9;
+    .note-card p {
+      margin: 0;
+      opacity: 0.8;
+      line-height: 1.9;
+      font-size: 18px;
     }
 
-    .table-wrap{
-      overflow-x:auto;
+    .table-wrap {
+      overflow-x: auto;
     }
 
-    .classes-table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:760px;
+    .classes-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
     }
 
     .classes-table th,
-    .classes-table td{
-      padding:18px 14px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      text-align:right;
-      vertical-align:middle;
+    .classes-table td {
+      padding: 18px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: right;
+      vertical-align: middle;
     }
 
-    .classes-table th{
-      color:#8fe8ff;
-      font-size:15px;
-      font-weight:700;
+    .classes-table th {
+      color: #8fe8ff;
+      font-size: 15px;
+      font-weight: 700;
     }
 
-    .classes-table td{
-      font-size:15px;
-      line-height:1.9;
+    .classes-table td {
+      font-size: 15px;
+      line-height: 1.9;
     }
 
-    .status-badge{
-      display:inline-block;
-      padding:8px 14px;
-      border-radius:999px;
-      font-size:14px;
-      font-weight:700;
-      white-space:nowrap;
+    .status-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
-    .status-active{
-      background:rgba(46, 204, 113, .16);
-      color:#7ef0a7;
-      border:1px solid rgba(46, 204, 113, .24);
+    .status-active {
+      background: rgba(46, 204, 113, 0.16);
+      color: #7ef0a7;
+      border: 1px solid rgba(46, 204, 113, 0.24);
     }
 
-    .status-inactive{
-      background:rgba(255,77,77,.12);
-      color:#ffb3b3;
-      border:1px solid rgba(255,77,77,.25);
+    .status-inactive {
+      background: rgba(255, 77, 77, 0.12);
+      color: #ffb3b3;
+      border: 1px solid rgba(255, 77, 77, 0.25);
     }
 
-    .grade-badge{
-      display:inline-block;
-      padding:8px 14px;
-      border-radius:999px;
-      font-size:14px;
-      font-weight:700;
-      white-space:nowrap;
-      background:rgba(64,140,255,.16);
-      color:#b9d7ff;
-      border:1px solid rgba(64,140,255,.24);
+    .muted {
+      opacity: 0.7;
     }
 
-    .muted{
-      opacity:.7;
-    }
-
-    @media(max-width:900px){
-      .stats{
-        grid-template-columns:1fr 1fr;
+    @media (max-width: 1000px) {
+      .stats {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
-    @media(max-width:600px){
-      .stats{
-        grid-template-columns:1fr;
+    @media (max-width: 600px) {
+      .stats {
+        grid-template-columns: 1fr;
       }
 
-      .container{
-        padding:20px;
+      .container {
+        padding: 20px;
       }
 
-      .top-section h1{
-        font-size:28px;
+      .top-section h1 {
+        font-size: 28px;
       }
 
-      .header{
-        align-items:flex-start;
+      .top-section p,
+      .note-card p,
+      .stat p {
+        font-size: 17px;
+      }
+
+      .header {
+        align-items: flex-start;
       }
     }
   </style>
@@ -250,7 +252,7 @@
 <body>
 
   <div class="header">
-    <div class="logo" id="classesHeaderTitle">Madaris AI | الفصول الدراسية</div>
+    <div class="logo" id="classesHeaderTitle">Madaris AI | فصول المدرسة</div>
 
     <div class="header-actions">
       <button class="back-btn" onclick="goBack()">رجوع</button>
@@ -267,7 +269,7 @@
       <h1 id="pageTitle">إدارة الفصول الدراسية</h1>
       <p id="pageSubtitle">
         هذه الصفحة تقرأ بيانات الفصول مباشرة من Firestore حسب المدرسة المرتبطة بحسابك.
-        حالياً نعرض اسم الصف، المستوى، الحالة، وتاريخ الإنشاء.
+        حالياً نعرض: اسم الفصل، معرف الفصل، الحالة، وتاريخ الإنشاء.
       </p>
     </div>
 
@@ -288,7 +290,7 @@
       </div>
 
       <div class="stat">
-        <h2 id="uniqueGrades">0</h2>
+        <h2 id="uniqueLevels">0</h2>
         <p>المستويات الدراسية</p>
       </div>
     </div>
@@ -300,16 +302,15 @@
         <table class="classes-table">
           <thead>
             <tr>
-              <th>اسم الصف</th>
-              <th>المستوى</th>
+              <th>اسم الفصل</th>
+              <th>معرف الفصل</th>
               <th>الحالة</th>
               <th>تاريخ الإنشاء</th>
-              <th>معرّف الفصل</th>
             </tr>
           </thead>
           <tbody id="classesTableBody">
             <tr>
-              <td colspan="5" class="muted">لا توجد بيانات حالياً.</td>
+              <td colspan="4" class="muted">لا توجد بيانات حالياً.</td>
             </tr>
           </tbody>
         </table>
@@ -373,31 +374,31 @@
     const totalClassesEl = document.getElementById("totalClasses");
     const activeClassesEl = document.getElementById("activeClasses");
     const inactiveClassesEl = document.getElementById("inactiveClasses");
-    const uniqueGradesEl = document.getElementById("uniqueGrades");
+    const uniqueLevelsEl = document.getElementById("uniqueLevels");
 
     const classesTableBody = document.getElementById("classesTableBody");
 
-    function showLoading(show){
+    function showLoading(show) {
       loadingBox.style.display = show ? "block" : "none";
     }
 
-    function showError(message){
+    function showError(message) {
       errorBox.textContent = message;
       errorBox.style.display = "block";
     }
 
-    function hideError(){
+    function hideError() {
       errorBox.style.display = "none";
       errorBox.textContent = "";
     }
 
-    function safeText(value, fallback = "-"){
+    function safeText(value, fallback = "-") {
       if (value === null || value === undefined) return fallback;
       const str = String(value).trim();
       return str === "" ? fallback : str;
     }
 
-    function escapeHtml(value){
+    function escapeHtml(value) {
       return String(value)
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
@@ -406,7 +407,7 @@
         .replaceAll("'", "&#039;");
     }
 
-    function normalizeStatus(statusValue){
+    function normalizeStatus(statusValue) {
       const value = String(statusValue || "").trim().toLowerCase();
 
       if (value === "active" || value === "نشط") {
@@ -422,58 +423,82 @@
       };
     }
 
-    function normalizeGrade(gradeValue){
-      if (gradeValue === null || gradeValue === undefined || gradeValue === "") {
-        return "-";
-      }
-
-      return String(gradeValue);
-    }
-
-    function formatDate(createdAt){
-      if (!createdAt) return "-";
+    function formatDate(dateValue) {
+      if (!dateValue) return "-";
 
       try {
-        if (typeof createdAt.toDate === "function") {
-          return createdAt.toDate().toLocaleString("ar-EG");
+        if (typeof dateValue.toDate === "function") {
+          return dateValue.toDate().toLocaleString("ar-EG");
         }
 
-        if (createdAt.seconds) {
-          return new Date(createdAt.seconds * 1000).toLocaleString("ar-EG");
+        if (dateValue.seconds) {
+          return new Date(dateValue.seconds * 1000).toLocaleString("ar-EG");
         }
 
-        return safeText(createdAt, "-");
+        const parsed = new Date(dateValue);
+        if (!Number.isNaN(parsed.getTime())) {
+          return parsed.toLocaleString("ar-EG");
+        }
+
+        return safeText(dateValue);
       } catch (error) {
         return "-";
       }
     }
 
-    function setEmptyState(message){
+    function extractLevelFromName(nameValue) {
+      const name = String(nameValue || "").trim();
+      if (!name) return null;
+
+      if (
+        name.includes("أول") ||
+        name.includes("اول") ||
+        name.includes("ثاني") ||
+        name.includes("ثالث") ||
+        name.includes("رابع") ||
+        name.includes("خامس") ||
+        name.includes("سادس") ||
+        name.includes("سابع") ||
+        name.includes("ثامن") ||
+        name.includes("تاسع") ||
+        name.includes("ثانوي") ||
+        name.includes("ابتدائي") ||
+        name.includes("إعدادي") ||
+        name.includes("اعدادي")
+      ) {
+        return name;
+      }
+
+      return null;
+    }
+
+    function setEmptyState(message) {
       classesTableBody.innerHTML = `
         <tr>
-          <td colspan="5" class="muted">${escapeHtml(message)}</td>
+          <td colspan="4" class="muted">${escapeHtml(message)}</td>
         </tr>
       `;
     }
 
-    function renderTableRows(classesList){
+    function renderTableRows(classesList) {
       if (!classesList.length) {
         setEmptyState("لا توجد فصول مرتبطة بهذه المدرسة حالياً.");
         return;
       }
 
-      const rows = classesList.map((classItem) => {
-        const statusInfo = normalizeStatus(classItem.status);
-        const gradeText = normalizeGrade(classItem.grade);
-        const createdAtText = formatDate(classItem.createdAt);
+      const rows = classesList.map((item) => {
+        const statusInfo = normalizeStatus(item.status);
+
+        const className = safeText(item.name);
+        const classPublicId = safeText(item.classId, item.id);
+        const createdAt = formatDate(item.createdAt);
 
         return `
           <tr>
-            <td>${escapeHtml(safeText(classItem.name))}</td>
-            <td><span class="grade-badge">الصف ${escapeHtml(gradeText)}</span></td>
+            <td>${escapeHtml(className)}</td>
+            <td>${escapeHtml(classPublicId)}</td>
             <td><span class="status-badge ${statusInfo.className}">${escapeHtml(statusInfo.text)}</span></td>
-            <td>${escapeHtml(createdAtText)}</td>
-            <td>${escapeHtml(classItem.id)}</td>
+            <td>${escapeHtml(createdAt)}</td>
           </tr>
         `;
       }).join("");
@@ -481,7 +506,7 @@
       classesTableBody.innerHTML = rows;
     }
 
-    async function loadClassesPage(){
+    async function loadClassesPage() {
       showLoading(true);
       hideError();
 
@@ -546,35 +571,25 @@
           });
         });
 
-        classesList.sort((a, b) => {
-          const gradeA = Number(a.grade || 0);
-          const gradeB = Number(b.grade || 0);
-
-          if (gradeA !== gradeB) {
-            return gradeA - gradeB;
-          }
-
-          return String(a.name || "").localeCompare(String(b.name || ""), "ar");
-        });
-
         const totalClasses = classesList.length;
-        const activeClasses = classesList.filter(item => {
-          const statusInfo = normalizeStatus(item.status);
-          return statusInfo.text === "نشط";
+        const activeClasses = classesList.filter((item) => {
+          return normalizeStatus(item.status).text === "نشط";
         }).length;
 
         const inactiveClasses = totalClasses - activeClasses;
 
-        const gradesSet = new Set(
-          classesList
-            .map(item => normalizeGrade(item.grade))
-            .filter(value => value !== "-")
-        );
+        const levelSet = new Set();
+        classesList.forEach((item) => {
+          const extracted = extractLevelFromName(item.name);
+          if (extracted) {
+            levelSet.add(extracted);
+          }
+        });
 
         totalClassesEl.textContent = totalClasses;
         activeClassesEl.textContent = activeClasses;
         inactiveClassesEl.textContent = inactiveClasses;
-        uniqueGradesEl.textContent = gradesSet.size;
+        uniqueLevelsEl.textContent = levelSet.size;
 
         renderTableRows(classesList);
 
@@ -586,11 +601,11 @@
       }
     }
 
-    window.goBack = function(){
+    window.goBack = function () {
       window.location.href = "index.html";
     };
 
-    window.logout = function(){
+    window.logout = function () {
       localStorage.removeItem("madaris_logged_in");
       localStorage.removeItem("madaris_role");
       localStorage.removeItem("madaris_uid");
@@ -605,4 +620,4 @@
   </script>
 
 </body>
-  </html>
+</html>
