@@ -1,356 +1,576 @@
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import {
-  getAuth,
-  setPersistence,
-  browserLocalPersistence,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  limit
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI | تسجيل الدخول</title>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAzQKhPMSZNevhb6LNn9pt9yA4Au9G7Cw",
-  authDomain: "madaris-ai.firebaseapp.com",
-  projectId: "madaris-ai",
-  storageBucket: "madaris-ai.firebasestorage.app",
-  messagingSenderId: "915394447224",
-  appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
-  measurementId: "G-SC7VE6F20S"
-};
+  <style>
+    :root{
+      --bg:#020b2a;
+      --bg-2:#06153d;
+      --card:#0a1f56;
+      --card-2:#0c255f;
+      --text:#ffffff;
+      --muted:#b9c7e6;
+      --primary:#35d0ff;
+      --primary-dark:#18b8ea;
+      --danger:#ff5d73;
+      --success:#25c281;
+      --border:rgba(255,255,255,0.08);
+      --shadow:0 20px 60px rgba(0,0,0,0.35);
+      --radius:28px;
+    }
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
 
-const form =
-  document.getElementById("loginForm") ||
-  document.querySelector('form');
+    html,body{
+      width:100%;
+      min-height:100%;
+      font-family:"Tahoma","Arial",sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(53,208,255,0.08), transparent 22%),
+        radial-gradient(circle at top left, rgba(53,208,255,0.05), transparent 18%),
+        linear-gradient(180deg, #021033 0%, #020b2a 100%);
+      color:var(--text);
+    }
 
-const emailInput =
-  document.getElementById("email") ||
-  document.querySelector('input[type="email"]') ||
-  document.querySelector('input[name="email"]');
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
 
-const passwordInput =
-  document.getElementById("password") ||
-  document.querySelector('input[type="password"]') ||
-  document.querySelector('input[name="password"]');
+    .page{
+      width:100%;
+      max-width:520px;
+    }
 
-const submitButton =
-  document.getElementById("loginButton") ||
-  document.getElementById("submitBtn") ||
-  document.querySelector('button[type="submit"]');
+    .login-card{
+      background:linear-gradient(180deg, rgba(10,31,86,0.96) 0%, rgba(7,24,67,0.98) 100%);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:32px 24px;
+      overflow:hidden;
+      position:relative;
+    }
 
-const errorBox = createMessageBox("error");
-const successBox = createMessageBox("success");
+    .login-card::before{
+      content:"";
+      position:absolute;
+      top:-120px;
+      left:-120px;
+      width:240px;
+      height:240px;
+      background:radial-gradient(circle, rgba(53,208,255,0.18) 0%, transparent 70%);
+      pointer-events:none;
+    }
 
-if (form) {
-  form.appendChild(errorBox);
-  form.appendChild(successBox);
-}
+    .brand{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      margin-bottom:26px;
+    }
 
-function createMessageBox(type) {
-  const box = document.createElement("div");
-  box.style.display = "none";
-  box.style.marginTop = "14px";
-  box.style.padding = "12px 14px";
-  box.style.borderRadius = "12px";
-  box.style.fontSize = "15px";
-  box.style.lineHeight = "1.8";
-  box.style.textAlign = "right";
-  box.style.direction = "rtl";
-  box.style.border = "1px solid transparent";
+    .brand h1{
+      font-size:48px;
+      line-height:1.15;
+      font-weight:800;
+      letter-spacing:0.3px;
+      margin-bottom:14px;
+    }
 
-  if (type === "error") {
-    box.style.background = "rgba(255, 82, 82, 0.12)";
-    box.style.color = "#ffd2d2";
-    box.style.borderColor = "rgba(255, 82, 82, 0.25)";
-  } else {
-    box.style.background = "rgba(0, 200, 255, 0.12)";
-    box.style.color = "#d7f7ff";
-    box.style.borderColor = "rgba(0, 200, 255, 0.25)";
-  }
+    .brand p{
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.9;
+    }
 
-  return box;
-}
+    .status-box{
+      display:none;
+      margin-bottom:18px;
+      border-radius:18px;
+      padding:14px 16px;
+      font-size:15px;
+      line-height:1.9;
+      border:1px solid transparent;
+    }
 
-function showError(message) {
-  if (!errorBox) return;
-  successBox.style.display = "none";
-  errorBox.textContent = message;
-  errorBox.style.display = "block";
-}
+    .status-box.show{
+      display:block;
+    }
 
-function showSuccess(message) {
-  if (!successBox) return;
-  errorBox.style.display = "none";
-  successBox.textContent = message;
-  successBox.style.display = "block";
-}
+    .status-box.error{
+      background:rgba(255,93,115,0.12);
+      color:#ffd3d9;
+      border-color:rgba(255,93,115,0.22);
+    }
 
-function clearMessages() {
-  if (errorBox) errorBox.style.display = "none";
-  if (successBox) successBox.style.display = "none";
-}
+    .status-box.success{
+      background:rgba(37,194,129,0.12);
+      color:#d7ffef;
+      border-color:rgba(37,194,129,0.22);
+    }
 
-function setLoading(isLoading) {
-  if (!submitButton) return;
+    .status-box.info{
+      background:rgba(53,208,255,0.12);
+      color:#daf7ff;
+      border-color:rgba(53,208,255,0.22);
+    }
 
-  submitButton.disabled = isLoading;
-  submitButton.style.opacity = isLoading ? "0.7" : "1";
-  submitButton.style.cursor = isLoading ? "not-allowed" : "pointer";
+    form{
+      position:relative;
+      z-index:1;
+    }
 
-  if (isLoading) {
-    submitButton.dataset.originalText = submitButton.textContent;
-    submitButton.textContent = "جارٍ تسجيل الدخول...";
-  } else if (submitButton.dataset.originalText) {
-    submitButton.textContent = submitButton.dataset.originalText;
-  }
-}
+    .field{
+      margin-bottom:18px;
+    }
 
-async function findOneByField(collectionName, fieldName, value) {
-  const q = query(
-    collection(db, collectionName),
-    where(fieldName, "==", value),
-    limit(1)
-  );
+    .field label{
+      display:block;
+      margin-bottom:10px;
+      font-size:15px;
+      color:#dbe8ff;
+      font-weight:700;
+    }
 
-  const snap = await getDocs(q);
+    .input-wrap{
+      position:relative;
+    }
 
-  if (snap.empty) return null;
+    .input{
+      width:100%;
+      border:none;
+      outline:none;
+      border-radius:20px;
+      background:rgba(255,255,255,0.92);
+      color:#0b1435;
+      padding:18px 18px;
+      font-size:20px;
+      min-height:62px;
+      transition:0.2s ease;
+      box-shadow:inset 0 0 0 2px transparent;
+    }
 
-  const first = snap.docs[0];
-  return {
-    id: first.id,
-    ...first.data()
-  };
-}
+    .input:focus{
+      box-shadow:inset 0 0 0 2px rgba(53,208,255,0.9);
+      background:#ffffff;
+    }
 
-async function resolveUserAccess(user) {
-  if (!user || !user.email) {
-    throw new Error("المستخدم غير متوفر أو لا يحتوي على بريد إلكتروني.");
-  }
+    .input::placeholder{
+      color:#7f8bab;
+    }
 
-  const uid = user.uid;
-  const email = user.email.toLowerCase().trim();
+    .password-toggle{
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      border:none;
+      background:transparent;
+      color:#2d4a84;
+      font-size:14px;
+      font-weight:700;
+      cursor:pointer;
+      padding:8px 10px;
+      border-radius:12px;
+    }
 
-  try {
-    const userDocRef = doc(db, "users", uid);
-    const userDocSnap = await getDoc(userDocRef);
+    .password-toggle:disabled{
+      opacity:0.5;
+      cursor:not-allowed;
+    }
 
-    if (userDocSnap.exists()) {
-      const data = userDocSnap.data() || {};
-      return {
-        source: "users_by_uid",
-        role: data.role || "user",
-        schoolId: data.schoolId || null,
-        userId: uid,
-        profile: data
+    .actions{
+      margin-top:10px;
+    }
+
+    .submit-btn{
+      width:100%;
+      border:none;
+      outline:none;
+      cursor:pointer;
+      border-radius:22px;
+      min-height:66px;
+      font-size:22px;
+      font-weight:800;
+      color:#ffffff;
+      background:linear-gradient(180deg, #3873f3 0%, #2d64df 100%);
+      box-shadow:0 14px 30px rgba(45,100,223,0.35);
+      transition:transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
+    }
+
+    .submit-btn:hover{
+      filter:brightness(1.03);
+    }
+
+    .submit-btn:active{
+      transform:scale(0.995);
+    }
+
+    .submit-btn:disabled{
+      cursor:not-allowed;
+      opacity:0.75;
+    }
+
+    .secondary-link{
+      text-align:center;
+      margin-top:18px;
+    }
+
+    .secondary-link a{
+      color:var(--primary);
+      text-decoration:none;
+      font-size:17px;
+      font-weight:700;
+    }
+
+    .secondary-link a:hover{
+      text-decoration:underline;
+    }
+
+    .helper{
+      margin-top:22px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.9;
+    }
+
+    .loader{
+      display:inline-block;
+      width:18px;
+      height:18px;
+      border:2px solid rgba(255,255,255,0.35);
+      border-top-color:#fff;
+      border-radius:50%;
+      animation:spin 0.8s linear infinite;
+      vertical-align:middle;
+      margin-inline-start:8px;
+    }
+
+    @keyframes spin{
+      to{ transform:rotate(360deg); }
+    }
+
+    @media (max-width:600px){
+      body{
+        padding:14px;
+      }
+
+      .login-card{
+        padding:26px 18px;
+        border-radius:24px;
+      }
+
+      .brand h1{
+        font-size:34px;
+      }
+
+      .brand p{
+        font-size:16px;
+      }
+
+      .input{
+        font-size:18px;
+        min-height:58px;
+      }
+
+      .submit-btn{
+        font-size:20px;
+        min-height:62px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="login-card">
+      <div class="brand">
+        <h1>Madaris AI</h1>
+        <p>تسجيل الدخول إلى المنصة</p>
+      </div>
+
+      <div id="statusBox" class="status-box"></div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="email">البريد الإلكتروني</label>
+          <div class="input-wrap">
+            <input
+              id="email"
+              name="email"
+              class="input"
+              type="email"
+              inputmode="email"
+              autocomplete="username"
+              placeholder="البريد الإلكتروني"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">كلمة المرور</label>
+          <div class="input-wrap">
+            <input
+              id="password"
+              name="password"
+              class="input"
+              type="password"
+              autocomplete="current-password"
+              placeholder="كلمة المرور"
+              required
+            />
+            <button type="button" id="togglePassword" class="password-toggle">إظهار</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="loginButton" type="submit" class="submit-btn">تسجيل الدخول</button>
+        </div>
+      </form>
+
+      <div class="secondary-link">
+        <a href="/app/register.html">إنشاء حساب جديد</a>
+      </div>
+
+      <div class="helper">
+        بعد تسجيل الدخول الصحيح سيتم حفظ الجلسة والانتقال تلقائيًا إلى لوحة المستخدم المناسبة.
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import {
+      getAuth,
+      setPersistence,
+      browserLocalPersistence,
+      signInWithEmailAndPassword,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      collection,
+      query,
+      where,
+      getDocs,
+      limit
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzQKhPMSZNevhb6L1Nh9pt9yA4Au9G7Cw",
+      authDomain: "madaris-ai.firebaseapp.com",
+      projectId: "madaris-ai",
+      storageBucket: "madaris-ai.firebasestorage.app",
+      messagingSenderId: "915394447224",
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+      measurementId: "G-SC7VE6F20S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginButton = document.getElementById("loginButton");
+    const togglePassword = document.getElementById("togglePassword");
+    const statusBox = document.getElementById("statusBox");
+
+    let authInitialized = false;
+
+    function showStatus(message, type = "info") {
+      statusBox.textContent = message;
+      statusBox.className = `status-box show ${type}`;
+    }
+
+    function hideStatus() {
+      statusBox.textContent = "";
+      statusBox.className = "status-box";
+    }
+
+    function setLoading(isLoading, buttonText = "تسجيل الدخول") {
+      loginButton.disabled = isLoading;
+      emailInput.disabled = isLoading;
+      passwordInput.disabled = isLoading;
+      togglePassword.disabled = isLoading;
+
+      if (isLoading) {
+        loginButton.innerHTML = `جارٍ تسجيل الدخول <span class="loader"></span>`;
+      } else {
+        loginButton.textContent = buttonText;
+      }
+    }
+
+    function normalizeEmail(value) {
+      return String(value || "").trim().toLowerCase();
+    }
+
+    function getRoleRoute(role) {
+      const safeRole = String(role || "").trim().toLowerCase();
+
+      if (safeRole === "school") return "/app/school/dashboard.html";
+      if (safeRole === "admin") return "/app/admin/dashboard.html";
+      if (safeRole === "teacher") return "/app/teacher/dashboard.html";
+      if (safeRole === "student") return "/app/student/dashboard.html";
+
+      return "/app/dashboard.html";
+    }
+
+    async function findUserProfile(uid, email) {
+      const normalizedEmail = normalizeEmail(email);
+
+      try {
+        const directDoc = await getDoc(doc(db, "users", uid));
+        if (directDoc.exists()) {
+          return {
+            id: directDoc.id,
+            ...directDoc.data()
+          };
+        }
+      } catch (error) {
+        console.warn("Direct user lookup failed:", error);
+      }
+
+      try {
+        if (normalizedEmail) {
+          const q = query(
+            collection(db, "users"),
+            where("email", "==", normalizedEmail),
+            limit(1)
+          );
+          const snap = await getDocs(q);
+          if (!snap.empty) {
+            const userDoc = snap.docs[0];
+            return {
+              id: userDoc.id,
+              ...userDoc.data()
+            };
+          }
+        }
+      } catch (error) {
+        console.warn("Email user lookup failed:", error);
+      }
+
+      return null;
+    }
+
+    function saveSession(user, profile) {
+      const sessionPayload = {
+        uid: user.uid || "",
+        email: normalizeEmail(user.email || ""),
+        role: profile?.role || "",
+        schoolId: profile?.schoolId || "",
+        name: profile?.name || user.displayName || "",
+        isAI: !!profile?.isAI,
+        teacherType: profile?.teacherType || "",
+        savedAt: Date.now()
       };
-    }
-  } catch (e) {
-    console.warn("users/{uid} not found or unreadable", e);
-  }
 
-  const userByEmail = await findOneByField("users", "email", email);
-  if (userByEmail) {
-    return {
-      source: "users_by_email",
-      role: userByEmail.role || "user",
-      schoolId: userByEmail.schoolId || null,
-      userId: userByEmail.id,
-      profile: userByEmail
-    };
-  }
+      localStorage.setItem("madaris_user_session", JSON.stringify(sessionPayload));
+        }
+async function redirectAuthenticatedUser(user) {
+      try {
+        const profile = await findUserProfile(user.uid, user.email || "");
+        saveSession(user, profile);
 
-  const schoolByManagerEmail = await findOneByField("schools", "managerEmail", email);
-  if (schoolByManagerEmail) {
-    return {
-      source: "schools_by_managerEmail",
-      role: "school",
-      schoolId: schoolByManagerEmail.id,
-      userId: uid,
-      profile: schoolByManagerEmail
-    };
-  }
+        const role = profile?.role || "";
+        const destination = getRoleRoute(role);
 
-  const teacherByEmail = await findOneByField("teachers", "email", email);
-  if (teacherByEmail) {
-    return {
-      source: "teachers_by_email",
-      role: "teacher",
-      schoolId: teacherByEmail.schoolId || null,
-      userId: teacherByEmail.id,
-      profile: teacherByEmail
-    };
-  }
+        showStatus("تم تسجيل الدخول بنجاح. جارٍ تحويلك الآن...", "success");
 
-  return {
-    source: "auth_only",
-    role: "user",
-    schoolId: null,
-    userId: uid,
-    profile: {}
-  };
-}
-
-function saveSessionSnapshot(user, access) {
-  const payload = {
-    uid: user.uid,
-    email: user.email || "",
-    role: access.role || "user",
-    schoolId: access.schoolId || "",
-    source: access.source || "",
-    savedAt: Date.now()
-  };
-
-  localStorage.setItem("madaris_user_session", JSON.stringify(payload));
-  localStorage.setItem("madaris_uid", payload.uid);
-  localStorage.setItem("madaris_email", payload.email);
-  localStorage.setItem("madaris_role", payload.role);
-  localStorage.setItem("madaris_school_id", payload.schoolId);
-}
-
-function getRedirectPath(access) {
-  const role = String(access?.role || "").toLowerCase();
-
-  if (role === "school" || role === "manager" || role === "school_manager") {
-    return "/app/school/index.html";
-  }
-
-  if (role === "teacher") {
-    return "/app/teacher/index.html";
-  }
-
-  if (role === "student") {
-    return "/app/student/index.html";
-  }
-
-  if (role === "admin" || role === "super_admin") {
-    return "/app/admin/index.html";
-  }
-
-  return "/app/dashboard.html";
-}
-
-async function processLogin(email, password) {
-  clearMessages();
-
-  if (!email || !password) {
-    showError("أدخل البريد الإلكتروني وكلمة المرور أولاً.");
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    await setPersistence(auth, browserLocalPersistence);
-
-    const credential = await signInWithEmailAndPassword(
-      auth,
-      email.trim(),
-      password
-    );
-
-    const user = credential.user;
-    const access = await resolveUserAccess(user);
-
-    saveSessionSnapshot(user, access);
-
-    showSuccess("تم تسجيل الدخول بنجاح. جاري تحويلك...");
-    const redirectPath = getRedirectPath(access);
-
-    setTimeout(() => {
-      window.location.href = redirectPath;
-    }, 700);
-
-  } catch (error) {
-    console.error("LOGIN_ERROR", error);
-
-    let message = "فشل تسجيل الدخول. تحقق من البيانات ثم أعد المحاولة.";
-
-    if (error?.code === "auth/invalid-email") {
-      message = "صيغة البريد الإلكتروني غير صحيحة.";
-    } else if (
-      error?.code === "auth/invalid-credential" ||
-      error?.code === "auth/wrong-password" ||
-      error?.code === "auth/user-not-found"
-    ) {
-      message = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
-    } else if (error?.code === "auth/too-many-requests") {
-      message = "تمت محاولات كثيرة. انتظر قليلًا ثم أعد المحاولة.";
-    } else if (error?.code === "auth/network-request-failed") {
-      message = "فشل الاتصال بالشبكة. تحقق من الإنترنت ثم أعد المحاولة.";
-    } else if (error?.message) {
-      message = `حدث خطأ: ${error.message}`;
+        setTimeout(() => {
+          window.location.href = destination;
+        }, 500);
+      } catch (error) {
+        console.error("Redirect error:", error);
+        showStatus("تم تسجيل الدخول، لكن حدث خطأ أثناء تجهيز الجلسة. حاول مرة أخرى.", "error");
+        setLoading(false);
+      }
     }
 
-    showError(message);
-  } finally {
-    setLoading(false);
-  }
-}
+    togglePassword.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.textContent = isPassword ? "إخفاء" : "إظهار";
+    });
 
-if (form) {
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
+    onAuthStateChanged(auth, async (user) => {
+      if (!authInitialized) {
+        authInitialized = true;
 
-    const email = emailInput ? emailInput.value : "";
-    const password = passwordInput ? passwordInput.value : "";
+        if (user) {
+          setLoading(true, "تسجيل الدخول");
+          await redirectAuthenticatedUser(user);
+          return;
+        }
+      }
+    });
 
-    await processLogin(email, password);
-  });
-}
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      hideStatus();
 
-onAuthStateChanged(auth, async (user) => {
-  try {
-    const currentPath = window.location.pathname || "";
+      const email = normalizeEmail(emailInput.value);
+      const password = String(passwordInput.value || "");
 
-    if (!currentPath.includes("/app/login.html")) {
-      return;
-    }
+      if (!email) {
+        showStatus("اكتب البريد الإلكتروني أولًا.", "error");
+        emailInput.focus();
+        return;
+      }
 
-    if (!user) {
-      return;
-    }
+      if (!password) {
+        showStatus("اكتب كلمة المرور أولًا.", "error");
+        passwordInput.focus();
+        return;
+      }
 
-    await setPersistence(auth, browserLocalPersistence);
+      try {
+        setLoading(true);
 
-    const access = await resolveUserAccess(user);
-    saveSessionSnapshot(user, access);
+        await setPersistence(auth, browserLocalPersistence);
 
-    const redirectPath = getRedirectPath(access);
+        const credential = await signInWithEmailAndPassword(auth, email, password);
+        const user = credential.user;
 
-    if (redirectPath && redirectPath !== currentPath) {
-      window.location.href = redirectPath;
-    }
-  } catch (error) {
-    console.error("AUTH_STATE_ERROR", error);
-  }
-});
+        await redirectAuthenticatedUser(user);
+      } catch (error) {
+        console.error("Login error:", error);
 
-window.madarisDebugLogin = async function () {
-  const user = auth.currentUser;
+        let message = "فشل تسجيل الدخول. تأكد من البريد الإلكتروني وكلمة المرور.";
 
-  if (!user) {
-    console.log("No authenticated user currently.");
-    return;
-  }
+        if (error?.code === "auth/invalid-email") {
+          message = "صيغة البريد الإلكتروني غير صحيحة.";
+        } else if (
+          error?.code === "auth/invalid-credential" ||
+          error?.code === "auth/user-not-found" ||
+          error?.code === "auth/wrong-password"
+        ) {
+          message = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+        } else if (error?.code === "auth/too-many-requests") {
+          message = "تمت محاولات كثيرة. انتظر قليلًا ثم حاول مرة أخرى.";
+        } else if (error?.code === "auth/network-request-failed") {
+          message = "يوجد خلل في الشبكة. تأكد من الاتصال بالإنترنت ثم أعد المحاولة.";
+        }
 
-  const access = await resolveUserAccess(user);
-
-  console.log("Authenticated user:", {
-    uid: user.uid,
-    email: user.email,
-    access
-  });
-};
+        showStatus(message, "error");
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>
