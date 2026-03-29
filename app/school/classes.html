@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madaris AI | الفصول الدراسية</title>
+
+  <script>
+    if (!localStorage.getItem("madaris_logged_in")) {
+      window.location.href = "../login.html";
+    }
+
+    if (localStorage.getItem("madaris_role") !== "school") {
+      window.location.href = "../login.html";
+    }
+  </script>
+
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/responsive.css">
+
+  <style>
+    body{
+      margin:0;
+      font-family:"Tajawal",sans-serif;
+      background:#071120;
+      color:white;
+    }
+
+    .header{
+      background:#0b1930;
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .logo{
+      font-size:20px;
+      font-weight:600;
+    }
+
+    .header-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .back-btn,
+    .logout{
+      border:none;
+      padding:10px 16px;
+      border-radius:10px;
+      color:white;
+      cursor:pointer;
+      font-weight:700;
+      font-size:15px;
+    }
+
+    .back-btn{
+      background:#20c7ee;
+    }
+
+    .logout{
+      background:#ff4d4d;
+    }
+
+    .container{
+      padding:30px;
+    }
+
+    .top-section{
+      margin-bottom:25px;
+    }
+
+    .top-section h1{
+      margin:0;
+      font-size:32px;
+    }
+
+    .top-section p{
+      margin:10px 0 0 0;
+      opacity:.82;
+      line-height:1.9;
+    }
+
+    .loading-box{
+      background:#0b1930;
+      padding:18px;
+      border-radius:12px;
+      margin-bottom:20px;
+      color:#8fe8ff;
+      display:none;
+    }
+
+    .error-box{
+      background:rgba(255,77,77,.12);
+      border:1px solid rgba(255,77,77,.25);
+      padding:18px;
+      border-radius:12px;
+      margin-bottom:20px;
+      color:#ffb3b3;
+      display:none;
+      line-height:1.9;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+      margin-bottom:30px;
+    }
+
+    .stat{
+      background:#0b1930;
+      padding:24px;
+      border-radius:18px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .stat h2{
+      margin:0;
+      font-size:30px;
+      color:#00d4ff;
+    }
+
+    .stat p{
+      margin-top:10px;
+      opacity:.75;
+    }
+
+    .table-card,
+    .note-card{
+      background:#0b1930;
+      border-radius:18px;
+      padding:24px;
+      margin-bottom:24px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .table-title,
+    .note-card h3{
+      margin-top:0;
+      margin-bottom:14px;
+      font-size:20px;
+    }
+
+    .note-card p{
+      margin:0;
+      opacity:.8;
+      line-height:1.9;
+    }
+
+    .table-wrap{
+      overflow-x:auto;
+    }
+
+    .classes-table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:760px;
+    }
+
+    .classes-table th,
+    .classes-table td{
+      padding:18px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      text-align:right;
+      vertical-align:middle;
+    }
+
+    .classes-table th{
+      color:#8fe8ff;
+      font-size:15px;
+      font-weight:700;
+    }
+
+    .classes-table td{
+      font-size:15px;
+      line-height:1.9;
+    }
+
+    .status-badge{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .status-active{
+      background:rgba(46, 204, 113, .16);
+      color:#7ef0a7;
+      border:1px solid rgba(46, 204, 113, .24);
+    }
+
+    .status-inactive{
+      background:rgba(255,77,77,.12);
+      color:#ffb3b3;
+      border:1px solid rgba(255,77,77,.25);
+    }
+
+    .grade-badge{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      white-space:nowrap;
+      background:rgba(64,140,255,.16);
+      color:#b9d7ff;
+      border:1px solid rgba(64,140,255,.24);
+    }
+
+    .muted{
+      opacity:.7;
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:600px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .container{
+        padding:20px;
+      }
+
+      .top-section h1{
+        font-size:28px;
+      }
+
+      .header{
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="logo" id="classesHeaderTitle">Madaris AI | الفصول الدراسية</div>
+
+    <div class="header-actions">
+      <button class="back-btn" onclick="goBack()">رجوع</button>
+      <button class="logout" onclick="logout()">خروج</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div id="loadingBox" class="loading-box">جاري تحميل بيانات الفصول...</div>
+    <div id="errorBox" class="error-box"></div>
+
+    <div class="top-section">
+      <h1 id="pageTitle">إدارة الفصول الدراسية</h1>
+      <p id="pageSubtitle">
+        هذه الصفحة تقرأ بيانات الفصول مباشرة من Firestore حسب المدرسة المرتبطة بحسابك.
+        حالياً نعرض اسم الصف، المستوى، الحالة، وتاريخ الإنشاء.
+      </p>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <h2 id="totalClasses">0</h2>
+        <p>إجمالي الفصول</p>
+      </div>
+
+      <div class="stat">
+        <h2 id="activeClasses">0</h2>
+        <p>الفصول النشطة</p>
+      </div>
+
+      <div class="stat">
+        <h2 id="inactiveClasses">0</h2>
+        <p>الفصول غير النشطة</p>
+      </div>
+
+      <div class="stat">
+        <h2 id="uniqueGrades">0</h2>
+        <p>المستويات الدراسية</p>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <h2 class="table-title">قائمة فصول المدرسة</h2>
+
+      <div class="table-wrap">
+        <table class="classes-table">
+          <thead>
+            <tr>
+              <th>اسم الصف</th>
+              <th>المستوى</th>
+              <th>الحالة</th>
+              <th>تاريخ الإنشاء</th>
+              <th>معرّف الفصل</th>
+            </tr>
+          </thead>
+          <tbody id="classesTableBody">
+            <tr>
+              <td colspan="5" class="muted">لا توجد بيانات حالياً.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="note-card">
+      <h3>ربط لاحق مع الطلاب</h3>
+      <p>
+        في المرحلة التالية سنربط كل فصل بعدد الطلاب المرتبطين به مباشرة من مجموعة students.
+      </p>
+    </div>
+
+    <div class="note-card">
+      <h3>ربط لاحق مع المواد والمعلمين</h3>
+      <p>
+        لاحقاً سنعرض داخل كل فصل المواد المرتبطة به والمعلمين المسؤولين عنه.
+      </p>
+    </div>
+
+    <div class="note-card">
+      <h3>بيانات حقيقية</h3>
+      <p>
+        هذه الصفحة مرتبطة فعلياً بـ Firestore، وليست بيانات ثابتة.
+      </p>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      collection,
+      getDocs,
+      query,
+      where
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      authDomain: "madaris-ai.firebaseapp.com",
+      projectId: "madaris-ai",
+      storageBucket: "madaris-ai.firebasestorage.app",
+      messagingSenderId: "915394447224",
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+      measurementId: "G-SC7VE6F20S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const loadingBox = document.getElementById("loadingBox");
+    const errorBox = document.getElementById("errorBox");
+
+    const classesHeaderTitle = document.getElementById("classesHeaderTitle");
+    const pageTitle = document.getElementById("pageTitle");
+
+    const totalClassesEl = document.getElementById("totalClasses");
+    const activeClassesEl = document.getElementById("activeClasses");
+    const inactiveClassesEl = document.getElementById("inactiveClasses");
+    const uniqueGradesEl = document.getElementById("uniqueGrades");
+
+    const classesTableBody = document.getElementById("classesTableBody");
+
+    function showLoading(show){
+      loadingBox.style.display = show ? "block" : "none";
+    }
+
+    function showError(message){
+      errorBox.textContent = message;
+      errorBox.style.display = "block";
+    }
+
+    function hideError(){
+      errorBox.style.display = "none";
+      errorBox.textContent = "";
+    }
+
+    function safeText(value, fallback = "-"){
+      if (value === null || value === undefined) return fallback;
+      const str = String(value).trim();
+      return str === "" ? fallback : str;
+    }
+
+    function escapeHtml(value){
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalizeStatus(statusValue){
+      const value = String(statusValue || "").trim().toLowerCase();
+
+      if (value === "active" || value === "نشط") {
+        return {
+          text: "نشط",
+          className: "status-active"
+        };
+      }
+
+      return {
+        text: safeText(statusValue, "غير نشط"),
+        className: "status-inactive"
+      };
+    }
+
+    function normalizeGrade(gradeValue){
+      if (gradeValue === null || gradeValue === undefined || gradeValue === "") {
+        return "-";
+      }
+
+      return String(gradeValue);
+    }
+
+    function formatDate(createdAt){
+      if (!createdAt) return "-";
+
+      try {
+        if (typeof createdAt.toDate === "function") {
+          return createdAt.toDate().toLocaleString("ar-EG");
+        }
+
+        if (createdAt.seconds) {
+          return new Date(createdAt.seconds * 1000).toLocaleString("ar-EG");
+        }
+
+        return safeText(createdAt, "-");
+      } catch (error) {
+        return "-";
+      }
+    }
+
+    function setEmptyState(message){
+      classesTableBody.innerHTML = `
+        <tr>
+          <td colspan="5" class="muted">${escapeHtml(message)}</td>
+        </tr>
+      `;
+    }
+
+    function renderTableRows(classesList){
+      if (!classesList.length) {
+        setEmptyState("لا توجد فصول مرتبطة بهذه المدرسة حالياً.");
+        return;
+      }
+
+      const rows = classesList.map((classItem) => {
+        const statusInfo = normalizeStatus(classItem.status);
+        const gradeText = normalizeGrade(classItem.grade);
+        const createdAtText = formatDate(classItem.createdAt);
+
+        return `
+          <tr>
+            <td>${escapeHtml(safeText(classItem.name))}</td>
+            <td><span class="grade-badge">الصف ${escapeHtml(gradeText)}</span></td>
+            <td><span class="status-badge ${statusInfo.className}">${escapeHtml(statusInfo.text)}</span></td>
+            <td>${escapeHtml(createdAtText)}</td>
+            <td>${escapeHtml(classItem.id)}</td>
+          </tr>
+        `;
+      }).join("");
+
+      classesTableBody.innerHTML = rows;
+    }
+
+    async function loadClassesPage(){
+      showLoading(true);
+      hideError();
+
+      try {
+        const uid = localStorage.getItem("madaris_uid");
+
+        if (!uid) {
+          showError("لم يتم العثور على UID المستخدم داخل المتصفح. سجل الدخول من جديد.");
+          setEmptyState("لا يمكن تحميل الصفحة بدون UID المستخدم.");
+          showLoading(false);
+          return;
+        }
+
+        const userRef = doc(db, "users", uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          showError("لم يتم العثور على مستند المستخدم داخل قاعدة البيانات.");
+          setEmptyState("مستند المستخدم غير موجود.");
+          showLoading(false);
+          return;
+        }
+
+        const userData = userSnap.data();
+        const schoolId = userData.schoolId;
+
+        if (!schoolId) {
+          showError("لم يتم العثور على schoolId داخل بيانات المستخدم.");
+          setEmptyState("هذا المستخدم غير مربوط بمدرسة.");
+          showLoading(false);
+          return;
+        }
+
+        const schoolRef = doc(db, "schools", schoolId);
+        const schoolSnap = await getDoc(schoolRef);
+
+        if (!schoolSnap.exists()) {
+          showError("لم يتم العثور على بيانات المدرسة المرتبطة بهذا المستخدم.");
+          setEmptyState("بيانات المدرسة غير موجودة.");
+          showLoading(false);
+          return;
+        }
+
+        const schoolData = schoolSnap.data();
+        const schoolName = schoolData.name || "المدرسة";
+
+        classesHeaderTitle.textContent = "Madaris AI | فصول " + schoolName;
+        pageTitle.textContent = "إدارة الفصول الدراسية";
+
+        localStorage.setItem("madaris_school_id", schoolId);
+        localStorage.setItem("madaris_school_name", schoolName);
+
+        const classesRef = collection(db, "classes");
+        const classesQuery = query(classesRef, where("schoolId", "==", schoolId));
+        const classesSnap = await getDocs(classesQuery);
+
+        const classesList = [];
+        classesSnap.forEach((docSnap) => {
+          classesList.push({
+            id: docSnap.id,
+            ...docSnap.data()
+          });
+        });
+
+        classesList.sort((a, b) => {
+          const gradeA = Number(a.grade || 0);
+          const gradeB = Number(b.grade || 0);
+
+          if (gradeA !== gradeB) {
+            return gradeA - gradeB;
+          }
+
+          return String(a.name || "").localeCompare(String(b.name || ""), "ar");
+        });
+
+        const totalClasses = classesList.length;
+        const activeClasses = classesList.filter(item => {
+          const statusInfo = normalizeStatus(item.status);
+          return statusInfo.text === "نشط";
+        }).length;
+
+        const inactiveClasses = totalClasses - activeClasses;
+
+        const gradesSet = new Set(
+          classesList
+            .map(item => normalizeGrade(item.grade))
+            .filter(value => value !== "-")
+        );
+
+        totalClassesEl.textContent = totalClasses;
+        activeClassesEl.textContent = activeClasses;
+        inactiveClassesEl.textContent = inactiveClasses;
+        uniqueGradesEl.textContent = gradesSet.size;
+
+        renderTableRows(classesList);
+
+      } catch (error) {
+        showError("حدث خطأ أثناء تحميل بيانات الفصول: " + error.message);
+        setEmptyState("تعذر تحميل بيانات الفصول حالياً.");
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    window.goBack = function(){
+      window.location.href = "index.html";
+    };
+
+    window.logout = function(){
+      localStorage.removeItem("madaris_logged_in");
+      localStorage.removeItem("madaris_role");
+      localStorage.removeItem("madaris_uid");
+      localStorage.removeItem("madaris_name");
+      localStorage.removeItem("madaris_email");
+      localStorage.removeItem("madaris_school_id");
+      localStorage.removeItem("madaris_school_name");
+      window.location.href = "../login.html";
+    };
+
+    loadClassesPage();
+  </script>
+
+</body>
+  </html>
