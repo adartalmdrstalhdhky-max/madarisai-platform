@@ -680,28 +680,42 @@
       statSubjects.textContent = String(uniqueSubjects.size);
       statTeachers.textContent = String(uniqueTeachers.size);
     }
+onAuthStateChanged(auth, async (user) => {
+  try {
+    if (!user) {
+      scheduleBody.innerHTML = `
+        <tr>
+          <td colspan="12" class="error">
+            لا توجد جلسة دخول محفوظة حالياً.<br>
+            هذا يعني أن Firebase Auth لم يجد المستخدم في هذه الصفحة.<br>
+            افتح صفحة تسجيل الدخول من جديد، ثم أخبرني فوراً إذا استمرت المشكلة.
+          </td>
+        </tr>
+      `;
 
-    onAuthStateChanged(auth, async (user)=>{
-      if(!user){
-        window.location.href = "/app/login.html";
-        return;
-      }
+      statRows.textContent = "0";
+      statClasses.textContent = "0";
+      statSubjects.textContent = "0";
+      statTeachers.textContent = "0";
 
-      try{
-        const schoolId = await findSchoolIdForUser(user);
-        await loadScheduleForSchool(schoolId);
-      }catch(error){
-        console.error(error);
-        scheduleBody.innerHTML = `
-          <tr>
-            <td colspan="12" class="error">
-              حدث خطأ أثناء تحميل الجدول:
-              ${escapeHtml(error?.message || "خطأ غير معروف")}
-            </td>
-          </tr>
-        `;
-      }
-    });
+      return;
+    }
+
+    const schoolId = await findSchoolIdForUser(user);
+    await loadScheduleForSchool(schoolId);
+
+  } catch (error) {
+    console.error(error);
+    scheduleBody.innerHTML = `
+      <tr>
+        <td colspan="12" class="error">
+          حدث خطأ أثناء تحميل الجدول:
+          ${escapeHtml(error?.message || "خطأ غير معروف")}
+        </td>
+      </tr>
+    `;
+  }
+});  
   </script>
 </body>
 </html>
