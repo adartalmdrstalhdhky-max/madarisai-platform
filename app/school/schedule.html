@@ -6,165 +6,168 @@
   <title>Madaris AI | جدول مدرسة الشهيد صالح قايد</title>
   <style>
     :root{
-      --bg:#020b2c;
-      --bg-soft:#07163f;
-      --card:#0a1f57;
-      --card-2:#0b255f;
-      --line:rgba(255,255,255,.08);
-      --text:#ffffff;
-      --muted:#b8c4e0;
-      --primary:#39c9f3;
-      --danger:#ff5b6e;
-      --success:#38d39f;
-      --warning:#ffd166;
-      --shadow:0 16px 40px rgba(0,0,0,.28);
+      --bg:#03152f;
+      --bg-soft:#08244d;
+      --card:#0a2550;
+      --card-2:#102d5f;
+      --line:rgba(255,255,255,0.08);
+      --text:#f4f7fb;
+      --muted:#b9c7de;
+      --cyan:#35d6ff;
+      --blue:#47c8f0;
+      --danger:#ff5c67;
+      --success:#39d98a;
+      --purple:#7b61ff;
+      --shadow:0 18px 40px rgba(0,0,0,0.28);
       --radius:28px;
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
+    *{box-sizing:border-box}
 
     html,body{
-      width:100%;
-      overflow-x:hidden;
+      margin:0;
+      padding:0;
+      font-family:"Tahoma","Arial",sans-serif;
       background:
-        radial-gradient(circle at top, rgba(36,88,190,.20), transparent 28%),
-        linear-gradient(180deg, #01081f 0%, #03103a 35%, #020b2c 100%);
+        radial-gradient(circle at top, rgba(44,113,255,0.14), transparent 30%),
+        linear-gradient(180deg, #02112a 0%, #041733 45%, #031229 100%);
       color:var(--text);
-      font-family:
-        "Cairo",
-        "Tajawal",
-        "Noto Kufi Arabic",
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-      min-height:100vh;
+      min-height:100%;
     }
 
     body{
-      padding:24px 14px 60px;
+      padding:18px 14px 48px;
     }
 
     .page{
-      max-width:1400px;
+      width:min(1200px, 100%);
       margin:0 auto;
     }
 
-    .hero,
     .card{
-      background:linear-gradient(180deg, rgba(13,42,105,.96), rgba(7,24,67,.96));
-      border:1px solid rgba(82,130,255,.12);
+      background:linear-gradient(180deg, rgba(14,45,98,0.95), rgba(8,31,70,0.96));
+      border:1px solid rgba(90,150,255,0.10);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
+      padding:26px 18px;
+      margin-bottom:18px;
+      overflow:hidden;
     }
 
     .hero{
-      padding:28px 20px;
-      margin-bottom:22px;
+      padding:30px 20px;
     }
 
     .hero h1{
-      font-size:clamp(2rem,4vw,3.2rem);
-      line-height:1.35;
-      margin-bottom:22px;
+      margin:0 0 18px;
+      font-size:clamp(34px, 6vw, 58px);
+      line-height:1.25;
       font-weight:800;
-      letter-spacing:.2px;
+      letter-spacing:0;
     }
 
     .hero p{
+      margin:0;
       color:var(--muted);
-      font-size:clamp(1.02rem,2.2vw,1.35rem);
-      line-height:2.05;
-      max-width:1000px;
-      margin-bottom:26px;
+      font-size:clamp(18px, 2.5vw, 22px);
+      line-height:2;
     }
 
-    .hero-actions{
+    .actions{
       display:flex;
       gap:16px;
       flex-wrap:wrap;
+      margin-top:28px;
     }
 
     .btn{
+      appearance:none;
       border:none;
-      outline:none;
-      cursor:pointer;
-      padding:18px 34px;
-      min-width:170px;
       border-radius:22px;
-      font-size:1.65rem;
-      font-weight:800;
+      padding:20px 34px;
+      min-width:170px;
+      font-size:20px;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
       color:#fff;
-      transition:transform .16s ease, opacity .16s ease, box-shadow .16s ease;
-      box-shadow:0 12px 26px rgba(0,0,0,.18);
-    }
-
-    .btn:hover{
-      transform:translateY(-1px);
-      opacity:.95;
+      box-shadow:var(--shadow);
     }
 
     .btn-back{
-      background:#42c7ee;
+      background:var(--blue);
+      color:#fff;
     }
 
     .btn-logout{
-      background:#ff5e69;
+      background:var(--danger);
+      color:#fff;
     }
 
     .section-title{
-      font-size:clamp(2rem,4vw,3rem);
+      margin:0 0 18px;
+      font-size:clamp(28px, 4.2vw, 44px);
+      line-height:1.3;
       font-weight:800;
-      line-height:1.35;
-      margin-bottom:16px;
     }
 
     .section-text{
+      margin:0;
       color:var(--muted);
-      font-size:clamp(1rem,2vw,1.22rem);
+      font-size:clamp(17px, 2.3vw, 21px);
       line-height:2;
     }
 
     .stats{
-      margin:0 0 22px;
       display:grid;
-      grid-template-columns:repeat(4, minmax(0, 1fr));
-      gap:20px;
+      grid-template-columns:repeat(4, 1fr);
+      gap:18px;
     }
 
     .stat{
-      padding:34px 20px;
       text-align:center;
+      padding:34px 14px;
+      min-height:210px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(180deg, rgba(10,38,83,0.95), rgba(8,32,71,0.95));
     }
 
     .stat-value{
-      color:var(--primary);
-      font-size:clamp(2.6rem,4vw,4rem);
-      font-weight:900;
-      line-height:1;
-      margin-bottom:18px;
+      font-size:clamp(44px, 6vw, 72px);
+      font-weight:800;
+      color:var(--cyan);
+      line-height:1.1;
+      margin-bottom:14px;
     }
 
     .stat-label{
       color:var(--muted);
-      font-size:clamp(1.1rem,2vw,1.5rem);
-      line-height:1.8;
+      font-size:clamp(22px, 2.4vw, 28px);
+      line-height:1.7;
     }
 
-    .table-card,
-    .info-card,
-    .status-card{
-      padding:30px 22px;
-      margin-bottom:22px;
+    .notice{
+      border:1px solid rgba(255,120,140,0.24);
+      background:linear-gradient(180deg, rgba(51,23,58,0.92), rgba(35,16,51,0.94));
+    }
+
+    .notice h3{
+      margin:0 0 12px;
+      font-size:clamp(26px, 4vw, 40px);
+      color:#ffd5da;
+    }
+
+    .notice p{
+      margin:0;
+      color:#ffc9d0;
+      font-size:clamp(18px, 2.3vw, 22px);
+      line-height:2;
     }
 
     .table-wrap{
-      width:100%;
       overflow-x:auto;
       -webkit-overflow-scrolling:touch;
       border-radius:22px;
@@ -172,220 +175,135 @@
 
     table{
       width:100%;
-      min-width:1240px;
+      min-width:1150px;
       border-collapse:collapse;
+      color:var(--text);
     }
 
     th, td{
       padding:24px 18px;
-      text-align:right;
       border-bottom:1px solid var(--line);
+      text-align:right;
       vertical-align:middle;
-      font-size:1.35rem;
-      line-height:1.9;
-      white-space:normal;
-      word-break:break-word;
+      font-size:clamp(18px, 2vw, 24px);
+      line-height:1.8;
     }
 
     th{
-      color:#8de3ff;
-      font-size:1.5rem;
+      color:#89e6ff;
       font-weight:800;
+      white-space:nowrap;
     }
 
     td{
-      color:#ffffff;
-      font-weight:600;
+      color:#f3f7ff;
     }
 
-    tr:last-child td{
-      border-bottom:none;
+    .empty-row td{
+      color:#ffc7cf;
+      line-height:2;
     }
 
     .badge{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:110px;
-      padding:10px 18px;
+      min-width:120px;
+      padding:14px 22px;
       border-radius:999px;
-      font-size:1.08rem;
-      font-weight:800;
-      border:1px solid rgba(255,255,255,.08);
+      font-size:20px;
+      font-weight:700;
+      line-height:1;
+      border:1px solid rgba(255,255,255,0.12);
+      white-space:nowrap;
     }
 
     .badge-success{
-      background:rgba(56,211,159,.16);
-      color:#62efba;
-      border-color:rgba(56,211,159,.24);
-    }
-
-    .badge-ai{
-      background:rgba(137,92,255,.18);
-      color:#ccb2ff;
-      border-color:rgba(137,92,255,.24);
+      background:rgba(57,217,138,0.18);
+      color:#90f3bf;
     }
 
     .badge-human{
-      background:rgba(61,136,255,.16);
-      color:#9ac0ff;
-      border-color:rgba(61,136,255,.24);
+      background:rgba(62,131,255,0.18);
+      color:#c4ddff;
+    }
+
+    .badge-ai{
+      background:rgba(123,97,255,0.22);
+      color:#d8ceff;
     }
 
     .badge-muted{
-      background:rgba(255,255,255,.06);
-      color:#d6def2;
+      background:rgba(255,255,255,0.06);
+      color:#d7dfef;
     }
 
-    .status-card.error{
-      border-color:rgba(255,91,110,.22);
-      background:linear-gradient(180deg, rgba(88,20,35,.32), rgba(50,12,23,.22));
+    .meta-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
     }
 
-    .status-card.success{
-      border-color:rgba(56,211,159,.22);
-      background:linear-gradient(180deg, rgba(12,67,53,.28), rgba(7,40,31,.18));
-    }
-
-    .status-title{
-      font-size:1.5rem;
-      font-weight:800;
-      margin-bottom:10px;
-    }
-
-    .status-text{
-      font-size:1.15rem;
-      line-height:2;
-      color:var(--muted);
-    }
-
-    .error .status-title,
-    .error .status-text{
-      color:#ffc1ca;
-    }
-
-    .success .status-title{
-      color:#7ff0c6;
-    }
-
-    .success .status-text{
-      color:#cbf7e8;
-    }
-
-    .info-card h3{
-      font-size:clamp(1.9rem,3vw,2.7rem);
-      margin-bottom:16px;
-      font-weight:800;
+    .small-card h3{
+      margin:0 0 12px;
+      font-size:clamp(24px, 3vw, 36px);
       line-height:1.4;
     }
 
-    .info-card p{
+    .small-card p{
+      margin:0;
       color:var(--muted);
-      font-size:clamp(1rem,2vw,1.22rem);
-      line-height:2.05;
+      font-size:clamp(18px, 2.2vw, 21px);
+      line-height:2;
     }
 
     .loading{
-      text-align:center;
-      padding:26px 10px 10px;
-      color:#9edcf5;
-      font-size:1.16rem;
+      color:var(--muted);
     }
 
-    .mono{
-      direction:ltr;
-      unicode-bidi:embed;
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size:.96em;
-      color:#c8e7ff;
+    @media (max-width: 980px){
+      .stats{grid-template-columns:repeat(2, 1fr)}
+      .meta-grid{grid-template-columns:1fr}
     }
 
-    @media (max-width: 1100px){
-      .stats{
-        grid-template-columns:repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 760px){
-      body{
-        padding:18px 10px 40px;
-      }
-
-      .hero,
-      .table-card,
-      .info-card,
-      .status-card,
-      .stat{
-        border-radius:24px;
-      }
-
-      .hero{
-        padding:22px 16px;
-      }
-
-      .table-card,
-      .info-card,
-      .status-card{
-        padding:24px 16px;
-      }
-
-      .stats{
-        grid-template-columns:1fr;
-        gap:16px;
-      }
-
-      .btn{
-        flex:1 1 100%;
-        width:100%;
-        min-width:unset;
-        font-size:1.45rem;
-        padding:16px 22px;
-      }
-
-      th, td{
-        padding:20px 14px;
-        font-size:1.18rem;
-      }
-
-      th{
-        font-size:1.26rem;
-      }
-
-      table{
-        min-width:1100px;
-      }
+    @media (max-width: 640px){
+      body{padding:14px 10px 34px}
+      .card{padding:22px 16px; border-radius:24px}
+      .hero{padding:24px 16px}
+      .actions{flex-direction:column}
+      .btn{width:100%}
+      .stats{grid-template-columns:1fr}
+      th,td{padding:20px 14px}
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <section class="hero">
+
+    <section class="card hero">
       <h1 id="pageTitle">Madaris AI | جدول مدرسة</h1>
       <p>
         هذه الصفحة تعرض الربط الحقيقي الحالي بين الصفوف والمواد والمعلمين مباشرة من
-        <span class="mono">Firestore</span>
-        حسب المدرسة المرتبطة بحسابك، وتقرأ بيانات الجدول المدرسي بشكل مباشر.
+        Firestore حسب المدرسة المرتبطة بحسابك، وتقرأ بيانات الجدول المدرسي بشكل مباشر.
       </p>
-      <div class="hero-actions">
+
+      <div class="actions">
         <button class="btn btn-back" onclick="goBack()">رجوع</button>
         <button class="btn btn-logout" onclick="logout()">خروج</button>
       </div>
     </section>
 
-    <section class="card info-card">
-      <h3>الجدول المدرسي</h3>
-      <p>
+    <section class="card">
+      <h2 class="section-title">الجدول المدرسي</h2>
+      <p class="section-text">
         الصفحة الآن تقرأ من المجموعات:
-        <span class="mono">classes</span>,
-        <span class="mono">subjects</span>,
-        <span class="mono">teachers</span>,
-        <span class="mono">schedules</span>
+        <span dir="ltr">classes, subjects, teachers, schedules</span>
         وتربط بينها حسب
-        <span class="mono">schoolId</span>
+        <span dir="ltr">schoolId</span>
         و
-        <span class="mono">classId</span>
+        <span dir="ltr">classId</span>
         و
-        <span class="mono">teacherId</span>.
+        <span dir="ltr">teacherId</span>.
       </p>
     </section>
 
@@ -411,11 +329,13 @@
       </div>
     </section>
 
-    <section id="statusBox"></section>
+    <section class="card notice" id="sessionNotice" style="display:none;">
+      <h3>تنبيه</h3>
+      <p id="sessionNoticeText"></p>
+    </section>
 
-    <section class="card table-card">
+    <section class="card">
       <h2 class="section-title">جدول المدرسة الحالي</h2>
-      <div id="loadingBox" class="loading">جارٍ قراءة البيانات الحقيقية من قاعدة البيانات...</div>
 
       <div class="table-wrap">
         <table>
@@ -428,6 +348,26 @@
               <th>الحالة</th>
               <th>البريد</th>
               <th>الهاتف</th>
+            </tr>
+          </thead>
+          <tbody id="mainScheduleBody">
+            <tr class="empty-row">
+              <td colspan="7" class="loading">جارٍ تحميل البيانات...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">تفاصيل الحصص داخل السطور</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>البريد</th>
+              <th>الهاتف</th>
               <th>اليوم</th>
               <th>الحصة</th>
               <th>من</th>
@@ -435,61 +375,67 @@
               <th>ملاحظة</th>
             </tr>
           </thead>
-          <tbody id="scheduleTableBody">
-            <tr>
-              <td colspan="12" style="color:#b8c4e0;">بانتظار تحميل البيانات...</td>
+          <tbody id="periodDetailsBody">
+            <tr class="empty-row">
+              <td colspan="7" class="loading">جارٍ تحميل تفاصيل الحصص...</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section class="card info-card">
-      <h3>كيف نقرأ هذه الصفحة الآن</h3>
-      <p>
-        كل سطر هنا يمثل حصة حقيقية من مجموعة
-        <span class="mono">schedules</span>.
-        إذا كان
-        <span class="mono">teacherId</span>
-        صحيحًا، فسيظهر اسم المعلم ونوعه وبريده وهاتفه تلقائيًا.
-      </p>
+    <section class="meta-grid">
+      <section class="card small-card">
+        <h3>كيف نقرأ هذه الصفحة الآن</h3>
+        <p>
+          كل سطر هنا يمثل حصة حقيقية من مجموعة
+          <span dir="ltr">schedules</span>.
+          إذا كان
+          <span dir="ltr">teacherId</span>
+          صحيحًا، فسيظهر اسم المعلم ونوعه وبريده وهاتفه تلقائيًا.
+        </p>
+      </section>
+
+      <section class="card small-card">
+        <h3>المرحلة التالية</h3>
+        <p>
+          بعد نجاح هذه الصفحة، ننتقل مباشرة إلى ربط الحضور والدرجات والنتائج ثم نبني لوحة تشغيل
+          حقيقية للمدرسة بدل العرض التجريبي.
+        </p>
+      </section>
     </section>
 
-    <section class="card info-card">
-      <h3>المرحلة التالية</h3>
-      <p>
-        بعد نجاح هذه الصفحة، ننتقل مباشرة إلى ربط الحضور والدرجات والنتائج ثم نبني لوحة تشغيل حقيقية للمدرسة بدل العرض التجريبي.
-      </p>
-    </section>
-
-    <section class="card info-card">
+    <section class="card small-card">
       <h3>مهم</h3>
       <p>
         لكي يظهر المعلم داخل الجدول، يجب أن تكون قيمة
-        <span class="mono">teacherId</span>
+        <span dir="ltr">teacherId</span>
         داخل وثيقة الجدول مساوية تمامًا لمعرّف وثيقة المعلم داخل مجموعة
-        <span class="mono">teachers</span>.
+        <span dir="ltr">teachers</span>.
       </p>
     </section>
+
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
     import {
       getAuth,
       onAuthStateChanged,
       signOut
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
     import {
       getFirestore,
+      doc,
+      getDoc,
       collection,
       getDocs,
       query,
       where
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAzQkhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
       authDomain: "madaris-ai.firebaseapp.com",
       projectId: "madaris-ai",
       storageBucket: "madaris-ai.firebasestorage.app",
@@ -503,356 +449,368 @@
     const db = getFirestore(app);
 
     const pageTitle = document.getElementById("pageTitle");
-    const statusBox = document.getElementById("statusBox");
-    const scheduleTableBody = document.getElementById("scheduleTableBody");
-    const loadingBox = document.getElementById("loadingBox");
-
+    const mainScheduleBody = document.getElementById("mainScheduleBody");
+    const periodDetailsBody = document.getElementById("periodDetailsBody");
     const statSchedules = document.getElementById("statSchedules");
     const statClasses = document.getElementById("statClasses");
     const statSubjects = document.getElementById("statSubjects");
     const statTeachers = document.getElementById("statTeachers");
+    const sessionNotice = document.getElementById("sessionNotice");
+    const sessionNoticeText = document.getElementById("sessionNoticeText");
 
-    function safeText(value, fallback = "-") {
-      if (value === undefined || value === null || value === "") return fallback;
-      return String(value);
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
-    function normalizeArabicDay(dayValue) {
-      const day = safeText(dayValue, "-").toLowerCase().trim();
-
-      const map = {
-        sunday: "الأحد",
-        monday: "الاثنين",
-        tuesday: "الثلاثاء",
-        wednesday: "الأربعاء",
-        thursday: "الخميس",
-        friday: "الجمعة",
-        saturday: "السبت"
-      };
-
-      return map[day] || safeText(dayValue, "-");
+    function showNotice(message) {
+      sessionNotice.style.display = "block";
+      sessionNoticeText.textContent = message;
     }
 
-    function teacherTypeLabel(teacher) {
-      const type = safeText(teacher?.teacherType, "").toLowerCase();
-      const isAI = teacher?.isAI === true;
-
-      if (isAI || type === "ai") {
-        return '<span class="badge badge-ai">معلم ذكي</span>';
-      }
-
-      if (type === "human" || type === "بشري" || type === "") {
-        return '<span class="badge badge-human">معلم بشري</span>';
-      }
-
-      return `<span class="badge badge-muted">${safeText(teacher?.teacherType, "-")}</span>`;
+    function clearNotice() {
+      sessionNotice.style.display = "none";
+      sessionNoticeText.textContent = "";
     }
 
-    function statusBadge(statusValue) {
-      const status = safeText(statusValue, "").toLowerCase();
-
-      if (status === "active" || status === "نشط") {
-        return '<span class="badge badge-success">نشط</span>';
-      }
-
-      return `<span class="badge badge-muted">${safeText(statusValue, "-")}</span>`;
+    function getStoredRole() {
+      return localStorage.getItem("madaris_role") || "";
     }
 
-    function showStatus(type, title, text) {
-      statusBox.innerHTML = `
-        <section class="card status-card ${type}">
-          <div class="status-title">${title}</div>
-          <div class="status-text">${text}</div>
-        </section>
+    function getStoredUid() {
+      return localStorage.getItem("madaris_uid") || "";
+    }
+
+    function getStoredSchoolId() {
+      return (
+        localStorage.getItem("madaris_school_id") ||
+        localStorage.getItem("schoolId") ||
+        ""
+      );
+    }
+
+    function setStoredSchoolId(schoolId) {
+      if (!schoolId) return;
+      localStorage.setItem("madaris_school_id", schoolId);
+      localStorage.setItem("schoolId", schoolId);
+    }
+
+    function isLoggedInLocally() {
+      return localStorage.getItem("madaris_logged_in") === "true";
+    }
+
+    function renderMainEmpty(message) {
+      mainScheduleBody.innerHTML = `
+        <tr class="empty-row">
+          <td colspan="7">${escapeHtml(message)}</td>
+        </tr>
       `;
     }
 
-    function clearStatus() {
-      statusBox.innerHTML = "";
+    function renderPeriodEmpty(message) {
+      periodDetailsBody.innerHTML = `
+        <tr class="empty-row">
+          <td colspan="7">${escapeHtml(message)}</td>
+        </tr>
+      `;
     }
 
-    function getStoredSession() {
-      try {
-        const raw =
-          localStorage.getItem("madaris_user_session") ||
-          sessionStorage.getItem("madaris_user_session");
+    function setStats({ schedules = 0, classes = 0, subjects = 0, teachers = 0 }) {
+      statSchedules.textContent = schedules;
+      statClasses.textContent = classes;
+      statSubjects.textContent = subjects;
+      statTeachers.textContent = teachers;
+    }
 
-        if (!raw) return null;
-        return JSON.parse(raw);
-      } catch (error) {
+    function formatTeacherType(teacherData) {
+      const raw = String(
+        teacherData?.teacherType ||
+        teacherData?.type ||
+        ""
+      ).toLowerCase();
+
+      if (raw === "ai") {
+        return `<span class="badge badge-ai">معلم ذكي</span>`;
+      }
+
+      if (raw === "human" || raw === "teacher") {
+        return `<span class="badge badge-human">معلم بشري</span>`;
+      }
+
+      return `<span class="badge badge-muted">-</span>`;
+    }
+
+    function formatTeacherName(teacherData) {
+      const title = teacherData?.title ? `${teacherData.title} ` : "";
+      const name = teacherData?.name || "غير محدد";
+      return `${title}${name}`.trim();
+    }
+
+    function formatStatus(value) {
+      const raw = String(value || "").toLowerCase();
+      if (raw === "active") {
+        return `<span class="badge badge-success">نشط</span>`;
+      }
+      return `<span class="badge badge-muted">${escapeHtml(value || "-")}</span>`;
+    }
+
+    async function readSchoolSession(user) {
+      const localRole = getStoredRole();
+      const localUid = getStoredUid();
+      const localLoggedIn = isLoggedInLocally();
+
+      if (!localLoggedIn || localRole !== "school") {
+        showNotice("هذه الصفحة خاصة بحساب المدرسة فقط. سيتم تحويلك إلى صفحة الدخول.");
+        setTimeout(() => {
+          window.location.href = "/app/login.html";
+        }, 1400);
         return null;
       }
-    }
 
-    function getSchoolIdFromSession() {
-      const session = getStoredSession();
+      const uid = user?.uid || localUid;
+      if (!uid) {
+        showNotice("تعذر العثور على معرّف المستخدم الحالي. افتح صفحة الدخول من جديد.");
+        return null;
+      }
 
-      if (!session) return null;
+      let schoolId = getStoredSchoolId();
+      let schoolName = localStorage.getItem("madaris_school_name") || "مدرسة";
 
-      return (
-        session.schoolId ||
-        session.school?.id ||
-        session.school?.schoolId ||
-        null
-      );
-    }
+      const userSnap = await getDoc(doc(db, "users", uid));
+      if (!userSnap.exists()) {
+        showNotice("وثيقة المستخدم غير موجودة داخل مجموعة users.");
+        return null;
+      }
 
-    function getSchoolNameFromSession() {
-      const session = getStoredSession();
+      const userData = userSnap.data() || {};
+      if (!schoolId) {
+        schoolId = userData.schoolId || "";
+      }
 
-      if (!session) return "مدرسة";
+      if (userData.name) {
+        localStorage.setItem("madaris_name", userData.name);
+      }
 
-      return (
-        session.schoolName ||
-        session.school?.name ||
-        session.name ||
-        "مدرسة"
-      );
-    }
+      if (userData.email) {
+        localStorage.setItem("madaris_email", userData.email);
+      }
 
-    function updateHeaderTitle() {
-      const schoolName = getSchoolNameFromSession();
+      if (schoolId) {
+        setStoredSchoolId(schoolId);
+      }
+
+      if (!schoolId) {
+        showNotice("لم يتم العثور على schoolId داخل بيانات المستخدم.");
+        return null;
+      }
+
+      const schoolSnap = await getDoc(doc(db, "schools", schoolId));
+      if (schoolSnap.exists()) {
+        const schoolData = schoolSnap.data() || {};
+        schoolName = schoolData.name || schoolName;
+        localStorage.setItem("madaris_school_name", schoolName);
+      }
+
       pageTitle.textContent = `Madaris AI | جدول ${schoolName}`;
-      document.title = `Madaris AI | جدول ${schoolName}`;
+      clearNotice();
+
+      return { uid, schoolId, schoolName, userData };
     }
 
     async function fetchCollectionMap(collectionName, schoolId) {
-      const resultMap = new Map();
       const q = query(collection(db, collectionName), where("schoolId", "==", schoolId));
       const snap = await getDocs(q);
+      const map = new Map();
 
       snap.forEach((docItem) => {
-        resultMap.set(docItem.id, { id: docItem.id, ...docItem.data() });
+        map.set(docItem.id, { id: docItem.id, ...docItem.data() });
       });
 
-      return resultMap;
-    }
+      return map;
+    }async function loadSchedulePage(session) {
+      const { schoolId } = session;
 
-    async function fetchSchedules(schoolId) {
-      const result = [];
-      const q = query(collection(db, "schedules"), where("schoolId", "==", schoolId));
-      const snap = await getDocs(q);
+      renderMainEmpty("جارٍ تحميل الجدول...");
+      renderPeriodEmpty("جارٍ تحميل تفاصيل الحصص...");
+      setStats({ schedules: 0, classes: 0, subjects: 0, teachers: 0 });
 
-      snap.forEach((docItem) => {
-        result.push({ id: docItem.id, ...docItem.data() });
-      });
+      const [classesMap, subjectsMap, teachersMap] = await Promise.all([
+        fetchCollectionMap("classes", schoolId),
+        fetchCollectionMap("subjects", schoolId),
+        fetchCollectionMap("teachers", schoolId)
+      ]);
 
-      return result;
-    }function renderRows(schedules, classesMap, subjectsMap, teachersMap) {
-      if (!schedules.length) {
-        scheduleTableBody.innerHTML = `
-          <tr>
-            <td colspan="12" style="color:#ffc1ca;">
-              لا توجد بيانات جدول مرتبطة بهذه المدرسة حالياً.
-            </td>
-          </tr>
-        `;
+      const scheduleQuery = query(
+        collection(db, "schedules"),
+        where("schoolId", "==", schoolId)
+      );
+      const scheduleSnap = await getDocs(scheduleQuery);
+
+      if (scheduleSnap.empty) {
+        renderMainEmpty("لا توجد أسطر جدول محفوظة لهذه المدرسة حاليًا.");
+        renderPeriodEmpty("لا توجد تفاصيل حصص لأن مجموعة schedules فارغة لهذه المدرسة.");
+        setStats({
+          schedules: 0,
+          classes: classesMap.size,
+          subjects: subjectsMap.size,
+          teachers: teachersMap.size
+        });
         return;
       }
 
-      scheduleTableBody.innerHTML = schedules.map((row) => {
-        const classDoc = classesMap.get(row.classId);
-        const teacherDoc = teachersMap.get(row.teacherId);
-        const subjectDoc =
-          subjectsMap.get(row.subjectId) ||
-          [...subjectsMap.values()].find(item => item.name === row.subjectName);
+      const scheduleRows = [];
+      scheduleSnap.forEach((docItem) => {
+        scheduleRows.push({ id: docItem.id, ...docItem.data() });
+      });
+
+      scheduleRows.sort((a, b) => {
+        const dayA = String(a.day || "");
+        const dayB = String(b.day || "");
+        const periodA = Number(a.period || 0);
+        const periodB = Number(b.period || 0);
+
+        if (dayA < dayB) return -1;
+        if (dayA > dayB) return 1;
+        return periodA - periodB;
+      });
+
+      const linkedClassIds = new Set();
+      const linkedSubjectIds = new Set();
+      const linkedTeacherIds = new Set();
+
+      const mainRowsHtml = [];
+      const periodRowsHtml = [];
+
+      for (const row of scheduleRows) {
+        const classId = row.classId || "";
+        const subjectId = row.subjectId || "";
+        const teacherId = row.teacherId || "";
+
+        if (classId) linkedClassIds.add(classId);
+        if (subjectId) linkedSubjectIds.add(subjectId);
+        if (teacherId) linkedTeacherIds.add(teacherId);
+
+        const classData = classesMap.get(classId);
+        const subjectData = subjectsMap.get(subjectId);
+        const teacherData = teachersMap.get(teacherId);
 
         const className =
-          classDoc?.name ||
           row.className ||
-          row.classLabel ||
-          row.gradeName ||
-          row.classId ||
-          "-";
+          classData?.name ||
+          classId ||
+          "غير محدد";
 
         const subjectName =
           row.subjectName ||
-          subjectDoc?.name ||
-          row.subjectId ||
-          "-";
-
-        const teacherName =
-          teacherDoc?.name ||
-          row.teacherName ||
+          subjectData?.name ||
+          subjectId ||
           "غير محدد";
 
-        const teacherEmail =
-          teacherDoc?.email ||
-          row.teacherEmail ||
-          "-";
+        const teacherName = teacherData
+          ? formatTeacherName(teacherData)
+          : "غير محدد";
 
-        const teacherPhone =
-          teacherDoc?.phone ||
-          row.teacherPhone ||
-          "-";
+        const teacherTypeBadge = teacherData
+          ? formatTeacherType(teacherData)
+          : `<span class="badge badge-muted">-</span>`;
 
-        let note = safeText(row.note, "-");
+        const teacherEmail = teacherData?.email || "-";
+        const teacherPhone = teacherData?.phone || "-";
+        const statusBadge = formatStatus(
+          teacherData?.status || row.status || "active"
+        );
 
-        if (!row.teacherId) {
-          note = "السطر موجود لكن لم يتم تعيين teacherId بعد";
-        } else if (row.teacherId && !teacherDoc) {
-          note = `المعرف موجود لكن لم نجد وثيقة معلم مطابقة له: ${safeText(row.teacherId)}`;
-        }
-
-        return `
+        mainRowsHtml.push(`
           <tr>
-            <td>${safeText(className)}</td>
-            <td>${safeText(subjectName)}</td>
-            <td>${safeText(teacherName)}</td>
-            <td>${teacherDoc ? teacherTypeLabel(teacherDoc) : '<span class="badge badge-muted">-</span>'}</td>
-            <td>${statusBadge(row.status || teacherDoc?.status || "-")}</td>
-            <td>${safeText(teacherEmail)}</td>
-            <td>${safeText(teacherPhone)}</td>
-            <td>${normalizeArabicDay(row.day)}</td>
-            <td>${safeText(row.period)}</td>
-            <td>${safeText(row.startTime)}</td>
-            <td>${safeText(row.endTime)}</td>
-            <td>${safeText(note)}</td>
+            <td>${escapeHtml(className)}</td>
+            <td>${escapeHtml(subjectName)}</td>
+            <td>${escapeHtml(teacherName)}</td>
+            <td>${teacherTypeBadge}</td>
+            <td>${statusBadge}</td>
+            <td>${escapeHtml(teacherEmail)}</td>
+            <td>${escapeHtml(teacherPhone)}</td>
           </tr>
-        `;
-      }).join("");
-    }
+        `);
 
-    function updateStats(schedules, classesMap, subjectsMap, teachersMap) {
-      const classIds = new Set();
-      const subjectIds = new Set();
-      const teacherIds = new Set();
-
-      schedules.forEach((row) => {
-        if (row.classId && classesMap.has(row.classId)) classIds.add(row.classId);
-        if (row.subjectId && subjectsMap.has(row.subjectId)) subjectIds.add(row.subjectId);
-        if (row.teacherId && teachersMap.has(row.teacherId)) teacherIds.add(row.teacherId);
-
-        if (!row.subjectId && row.subjectName) {
-          const matched = [...subjectsMap.values()].find(item => item.name === row.subjectName);
-          if (matched) subjectIds.add(matched.id);
-        }
-      });
-
-      statSchedules.textContent = schedules.length;
-      statClasses.textContent = classIds.size;
-      statSubjects.textContent = subjectIds.size;
-      statTeachers.textContent = teacherIds.size;
-    }
-
-    async function loadSchedulePage(schoolId) {
-      loadingBox.style.display = "block";
-      scheduleTableBody.innerHTML = `
-        <tr>
-          <td colspan="12" style="color:#b8c4e0;">جارٍ تحميل الجدول...</td>
-        </tr>
-      `;
-
-      try {
-        const [classesMap, subjectsMap, teachersMap, schedules] = await Promise.all([
-          fetchCollectionMap("classes", schoolId),
-          fetchCollectionMap("subjects", schoolId),
-          fetchCollectionMap("teachers", schoolId),
-          fetchSchedules(schoolId)
-        ]);
-
-        updateStats(schedules, classesMap, subjectsMap, teachersMap);
-        renderRows(schedules, classesMap, subjectsMap, teachersMap);
-
-        clearStatus();
-
-        if (schedules.length > 0) {
-          const foundTeacher = schedules.some(row => row.teacherId && teachersMap.has(row.teacherId));
-
-          if (foundTeacher) {
-            showStatus(
-              "success",
-              "تم تحميل الجدول بنجاح",
-              "تمت قراءة بيانات الجدول الحقيقي من Firestore، وتم ربط الصفوف والمواد والمعلمين حسب المدرسة الحالية."
-            );
-          } else {
-            showStatus(
-              "error",
-              "الجدول موجود لكن ربط المعلم غير مكتمل",
-              "تم العثور على أسطر في schedules، لكن لم يتم العثور على معلمين مطابقين داخل مجموعة teachers بنفس قيم teacherId."
-            );
-          }
+        let note = "";
+        if (!teacherId) {
+          note = "السطر موجود لكن لا يحتوي على teacherId.";
+        } else if (!teacherData) {
+          note = "تم العثور على teacherId لكن لا توجد وثيقة مطابقة داخل teachers.";
         } else {
-          showStatus(
-            "error",
-            "لا توجد بيانات جدول حالياً",
-            "لم نجد أي وثائق داخل مجموعة schedules مرتبطة بـ schoolId الحالي."
-          );
-        }
-      } catch (error) {
-        console.error("Schedule page error:", error);
-        showStatus(
-          "error",
-          "حدث خطأ أثناء قراءة البيانات",
-          safeText(error?.message, "تعذر تحميل بيانات الجدول من Firestore.")
-        );
-
-        scheduleTableBody.innerHTML = `
-          <tr>
-            <td colspan="12" style="color:#ffc1ca;">
-              تعذر تحميل البيانات: ${safeText(error?.message, "خطأ غير معروف")}
-            </td>
-          </tr>
-        `;
-      } finally {
-        loadingBox.style.display = "none";
-      }
-    }
-
-    async function ensureSessionAndLoad() {
-      updateHeaderTitle();
-
-      const schoolId = getSchoolIdFromSession();
-
-      if (!schoolId) {
-        showStatus(
-          "error",
-          "لا توجد جلسة دخول محلية محفوظة",
-          "افتح صفحة تسجيل الدخول من جديد، ثم سجّل الدخول مرة أخرى حتى يتم حفظ بيانات المدرسة محلياً."
-        );
-
-        scheduleTableBody.innerHTML = `
-          <tr>
-            <td colspan="12" style="color:#ffc1ca;">
-              لا توجد جلسة دخول محفوظة حالياً. هذا يعني أن الصفحة لم تجد schoolId داخل الجلسة المحلية.
-            </td>
-          </tr>
-        `;
-        loadingBox.style.display = "none";
-        return;
-      }
-
-      onAuthStateChanged(auth, async (user) => {
-        if (!user) {
-          showStatus(
-            "error",
-            "تسجيل Firebase غير نشط حالياً",
-            "يوجد schoolId محلياً، لكن Firebase Auth لم يجد مستخدماً نشطاً في هذه الصفحة. سنحاول عرض البيانات اعتماداً على الجلسة المحلية أيضاً."
-          );
+          note = "ربط صحيح وجاهز.";
         }
 
-        await loadSchedulePage(schoolId);
+        periodRowsHtml.push(`
+          <tr>
+            <td>${escapeHtml(teacherEmail)}</td>
+            <td>${escapeHtml(teacherPhone)}</td>
+            <td>${escapeHtml(row.day || "-")}</td>
+            <td>${escapeHtml(row.period ?? "-")}</td>
+            <td>${escapeHtml(row.startTime || "-")}</td>
+            <td>${escapeHtml(row.endTime || "-")}</td>
+            <td>${escapeHtml(note)}</td>
+          </tr>
+        `);
+      }
+
+      mainScheduleBody.innerHTML = mainRowsHtml.join("");
+      periodDetailsBody.innerHTML = periodRowsHtml.join("");
+
+      const actualTeacherCount = [...linkedTeacherIds].filter((id) => teachersMap.has(id)).length;
+
+      setStats({
+        schedules: scheduleRows.length,
+        classes: linkedClassIds.size,
+        subjects: linkedSubjectIds.size,
+        teachers: actualTeacherCount
       });
     }
 
     window.goBack = function () {
-      window.location.href = "/app/school/dashboard.html";
+      window.location.href = "/app/school/index.html";
     };
 
     window.logout = async function () {
       try {
-        localStorage.removeItem("madaris_user_session");
-        sessionStorage.removeItem("madaris_user_session");
-      } catch (error) {}
+        localStorage.removeItem("madaris_logged_in");
+        localStorage.removeItem("madaris_role");
+        localStorage.removeItem("madaris_uid");
+        localStorage.removeItem("madaris_name");
+        localStorage.removeItem("madaris_email");
+        localStorage.removeItem("madaris_school_id");
+        localStorage.removeItem("madaris_school_name");
+        localStorage.removeItem("schoolId");
 
-      try {
         await signOut(auth);
-      } catch (error) {}
-
-      window.location.href = "/app/login.html";
+      } catch (error) {
+        console.error("Logout error:", error);
+      } finally {
+        window.location.href = "/app/login.html";
+      }
     };
 
-    ensureSessionAndLoad();
+    onAuthStateChanged(auth, async (user) => {
+      try {
+        const session = await readSchoolSession(user);
+        if (!session) {
+          renderMainEmpty("تعذر فتح الجدول بسبب مشكلة في الجلسة.");
+          renderPeriodEmpty("تعذر فتح تفاصيل الحصص بسبب مشكلة في الجلسة.");
+          return;
+        }
+
+        await loadSchedulePage(session);
+      } catch (error) {
+        console.error("Schedule page error:", error);
+        showNotice(`حدث خطأ أثناء تحميل الصفحة: ${error.message}`);
+        renderMainEmpty(`حدث خطأ أثناء تحميل الجدول: ${error.message}`);
+        renderPeriodEmpty(`حدث خطأ أثناء تحميل تفاصيل الحصص: ${error.message}`);
+      }
+    });
   </script>
 </body>
 </html>
