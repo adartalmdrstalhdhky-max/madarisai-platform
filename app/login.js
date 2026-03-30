@@ -1,15 +1,19 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 
 import {
   getAuth,
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 
 import {
   getFirestore,
   doc,
   getDoc
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+
+/* Firebase Config (نفس مشروعك الحالي) */
 
 const firebaseConfig = {
   apiKey: "AIzaSyAzQkhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
@@ -21,77 +25,219 @@ const firebaseConfig = {
   measurementId: "G-SC7VE6F20S"
 };
 
+
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+
 const db = getFirestore(app);
 
+
+/* عناصر الصفحة */
+
 const form = document.getElementById("loginForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const errorBox = document.getElementById("errorBox");
+const loginBtn = document.getElementById("loginBtn");
 
-form.addEventListener("submit", async (e) => {
 
-  e.preventDefault();
+/* مفاتيح الجلسة */
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+const SESSION_KEY_CURRENT = "madaris_user_session";
+const SESSION_KEY_LEGACY = "madaris_session";
+
+
+function showError(message) {
+  if (!errorBox) return;
+  errorBox.style.display = "block";
+  errorBox.innerHTML = message;
+}
+
+
+function hideError() {
+  if (!errorBox) return;
+  errorBox.style.display = "none";
+  errorBox.innerHTML = "";
+}
+
+
+/* حفظ الجلسة */
+
+function saveSession(session) {
+  localStorage.setItem(
+    SESSION_KEY_CURRENT,
+    JSON.stringify(session)
+  );
+
+  /* دعم النسخة القديمة */
+  localStorage.setItem(
+    SESSION_KEY_LEGACY,
+    JSON.stringify(session)
+  );
+}
+
+
+/* التحويل حسب الدور */
+
+function redirectByRole(role) {
+
+  if (role === "school") {
+    window.location.href = "/app/school/index.html";
+    return;
+  }
+
+  if (role === "teacher") {
+    window.location.href = "/app/teacher/index.html";
+    return;
+  }
+
+  if (role === "admin") {
+    window.location.href = "/app/admin/index.html";
+    return;
+  }
+
+  /* افتراضي */
+  window.location.href = "/app/school/index.html";
+}
+
+
+/* تسجيل الدخول */
+
+async function handleLogin(email, password) {
 
   try {
 
-    const userCredential = await signInWithEmailAndPassword(
+    hideError();
+
+    loginBtn.disabled = true;
+    loginBtn.innerText = "جارٍ تسجيل الدخول...";
+
+
+    const credential = await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
 
-    const user = userCredential.user;
 
-    const userDoc = await getDoc(doc(db, "users", user.uid));
+    const user = credential.user;
 
-    if (!userDoc.exists()) {
+    const uid = user.uid;
 
-      alert("لا يوجد حساب مرتبط");
+    const userRef = doc(db, "users", uid);
+
+    const userSnap = await getDoc(userRef);
+
+
+    if (!userSnap.exists()) {
+
+      showError("لم يتم العثور على حساب المستخدم داخل قاعدة البيانات.");
+
+      loginBtn.disabled = false;
+      loginBtn.innerText = "تسجيل الدخول";
 
       return;
     }
 
-    const data = userDoc.data();
+    const userData = userSnap.data();
 
     const session = {
-      uid: user.uid,
-      email: data.email,
-      role: data.role,
-      schoolId: data.schoolId,
-      schoolName: data.schoolName || "مدرسة"
+      uid: uid,
+      email: user.email || "",
+      role: userData.role || "school",
+      schoolId: userData.schoolId || "",
+      name: userData.name || "",
+      roleLevel: userData.roleLevel || ""
     };
 
-    localStorage.setItem(
-      "madaris_user_session",
-      JSON.stringify(session)
-    );
 
-    if (data.role === "school") {
+    if (!session.schoolId && session.role === "school") {
 
-      window.location.href = "/app/school/dashboard.html";
+      showError("الحساب لا يحتوي على schoolId");
 
-    } else if (data.role === "teacher") {
+      loginBtn.disabled = false;
+      loginBtn.innerText = "تسجيل الدخول";
 
-      window.location.href = "/app/teacher/dashboard.html";
-
-    } else if (data.role === "student") {
-
-      window.location.href = "/app/student/dashboard.html";
-
-    } else if (data.role === "admin") {
-
-      window.location.href = "/app/admin/dashboard.html";
-
+      return;
     }
+
+    /* حفظ الجلسة */
+
+    saveSession(session);
+
+
+    /* تحويل */
+
+    redirectByRole(session.role);
 
   } catch (error) {
 
-    alert("فشل تسجيل الدخول");
+    console.error("Login Error:", error);
 
-    console.error(error);
+    showError(error.message || "فشل تسجيل الدخول");
+
+    loginBtn.disabled = false;
+    loginBtn.innerText = "تسجيل الدخول";
+
+  }
+
+}/* Submit Form */
+
+if (form) {
+
+  form.addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if (!email || !password) {
+      showError("يرجى إدخال البريد وكلمة المرور");
+      return;
+    }
+
+    handleLogin(email, password);
+
+  });
+
+}
+
+
+/* تحقق تلقائي من الجلسة */
+
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) return;
+
+  try {
+
+    const userRef = doc(db, "users", user.uid);
+
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) return;
+
+    const userData = userSnap.data();
+
+    const session = {
+      uid: user.uid,
+      email: user.email || "",
+      role: userData.role || "school",
+      schoolId: userData.schoolId || "",
+      name: userData.name || "",
+      roleLevel: userData.roleLevel || ""
+    };
+
+    if (!session.schoolId && session.role === "school") return;
+
+    saveSession(session);
+
+  } catch (error) {
+
+    console.error("Session restore error:", error);
+
   }
 
 });
