@@ -1,3 +1,8 @@
+// ===============================
+// Madaris AI - Login System
+// Final Production Version
+// ===============================
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 
 import {
@@ -13,7 +18,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 
-// Firebase Config
+// ===============================
+// Firebase Config (Final)
+// ===============================
 
 const firebaseConfig = {
   apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
@@ -26,6 +33,10 @@ const firebaseConfig = {
 };
 
 
+// ===============================
+// Initialize Firebase
+// ===============================
+
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
@@ -33,156 +44,239 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 
-// Login
+// ===============================
+// Save Session Helper
+// ===============================
 
-window.loginUser = async function () {
+function saveSession(session){
 
-  const email =
-    document.getElementById("email")?.value.trim();
+localStorage.setItem(
+"madaris_user_session",
+JSON.stringify(session)
+);
 
-  const password =
-    document.getElementById("password")?.value.trim();
+localStorage.setItem(
+"madaris_session",
+JSON.stringify(session)
+);
 
+console.log("Session Saved:",session);
 
-  if (!email || !password) {
-    alert("الرجاء إدخال البريد وكلمة المرور");
-    return;
-  }
-
-  try {
-
-    const userCredential =
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    const user = userCredential.user;
-
-    const uid = user.uid;
+}
 
 
-    const userRef =
-      doc(db, "users", uid);
+// ===============================
+// Login Function
+// ===============================
 
-    const userSnap =
-      await getDoc(userRef);
+window.loginUser = async function(){
 
+try{
 
-    if (!userSnap.exists()) {
+const email =
+document.getElementById("email").value.trim();
 
-      alert("المستخدم غير موجود في قاعدة البيانات");
-
-      return;
-
-    }
-
-
-    const userData =
-      userSnap.data();
+const password =
+document.getElementById("password").value.trim();
 
 
-    const session = {
+if(!email || !password){
 
-      uid: uid,
+alert("الرجاء إدخال البريد وكلمة المرور");
 
-      email: user.email,
+return;
 
-      role: userData.role || "",
-
-      schoolId: userData.schoolId || "",
-
-      name: userData.name || "",
-
-      loginTime: Date.now()
-
-    };
+}
 
 
-    localStorage.setItem(
-      "madaris_user_session",
-      JSON.stringify(session)
-    );
+// Firebase Login
+
+const userCredential =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user = userCredential.user;
+
+const uid = user.uid;
+
+console.log("User UID:",uid);
 
 
-    localStorage.setItem(
-      "madaris_session",
-      JSON.stringify(session)
-    );console.log("Session Saved", session);
+// ===============================
+// Read Firestore User
+// ===============================
+
+const userRef =
+doc(db,"users",uid);
+
+const userSnap =
+await getDoc(userRef);
 
 
-    if (session.role === "school") {
+if(!userSnap.exists()){
 
-      window.location.href =
-        "/app/school/index.html";
+alert("المستخدم غير موجود داخل قاعدة البيانات");
 
-      return;
+return;
 
-    }
+}
 
+const userData =
+userSnap.data();
 
-    if (session.role === "teacher") {
-
-      window.location.href =
-        "/app/teacher/index.html";
-
-      return;
-
-    }
+console.log("User Data:",userData);
 
 
-    if (session.role === "admin") {
+// ===============================
+// Build Session
+// ===============================
 
-      window.location.href =
-        "/app/admin/index.html";
+const session = {
 
-      return;
+uid: uid,
 
-    }
+email: user.email,
 
+name: userData.name || "",
 
-    window.location.href =
-      "/app/dashboard.html";
+role: userData.role || "",
 
+roleLevel: userData.roleLevel || "",
 
-  } catch (error) {
+schoolId: userData.schoolId || "",
 
-    console.error(error);
+status: userData.status || "active",
 
-    alert("فشل تسجيل الدخول: " + error.message);
-
-  }
+loginAt: Date.now()
 
 };
 
 
+// ===============================
+// Save Session
+// ===============================
+
+saveSession(session);// ===============================
+// Redirect
+// ===============================
+
+if(session.role === "school"){
+
+window.location.href =
+"/app/school/index.html";
+
+return;
+
+}
+
+if(session.role === "teacher"){
+
+window.location.href =
+"/app/teacher/index.html";
+
+return;
+
+}
+
+if(session.role === "admin"){
+
+window.location.href =
+"/app/admin/index.html";
+
+return;
+
+}
+
+window.location.href =
+"/app/dashboard.html";
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"فشل تسجيل الدخول: " +
+error.message
+);
+
+}
+
+};
+
+
+// ===============================
 // Auto Login
+// ===============================
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth,(user)=>{
 
-  if (!user) return;
+if(!user) return;
+
+const session =
+localStorage.getItem(
+"madaris_user_session"
+);
+
+if(!session) return;
+
+const data =
+JSON.parse(session);
+
+console.log("Auto Session:",data);
 
 
-  const session =
-    localStorage.getItem(
-      "madaris_user_session"
-    );
+if(data.role === "school"){
 
+window.location.href =
+"/app/school/index.html";
 
-  if (session) {
+return;
 
-    const data =
-      JSON.parse(session);
+}
 
+if(data.role === "teacher"){
 
-    if (data.role === "school") {
+window.location.href =
+"/app/teacher/index.html";
 
-      window.location.href =
-        "/app/school/index.html";
+return;
 
-    }
+}
 
-  }
+if(data.role === "admin"){
+
+window.location.href =
+"/app/admin/index.html";
+
+return;
+
+}
 
 });
+
+
+// ===============================
+// Debug Helper
+// ===============================
+
+window.debugSession = function(){
+
+console.log(
+"madaris_user_session",
+localStorage.getItem(
+"madaris_user_session"
+)
+);
+
+console.log(
+"madaris_session",
+localStorage.getItem(
+"madaris_session"
+)
+);
+
+};
