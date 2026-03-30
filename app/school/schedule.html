@@ -32,7 +32,7 @@
       background:
         radial-gradient(circle at top, #0e2f6f 0%, #071427 45%, #05111f 100%);
       color:var(--text);
-      font-family: "Tahoma", "Arial", sans-serif;
+      font-family:"Tahoma","Arial",sans-serif;
       min-height:100%;
     }
 
@@ -211,6 +211,7 @@
       font-size:clamp(22px, 2vw, 28px);
       line-height:1.9;
       margin-top:16px;
+      margin-bottom:20px;
     }
 
     .notice-error{
@@ -231,15 +232,6 @@
       font-size:clamp(24px, 2vw, 30px);
       line-height:1.9;
       padding:30px 10px;
-    }
-
-    .muted{
-      color:var(--muted);
-    }
-
-    .small{
-      font-size:clamp(18px, 1.6vw, 22px);
-      line-height:1.9;
     }
 
     @media (max-width: 900px){
@@ -395,13 +387,10 @@
     <section class="card">
       <h2 class="section-title">مهم</h2>
       <p class="section-text">
-        لكي يظهر المعلم داخل الجدول، يجب أن تكون قيمة
-        <span dir="ltr">teacherId</span>
-        داخل وثيقة الجدول مساوية تمامًا لمعرف وثيقة المعلم داخل مجموعة
-        <span dir="ltr">teachers</span>.
-        وإذا لم يوجد
-        <span dir="ltr">teacherId</span>
-        صحيح، فهذه الصفحة ستستخدم المعلم الذكي تلقائيًا إذا كان موجودًا داخل نفس المدرسة.
+        هذه النسخة لا تطرد المستخدم مباشرة إلى صفحة الدخول إذا كانت الجلسة المحلية موجودة.
+        لذلك إذا تأخر
+        <span dir="ltr">Firebase Auth</span>
+        قليلًا فلن تخرج الصفحة من نفسها.
       </p>
     </section>
   </div>
@@ -410,7 +399,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
     import {
       getAuth,
-      onAuthStateChanged,
       signOut
     } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
     import {
@@ -445,17 +433,6 @@
     const statSubjects = document.getElementById("statSubjects");
     const statTeachers = document.getElementById("statTeachers");
 
-    let sessionContext = {
-      schoolId: null,
-      schoolName: null,
-      userName: null,
-      email: null
-    };
-
-    function setNotice(type, message){
-      mainNotice.innerHTML = `<div class="notice ${type}">${message}</div>`;
-    }
-
     function escapeHtml(value){
       if(value === null || value === undefined) return "";
       return String(value)
@@ -472,23 +449,8 @@
       return v ? escapeHtml(v) : fallback;
     }
 
-    function detectTeacherType(teacher){
-      if(!teacher) return "-";
-      if(teacher.isAI === true) return "معلم ذكي";
-      if(String(teacher.teacherType || "").toLowerCase() === "ai") return "معلم ذكي";
-      if(String(teacher.teacherType || "").toLowerCase() === "human") return "معلم بشري";
-      return teacher.title ? escapeHtml(teacher.title) : "-";
-    }
-
-    function buildTeacherTypeBadge(teacher){
-      const typeLabel = detectTeacherType(teacher);
-      if(typeLabel === "معلم ذكي"){
-        return `<span class="pill pill-ai">معلم ذكي</span>`;
-      }
-      if(typeLabel === "معلم بشري"){
-        return `<span class="pill pill-human">معلم بشري</span>`;
-      }
-      return `<span class="pill pill-human">${escapeHtml(typeLabel)}</span>`;
+    function setNotice(type, message){
+      mainNotice.innerHTML = `<div class="notice ${type}">${message}</div>`;
     }
 
     function getLocalJson(key){
@@ -516,51 +478,50 @@
       const schoolSession = getLocalJson("schoolSession");
       const loginSession = getLocalJson("madarisSession");
 
-      const schoolId = pickFirstNonEmpty([
-        localStorage.getItem("schoolId"),
-        localStorage.getItem("currentSchoolId"),
-        localStorage.getItem("madaris_schoolId"),
-        localStorage.getItem("session_schoolId"),
-        userSession?.schoolId,
-        currentUser?.schoolId,
-        schoolSession?.schoolId,
-        loginSession?.schoolId,
-        currentUser?.school?.id,
-        userSession?.school?.id
-      ]);
-
-      const schoolNameValue = pickFirstNonEmpty([
-        localStorage.getItem("schoolName"),
-        localStorage.getItem("currentSchoolName"),
-        localStorage.getItem("madaris_schoolName"),
-        userSession?.schoolName,
-        currentUser?.schoolName,
-        schoolSession?.schoolName,
-        loginSession?.schoolName,
-        currentUser?.school?.name,
-        userSession?.school?.name
-      ]);
-
-      const userNameValue = pickFirstNonEmpty([
-        localStorage.getItem("userName"),
-        currentUser?.name,
-        userSession?.name,
-        loginSession?.name
-      ]);
-
-      const emailValue = pickFirstNonEmpty([
-        localStorage.getItem("userEmail"),
-        currentUser?.email,
-        userSession?.email,
-        loginSession?.email
-      ]);
-
-      sessionContext = {
-        schoolId,
-        schoolName: schoolNameValue,
-        userName: userNameValue,
-        email: emailValue
+      return {
+        schoolId: pickFirstNonEmpty([
+          localStorage.getItem("schoolId"),
+          localStorage.getItem("currentSchoolId"),
+          localStorage.getItem("madaris_schoolId"),
+          localStorage.getItem("session_schoolId"),
+          userSession?.schoolId,
+          currentUser?.schoolId,
+          schoolSession?.schoolId,
+          loginSession?.schoolId,
+          currentUser?.school?.id,
+          userSession?.school?.id
+        ]),
+        schoolName: pickFirstNonEmpty([
+          localStorage.getItem("schoolName"),
+          localStorage.getItem("currentSchoolName"),
+          localStorage.getItem("madaris_schoolName"),
+          userSession?.schoolName,
+          currentUser?.schoolName,
+          schoolSession?.schoolName,
+          loginSession?.schoolName,
+          currentUser?.school?.name,
+          userSession?.school?.name
+        ])
       };
+    }
+
+    function detectTeacherType(teacher){
+      if(!teacher) return "-";
+      if(teacher.isAI === true) return "معلم ذكي";
+      if(String(teacher.teacherType || "").toLowerCase() === "ai") return "معلم ذكي";
+      if(String(teacher.teacherType || "").toLowerCase() === "human") return "معلم بشري";
+      return teacher.title ? escapeHtml(teacher.title) : "-";
+    }
+
+    function buildTeacherTypeBadge(teacher){
+      const typeLabel = detectTeacherType(teacher);
+      if(typeLabel === "معلم ذكي"){
+        return `<span class="pill pill-ai">معلم ذكي</span>`;
+      }
+      if(typeLabel === "معلم بشري"){
+        return `<span class="pill pill-human">معلم بشري</span>`;
+      }
+      return `<span class="pill pill-human">${escapeHtml(typeLabel)}</span>`;
     }
 
     function goBackToSchoolIndex(){
@@ -590,26 +551,21 @@
     window.goBackToSchoolIndex = goBackToSchoolIndex;
     window.logoutNow = logoutNow;
 
-    async function loadSchedulePage(user){
-      readSessionContext();
+    async function loadSchedulePage(){
+      const session = readSessionContext();
 
-      if(!user){
-        scheduleTableBody.innerHTML = `<tr><td colspan="7">لا يوجد مستخدم مسجل حالياً.</td></tr>`;
-        detailsTableBody.innerHTML = `<tr><td colspan="7">افتح صفحة تسجيل الدخول من جديد ثم سجل الدخول.</td></tr>`;
-        setNotice("notice-error", "لا توجد جلسة Firebase Auth حالياً. افتح صفحة تسجيل الدخول من جديد ثم سجل الدخول.");
+      if(!session.schoolId){
+        scheduleTableBody.innerHTML = `<tr><td colspan="7">لا توجد جلسة محلية محفوظة.</td></tr>`;
+        detailsTableBody.innerHTML = `<tr><td colspan="7">الصفحة لم تجد schoolId داخل localStorage.</td></tr>`;
+        setNotice("notice-error", "لا توجد جلسة محلية محفوظة. الصفحة لم تجد <span dir='ltr'>schoolId</span> داخل <span dir='ltr'>localStorage</span>.");
         return;
       }
 
-      if(!sessionContext.schoolId){
-        scheduleTableBody.innerHTML = `<tr><td colspan="7">لا توجد جلسة دخول محلية محفوظة.</td></tr>`;
-        detailsTableBody.innerHTML = `<tr><td colspan="7">الصفحة لم تجد <span dir="ltr">schoolId</span> داخل الجلسة المحلية.</td></tr>`;
-        setNotice("notice-error", "لا توجد جلسة دخول محلية محفوظة. هذا يعني أن الصفحة لم تجد <span dir='ltr'>schoolId</span> داخل الجلسة المحلية.");
-        return;
-      }
-
-      schoolTitle.textContent = `Madaris AI | جدول ${sessionContext.schoolName || "مدرسة"} `;const schoolId = sessionContext.schoolId;
+      schoolTitle.textContent = `Madaris AI | جدول ${session.schoolName || "مدرسة"}`;
 
       try{
+        const schoolId = session.schoolId;
+
         const schedulesQuery = query(collection(db, "schedules"), where("schoolId", "==", schoolId));
         const classesQuery = query(collection(db, "classes"), where("schoolId", "==", schoolId));
         const subjectsQuery = query(collection(db, "subjects"), where("schoolId", "==", schoolId));
@@ -656,12 +612,10 @@
 
         statRows.textContent = String(scheduleRows.length);
         statClasses.textContent = String(classesSnapshot.size);
-        statSubjects.textContent = String(subjectsSnapshot.size);
-
-        const linkedTeacherIds = new Set();
+        statSubjects.textContent = String(subjectsSnapshot.size);const linkedTeacherIds = new Set();
 
         if(scheduleRows.length === 0){
-          scheduleTableBody.innerHTML = `<tr><td colspan="7">لا توجد أسطر جدول داخل <span dir="ltr">schedules</span> لهذه المدرسة.</td></tr>`;
+          scheduleTableBody.innerHTML = `<tr><td colspan="7">لا توجد أسطر جدول داخل schedules لهذه المدرسة.</td></tr>`;
           detailsTableBody.innerHTML = `<tr><td colspan="7">لا توجد تفاصيل لعرضها حالياً.</td></tr>`;
           statTeachers.textContent = "0";
           setNotice("notice-error", "لا توجد بيانات جدول حالياً لهذه المدرسة داخل مجموعة <span dir='ltr'>schedules</span>.");
@@ -674,7 +628,7 @@
 
         for(const row of scheduleRows){
           const classData = classesMap[row.classId] || null;
-          const subjectById = subjectsMap[row.subjectId] || null;
+          const subjectData = subjectsMap[row.subjectId] || null;
 
           let teacher = null;
           let note = "";
@@ -683,48 +637,23 @@
             teacher = teachersMap[row.teacherId];
             foundCorrectLink = true;
             note = "ربط صحيح وجاهز.";
-          } else if(row.teacherId && !teachersMap[row.teacherId] && aiTeacher){
+          } else if(aiTeacher){
             teacher = aiTeacher;
-            note = "تم استخدام المعلم الذكي تلقائياً لأن teacherId غير مطابق لمعلم موجود.";
-          } else if(!row.teacherId && aiTeacher){
-            teacher = aiTeacher;
-            note = "لا يوجد teacherId داخل السطر، فتم استخدام المعلم الذكي تلقائياً.";
-          } else if(row.teacherId && !teachersMap[row.teacherId]){
-            note = "تم العثور على teacherId لكن لا توجد وثيقة مطابقة داخل teachers.";
+            note = "تم استخدام المعلم الذكي تلقائياً لأن teacherId غير موجود أو غير مطابق.";
           } else {
-            note = "لا يوجد teacherId داخل السطر ولا يوجد معلم ذكي افتراضي داخل teachers.";
+            note = "لا يوجد معلم مطابق داخل teachers.";
           }
 
           if(teacher?.id){
             linkedTeacherIds.add(teacher.id);
           }
 
-          const className =
-            classData?.name ||
-            row.className ||
-            "-";
-
-          const subjectName =
-            subjectById?.name ||
-            row.subjectName ||
-            "-";
-
-          const teacherName =
-            teacher?.name ||
-            "غير محدد";
-
-          const teacherEmail =
-            teacher?.email ||
-            "-";
-
-          const teacherPhone =
-            teacher?.phone ||
-            "-";
-
-          const teacherStatus =
-            teacher?.status ||
-            row.status ||
-            "active";
+          const className = classData?.name || row.className || "-";
+          const subjectName = subjectData?.name || row.subjectName || "-";
+          const teacherName = teacher?.name || "غير محدد";
+          const teacherEmail = teacher?.email || "-";
+          const teacherPhone = teacher?.phone || "-";
+          const teacherStatus = teacher?.status || row.status || "active";
 
           scheduleHtml += `
             <tr>
@@ -756,11 +685,11 @@
         statTeachers.textContent = String(linkedTeacherIds.size);
 
         if(foundCorrectLink){
-          setNotice("notice-ok", "تم تحميل الجدول بنجاح. يوجد على الأقل سطر واحد مرتبط بمعلم فعلي بشكل صحيح.");
+          setNotice("notice-ok", "تم تحميل الجدول بنجاح. الصفحة لم تعد تطردك إلى تسجيل الدخول، والربط الحالي يعمل.");
         } else if(aiTeacher){
-          setNotice("notice-ok", "تم تحميل الجدول بنجاح باستخدام المعلم الذكي كخيار افتراضي عند غياب الربط الصحيح.");
+          setNotice("notice-ok", "تم تحميل الجدول بنجاح باستخدام المعلم الذكي كخيار افتراضي.");
         } else {
-          setNotice("notice-error", "تم تحميل الجدول، لكن لا يوجد ربط صحيح مع teachers ولا يوجد معلم ذكي افتراضي متاح.");
+          setNotice("notice-error", "تم تحميل الجدول، لكن لا يوجد معلم مطابق داخل teachers.");
         }
 
       } catch (error) {
@@ -771,17 +700,7 @@
       }
     }
 
-    onAuthStateChanged(auth, async (user) => {
-      if(!user){
-        setTimeout(() => {
-          if(!auth.currentUser){
-            window.location.href = "/app/login.html";
-          }
-        }, 1200);
-      }
-
-      await loadSchedulePage(user);
-    });
+    loadSchedulePage();
   </script>
 </body>
 </html>
