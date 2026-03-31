@@ -2,690 +2,562 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
   <title>Madaris AI | لوحة المدرسة</title>
+
   <style>
     :root {
-      --bg: #020b2c;
-      --bg2: #071845;
-      --card: #0b2157;
-      --card2: #102963;
-      --line: rgba(255,255,255,0.08);
-      --text: #f5f7ff;
-      --muted: #d6ddff;
-      --cyan: #58d3ff;
-      --blue: #4f86ff;
-      --green: #2fcf7a;
-      --red: #ff5f73;
-      --shadow: 0 20px 50px rgba(0,0,0,0.25);
-      --radius: 28px;
+      --bg-1: #06142b;
+      --bg-2: #0b2452;
+      --card: rgba(18, 52, 116, 0.92);
+      --card-2: rgba(22, 63, 139, 0.88);
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #f4f7ff;
+      --muted: #d8e4ff;
+      --accent: #61dafb;
+      --accent-2: #70e1ff;
+      --success: #39d66b;
+      --danger: #ff5c7a;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --max-width: 1120px;
     }
 
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
-      font-family: "Tahoma", "Arial", sans-serif;
-      background:
-        radial-gradient(circle at top, #0b2a6f 0%, #04153d 34%, #020b2c 70%, #01071d 100%);
-      color: var(--text);
       min-height: 100%;
+      font-family: "Tahoma", "Arial", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(97, 218, 251, 0.10), transparent 30%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
     }
 
     body {
-      padding: 18px;
+      padding: 18px 14px 40px;
     }
 
-    .shell {
-      max-width: 1180px;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
       margin: 0 auto;
     }
 
-    .hero {
-      background: linear-gradient(180deg, rgba(18,48,112,0.96), rgba(7,24,69,0.96));
+    .card {
+      background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
       border: 1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
-      padding: 28px;
-      margin-bottom: 22px;
     }
 
-    .hero-top {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
+    .hero {
+      padding: 28px 18px;
+      margin-bottom: 18px;
+      text-align: center;
     }
 
-    .brand {
-      font-size: 52px;
-      line-height: 1.2;
+    .hero-title {
+      margin: 0 0 14px;
+      line-height: 1.35;
+      font-size: clamp(32px, 7vw, 64px);
       font-weight: 800;
+    }
+
+    .hero-subtitle {
+      margin: 0 auto 18px;
+      max-width: 860px;
+      color: var(--muted);
+      line-height: 2;
+      font-size: clamp(18px, 3.8vw, 30px);
+    }
+
+    .school-name {
       margin: 0;
+      font-size: clamp(26px, 5.5vw, 44px);
+      font-weight: 800;
       color: #ffffff;
     }
 
-    .brand small {
-      display: block;
-      font-size: 24px;
-      color: var(--muted);
-      margin-top: 10px;
-      font-weight: 600;
+    .school-id {
+      margin: 14px 0 0;
+      color: var(--accent-2);
+      font-size: clamp(14px, 3.8vw, 22px);
+      word-break: break-word;
+      line-height: 1.9;
     }
 
-    .hero p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 2;
+    .status-box {
+      margin-top: 18px;
+      padding: 16px 14px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(9, 28, 68, 0.42);
+      color: #eaf3ff;
+      line-height: 1.9;
+      font-size: clamp(15px, 3.8vw, 21px);
     }
 
-    .hero-actions {
-      display: flex;
+    .status-box.error {
+      background: rgba(110, 18, 45, 0.40);
+      border-color: rgba(255, 92, 122, 0.28);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 24px;
+      margin: 18px 0;
+    }
+
+    .toolbar .btn {
+      width: 100%;
     }
 
     .btn {
       border: none;
-      border-radius: 22px;
-      padding: 18px 26px;
-      min-width: 170px;
-      font-size: 20px;
-      font-weight: 800;
+      outline: none;
       cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-      color: #fff;
-      box-shadow: var(--shadow);
+      border-radius: 999px;
+      padding: 18px 16px;
+      font-size: clamp(19px, 4.3vw, 26px);
+      font-weight: 800;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 64px;
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
-      opacity: 0.95;
+    .btn:active {
+      transform: scale(0.985);
     }
 
     .btn-primary {
-      background: linear-gradient(180deg, #59d7ff, #46bde4);
-      color: #fff;
+      background: linear-gradient(135deg, #5ccff4 0%, #6de4ff 100%);
+      color: #ffffff;
     }
 
     .btn-danger {
-      background: linear-gradient(180deg, #ff6c7d, #ff5b72);
-      color: #fff;
+      background: linear-gradient(135deg, #ff6685 0%, #ff5c7a 100%);
+      color: #ffffff;
     }
 
-    .loading,
-    .error,
-    .info-box,
-    .school-card,
-    .stat-card,
-    .feature-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .btn-secondary {
+      background: linear-gradient(135deg, rgba(97, 218, 251, 0.15), rgba(97, 218, 251, 0.08));
+      color: #ffffff;
+      border: 1px solid rgba(97, 218, 251, 0.20);
     }
 
-    .loading,
-    .error,
-    .info-box,
-    .school-card {
-      background: linear-gradient(180deg, rgba(12,34,84,0.96), rgba(8,26,66,0.96));
-      padding: 22px;
-      margin-bottom: 22px;
+    .section {
+      padding: 22px 16px;
+      margin-bottom: 18px;
     }
 
-    .loading {
+    .section-title {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 5.8vw, 42px);
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .section-text {
+      margin: 0;
       color: var(--muted);
-      font-size: 19px;
-    }
-
-    .error {
-      color: #ffd6db;
-      border-color: rgba(255,95,115,0.25);
-      background: linear-gradient(180deg, rgba(56,15,36,0.94), rgba(28,11,28,0.96));
-      display: none;
       line-height: 2;
-      font-size: 18px;
+      font-size: clamp(16px, 3.9vw, 22px);
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    .school-card h2,
-    .info-box h3 {
-      margin: 0 0 12px 0;
-      font-size: 38px;
-      color: #fff;
-    }
-
-    .school-grid {
+    .actions-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 16px;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 18px;
     }
 
-    .meta {
-      background: rgba(255,255,255,0.03);
+    .action-card {
+      display: block;
+      padding: 22px 16px;
+      border-radius: var(--radius-lg);
       border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 16px;
+      background: rgba(10, 34, 84, 0.34);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
     }
 
-    .meta-label {
-      color: #9cc9ff;
-      font-size: 15px;
-      margin-bottom: 8px;
+    .action-card:active {
+      transform: scale(0.99);
     }
 
-    .meta-value {
-      color: #fff;
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1.7;
+    .action-card.disabled {
+      opacity: 0.55;
+      pointer-events: none;
     }
 
-    .stats {
+    .action-title {
+      margin: 0 0 10px;
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.45;
+    }
+
+    .action-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 3.7vw, 21px);
+      line-height: 1.95;
+    }
+
+    .stats-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-      margin-bottom: 22px;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
     }
 
     .stat-card {
-      background: linear-gradient(180deg, rgba(14,44,108,0.95), rgba(7,27,72,0.95));
-      padding: 28px 20px;
+      padding: 20px 14px;
       text-align: center;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: rgba(10, 34, 84, 0.34);
     }
 
     .stat-value {
-      font-size: 64px;
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: clamp(34px, 9vw, 58px);
       font-weight: 900;
-      color: var(--cyan);
-      margin-bottom: 8px;
-      line-height: 1;
+      line-height: 1.1;
     }
 
     .stat-label {
-      color: var(--muted);
-      font-size: 18px;
+      margin: 0;
+      color: #f6f9ff;
+      font-size: clamp(16px, 3.8vw, 22px);
       line-height: 1.8;
     }
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-bottom: 22px;
-    }
-
-    .feature-card {
-      background: linear-gradient(180deg, rgba(11,33,87,0.98), rgba(8,25,65,0.98));
-      padding: 24px;
-      cursor: pointer;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(88,211,255,0.25);
-    }
-
-    .feature-card h3 {
-      margin: 0 0 10px 0;
-      font-size: 28px;
-      color: #fff;
-    }
-
-    .feature-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 16px;
-    }
-
-    .info-box p {
-      margin: 0;
+    .footer-note {
+      text-align: center;
       color: var(--muted);
       line-height: 2;
-      font-size: 18px;
+      font-size: clamp(15px, 3.7vw, 21px);
+      padding: 4px 10px 0;
     }
 
-    .muted-note {
-      color: #b9c8ff;
-      line-height: 2;
-      font-size: 15px;
-      opacity: 0.95;
-    }
-
-    @media (max-width: 980px) {
-      .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .features {
-        grid-template-columns: 1fr;
-      }
-
-      .school-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .brand {
-        font-size: 42px;
-      }
-
-      .school-card h2,
-      .info-box h3 {
-        font-size: 32px;
-      }
-    }
-
-    @media (max-width: 640px) {
+    @media (min-width: 760px) {
       body {
-        padding: 12px;
+        padding: 24px 18px 48px;
       }
 
-      .hero,
-      .loading,
-      .error,
-      .info-box,
-      .school-card,
-      .feature-card,
-      .stat-card {
-        border-radius: 24px;
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .brand {
-        font-size: 30px;
+      .actions-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 980px) {
+      .actions-grid {
+        grid-template-columns: 1fr 1fr 1fr;
       }
 
-      .brand small {
-        font-size: 20px;
-      }
-
-      .hero p,
-      .info-box p,
-      .error,
-      .loading {
-        font-size: 17px;
-      }
-
-      .btn {
-        width: 100%;
-        min-width: 100%;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .stat-value {
-        font-size: 54px;
-      }
-
-      .feature-card h3 {
-        font-size: 24px;
-      }
-
-      .school-card h2,
-      .info-box h3 {
-        font-size: 28px;
-      }
-
-      .meta-value {
-        font-size: 20px;
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
       }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <section class="hero">
-      <div class="hero-top">
-        <h1 class="brand">
-          Madaris AI | لوحة المدرسة
-          <small id="schoolHeaderTitle">جاري تحميل المدرسة...</small>
-        </h1>
-      </div>
+  <main class="page">
+    <section class="card hero">
+      <h1 class="hero-title">Madaris AI | لوحة المدرسة</h1>
 
-      <p id="pageSubtitle">
-        هذه الصفحة تقرأ جلسة المدرسة الحالية من التخزين المحلي، ثم تجلب بيانات المدرسة من Firestore
-        وتوحّد التنقل بين صفحات المدرسة بدون خروج مفاجئ.
+      <p class="hero-subtitle">
+        هذه الصفحة هي لوحة المدرسة الرئيسية. من هنا تنتقل بشكل واضح إلى عرض
+        الجدول، إدارة الجدول، طاقم المدرسة، الطلاب، والإعدادات باستخدام نفس
+        جلسة المدرسة المحفوظة محليًا.
       </p>
 
-      <div class="hero-actions">
-        <button class="btn btn-primary" id="goScheduleBtn" type="button">الجدول المدرسي</button>
-        <button class="btn btn-danger" id="logoutBtn" type="button">خروج</button>
+      <h2 id="schoolName" class="school-name">جاري تحميل بيانات المدرسة...</h2>
+      <p id="schoolIdText" class="school-id">schoolId = ...</p>
+
+      <div id="sessionStatus" class="status-box">
+        جاري فحص جلسة المدرسة الحالية...
+      </div>
+
+      <div class="toolbar">
+        <a class="btn btn-primary" href="schedule.html">عرض الجدول</a>
+        <button id="logoutBtn" class="btn btn-danger" type="button">خروج</button>
       </div>
     </section>
 
-    <div class="loading" id="loadingBox">جارٍ فحص الجلسة وقراءة بيانات المدرسة...</div>
-
-    <div class="error" id="errorBox"></div>
-
-    <section class="school-card hidden" id="schoolCard">
-      <h2 id="pageTitle">لوحة المدرسة</h2>
-
-      <div class="school-grid">
-        <div class="meta">
-          <div class="meta-label">اسم المدرسة</div>
-          <div class="meta-value" id="schoolName">-</div>
-        </div>
-
-        <div class="meta">
-          <div class="meta-label">المدينة</div>
-          <div class="meta-value" id="schoolCity">-</div>
-        </div>
-
-        <div class="meta">
-          <div class="meta-label">اسم المدير</div>
-          <div class="meta-value" id="managerName">-</div>
-        </div>
-
-        <div class="meta">
-          <div class="meta-label">بريد المدير</div>
-          <div class="meta-value" id="managerEmail">-</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="stats hidden" id="statsSection">
-      <div class="stat-card">
-        <div class="stat-value" id="studentsCount">0</div>
-        <div class="stat-label">إجمالي الطلاب</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-value" id="teachersCount">0</div>
-        <div class="stat-label">إجمالي المعلمين</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-value" id="classesCount">0</div>
-        <div class="stat-label">إجمالي الصفوف</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-value" id="attendanceRate">0%</div>
-        <div class="stat-label">نسبة الحضور</div>
-      </div>
-    </section><section class="features hidden" id="featuresSection">
-      <div class="feature-card" id="cardSchedule">
-        <h3>الجدول المدرسي</h3>
-        <p>عرض الربط الحقيقي بين الصفوف والمواد والمعلمين داخل المدرسة الحالية.</p>
-      </div>
-
-      <div class="feature-card" id="cardStaff">
-        <h3>طاقم المدرسة</h3>
-        <p>عرض جميع المعلمين وربطهم بالمواد والصفوف مع تمييز المعلم الذكي والبشري.</p>
-      </div>
-
-      <div class="feature-card" id="cardReports">
-        <h3>تقارير المدرسة</h3>
-        <p>عرض تقارير المدرسة الحالية وربطها بجلسة المدرسة نفسها دون تضارب في التخزين المحلي.</p>
-      </div>
-
-      <div class="feature-card" id="cardClasses">
-        <h3>الفصول الدراسية</h3>
-        <p>إدارة الصفوف وربط كل صف بالمدرسة الحالية بناءً على schoolId من الجلسة.</p>
-      </div>
-
-      <div class="feature-card" id="cardStudents">
-        <h3>الطلاب</h3>
-        <p>الانتقال إلى واجهة الطلاب الخاصة بالمدرسة الحالية عند تجهيزها.</p>
-      </div>
-
-      <div class="feature-card" id="cardSettings">
-        <h3>الإعدادات</h3>
-        <p>صفحة إعدادات المدرسة والحسابات والربط العام داخل المنصة.</p>
-      </div>
-    </section>
-
-    <section class="info-box">
-      <h3>كيف تعمل الجلسة الآن</h3>
-      <p>
-        هذا الملف يقرأ أولًا من <strong>madaris_user_session</strong> لأنه المفتاح المستخدم فعليًا في
-        صفحة <strong>app/login.js</strong>. وإذا لم يجده، يحاول قراءة <strong>madaris_session</strong>
-        كنسخة قديمة فقط. بعد ذلك يوحّد الصيغة ويحفظ الجلسة بصيغة واحدة حتى تتوقف مشكلة الخروج المفاجئ.
+    <section class="card section">
+      <h3 class="section-title">أقسام لوحة المدرسة</h3>
+      <p class="section-text">
+        تم ترتيب الأقسام التالية لتكون واضحة ومباشرة داخل الجوال، حتى لا يحصل
+        خلط بين صفحة عرض الجدول وصفحة إدارة الجدول.
       </p>
+
+      <div class="actions-grid">
+        <a class="action-card" href="schedule.html">
+          <h4 class="action-title">عرض الجدول</h4>
+          <p class="action-desc">
+            عرض الربط الحالي بين الصفوف والمواد والمعلمين والحصص داخل المدرسة
+            الحالية فقط.
+          </p>
+        </a>
+
+        <a class="action-card" href="manage-schedule.html">
+          <h4 class="action-title">إدارة الجدول</h4>
+          <p class="action-desc">
+            إضافة حصة جديدة، تعديل حصة موجودة، حذف الحصص، وتجهيز الجدول المدرسي
+            بصورة منظمة.
+          </p>
+        </a>
+
+        <a class="action-card" href="staff.html">
+          <h4 class="action-title">طاقم المدرسة</h4>
+          <p class="action-desc">
+            عرض جميع المعلمين وربطهم بالمواد والصفوف مع التمييز بين المعلم الذكي
+            والمعلم البشري.
+          </p>
+        </a>
+
+        <a class="action-card" href="students.html">
+          <h4 class="action-title">الطلاب</h4>
+          <p class="action-desc">
+            الانتقال إلى صفحة الطلاب الخاصة بالمدرسة الحالية عند تجهيز بياناتهم
+            وربطها الكامل.
+          </p>
+        </a>
+
+        <a class="action-card" href="settings.html">
+          <h4 class="action-title">الإعدادات</h4>
+          <p class="action-desc">
+            إدارة إعدادات المدرسة والحسابات والربط العام الخاص بجلسة هذه
+            المدرسة.
+          </p>
+        </a>
+
+        <a class="action-card" href="../login.html">
+          <h4 class="action-title">تسجيل الدخول</h4>
+          <p class="action-desc">
+            الرجوع إلى صفحة الدخول الرئيسية في حال أردت تبديل الحساب أو بدء جلسة
+            جديدة.
+          </p>
+        </a>
+      </div>
+    </section><section class="card section">
+      <h3 class="section-title">ملخص سريع</h3>
+      <p class="section-text">
+        الأرقام التالية تُقرأ من جلسة المدرسة المحلية فقط، لذلك هي أرقام
+        آمنة وثابتة حتى لو لم نربط هنا قراءة Firestore التفصيلية.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div id="studentsCount" class="stat-value">0</div>
+          <p class="stat-label">إجمالي الطلاب</p>
+        </div>
+
+        <div class="stat-card">
+          <div id="teachersCount" class="stat-value">0</div>
+          <p class="stat-label">إجمالي المعلمين</p>
+        </div>
+
+        <div class="stat-card">
+          <div id="classesCount" class="stat-value">0</div>
+          <p class="stat-label">إجمالي الصفوف</p>
+        </div>
+
+        <div class="stat-card">
+          <div id="attendanceRate" class="stat-value">0%</div>
+          <p class="stat-label">نسبة الحضور</p>
+        </div>
+      </div>
     </section>
 
-    <div class="muted-note">
-      إذا ظهرت المدرسة هنا واستمرّت باقي صفحات المدرسة بالعمل، فهذا يعني أن أصل الخلل كان في عدم توحيد
-      اسم مفتاح الجلسة بين صفحة الدخول وصفحات المدرسة، وليس في Firebase نفسه. صفحة الدخول الحالية في
-      المستودع تستخدم `madaris_user_session` وتقرأ بيانات المستخدم من مجموعة `users` ثم تحفظ `schoolId`
-      داخل الجلسة. 1
-    </div>
-  </div>
+    <p class="footer-note">
+      إذا لم تظهر المدرسة هنا، فافتح صفحة تسجيل الدخول من جديد وسجل الدخول
+      بحساب مدرسة حتى يتم حفظ <strong>schoolId</strong> داخل الجلسة المحلية
+      ثم تُفتح هذه الصفحة بشكل صحيح.
+    </p>
+  </main>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-    import {
-      getFirestore,
-      doc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+  <script>
+    (function () {
+      const schoolNameEl = document.getElementById("schoolName");
+      const schoolIdTextEl = document.getElementById("schoolIdText");
+      const sessionStatusEl = document.getElementById("sessionStatus");
+      const logoutBtn = document.getElementById("logoutBtn");
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAzQkhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-      authDomain: "madaris-ai.firebaseapp.com",
-      projectId: "madaris-ai",
-      storageBucket: "madaris-ai.firebasestorage.app",
-      messagingSenderId: "915394447224",
-      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
-      measurementId: "G-SC7VE6F20S"
-    };
+      const studentsCountEl = document.getElementById("studentsCount");
+      const teachersCountEl = document.getElementById("teachersCount");
+      const classesCountEl = document.getElementById("classesCount");
+      const attendanceRateEl = document.getElementById("attendanceRate");
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const loadingBox = document.getElementById("loadingBox");
-    const errorBox = document.getElementById("errorBox");
-    const schoolCard = document.getElementById("schoolCard");
-    const statsSection = document.getElementById("statsSection");
-    const featuresSection = document.getElementById("featuresSection");
-
-    const schoolHeaderTitle = document.getElementById("schoolHeaderTitle");
-    const pageTitle = document.getElementById("pageTitle");
-    const pageSubtitle = document.getElementById("pageSubtitle");
-
-    const schoolNameEl = document.getElementById("schoolName");
-    const schoolCityEl = document.getElementById("schoolCity");
-    const managerNameEl = document.getElementById("managerName");
-    const managerEmailEl = document.getElementById("managerEmail");
-
-    const studentsCountEl = document.getElementById("studentsCount");
-    const teachersCountEl = document.getElementById("teachersCount");
-    const classesCountEl = document.getElementById("classesCount");
-    const attendanceRateEl = document.getElementById("attendanceRate");
-
-    const SESSION_KEY_CURRENT = "madaris_user_session";
-    const SESSION_KEY_LEGACY = "madaris_session";
-
-    function showLoading(show) {
-      loadingBox.classList.toggle("hidden", !show);
-    }
-
-    function showError(message) {
-      errorBox.style.display = "block";
-      errorBox.innerHTML = message;
-    }
-
-    function hideError() {
-      errorBox.style.display = "none";
-      errorBox.innerHTML = "";
-    }
-
-    function showMainSections() {
-      schoolCard.classList.remove("hidden");
-      statsSection.classList.remove("hidden");
-      featuresSection.classList.remove("hidden");
-    }
-
-    function safeJsonParse(value) {
-      try {
-        return JSON.parse(value);
-      } catch {
-        return null;
-      }
-    }
-
-    function normalizeSession(raw) {
-      if (!raw || typeof raw !== "object") return null;
-
-      const session = {
-        uid: raw.uid || raw.userId || "",
-        email: raw.email || "",
-        role: raw.role || "",
-        schoolId: raw.schoolId || raw.school_id || "",
-        name: raw.name || raw.displayName || "",
-        roleLevel: raw.roleLevel || raw.level || ""
-      };
-
-      if (!session.schoolId) return null;
-      return session;
-    }
-
-    function readSession() {
-      const currentRaw = localStorage.getItem(SESSION_KEY_CURRENT);
-      const legacyRaw = localStorage.getItem(SESSION_KEY_LEGACY);
-
-      const currentParsed = normalizeSession(safeJsonParse(currentRaw));
-      if (currentParsed) {
-        localStorage.setItem(SESSION_KEY_CURRENT, JSON.stringify(currentParsed));
-        localStorage.setItem(SESSION_KEY_LEGACY, JSON.stringify(currentParsed));
-        return currentParsed;
+      function safeParse(value) {
+        try {
+          return JSON.parse(value);
+        } catch (error) {
+          return null;
+        }
       }
 
-      const legacyParsed = normalizeSession(safeJsonParse(legacyRaw));
-      if (legacyParsed) {
-        localStorage.setItem(SESSION_KEY_CURRENT, JSON.stringify(legacyParsed));
-        localStorage.setItem(SESSION_KEY_LEGACY, JSON.stringify(legacyParsed));
-        return legacyParsed;
+      function normalizeSession(rawSession) {
+        if (!rawSession || typeof rawSession !== "object") return null;
+
+        const schoolId =
+          rawSession.schoolId ||
+          rawSession.schoolID ||
+          rawSession.schoolid ||
+          "";
+
+        const role = rawSession.role || "";
+        const roleLevel = rawSession.roleLevel || "";
+
+        return {
+          uid: rawSession.uid || "",
+          email: rawSession.email || "",
+          name: rawSession.name || "",
+          role,
+          roleLevel,
+          schoolId,
+          status: rawSession.status || "active",
+          studentsCount: Number(rawSession.studentsCount || 0),
+          teachersCount: Number(rawSession.teachersCount || 0),
+          classesCount: Number(rawSession.classesCount || 0),
+          attendanceRate:
+            rawSession.attendanceRate !== undefined &&
+            rawSession.attendanceRate !== null
+              ? String(rawSession.attendanceRate)
+              : "0",
+          schoolName:
+            rawSession.schoolName ||
+            rawSession.name ||
+            "مدرسة بدون اسم"
+        };
       }
 
-      return null;
-    }
+      function getSchoolSession() {
+        const currentSession = safeParse(
+          localStorage.getItem("madaris_user_session")
+        );
+        const legacySession = safeParse(localStorage.getItem("madaris_session"));
 
-    function clearSessionAndGoLogin() {
-      localStorage.removeItem(SESSION_KEY_CURRENT);
-      localStorage.removeItem(SESSION_KEY_LEGACY);
-      window.location.href = "/app/login.html";
-    }
+        const session = normalizeSession(currentSession) || normalizeSession(legacySession);
 
-    function goSchedule() {
-      window.location.href = "/app/school/schedule.html";
-    }
+        if (!session) return null;
 
-    function goStaff() {
-      window.location.href = "/app/school/staff.html";
-    }
-
-    function goReports() {
-      window.location.href = "/app/school/reports.html";
-    }
-
-    function goClasses() {
-      window.location.href = "/app/school/classes.html";
-    }
-
-    function goStudents() {
-      window.location.href = "/app/school/students.html";
-    }
-
-    function goSettings() {
-      window.location.href = "/app/school/settings.html";
-    }
-
-    document.getElementById("goScheduleBtn").addEventListener("click", goSchedule);
-    document.getElementById("logoutBtn").addEventListener("click", clearSessionAndGoLogin);
-
-    document.getElementById("cardSchedule").addEventListener("click", goSchedule);
-    document.getElementById("cardStaff").addEventListener("click", goStaff);
-    document.getElementById("cardReports").addEventListener("click", goReports);
-    document.getElementById("cardClasses").addEventListener("click", goClasses);
-    document.getElementById("cardStudents").addEventListener("click", goStudents);
-    document.getElementById("cardSettings").addEventListener("click", goSettings);
-
-    async function loadSchoolDashboard() {
-      showLoading(true);
-      hideError();
-
-      const session = readSession();
-
-      if (!session) {
-        showLoading(false);
-        showError(`
-          لا توجد جلسة دخول محفوظة بصيغة صحيحة.<br>
-          افتح صفحة تسجيل الدخول من جديد ثم سجّل الدخول كحساب مدرسة حتى يتم حفظ
-          <strong>schoolId</strong> داخل الجلسة المحلية.
-        `);
-        return;
-      }
-
-      if (session.role && session.role !== "school") {
-        showLoading(false);
-        showError(`
-          الجلسة الحالية موجودة لكنها ليست لحساب مدرسة.<br>
-          الدور الحالي هو: <strong>${session.role}</strong><br>
-          ادخل بحساب المدرسة أولًا.
-        `);
-        return;
-      }
-
-      try {
-        const schoolRef = doc(db, "schools", session.schoolId);
-        const schoolSnap = await getDoc(schoolRef);
-
-        if (!schoolSnap.exists()) {
-          showLoading(false);
-          showError(`
-            تم العثور على الجلسة لكن لم يتم العثور على وثيقة المدرسة داخل مجموعة
-            <strong>schools</strong> باستخدام هذا المعرّف:<br>
-            <strong>${session.schoolId}</strong>
-          `);
-          return;
+        if (!session.schoolId) {
+          return {
+            ...session,
+            invalid: true
+          };
         }
 
-        const school = schoolSnap.data();
+        if (session.role !== "school") {
+          if (session.roleLevel !== "owner" && session.roleLevel !== "school") {
+            return {
+              ...session,
+              invalid: true
+            };
+          }
+        }
 
-        schoolHeaderTitle.textContent = school.name || "مدرسة بدون اسم";
-        pageTitle.textContent = `لوحة ${school.name || "المدرسة"}`;
-        pageSubtitle.textContent =
-          `تم تحميل الجلسة بنجاح للمدرسة الحالية. schoolId = ${session.schoolId}`;
-
-        schoolNameEl.textContent = school.name || "-";
-        schoolCityEl.textContent = school.city || "-";
-        managerNameEl.textContent = school.managerName || "-";
-        managerEmailEl.textContent = school.managerEmail || session.email || "-";
-
-        studentsCountEl.textContent = Number(school.studentsCount || 0);
-        teachersCountEl.textContent = Number(school.teachersCount || 0);
-        classesCountEl.textContent = Number(school.classesCount || 0);
-        attendanceRateEl.textContent = `${Number(school.attendanceRate || 0)}%`;
-
-        showMainSections();
-        showLoading(false);
-      } catch (error) {
-        console.error("School dashboard load error:", error);
-        showLoading(false);
-        showError(`
-          حدث خطأ أثناء قراءة بيانات المدرسة من Firestore.<br>
-          الرسالة التقنية:<br>
-          <strong>${error.message || "Unknown error"}</strong>
-        `);
+        return session;
       }
-    }
 
-    loadSchoolDashboard();
+      function setStats(session) {
+        studentsCountEl.textContent = Number.isFinite(session.studentsCount)
+          ? session.studentsCount
+          : 0;
+
+        teachersCountEl.textContent = Number.isFinite(session.teachersCount)
+          ? session.teachersCount
+          : 0;
+
+        classesCountEl.textContent = Number.isFinite(session.classesCount)
+          ? session.classesCount
+          : 0;
+
+        const attendanceText = String(session.attendanceRate || "0").replace("%", "");
+        attendanceRateEl.textContent = `${attendanceText}%`;
+      }
+
+      function showValidSession(session) {
+        schoolNameEl.textContent = session.schoolName || "مدرسة بدون اسم";
+        schoolIdTextEl.textContent = `schoolId = ${session.schoolId}`;
+
+        sessionStatusEl.classList.remove("error");
+        sessionStatusEl.innerHTML =
+          `تم العثور على جلسة المدرسة بنجاح.<br>` +
+          `الدور الحالي: <strong>${session.role || "school"}</strong><br>` +
+          `الحالة: <strong>${session.status || "active"}</strong>`;
+
+        setStats(session);
+      }
+
+      function showInvalidSession() {
+        schoolNameEl.textContent = "لا توجد جلسة مدرسة صالحة";
+        schoolIdTextEl.textContent = "schoolId = غير موجود";
+
+        sessionStatusEl.classList.add("error");
+        sessionStatusEl.innerHTML =
+          `افتح صفحة تسجيل الدخول من جديد ثم سجل الدخول بحساب مدرسة.<br>` +
+          `الصفحة الحالية تحتاج وجود <strong>schoolId</strong> داخل الجلسة المحلية.`;
+
+        setStats({
+          studentsCount: 0,
+          teachersCount: 0,
+          classesCount: 0,
+          attendanceRate: "0"
+        });
+      }
+
+      function logoutNow() {
+        const confirmed = confirm("هل أنت متأكد من تسجيل الخروج؟");
+        if (!confirmed) return;
+
+        localStorage.removeItem("madaris_user_session");
+        localStorage.removeItem("madaris_session");
+        window.location.href = "../login.html";
+      }
+
+      logoutBtn.addEventListener("click", logoutNow);
+
+      const session = getSchoolSession();
+
+      if (!session || session.invalid) {
+        showInvalidSession();
+      } else {
+        showValidSession(session);
+      }
+    })();
   </script>
 </body>
 </html>
