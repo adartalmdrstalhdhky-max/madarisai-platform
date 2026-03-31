@@ -1,320 +1,238 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | تسجيل الدخول</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<title>Madaris AI | تسجيل الدخول</title>
 
-    html, body {
-      width: 100%;
-      min-height: 100%;
-      font-family: Tahoma, Arial, sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(32, 87, 197, 0.28), transparent 30%),
-        linear-gradient(180deg, #020817 0%, #041433 45%, #031022 100%);
-      color: #ffffff;
-    }
+<style>
 
-    body {
-      padding: 20px 14px 40px;
-    }
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
-    .page {
-      width: 100%;
-      max-width: 720px;
-      margin: 0 auto;
-    }
+body{
+font-family:Tahoma,Arial;
+background:linear-gradient(180deg,#07142f 0%,#03122a 100%);
+color:white;
+padding:16px;
+min-height:100vh;
+}
 
-    .card {
-      background: linear-gradient(180deg, rgba(23, 63, 151, 0.96) 0%, rgba(12, 35, 96, 0.96) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 28px;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
-      padding: 26px 18px;
-      margin-bottom: 18px;
-    }
+.container{
+max-width:700px;
+margin:auto;
+}
 
-    .hero-title {
-      text-align: center;
-      font-size: 30px;
-      font-weight: 800;
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
+.card{
+background:linear-gradient(180deg,#214aa4 0%,#102e79 100%);
+border-radius:26px;
+padding:24px;
+margin-bottom:18px;
+box-shadow:0 15px 35px rgba(0,0,0,.35);
+border:1px solid rgba(255,255,255,.08);
+}
 
-    .hero-subtitle {
-      text-align: center;
-      font-size: 17px;
-      line-height: 2;
-      color: rgba(255, 255, 255, 0.88);
-      margin-bottom: 24px;
-    }
+.title{
+text-align:center;
+font-size:34px;
+font-weight:800;
+margin-bottom:6px;
+}
 
-    .brand-line {
-      display: block;
-      font-size: 16px;
-      color: #8adfff;
-      margin-top: 6px;
-      font-weight: 700;
-    }
+.subtitle{
+text-align:center;
+color:#8fdfff;
+font-size:20px;
+margin-bottom:18px;
+}
 
-    .form-title {
-      text-align: center;
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
+.text{
+text-align:center;
+line-height:1.8;
+color:#d8e4ff;
+font-size:16px;
+}
 
-    .form-desc {
-      text-align: center;
-      color: rgba(255, 255, 255, 0.86);
-      font-size: 16px;
-      line-height: 1.9;
-      margin-bottom: 22px;
-    }
+.section-title{
+text-align:center;
+font-size:28px;
+font-weight:800;
+margin-bottom:12px;
+}
 
-    .field {
-      margin-bottom: 16px;
-    }
+.label{
+display:block;
+margin-bottom:8px;
+font-weight:700;
+font-size:16px;
+}
 
-    .label {
-      display: block;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #ffffff;
-    }
+.input{
+width:100%;
+padding:18px;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.15);
+background:rgba(255,255,255,.08);
+color:white;
+font-size:18px;
+margin-bottom:14px;
+}
 
-    .input {
-      width: 100%;
-      min-height: 62px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.10);
-      color: #ffffff;
-      font-size: 18px;
-      padding: 0 18px;
-      outline: none;
-      transition: 0.2s ease;
-    }
+.input:focus{
+outline:none;
+border-color:#63d3f5;
+}
 
-    .input::placeholder {
-      color: rgba(255, 255, 255, 0.55);
-    }
+.button{
+width:100%;
+padding:18px;
+border-radius:50px;
+border:none;
+font-size:20px;
+font-weight:800;
+cursor:pointer;
+margin-top:8px;
+}
 
-    .input:focus {
-      border-color: rgba(114, 214, 255, 0.6);
-      box-shadow: 0 0 0 3px rgba(114, 214, 255, 0.12);
-      background: rgba(255, 255, 255, 0.14);
-    }
+.primary{
+background:linear-gradient(180deg,#63d3f5,#43bfe6);
+}
 
-    .btn {
-      width: 100%;
-      min-height: 66px;
-      border: none;
-      border-radius: 999px;
-      font-size: 21px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
-      margin-top: 10px;
-    }
+.secondary{
+background:linear-gradient(180deg,#ff6f93,#ef4f76);
+margin-top:12px;
+}
 
-    .btn:active {
-      transform: scale(0.99);
-    }
+.note{
+text-align:center;
+margin-top:14px;
+font-size:15px;
+color:#cddaff;
+line-height:1.8;
+}
 
-    .btn-primary {
-      background: linear-gradient(180deg, #6fdcff 0%, #57c7ef 100%);
-      color: #ffffff;
-      box-shadow: 0 10px 24px rgba(87, 199, 239, 0.28);
-    }
+.status{
+background:rgba(255,255,255,.08);
+padding:16px;
+border-radius:18px;
+margin-top:14px;
+text-align:center;
+line-height:1.8;
+font-size:15px;
+}
 
-    .btn-secondary {
-      background: linear-gradient(180deg, #ff6f93 0%, #ff5b7f 100%);
-      color: #ffffff;
-      box-shadow: 0 10px 24px rgba(255, 91, 127, 0.24);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+</style>
 
-    .btn:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .link-box {
-      margin-top: 16px;
-      text-align: center;
-    }
-
-    .link-box a {
-      color: #8adfff;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .link-box a:hover {
-      text-decoration: underline;
-    }
-
-    .note {
-      margin-top: 18px;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.78);
-      font-size: 15px;
-      line-height: 1.9;
-    }
-
-    .status-box {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 22px;
-      padding: 18px 16px;
-      margin-top: 20px;
-    }
-
-    .status-box h3 {
-      font-size: 19px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    .status-box p {
-      font-size: 15px;
-      line-height: 1.9;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.84);
-    }
-
-    .footer-space {
-      height: 10px;
-    }
-
-    @media (min-width: 768px) {
-      body {
-        padding: 36px 20px 50px;
-      }
-
-      .card {
-        padding: 34px 28px;
-      }
-
-      .hero-title {
-        font-size: 42px;
-      }
-
-      .hero-subtitle {
-        font-size: 20px;
-      }
-
-      .form-title {
-        font-size: 28px;
-      }
-    }
-  </style>
 </head>
+
 <body>
-  <main class="page">
-    <section class="card">
-      <h1 class="hero-title">
-        Madaris AI
-        <span class="brand-line">منصة المدرسة الذكية</span>
-      </h1>
 
-      <p class="hero-subtitle">
-        تسجيل الدخول إلى المنصة بحسابك المعتمد،
-        وبعد نجاح الدخول سيتم حفظ الجلسة محليًا
-        ثم تحويلك تلقائيًا إلى صفحتك المناسبة.
-      </p>
-    </section>
+<div class="container">
 
-    <section class="card">
-      <h2 class="form-title">تسجيل الدخول</h2>
+<div class="card">
+<div class="title">Madaris AI</div>
+<div class="subtitle">منصة المدرسة الذكية</div>
 
-      <p class="form-desc">
-        أدخل البريد الإلكتروني وكلمة المرور،
-        ثم اضغط على زر تسجيل الدخول.
-      </p>
+<div class="text">
+تسجيل الدخول إلى المنصة بحسابك المعتمد  
+وبعد نجاح الدخول سيتم حفظ الجلسة محلياً  
+ثم تحويلك تلقائياً إلى صفحتك المناسبة
+</div>
 
-      <div class="field">
-        <label class="label" for="email">البريد الإلكتروني</label>
-        <input
-          id="email"
-          class="input"
-          type="email"
-          placeholder="مثال: info@madarisai.com"
-          autocomplete="email"
-          inputmode="email"
-        />
-      </div>
+</div>
 
-      <div class="field">
-        <label class="label" for="password">كلمة المرور</label>
-        <input
-          id="password"
-          class="input"
-          type="password"
-          placeholder="أدخل كلمة المرور"
-          autocomplete="current-password"
-        />
-      </div>
 
-      <button id="loginBtn" class="btn btn-primary" onclick="loginUser()">
-        تسجيل الدخول
-      </button>
-      <div class="link-box">
-        <a href="./register.html">إنشاء حساب جديد</a>
-      </div>
+<div class="card">
 
-      <div class="status-box">
-        <h3>ملاحظات مهمة</h3>
-        <p>
-          إذا كانت لديك جلسة محفوظة وصحيحة، فسيتم نقلك تلقائيًا إلى لوحة المدرسة
-          أو لوحة المشرف أو صفحة المعلم أو الطالب حسب دورك داخل النظام.
-        </p>
-      </div>
+<div class="section-title">تسجيل الدخول</div>
 
-      <p class="note">
-        إذا ظهر خطأ بالشبكة، تأكد من اتصال الإنترنت ثم أعد المحاولة.
-      </p>
-    </section>
+<label class="label">البريد الإلكتروني</label>
+<input
+id="email"
+class="input"
+type="email"
+placeholder="info@madarisai.com"
+autocomplete="username"
+>
 
-    <section class="card">
-      <h2 class="form-title">طريقة العمل</h2>
-      <p class="form-desc">
-        هذا الملف متوافق بالكامل مع <strong>app/login.js</strong> الذي يعتمد على Firebase،
-        ويستخدم العناصر التالية بشكل مباشر:
-      </p>
+<label class="label">كلمة المرور</label>
+<input
+id="password"
+class="input"
+type="password"
+placeholder="أدخل كلمة المرور"
+autocomplete="current-password"
+>
 
-      <div class="status-box">
-        <p>
-          <strong>email</strong> لحقل البريد الإلكتروني<br />
-          <strong>password</strong> لحقل كلمة المرور<br />
-          <strong>loginBtn</strong> لزر تسجيل الدخول
-        </p>
-      </div>
+<button
+id="loginBtn"
+class="button primary"
+onclick="loginUser()"
+>
+تسجيل الدخول
+</button>
 
-      <p class="note">
-        لا تغيّر أسماء هذه المعرفات حتى يبقى الربط صحيحًا مع كود الدخول.
-      </p>
-    </section>
+<button
+class="button secondary"
+onclick="location.href='./register.html'"
+>
+إنشاء حساب جديد
+</button>
 
-    <div class="footer-space"></div>
-  </main>
+<div id="loginStatus" class="status">
+بعد نجاح تسجيل الدخول سيتم تحويلك تلقائياً
+إلى لوحة التحكم الخاصة بك
+</div>
 
-  <script type="module" src="./login.js"></script>
+<div class="note">
+إذا فشل تسجيل الدخول تأكد من الإنترنت
+وأعد المحاولة
+</div>
+
+</div>
+
+
+</div>
+
+
+<script type="module" src="./login.js"></script>
+
+<script>
+
+const email=document.getElementById("email")
+const password=document.getElementById("password")
+const status=document.getElementById("loginStatus")
+
+function setStatus(text){
+if(status){
+status.textContent=text
+}
+}
+
+email.addEventListener("input",()=>{
+if(email.value.trim()){
+setStatus("أدخل كلمة المرور ثم اضغط تسجيل الدخول")
+}
+})
+
+password.addEventListener("input",()=>{
+if(password.value.trim()){
+setStatus("اضغط تسجيل الدخول الآن")
+}
+})
+
+document.getElementById("loginBtn")
+.addEventListener("click",()=>{
+setStatus("جاري تسجيل الدخول...")
+})
+
+</script>
+
 </body>
-</html>
 
+</html>
