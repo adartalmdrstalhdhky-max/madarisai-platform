@@ -3,266 +3,497 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | إدارة الجدول</title>
+  <title>Madaris AI | إدارة الجدول المدرسي</title>
+
+  <script src="./session-guard.js"></script>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-1: #04142d;
+      --bg-2: #0a1f4d;
+      --card: rgba(26, 67, 160, 0.88);
+      --card-2: rgba(35, 79, 178, 0.88);
+      --line: rgba(255,255,255,0.08);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.82);
+      --cyan: #63d8ff;
+      --cyan-2: #58c4ea;
+      --pink: #ff5f8a;
+      --pink-2: #ff6d95;
+      --green: #36d667;
+      --green-2: #31c75f;
+      --gray: #4a5e7a;
+      --purple: #7588ff;
+      --purple-2: #6178ff;
+      --shadow: 0 18px 44px rgba(0,0,0,0.34);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: "Tahoma", "Arial", sans-serif;
+      background:
+        radial-gradient(circle at top, #11347f 0%, #081b44 32%, #031028 100%);
+      color: var(--text);
+    }
+
     body {
-      font-family: Tahoma, Arial, sans-serif;
-      background: linear-gradient(180deg, #07142f 0%, #03122a 100%);
-      color: #fff;
-      min-height: 100vh;
-      padding: 16px;
+      padding: 18px 14px 42px;
     }
-    .container { max-width: 920px; margin: 0 auto; }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
     .card {
-      background: linear-gradient(180deg, #214aa4 0%, #102e79 100%);
-      border-radius: 28px;
-      padding: 24px;
+      background: linear-gradient(180deg, var(--card-2), var(--card));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 18px;
       margin-bottom: 18px;
-      border: 1px solid rgba(255,255,255,.08);
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
     }
-    .title, .section-title {
+
+    .title {
+      margin: 0 0 14px;
       text-align: center;
+      font-size: 30px;
+      line-height: 1.5;
       font-weight: 800;
     }
-    .title { font-size: 32px; margin-bottom: 12px; }
-    .section-title { font-size: 28px; margin-bottom: 16px; }
-    .text {
+
+    .sub {
+      margin: 0 0 18px;
       text-align: center;
-      color: #dbe5ff;
-      line-height: 1.9;
+      color: var(--muted);
       font-size: 17px;
+      line-height: 2;
     }
+
     .school-name {
+      margin: 0 0 8px;
       text-align: center;
       font-size: 26px;
       font-weight: 800;
-      margin: 18px 0 8px;
+      line-height: 1.7;
     }
+
     .school-id {
+      margin: 0 0 18px;
       text-align: center;
-      color: #d9e5ff;
-      font-size: 15px;
-      margin-bottom: 18px;
+      color: var(--cyan);
+      font-size: 16px;
       word-break: break-word;
     }
+
     .btn {
       display: block;
       width: 100%;
-      text-align: center;
+      border: 0;
       text-decoration: none;
-      border: none;
+      text-align: center;
       border-radius: 999px;
-      padding: 18px;
-      font-size: 22px;
+      padding: 19px 18px;
+      font-size: 18px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 12px;
+      transition: transform .15s ease, opacity .15s ease;
     }
+
+    .btn:active { transform: scale(0.985); }
+
     .btn-primary {
-      background: linear-gradient(180deg, #ffffff 0%, #ececec 100%);
-      color: #111;
+      background: linear-gradient(180deg, #68d8fb, #59bcd9);
+      color: #ffffff;
+      margin-bottom: 14px;
     }
+
     .btn-danger {
-      background: linear-gradient(180deg, #ff6f93 0%, #f45377 100%);
-      color: #fff;
+      background: linear-gradient(180deg, var(--pink-2), var(--pink));
+      color: #ffffff;
     }
-    .btn-save {
-      background: linear-gradient(180deg, #41d768 0%, #34cb60 100%);
-      color: #fff;
+
+    .btn-success {
+      background: linear-gradient(180deg, #42dc6e, #31c75f);
+      color: #ffffff;
     }
-    .btn-muted {
-      background: linear-gradient(180deg, #47607c 0%, #3f556d 100%);
-      color: #fff;
+
+    .btn-secondary {
+      background: linear-gradient(180deg, #556b86, #44576e);
+      color: #ffffff;
     }
+
+    .btn-edit {
+      background: linear-gradient(180deg, #8a99ff, #6178ff);
+      color: #ffffff;
+      padding: 13px 14px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .btn-delete {
+      background: linear-gradient(180deg, var(--pink-2), var(--pink));
+      color: #ffffff;
+      padding: 13px 14px;
+      font-size: 16px;
+    }
+
     .status-box {
-      background: rgba(255,255,255,.08);
-      border-radius: 18px;
-      padding: 16px;
       text-align: center;
-      color: #dce8ff;
+      background: rgba(99,216,255,0.10);
+      border: 1px solid rgba(99,216,255,0.16);
+      color: #ffffff;
+      border-radius: 22px;
+      padding: 16px;
       line-height: 1.9;
-      margin-top: 14px;
+      font-size: 16px;
+      margin-bottom: 16px;
     }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px 12px;
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 44px;
+      color: var(--cyan);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .stat-label {
+      color: #ffffff;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
     .form-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 14px;
-      margin-top: 16px;
     }
-    .label {
+
+    .field {
+      display: block;
+    }
+
+    .field label {
       display: block;
       margin-bottom: 8px;
       font-size: 17px;
-      font-weight: 700;
+      font-weight: 800;
+      color: #ffffff;
     }
-    .input, .select, .textarea {
+
+    .input,
+    .select,
+    .textarea {
       width: 100%;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      color: #fff;
-      padding: 18px;
-      font-size: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: #ffffff;
+      border-radius: 22px;
+      padding: 18px 16px;
+      font-size: 17px;
       outline: none;
     }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: rgba(255,255,255,0.46);
+    }
+
     .textarea {
       min-height: 120px;
       resize: vertical;
+      line-height: 1.8;
     }
-    .select option { color: #111; }
+
+    .form-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
     .helper {
-      margin-top: 10px;
       text-align: center;
-      color: #cddaff;
+      color: var(--muted);
       line-height: 1.9;
       font-size: 15px;
+      margin-top: 8px;
     }
+
     .table-wrap {
       overflow-x: auto;
-      margin-top: 14px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.05);
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
     }
+
     table {
       width: 100%;
-      min-width: 1080px;
+      min-width: 1220px;
       border-collapse: collapse;
     }
+
     th, td {
-      padding: 16px 14px;
-      text-align: right;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      font-size: 17px;
-      white-space: nowrap;
+      padding: 16px 12px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+      font-size: 16px;
+      color: #ffffff;
       vertical-align: middle;
     }
-    th { color: #69d8f8; font-size: 18px; }
-    .row-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .small-btn {
-      border: none;
-      border-radius: 16px;
-      padding: 10px 16px;
-      font-size: 16px;
+
+    th {
+      color: var(--cyan);
+      font-size: 17px;
       font-weight: 800;
-      cursor: pointer;
+      background: rgba(255,255,255,0.02);
+      position: sticky;
+      top: 0;
     }
-    .edit-btn {
-      background: linear-gradient(180deg, #7288ff 0%, #5d73ef 100%);
-      color: #fff;
+
+    tr:last-child td {
+      border-bottom: 0;
     }
-    .delete-btn {
-      background: linear-gradient(180deg, #ff6f93 0%, #f45377 100%);
-      color: #fff;
-    }
-    .badge {
+
+    .pill {
       display: inline-block;
-      padding: 8px 14px;
+      min-width: 110px;
+      padding: 12px 14px;
       border-radius: 999px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 15px;
     }
-    .badge-human { background: rgba(255,145,0,.18); }
-    .badge-ai { background: rgba(112,92,255,.28); }
-    .badge-active { background: rgba(34,197,94,.22); }
+
+    .pill-smart {
+      background: rgba(122, 106, 255, 0.24);
+      color: #efeaff;
+      border: 1px solid rgba(150,130,255,0.24);
+    }
+
+    .pill-human {
+      background: rgba(255, 183, 77, 0.18);
+      color: #ffe6b5;
+      border: 1px solid rgba(255, 183, 77, 0.16);
+    }
+
+    .pill-status {
+      background: rgba(25, 195, 125, 0.20);
+      color: #d5ffea;
+      border: 1px solid rgba(25,195,125,0.18);
+      min-width: 100px;
+    }
+
+    .editing-banner {
+      display: none;
+      text-align: center;
+      background: rgba(117,136,255,0.18);
+      border: 1px solid rgba(117,136,255,0.22);
+      color: #ffffff;
+      border-radius: 22px;
+      padding: 16px;
+      line-height: 1.9;
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    .mobile-list {
+      display: none;
+      gap: 14px;
+    }
+
+    .mobile-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .mobile-title {
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+
+    .mobile-row {
+      margin-bottom: 8px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .mobile-row strong {
+      color: #ffffff;
+    }
+
+    .mobile-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .loading-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    @media (max-width: 820px) {
+      .table-wrap { display: none; }
+      .mobile-list { display: block; }
+    }
+
+    @media (min-width: 821px) {
+      .mobile-list { display: none !important; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
+    <section class="card">
+      <h1 class="title">Madaris AI | إدارة الجدول المدرسي</h1>
+      <p class="sub">إضافة وتعديل وحذف الحصص داخل المدرسة الحالية بصورة نظيفة ومضمونة للجوال.</p>
 
-    <div class="card">
-      <div class="title">Madaris AI | إدارة الجدول</div>
-      <div class="text">إضافة وتعديل الحصص المدرسية</div>
-
-      <div id="schoolName" class="school-name">جاري تحميل المدرسة...</div>
-      <div id="schoolIdText" class="school-id">schoolId: ...</div>
+      <h2 id="schoolName" class="school-name">جاري تحميل المدرسة...</h2>
+      <p id="schoolIdText" class="school-id">schoolId: ...</p>
 
       <a class="btn btn-primary" href="./index.html">رجوع للوحة المدرسة</a>
       <button id="logoutBtn" class="btn btn-danger" type="button">خروج</button>
-    </div>
+    </section>
 
-    <div class="card">
-      <div class="section-title">إضافة / تعديل حصة</div>
+    <section class="card">
+      <div id="sessionStatus" class="status-box">جاري فحص الجلسة...</div>
 
-      <div id="formStatus" class="status-box">جاري تحميل بيانات النموذج...</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span id="classesCount" class="stat-number">0</span>
+          <div class="stat-label">الصفوف</div>
+        </div>
+        <div class="stat-card">
+          <span id="subjectsCount" class="stat-number">0</span>
+          <div class="stat-label">المواد</div>
+        </div>
+        <div class="stat-card">
+          <span id="teachersCount" class="stat-number">0</span>
+          <div class="stat-label">المعلمين</div>
+        </div>
+        <div class="stat-card">
+          <span id="schedulesCount" class="stat-number">0</span>
+          <div class="stat-label">الحصص الحالية</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="formCard" class="card">
+      <h3 class="title" style="font-size:26px;">إضافة / تعديل حصة</h3>
+      <div id="editingBanner" class="editing-banner"></div>
+      <div id="formStatus" class="status-box">جاري تجهيز النموذج...</div>
 
       <div class="form-grid">
-        <div>
-          <label class="label" for="classId">الصف</label>
-          <select id="classId" class="select"></select>
+        <div class="field">
+          <label for="classSelect">الصف</label>
+          <select id="classSelect" class="select">
+            <option value="">اختر الصف</option>
+          </select>
         </div>
 
-        <div>
-          <label class="label" for="subjectId">المادة</label>
-          <select id="subjectId" class="select"></select>
+        <div class="field">
+          <label for="subjectSelect">المادة</label>
+          <select id="subjectSelect" class="select">
+            <option value="">اختر المادة</option>
+          </select>
         </div>
 
-        <div>
-          <label class="label" for="teacherId">المعلم</label>
-          <select id="teacherId" class="select"></select>
+        <div class="field">
+          <label for="teacherSelect">المعلم</label>
+          <select id="teacherSelect" class="select">
+            <option value="">اختر المعلم</option>
+          </select>
         </div>
 
-        <div>
-          <label class="label" for="day">اليوم</label>
-          <select id="day" class="select">
+        <div class="field">
+          <label for="daySelect">اليوم</label>
+          <select id="daySelect" class="select">
             <option value="">اختر اليوم</option>
             <option value="السبت">السبت</option>
             <option value="الأحد">الأحد</option>
-            <option value="الإثنين">الإثنين</option>
+            <option value="الاثنين">الاثنين</option>
             <option value="الثلاثاء">الثلاثاء</option>
             <option value="الأربعاء">الأربعاء</option>
             <option value="الخميس">الخميس</option>
+            <option value="الجمعة">الجمعة</option>
           </select>
         </div>
 
-        <div>
-          <label class="label" for="period">رقم الحصة</label>
-          <input id="period" class="input" type="number" min="1" placeholder="مثال: 1">
+        <div class="field">
+          <label for="periodInput">رقم الحصة</label>
+          <input id="periodInput" class="input" type="number" min="1" placeholder="مثال: 1" />
         </div>
 
-        <div>
-          <label class="label" for="fromTime">من</label>
-          <input id="fromTime" class="input" type="time">
+        <div class="field">
+          <label for="fromInput">من</label>
+          <input id="fromInput" class="input" type="time" />
         </div>
 
-        <div>
-          <label class="label" for="toTime">إلى</label>
-          <input id="toTime" class="input" type="time">
+        <div class="field">
+          <label for="toInput">إلى</label>
+          <input id="toInput" class="input" type="time" />
         </div>
 
-        <div>
-          <label class="label" for="status">الحالة</label>
-          <select id="status" class="select">
+        <div class="field">
+          <label for="statusSelect">الحالة</label>
+          <select id="statusSelect" class="select">
             <option value="نشط">نشط</option>
-            <option value="معلق">معلق</option>
+            <option value="غير نشط">غير نشط</option>
           </select>
         </div>
 
-        <div>
-          <label class="label" for="note">ملاحظة</label>
-          <textarea id="note" class="textarea" placeholder="ملاحظة"></textarea>
+        <div class="field">
+          <label for="noteInput">ملاحظة</label>
+          <textarea id="noteInput" class="textarea" placeholder="ملاحظة"></textarea>
         </div>
       </div>
 
       <div class="helper">
-        لا يتم إنشاء أي حصة تلقائيًا من الكود. أي صف يظهر هنا
-        موجود فعلاً داخل Firestore فقط.
+        يتم هنا حفظ بيانات نظيفة وموحدة داخل Firestore فقط، بدون إنشاء أي حصص وهمية من الكود.
       </div>
 
-      <button id="saveBtn" class="btn btn-save" type="button">حفظ الحصة</button>
-      <button id="resetBtn" class="btn btn-muted" type="button">تفريغ النموذج</button>
-    </div>
+      <div class="form-actions">
+        <button id="saveBtn" class="btn btn-success" type="button">حفظ الحصة</button>
+        <button id="clearBtn" class="btn btn-secondary" type="button">تفريغ النموذج</button>
+      </div>
+    </section>
 
-    <div class="card">
-      <div class="section-title">الحصص الحالية</div>
-      <div id="listStatus" class="status-box">جاري التحميل...</div>
+    <section class="card">
+      <h3 class="title" style="font-size:26px;">الحصص الحالية داخل المدرسة</h3>
+      <div id="listStatus" class="status-box">جاري تحميل الحصص...</div>
 
-      <div class="table-wrap">
+      <div id="desktopTable" class="table-wrap" style="display:none;">
         <table>
           <thead>
             <tr>
@@ -279,31 +510,31 @@
               <th>إجراءات</th>
             </tr>
           </thead>
-          <tbody id="scheduleBody">
-            <tr>
-              <td colspan="11">جاري التحميل...</td>
-            </tr>
-          </tbody>
+          <tbody id="scheduleBody"></tbody>
         </table>
       </div>
-    </div>
 
+      <div id="mobileList" class="mobile-list"></div>
+
+      <div id="emptyState" class="loading-note" style="display:none;">
+        لا توجد حصص محفوظة حالياً داخل المدرسة.
+      </div>
+    </section>
   </div>
 
-  <script src="./session-guard.js"></script>
   <script type="module">
-    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import {
       getFirestore,
       collection,
-      getDocs,
-      getDoc,
       doc,
+      getDoc,
+      getDocs,
+      query,
+      where,
       addDoc,
       updateDoc,
       deleteDoc,
-      query,
-      where,
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -313,314 +544,574 @@
       projectId: "madaris-ai",
       storageBucket: "madaris-ai.firebasestorage.app",
       messagingSenderId: "915394447224",
-      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
-      measurementId: "G-SC7VE6F20S"
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
     };
 
-    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const session = window.MadarisSession.requireSchoolSession();
-    if (!session) throw new Error("No session");
+    const DAY_MAP = {
+      saturday: "السبت",
+      sunday: "الأحد",
+      monday: "الاثنين",
+      tuesday: "الثلاثاء",
+      wednesday: "الأربعاء",
+      thursday: "الخميس",
+      friday: "الجمعة",
+      "السبت": "السبت",
+      "الأحد": "الأحد",
+      "الاحد": "الأحد",
+      "الاثنين": "الاثنين",
+      "الثلاثاء": "الثلاثاء",
+      "الأربعاء": "الأربعاء",
+      "الاربعاء": "الأربعاء",
+      "الخميس": "الخميس",
+      "الجمعة": "الجمعة"
+    };
 
-    const schoolName = document.getElementById("schoolName");
-    const schoolIdText = document.getElementById("schoolIdText");
-    const formStatus = document.getElementById("formStatus");
-    const listStatus = document.getElementById("listStatus");
-    const scheduleBody = document.getElementById("scheduleBody");
+    const DAY_ORDER = {
+      "السبت": 1,
+      "الأحد": 2,
+      "الاثنين": 3,
+      "الثلاثاء": 4,
+      "الأربعاء": 5,
+      "الخميس": 6,
+      "الجمعة": 7
+    };
 
-    const classIdEl = document.getElementById("classId");
-    const subjectIdEl = document.getElementById("subjectId");
-    const teacherIdEl = document.getElementById("teacherId");
-    const dayEl = document.getElementById("day");
-    const periodEl = document.getElementById("period");
-    const fromTimeEl = document.getElementById("fromTime");
-    const toTimeEl = document.getElementById("toTime");
-    const statusEl = document.getElementById("status");
-    const noteEl = document.getElementById("note");
-    const saveBtn = document.getElementById("saveBtn");
-    const resetBtn = document.getElementById("resetBtn");
+    const state = {
+      session: null,
+      schoolId: null,
+      schoolName: null,
+      classes: [],
+      subjects: [],
+      teachers: [],
+      schedules: [],
+      editingId: null
+    };
 
-    let editingId = null;
-    let classesMap = {};
-    let subjectsMap = {};
-    let teachersMap = {};
+    const el = {
+      schoolName: document.getElementById("schoolName"),
+      schoolIdText: document.getElementById("schoolIdText"),
+      sessionStatus: document.getElementById("sessionStatus"),
+      classesCount: document.getElementById("classesCount"),
+      subjectsCount: document.getElementById("subjectsCount"),
+      teachersCount: document.getElementById("teachersCount"),
+      schedulesCount: document.getElementById("schedulesCount"),
+      formStatus: document.getElementById("formStatus"),
+      listStatus: document.getElementById("listStatus"),
+      editingBanner: document.getElementById("editingBanner"),
+      classSelect: document.getElementById("classSelect"),
+      subjectSelect: document.getElementById("subjectSelect"),
+      teacherSelect: document.getElementById("teacherSelect"),
+      daySelect: document.getElementById("daySelect"),
+      periodInput: document.getElementById("periodInput"),
+      fromInput: document.getElementById("fromInput"),
+      toInput: document.getElementById("toInput"),
+      statusSelect: document.getElementById("statusSelect"),
+      noteInput: document.getElementById("noteInput"),
+      saveBtn: document.getElementById("saveBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      scheduleBody: document.getElementById("scheduleBody"),
+      desktopTable: document.getElementById("desktopTable"),
+      mobileList: document.getElementById("mobileList"),
+      emptyState: document.getElementById("emptyState"),
+      logoutBtn: document.getElementById("logoutBtn"),
+      formCard: document.getElementById("formCard")
+    };
 
-    schoolName.textContent = session.name || "المدرسة الحالية";
-    schoolIdText.textContent = "schoolId: " + session.schoolId;
+    function readLocalSession() {
+      const rawPrimary = localStorage.getItem("madaris_user_session");
+      const rawLegacy = localStorage.getItem("madaris_session");
+      let parsed = null;
 
-    document.getElementById("logoutBtn").addEventListener("click", function () {
-      window.MadarisSession.logoutToLogin();
-    });
+      try {
+        if (rawPrimary) parsed = JSON.parse(rawPrimary);
+      } catch (_) {}
 
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+      if (!parsed) {
+        try {
+          if (rawLegacy) parsed = JSON.parse(rawLegacy);
+        } catch (_) {}
+      }
+
+      if (!parsed || typeof parsed !== "object") return null;
+      if (!parsed.schoolId || parsed.role !== "school") return null;
+      return parsed;
     }
 
-    function teacherTypeBadge(roleLevel) {
-      const type = roleLevel === "ai" ? "معلم ذكي" : "معلم بشري";
-      const cls = roleLevel === "ai" ? "badge badge-ai" : "badge badge-human";
-      return `<span class="${cls}">${escapeHtml(type)}</span>`;
+    function safeText(value, fallback = "-") {
+      if (value === null || value === undefined || value === "") return fallback;
+      return String(value);
     }
 
-    function activeBadge(status) {
-      return `<span class="badge badge-active">${escapeHtml(status || "نشط")}</span>`;
+    function normalizeDay(value) {
+      if (!value) return "-";
+      const key = String(value).trim().toLowerCase();
+      return DAY_MAP[key] || String(value).trim();
     }
 
-    async function loadMap(name) {
-      const q = query(collection(db, name), where("schoolId", "==", session.schoolId));
-      const snap = await getDocs(q);
-      const map = {};
-      snap.forEach(docSnap => {
-        map[docSnap.id] = { id: docSnap.id, ...docSnap.data() };
-      });
-      return map;
+    function normalizeStatus(value) {
+      const raw = String(value || "").trim().toLowerCase();
+      if (!raw) return "نشط";
+      if (raw === "active" || raw === "نشط") return "نشط";
+      if (raw === "inactive" || raw === "غير نشط") return "غير نشط";
+      return String(value);
     }
 
-    function fillSelect(selectEl, map, placeholder, formatter) {
-      const options = [`<option value="">${placeholder}</option>`];
-      Object.values(map).forEach(item => {
-        options.push(
-          `<option value="${escapeHtml(item.id)}">${escapeHtml(formatter(item))}</option>`
-        );
-      });
-      selectEl.innerHTML = options.join("");
+    function normalizeTeacherType(rawValue) {
+      const raw = String(rawValue || "").trim().toLowerCase();
+      if (raw.includes("smart") || raw.includes("ai") || raw.includes("ذكي")) return "معلم ذكي";
+      if (raw.includes("human") || raw.includes("بشري")) return "معلم بشري";
+      return "معلم بشري";
     }
 
-    async function loadLookups() {
-      formStatus.textContent = "جاري تحميل بيانات الصفوف والمواد والمعلمين...";
+    function periodNumber(value) {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 999;
+    }
 
-      classesMap = await loadMap("classes");
-      subjectsMap = await loadMap("subjects");
-      teachersMap = await loadMap("teachers");
+    function scheduleSort(a, b) {
+      const dayDiff = (DAY_ORDER[a.dayLabel] || 999) - (DAY_ORDER[b.dayLabel] || 999);
+      if (dayDiff !== 0) return dayDiff;
 
-      fillSelect(classIdEl, classesMap, "اختر الصف", item => item.name || item.title || "صف");
-      fillSelect(subjectIdEl, subjectsMap, "اختر المادة", item => item.name || item.title || "مادة");
-      fillSelect(
-        teacherIdEl,
-        teachersMap,
-        "اختر المعلم",
-        item => `${item.name || "معلم"} - ${item.subjectName || item.specialty || (item.roleLevel === "ai" ? "معلم ذكي" : "معلم بشري")}`
+      const periodDiff = periodNumber(a.period) - periodNumber(b.period);
+      if (periodDiff !== 0) return periodDiff;
+
+      return String(a.from || "").localeCompare(String(b.from || ""));
+    }
+
+    function setBanner(message, isEditing = false) {
+      if (!message) {
+        el.editingBanner.style.display = "none";
+        el.editingBanner.textContent = "";
+        return;
+      }
+      el.editingBanner.style.display = "block";
+      el.editingBanner.textContent = message;
+      if (isEditing) {
+        el.editingBanner.style.background = "rgba(117,136,255,0.18)";
+        el.editingBanner.style.borderColor = "rgba(117,136,255,0.22)";
+      } else {
+        el.editingBanner.style.background = "rgba(99,216,255,0.10)";
+        el.editingBanner.style.borderColor = "rgba(99,216,255,0.16)";
+      }
+    }
+
+    function setFormStatus(message) {
+      el.formStatus.textContent = message;
+    }
+
+    function setListStatus(message) {
+      el.listStatus.textContent = message;
+    }
+
+    function findClassById(id) {
+      return state.classes.find(item => item.id === id) || null;
+    }
+
+    function findSubjectById(id) {
+      return state.subjects.find(item => item.id === id) || null;
+    }
+
+    function findTeacherById(id) {
+      return state.teachers.find(item => item.id === id) || null;
+    }
+
+    function populateSelect(selectEl, items, placeholder, labelBuilder) {
+      selectEl.innerHTML = `<option value="">${placeholder}</option>` +
+        items.map(item => `<option value="${item.id}">${labelBuilder(item)}</option>`).join("");
+    }
+
+    function renderSelectors() {
+      populateSelect(
+        el.classSelect,
+        state.classes,
+        "اختر الصف",
+        (item) => item.name || item.className || "صف بدون اسم"
       );
 
-      formStatus.textContent = "النموذج جاهز. املأ البيانات ثم اضغط \"حفظ الحصة\".";
+      populateSelect(
+        el.subjectSelect,
+        state.subjects,
+        "اختر المادة",
+        (item) => item.name || item.subjectName || "مادة بدون اسم"
+      );
+
+      populateSelect(
+        el.teacherSelect,
+        state.teachers,
+        "اختر المعلم",
+      (item) => {
+          const name = item.name || item.teacherName || "معلم بدون اسم";
+          const type = normalizeTeacherType(item.teacherType || item.type || item.roleType);
+          return `${name} - ${type}`;
+        }
+      );
     }
 
-    function resetForm() {
-      editingId = null;
-      classIdEl.value = "";
-      subjectIdEl.value = "";
-      teacherIdEl.value = "";
-      dayEl.value = "";
-      periodEl.value = "";
-      fromTimeEl.value = "";
-      toTimeEl.value = "";
-      statusEl.value = "نشط";
-      noteEl.value = "";
-      saveBtn.textContent = "حفظ الحصة";
-      formStatus.textContent = "تم تفريغ النموذج.";
+    function clearForm(keepBanner = false) {
+      state.editingId = null;
+      el.classSelect.value = "";
+      el.subjectSelect.value = "";
+      el.teacherSelect.value = "";
+      el.daySelect.value = "";
+      el.periodInput.value = "";
+      el.fromInput.value = "";
+      el.toInput.value = "";
+      el.statusSelect.value = "نشط";
+      el.noteInput.value = "";
+      el.saveBtn.textContent = "حفظ الحصة";
+      if (!keepBanner) setBanner("");
+      setFormStatus("النموذج جاهز. املأ البيانات ثم اضغط \"حفظ الحصة\".");
+    }
+
+    function fillFormFromSchedule(item) {
+      state.editingId = item.id;
+
+      el.classSelect.value = item.classId || "";
+      el.subjectSelect.value = item.subjectId || "";
+      el.teacherSelect.value = item.teacherId || "";
+      el.daySelect.value = item.dayLabel || "";
+      el.periodInput.value = item.period || "";
+      el.fromInput.value = item.from !== "-" ? item.from : "";
+      el.toInput.value = item.to !== "-" ? item.to : "";
+      el.statusSelect.value = item.statusLabel || "نشط";
+      el.noteInput.value = item.note !== "-" ? item.note : "";
+
+      el.saveBtn.textContent = "حفظ التعديل";
+      setBanner(`أنت الآن تعدل هذه الحصة: ${item.className} - ${item.subjectName} - ${item.dayLabel} - الحصة ${item.period}`, true);
+      setFormStatus("تم تحميل بيانات الحصة داخل النموذج. عدّل ثم اضغط \"حفظ التعديل\".");
+
+      requestAnimationFrame(() => {
+        el.formCard.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+
+    function buildNormalizedSchedule(raw) {
+      const classDoc = findClassById(raw.classId);
+      const subjectDoc = findSubjectById(raw.subjectId);
+      const teacherDoc = findTeacherById(raw.teacherId);
+
+      return {
+        id: raw.id,
+        classId: raw.classId || "",
+        subjectId: raw.subjectId || "",
+        teacherId: raw.teacherId || "",
+        className: classDoc?.name || classDoc?.className || raw.className || "—",
+        subjectName: subjectDoc?.name || subjectDoc?.subjectName || raw.subjectName || "—",
+        teacherName: teacherDoc?.name || teacherDoc?.teacherName || raw.teacherName || "—",
+        teacherType: normalizeTeacherType(
+          teacherDoc?.teacherType ||
+          teacherDoc?.type ||
+          teacherDoc?.roleType ||
+          raw.teacherType
+        ),
+        dayLabel: normalizeDay(raw.day || raw.dayLabel || raw.dayName),
+        period: safeText(raw.period || raw.periodNumber, "-"),
+        from: safeText(raw.from || raw.startTime, "-"),
+        to: safeText(raw.to || raw.endTime, "-"),
+        statusLabel: normalizeStatus(raw.status || raw.statusLabel),
+        note: safeText(raw.note || raw.notes, "-"),
+        createdAt: raw.createdAt || null
+      };
+    }
+
+    function renderScheduleList() {
+      const normalized = state.schedules.map(buildNormalizedSchedule).sort(scheduleSort);
+
+      el.schedulesCount.textContent = normalized.length;
+
+      if (!normalized.length) {
+        el.desktopTable.style.display = "none";
+        el.mobileList.innerHTML = "";
+        el.emptyState.style.display = "block";
+        setListStatus("لا توجد حصص محفوظة حالياً داخل المدرسة.");
+        return;
+      }
+
+      setListStatus(`تم تحميل ${normalized.length} حصة بنجاح داخل المدرسة الحالية.`);
+      el.emptyState.style.display = "none";
+      el.desktopTable.style.display = "block";
+
+      el.scheduleBody.innerHTML = normalized.map((item) => `
+        <tr>
+          <td>${item.className}</td>
+          <td>${item.subjectName}</td>
+          <td>${item.teacherName}</td>
+          <td>
+            <span class="pill ${item.teacherType === "معلم ذكي" ? "pill-smart" : "pill-human"}">
+              ${item.teacherType}
+            </span>
+          </td>
+          <td>${item.dayLabel}</td>
+          <td>${item.period}</td>
+          <td>${item.from}</td>
+          <td>${item.to}</td>
+          <td><span class="pill pill-status">${item.statusLabel}</span></td>
+          <td>${item.note}</td>
+          <td>
+            <button class="btn btn-edit" type="button" data-action="edit" data-id="${item.id}">تعديل</button>
+            <button class="btn btn-delete" type="button" data-action="delete" data-id="${item.id}">حذف</button>
+          </td>
+        </tr>
+      `).join("");
+
+      el.mobileList.innerHTML = normalized.map((item) => `
+        <div class="mobile-item">
+          <div class="mobile-title">${item.className} - ${item.subjectName}</div>
+          <div class="mobile-row"><strong>المعلم:</strong> ${item.teacherName}</div>
+          <div class="mobile-row"><strong>نوع المعلم:</strong> ${item.teacherType}</div>
+          <div class="mobile-row"><strong>اليوم:</strong> ${item.dayLabel}</div>
+          <div class="mobile-row"><strong>الحصة:</strong> ${item.period}</div>
+          <div class="mobile-row"><strong>من:</strong> ${item.from}</div>
+          <div class="mobile-row"><strong>إلى:</strong> ${item.to}</div>
+          <div class="mobile-row"><strong>الحالة:</strong> ${item.statusLabel}</div>
+          <div class="mobile-row"><strong>ملاحظة:</strong> ${item.note}</div>
+          <div class="mobile-actions">
+            <button class="btn btn-edit" type="button" data-action="edit" data-id="${item.id}">تعديل</button>
+            <button class="btn btn-delete" type="button" data-action="delete" data-id="${item.id}">حذف</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function loadSchoolMeta() {
+      try {
+        const schoolSnap = await getDoc(doc(db, "schools", state.schoolId));
+        if (schoolSnap.exists()) {
+          const schoolData = schoolSnap.data() || {};
+          state.schoolName =
+            schoolData.name ||
+            schoolData.schoolName ||
+            state.session.schoolName ||
+            state.session.name ||
+            "المدرسة الحالية";
+        } else {
+          state.schoolName =
+            state.session.schoolName ||
+            state.session.name ||
+            "المدرسة الحالية";
+        }
+      } catch (error) {
+        console.error("School meta error:", error);
+        state.schoolName =
+          state.session.schoolName ||
+          state.session.name ||
+          "المدرسة الحالية";
+      }
+
+      el.schoolName.textContent = state.schoolName;
+      el.schoolIdText.textContent = `schoolId: ${state.schoolId}`;
+      el.sessionStatus.textContent = `تم العثور على جلسة المدرسة بنجاح.`;
+    }
+
+    async function loadBaseCollections() {
+      const schoolId = state.schoolId;
+
+      const [classesSnap, subjectsSnap, teachersSnap] = await Promise.all([
+        getDocs(query(collection(db, "classes"), where("schoolId", "==", schoolId))),
+        getDocs(query(collection(db, "subjects"), where("schoolId", "==", schoolId))),
+        getDocs(query(collection(db, "teachers"), where("schoolId", "==", schoolId)))
+      ]);
+
+      state.classes = classesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      state.subjects = subjectsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      state.teachers = teachersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      el.classesCount.textContent = state.classes.length;
+      el.subjectsCount.textContent = state.subjects.length;
+      el.teachersCount.textContent = state.teachers.length;
+
+      renderSelectors();
+    }
+
+    async function loadSchedules() {
+      const snap = await getDocs(query(collection(db, "schedules"), where("schoolId", "==", state.schoolId)));
+      state.schedules = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderScheduleList();
     }
 
     function validateForm() {
-      if (!classIdEl.value) return "اختر الصف";
-      if (!subjectIdEl.value) return "اختر المادة";
-      if (!teacherIdEl.value) return "اختر المعلم";
-      if (!dayEl.value) return "اختر اليوم";
-      if (!periodEl.value) return "أدخل رقم الحصة";
-      if (!fromTimeEl.value) return "أدخل وقت البداية";
-      if (!toTimeEl.value) return "أدخل وقت النهاية";
-      return "";
-    }
+      const classId = el.classSelect.value.trim();
+      const subjectId = el.subjectSelect.value.trim();
+      const teacherId = el.teacherSelect.value.trim();
+      const day = normalizeDay(el.daySelect.value.trim());
+      const period = el.periodInput.value.trim();
+      const from = el.fromInput.value.trim();
+      const to = el.toInput.value.trim();
+      const status = normalizeStatus(el.statusSelect.value.trim());
+      const note = el.noteInput.value.trim();
 
-    function buildPayload() {
-      const classData = classesMap[classIdEl.value] || {};
-      const subjectData = subjectsMap[subjectIdEl.value] || {};
-      const teacherData = teachersMap[teacherIdEl.value] || {};
+      if (!classId) return { ok: false, message: "اختر الصف أولاً." };
+      if (!subjectId) return { ok: false, message: "اختر المادة أولاً." };
+      if (!teacherId) return { ok: false, message: "اختر المعلم أولاً." };
+      if (!day || day === "-") return { ok: false, message: "اختر اليوم أولاً." };
+      if (!period) return { ok: false, message: "أدخل رقم الحصة." };
+      if (!from) return { ok: false, message: "أدخل وقت البداية." };
+      if (!to) return { ok: false, message: "أدخل وقت النهاية." };
+
+      const classDoc = findClassById(classId);
+      const subjectDoc = findSubjectById(subjectId);
+      const teacherDoc = findTeacherById(teacherId);
+
+      if (!classDoc) return { ok: false, message: "الصف غير موجود داخل المدرسة الحالية." };
+      if (!subjectDoc) return { ok: false, message: "المادة غير موجودة داخل المدرسة الحالية." };
+      if (!teacherDoc) return { ok: false, message: "المعلم غير موجود داخل المدرسة الحالية." };
 
       return {
-        schoolId: session.schoolId,
-        classId: classIdEl.value,
-        className: classData.name || "",
-        subjectId: subjectIdEl.value,
-        subjectName: subjectData.name || "",
-        teacherId: teacherIdEl.value,
-        teacherName: teacherData.name || "",
-        teacherRoleLevel: teacherData.roleLevel || "human",
-        day: dayEl.value,
-        period: Number(periodEl.value),
-        from: fromTimeEl.value,
-        to: toTimeEl.value,
-        status: statusEl.value || "نشط",
-        note: noteEl.value.trim(),
-        updatedAt: serverTimestamp(),
-        updatedBy: session.uid || ""
+        ok: true,
+        data: {
+          schoolId: state.schoolId,
+          classId,
+          className: classDoc.name || classDoc.className || "",
+          subjectId,
+          subjectName: subjectDoc.name || subjectDoc.subjectName || "",
+          teacherId,
+          teacherName: teacherDoc.name || teacherDoc.teacherName || "",
+          teacherType: normalizeTeacherType(teacherDoc.teacherType || teacherDoc.type || teacherDoc.roleType),
+          day,
+          period: Number(period),
+          from,
+          to,
+          status,
+          note: note || "-"
+        }
       };
     }
 
     async function saveSchedule() {
-      const validation = validateForm();
-      if (validation) {
-        formStatus.textContent = validation;
-        alert(validation);
+      const check = validateForm();
+      if (!check.ok) {
+        setFormStatus(check.message);
         return;
       }
 
-      try {
-        formStatus.textContent = editingId ? "جاري تحديث الحصة..." : "جاري حفظ الحصة...";
-        const payload = buildPayload();
+      const payload = {
+        ...check.data,
+        updatedAt: serverTimestamp()
+      };
 
-        if (editingId) {
-          await updateDoc(doc(db, "schedules", editingId), payload);
-          formStatus.textContent = "تم تحديث الحصة بنجاح.";
+      try {
+        el.saveBtn.disabled = true;
+        el.saveBtn.style.opacity = "0.7";
+
+        if (state.editingId) {
+          await updateDoc(doc(db, "schedules", state.editingId), payload);
+          setFormStatus("تم حفظ التعديل بنجاح.");
+          setBanner("تم حفظ التعديل بنجاح.");
         } else {
           await addDoc(collection(db, "schedules"), {
             ...payload,
-            createdAt: serverTimestamp(),
-            createdBy: session.uid || ""
+            createdAt: serverTimestamp()
           });
-          formStatus.textContent = "تم حفظ الحصة بنجاح.";
-        }
-
-        resetForm();
+          setFormStatus("تم حفظ الحصة بنجاح.");
+          setBanner("تم حفظ الحصة الجديدة بنجاح.");
+    }
+    
         await loadSchedules();
+        clearForm(true);
       } catch (error) {
-        console.error(error);
-        formStatus.textContent = "فشل حفظ الحصة.";
-        alert("فشل حفظ الحصة");
+        console.error("Save schedule error:", error);
+        setFormStatus("حدث خطأ أثناء حفظ الحصة. تأكد من الاتصال ثم حاول مرة أخرى.");
+      } finally {
+        el.saveBtn.disabled = false;
+        el.saveBtn.style.opacity = "1";
       }
     }
 
-    async function startEdit(id) {
-      try {
-        const snap = await getDoc(doc(db, "schedules", id));
-        if (!snap.exists()) {
-          alert("الحصة غير موجودة");
-          return;
-        }
+    async function deleteScheduleById(id) {
+      const item = state.schedules.find(row => row.id === id);
+      if (!item) return;
 
-        const row = snap.data();
-        editingId = id;
-
-        classIdEl.value = row.classId || "";
-        subjectIdEl.value = row.subjectId || "";
-        teacherIdEl.value = row.teacherId || "";
-        dayEl.value = row.day || "";
-        periodEl.value = row.period || "";
-        fromTimeEl.value = row.from || "";
-        toTimeEl.value = row.to || "";
-        statusEl.value = row.status || "نشط";
-        noteEl.value = row.note || "";
-
-        saveBtn.textContent = "حفظ التعديل";
-        formStatus.textContent = "أنت الآن في وضع التعديل. عدّل ثم اضغط حفظ التعديل.";
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } catch (error) {
-        console.error(error);
-        alert("فشل تحميل بيانات الحصة للتعديل");
-      }
-    }
-
-    async function removeSchedule(id) {
-      const ok = confirm("هل أنت متأكد من حذف هذه الحصة؟");
-      if (!ok) return;
+      const sure = confirm("هل أنت متأكد من حذف هذه الحصة؟");
+      if (!sure) return;
 
       try {
         await deleteDoc(doc(db, "schedules", id));
-        listStatus.textContent = "تم حذف الحصة بنجاح.";
-        if (editingId === id) resetForm();
-        await loadSchedules();
-      } catch (error) {
-        console.error(error);
-        alert("فشل حذف الحصة");
-      }
-    }
 
-    async function loadSchedules() {
-      try {
-        listStatus.textContent = "جاري تحميل الحصص...";
-        scheduleBody.innerHTML = `<tr><td colspan="11">جاري التحميل...</td></tr>`;
-
-        const snap = await getDocs(
-          query(collection(db, "schedules"), where("schoolId", "==", session.schoolId))
-        );
-
-        const rows = [];
-        snap.forEach(docSnap => {
-          rows.push({ id: docSnap.id, ...docSnap.data() });
-        });
-
-        rows.sort((a, b) => {
-          const d1 = String(a.day || "");
-          const d2 = String(b.day || "");
-          if (d1 !== d2) return d1.localeCompare(d2, "ar");
-          return Number(a.period || 0) - Number(b.period || 0);
-        });
-
-        if (!rows.length) {
-          listStatus.textContent = "لا توجد حصص حالية داخل المدرسة.";
-          scheduleBody.innerHTML = `<tr><td colspan="11">لا توجد حصص حاليًا.</td></tr>`;
-          return;
+        if (state.editingId === id) {
+          clearForm();
+          setBanner("");
         }
 
-        listStatus.textContent = `تم تحميل ${rows.length} حصة بنجاح داخل المدرسة الحالية.`;
-
-        scheduleBody.innerHTML = rows.map(row => {
-          const className = classesMap[row.classId]?.name || row.className || "-";
-          const subjectName = subjectsMap[row.subjectId]?.name || row.subjectName || "-";
-          const teacher = teachersMap[row.teacherId];
-          const teacherName = teacher?.name || row.teacherName || "-";
-          const roleLevel = teacher?.roleLevel || row.teacherRoleLevel || "human";
-
-          return `
-            <tr>
-              <td>${escapeHtml(className)}</td>
-              <td>${escapeHtml(subjectName)}</td>
-              <td>${escapeHtml(teacherName)}</td>
-              <td>${teacherTypeBadge(roleLevel)}</td>
-              <td>${escapeHtml(row.day || "-")}</td>
-              <td>${escapeHtml(row.period || "-")}</td>
-              <td>${escapeHtml(row.from || "-")}</td>
-              <td>${escapeHtml(row.to || "-")}</td>
-              <td>${activeBadge(row.status || "نشط")}</td>
-              <td>${escapeHtml(row.note || "-")}</td>
-              <td>
-                <div class="row-actions">
-                  <button class="small-btn edit-btn" data-edit="${escapeHtml(row.id)}">تعديل</button>
-                  <button class="small-btn delete-btn" data-delete="${escapeHtml(row.id)}">حذف</button>
-                </div>
-              </td>
-            </tr>
-          `;
-        }).join("");
-
-        scheduleBody.querySelectorAll("[data-edit]").forEach(btn => {
-          btn.addEventListener("click", () => startEdit(btn.getAttribute("data-edit")));
-        });
-
-        scheduleBody.querySelectorAll("[data-delete]").forEach(btn => {
-          btn.addEventListener("click", () => removeSchedule(btn.getAttribute("data-delete")));
-        });
+        setListStatus("تم حذف الحصة بنجاح.");
+        await loadSchedules();
       } catch (error) {
-        console.error(error);
-        listStatus.textContent = "فشل تحميل الحصص.";
-        scheduleBody.innerHTML = `<tr><td colspan="11">حدث خطأ أثناء تحميل البيانات.</td></tr>`;
+        console.error("Delete schedule error:", error);
+        setListStatus("حدث خطأ أثناء حذف الحصة.");
       }
     }
 
-    saveBtn.addEventListener("click", saveSchedule);
-    resetBtn.addEventListener("click", resetForm);
-
-    async function init() {
-      await loadLookups();
-      await loadSchedules();
+    function startEditById(id) {
+      const rawItem = state.schedules.find(row => row.id === id);
+      if (!rawItem) return;
+      const item = buildNormalizedSchedule(rawItem);
+      fillFormFromSchedule(item);
     }
 
-    init();
+    function attachActionDelegation() {
+      document.addEventListener("click", (event) => {
+        const target = event.target.closest("[data-action]");
+        if (!target) return;
+
+        const action = target.getAttribute("data-action");
+        const id = target.getAttribute("data-id");
+        if (!id) return;
+
+        event.preventDefault();
+
+        if (action === "edit") {
+          startEditById(id);
+        }
+
+        if (action === "delete") {
+          deleteScheduleById(id);
+        }
+      });
+    }
+
+    async function initPage() {
+      state.session = readLocalSession();
+
+      if (!state.session) {
+        window.location.href = "../login.html";
+        return;
+      }
+
+      state.schoolId = state.session.schoolId;
+
+      await loadSchoolMeta();
+
+      try {
+        setFormStatus("جاري تحميل الصفوف والمواد والمعلمين...");
+        setListStatus("جاري تحميل الحصص...");
+        await loadBaseCollections();
+        await loadSchedules();
+
+        setFormStatus("النموذج جاهز. املأ البيانات ثم اضغط \"حفظ الحصة\".");
+      } catch (error) {
+        console.error("Init page error:", error);
+        setFormStatus("تعذر تحميل بيانات المدرسة. تحقق من Firestore والاتصال.");
+        setListStatus("تعذر تحميل الحصص الحالية.");
+      }
+    }
+
+    el.saveBtn.addEventListener("click", saveSchedule);
+
+    el.clearBtn.addEventListener("click", () => {
+      clearForm();
+      setBanner("تم تفريغ النموذج.");
+    });
+
+    el.logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("madaris_user_session");
+      localStorage.removeItem("madaris_session");
+      window.location.href = "../login.html";
+    });
+
+    attachActionDelegation();
+    initPage();
   </script>
 </body>
 </html>
