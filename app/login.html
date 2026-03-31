@@ -2,10 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Madaris AI | تسجيل الدخول</title>
 
   <style>
@@ -15,150 +12,119 @@
       padding: 0;
     }
 
-    :root {
-      --bg-1: #020617;
-      --bg-2: #031a4a;
-      --card: rgba(10, 26, 74, 0.94);
-      --line: rgba(255, 255, 255, 0.08);
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
-      --danger: #fb7185;
-      --danger-hover: #f43f5e;
-      --input-bg: rgba(255, 255, 255, 0.92);
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-    }
-
-    html,
-    body {
+    html, body {
       width: 100%;
       min-height: 100%;
-      font-family: "Tahoma", "Arial", sans-serif;
+      font-family: Tahoma, Arial, sans-serif;
       background:
-        radial-gradient(circle at top right, rgba(59, 130, 246, 0.16), transparent 28%),
-        radial-gradient(circle at top left, rgba(34, 211, 238, 0.12), transparent 24%),
-        linear-gradient(180deg, var(--bg-1) 0%, #021038 38%, #031a4a 100%);
-      color: var(--text);
+        radial-gradient(circle at top, rgba(32, 87, 197, 0.28), transparent 30%),
+        linear-gradient(180deg, #020817 0%, #041433 45%, #031022 100%);
+      color: #ffffff;
     }
 
     body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
+      padding: 20px 14px 40px;
     }
 
-    .page-shell {
+    .page {
       width: 100%;
-      max-width: 560px;
+      max-width: 720px;
+      margin: 0 auto;
     }
 
-    .login-card {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-      padding: 34px 22px 26px;
-      backdrop-filter: blur(12px);
-    }
-
-    .brand {
-      text-align: center;
-      margin-bottom: 26px;
-    }
-
-    .brand h1 {
-      font-size: 2.3rem;
-      line-height: 1.2;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 12px;
-      letter-spacing: 0.2px;
-    }
-
-    .brand p {
-      font-size: 1.3rem;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .status-box {
-      display: none;
+    .card {
+      background: linear-gradient(180deg, rgba(23, 63, 151, 0.96) 0%, rgba(12, 35, 96, 0.96) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+      padding: 26px 18px;
       margin-bottom: 18px;
-      border-radius: 18px;
-      padding: 14px 16px;
-      line-height: 1.8;
-      font-size: 1rem;
-      border: 1px solid transparent;
     }
 
-    .status-box.show {
+    .hero-title {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      text-align: center;
+      font-size: 17px;
+      line-height: 2;
+      color: rgba(255, 255, 255, 0.88);
+      margin-bottom: 24px;
+    }
+
+    .brand-line {
       display: block;
+      font-size: 16px;
+      color: #8adfff;
+      margin-top: 6px;
+      font-weight: 700;
     }
 
-    .status-box.error {
-      background: rgba(127, 29, 29, 0.35);
-      color: #fecaca;
-      border-color: rgba(251, 113, 133, 0.25);
+    .form-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
     }
 
-    .status-box.success {
-      background: rgba(20, 83, 45, 0.35);
-      color: #bbf7d0;
-      border-color: rgba(74, 222, 128, 0.2);
+    .form-desc {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 16px;
+      line-height: 1.9;
+      margin-bottom: 22px;
     }
 
-    .field-group {
+    .field {
       margin-bottom: 16px;
     }
 
-    .field-label {
+    .label {
       display: block;
-      margin-bottom: 8px;
-      color: #dbeafe;
-      font-size: 1rem;
+      font-size: 16px;
       font-weight: 700;
+      margin-bottom: 10px;
+      color: #ffffff;
     }
 
     .input {
       width: 100%;
-      height: 72px;
-      border: none;
-      outline: none;
-      border-radius: var(--radius-lg);
-      background: var(--input-bg);
-      color: #0f172a;
-      font-size: 1.15rem;
+      min-height: 62px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.10);
+      color: #ffffff;
+      font-size: 18px;
       padding: 0 18px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.45);
+      outline: none;
+      transition: 0.2s ease;
     }
 
     .input::placeholder {
-      color: #64748b;
-      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.55);
     }
 
     .input:focus {
-      box-shadow:
-        0 0 0 3px rgba(96, 165, 250, 0.28),
-        inset 0 1px 0 rgba(255,255,255,0.45);
+      border-color: rgba(114, 214, 255, 0.6);
+      box-shadow: 0 0 0 3px rgba(114, 214, 255, 0.12);
+      background: rgba(255, 255, 255, 0.14);
     }
 
     .btn {
       width: 100%;
-      min-height: 74px;
+      min-height: 66px;
       border: none;
-      outline: none;
-      border-radius: 24px;
-      font-size: 1.2rem;
+      border-radius: 999px;
+      font-size: 21px;
       font-weight: 800;
       cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+      margin-top: 10px;
     }
 
     .btn:active {
@@ -166,197 +132,189 @@
     }
 
     .btn-primary {
-      margin-top: 10px;
-      background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+      background: linear-gradient(180deg, #6fdcff 0%, #57c7ef 100%);
       color: #ffffff;
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(180deg, #4b8df7 0%, #1d4ed8 100%);
+      box-shadow: 0 10px 24px rgba(87, 199, 239, 0.28);
     }
 
     .btn-secondary {
-      margin-top: 14px;
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-      color: #cbd5e1;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, #ff6f93 0%, #ff5b7f 100%);
+      color: #ffffff;
+      box-shadow: 0 10px 24px rgba(255, 91, 127, 0.24);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .helper-links {
-      margin-top: 18px;
+    .btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .link-box {
+      margin-top: 16px;
       text-align: center;
     }
 
-    .helper-links a {
-      color: #93c5fd;
+    .link-box a {
+      color: #8adfff;
       text-decoration: none;
-      font-size: 1.05rem;
+      font-size: 18px;
       font-weight: 700;
     }
 
-    .helper-links a:hover {
+    .link-box a:hover {
       text-decoration: underline;
     }
 
-    .footer-note {
-      margin-top: 22px;
+    .note {
+      margin-top: 18px;
       text-align: center;
-      color: #94a3b8;
-      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 15px;
       line-height: 1.9;
     }
 
-    .loading-row {
-      display: none;
-      margin-top: 14px;
+    .status-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 22px;
+      padding: 18px 16px;
+      margin-top: 20px;
+    }
+
+    .status-box h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
       text-align: center;
-      color: #cbd5e1;
-      font-size: 1rem;
     }
 
-    .loading-row.show {
-      display: block;
+    .status-box p {
+      font-size: 15px;
+      line-height: 1.9;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.84);
     }
 
-    @media (max-width: 640px) {
+    .footer-space {
+      height: 10px;
+    }
+
+    @media (min-width: 768px) {
       body {
-        padding: 18px 12px;
+        padding: 36px 20px 50px;
       }
 
-      .login-card {
-        padding: 28px 16px 22px;
-        border-radius: 24px;
+      .card {
+        padding: 34px 28px;
       }
 
-      .brand h1 {
-        font-size: 2rem;
+      .hero-title {
+        font-size: 42px;
       }
 
-      .brand p {
-        font-size: 1.15rem;
+      .hero-subtitle {
+        font-size: 20px;
       }
 
-      .input {
-        height: 68px;
-        font-size: 1.08rem;
-      }
-
-      .btn {
-        min-height: 70px;
-        font-size: 1.15rem;
+      .form-title {
+        font-size: 28px;
       }
     }
   </style>
 </head>
 <body>
-  <main class="page-shell">
-    <section class="login-card">
-      <div class="brand">
-        <h1>Madaris AI</h1>
-        <p>تسجيل الدخول إلى المنصة</p>
+  <main class="page">
+    <section class="card">
+      <h1 class="hero-title">
+        Madaris AI
+        <span class="brand-line">منصة المدرسة الذكية</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        تسجيل الدخول إلى المنصة بحسابك المعتمد،
+        وبعد نجاح الدخول سيتم حفظ الجلسة محليًا
+        ثم تحويلك تلقائيًا إلى صفحتك المناسبة.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="form-title">تسجيل الدخول</h2>
+
+      <p class="form-desc">
+        أدخل البريد الإلكتروني وكلمة المرور،
+        ثم اضغط على زر تسجيل الدخول.
+      </p>
+
+      <div class="field">
+        <label class="label" for="email">البريد الإلكتروني</label>
+        <input
+          id="email"
+          class="input"
+          type="email"
+          placeholder="مثال: info@madarisai.com"
+          autocomplete="email"
+          inputmode="email"
+        />
       </div>
 
-      <div id="statusBox" class="status-box" aria-live="polite"></div>
+      <div class="field">
+        <label class="label" for="password">كلمة المرور</label>
+        <input
+          id="password"
+          class="input"
+          type="password"
+          placeholder="أدخل كلمة المرور"
+          autocomplete="current-password"
+        />
+      </div>
 
-      <form id="loginForm">
-        <div class="field-group">
-          <label class="field-label" for="email">البريد الإلكتروني</label>
-          <input
-            id="email"
-            name="email"
-            class="input"
-            type="email"
-            inputmode="email"
-            autocomplete="email"
-            placeholder="البريد الإلكتروني"
-            required
-          />
-        </div>
+      <button id="loginBtn" class="btn btn-primary" onclick="loginUser()">
+        تسجيل الدخول
+      </button>
+      <div class="link-box">
+        <a href="./register.html">إنشاء حساب جديد</a>
+      </div>
 
-        <div class="field-group">
-          <label class="field-label" for="password">كلمة المرور</label>
-          <input
-            id="password"
-            name="password"
-            class="input"
-            type="password"
-            autocomplete="current-password"
-            placeholder="كلمة المرور"
-            required
-          />
-        </div>
+      <div class="status-box">
+        <h3>ملاحظات مهمة</h3>
+        <p>
+          إذا كانت لديك جلسة محفوظة وصحيحة، فسيتم نقلك تلقائيًا إلى لوحة المدرسة
+          أو لوحة المشرف أو صفحة المعلم أو الطالب حسب دورك داخل النظام.
+        </p>
+      </div>
 
-        <button id="loginBtn" type="submit" class="btn btn-primary">
-          تسجيل الدخول
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-secondary"
-          onclick="window.location.href='../index.html'"
-        >
-          رجوع إلى الرئيسية
-        </button>
-
-        <div id="loadingRow" class="loading-row">جارٍ تسجيل الدخول...</div>
-
-        <div class="helper-links">
-          <a href="register.html">إنشاء حساب جديد</a>
-        </div>
-
-        <div class="footer-note">
-          بعد نجاح تسجيل الدخول سيتم حفظ الجلسة محليًا ثم تحويلك تلقائيًا إلى صفحتك المناسبة.
-        </div>
-      </form>
+      <p class="note">
+        إذا ظهر خطأ بالشبكة، تأكد من اتصال الإنترنت ثم أعد المحاولة.
+      </p>
     </section>
-  </main><script type="module" src="./login.js"></script>
 
-  <script>
-    (function () {
-      const form = document.getElementById("loginForm");
-      const loginBtn = document.getElementById("loginBtn");
-      const statusBox = document.getElementById("statusBox");
-      const loadingRow = document.getElementById("loadingRow");
+    <section class="card">
+      <h2 class="form-title">طريقة العمل</h2>
+      <p class="form-desc">
+        هذا الملف متوافق بالكامل مع <strong>app/login.js</strong> الذي يعتمد على Firebase،
+        ويستخدم العناصر التالية بشكل مباشر:
+      </p>
 
-      function showStatus(message, type = "error") {
-        statusBox.textContent = message;
-        statusBox.className = "status-box show " + type;
-      }
+      <div class="status-box">
+        <p>
+          <strong>email</strong> لحقل البريد الإلكتروني<br />
+          <strong>password</strong> لحقل كلمة المرور<br />
+          <strong>loginBtn</strong> لزر تسجيل الدخول
+        </p>
+      </div>
 
-      function clearStatus() {
-        statusBox.textContent = "";
-        statusBox.className = "status-box";
-      }
+      <p class="note">
+        لا تغيّر أسماء هذه المعرفات حتى يبقى الربط صحيحًا مع كود الدخول.
+      </p>
+    </section>
 
-      function setLoading(isLoading) {
-        loginBtn.disabled = isLoading;
-        loginBtn.style.opacity = isLoading ? "0.75" : "1";
-        loadingRow.className = isLoading ? "loading-row show" : "loading-row";
-      }
+    <div class="footer-space"></div>
+  </main>
 
-      form.addEventListener("submit", async function (event) {
-        event.preventDefault();
-        clearStatus();
-        setLoading(true);
-
-        try {
-          if (typeof window.loginUser !== "function") {
-            throw new Error("ملف login.js لم يتم تحميله بشكل صحيح.");
-          }
-
-          await window.loginUser();
-        } catch (error) {
-          console.error("Login form error:", error);
-          showStatus(error?.message || "حدث خطأ أثناء تسجيل الدخول.");
-        } finally {
-          setLoading(false);
-        }
-      });
-
-      window.addEventListener("error", function (event) {
-        console.error("Global page error:", event.error || event.message);
-      });
-    })();
-  </script>
+  <script type="module" src="./login.js"></script>
 </body>
 </html>
+
