@@ -1,315 +1,288 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Madaris AI | عرض الجدول</title>
-
-<style>
-
-body{
-margin:0;
-font-family:tahoma;
-background:linear-gradient(180deg,#071a3a,#06142b);
-color:white;
-padding:15px;
-}
-
-.container{
-max-width:1000px;
-margin:auto;
-}
-
-.card{
-background:#0b2452;
-padding:20px;
-border-radius:18px;
-margin-bottom:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
-}
-
-.title{
-font-size:26px;
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.subtitle{
-opacity:.8;
-line-height:1.8;
-}
-
-.button{
-display:block;
-width:100%;
-padding:16px;
-margin-top:10px;
-border-radius:30px;
-border:none;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.btn-primary{
-background:#58c7e6;
-color:white;
-}
-
-.btn-danger{
-background:#ff5a7b;
-color:white;
-}
-
-.schedule-day{
-margin-bottom:20px;
-}
-
-.day-title{
-font-size:22px;
-margin-bottom:10px;
-font-weight:bold;
-}
-
-.lesson{
-background:#0f2f68;
-padding:15px;
-border-radius:12px;
-margin-bottom:10px;
-}
-
-.lesson-title{
-font-size:18px;
-font-weight:bold;
-}
-
-.lesson-meta{
-opacity:.8;
-margin-top:5px;
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI | عرض الجدول</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background: linear-gradient(180deg, #07142f 0%, #03122a 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    .card {
+      background: linear-gradient(180deg, #214aa4 0%, #102e79 100%);
+      border-radius: 28px;
+      padding: 24px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+    .title, .section-title {
+      text-align: center;
+      font-weight: 800;
+    }
+    .title { font-size: 32px; margin-bottom: 12px; }
+    .section-title { font-size: 28px; margin-bottom: 16px; }
+    .text {
+      text-align: center;
+      color: #dbe5ff;
+      line-height: 1.9;
+      font-size: 17px;
+    }
+    .school-name {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+      margin: 18px 0 8px;
+    }
+    .school-id {
+      text-align: center;
+      color: #d9e5ff;
+      font-size: 15px;
+      margin-bottom: 18px;
+      word-break: break-word;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      border-radius: 999px;
+      padding: 18px;
+      font-size: 22px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+    .btn-primary {
+      background: linear-gradient(180deg, #65d7f7 0%, #4fc4ea 100%);
+      color: #fff;
+    }
+    .btn-danger {
+      background: linear-gradient(180deg, #ff6f93 0%, #f45377 100%);
+      color: #fff;
+    }
+    .status-box {
+      background: rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+      color: #dce8ff;
+      line-height: 1.9;
+      margin-top: 14px;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.05);
+    }
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 16px 14px;
+      text-align: right;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      font-size: 17px;
+      white-space: nowrap;
+    }
+    th { color: #69d8f8; font-size: 18px; }
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .badge-human { background: rgba(255, 145, 0, .18); }
+    .badge-ai { background: rgba(112, 92, 255, .28); }
+    .badge-active { background: rgba(34, 197, 94, .22); }
+    .muted { color: #cbd8ff; }
+  </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<div class="card">
-
-<div class="title">
-Madaris AI | عرض الجدول المدرسي
-</div>
-
-<div class="subtitle">
-عرض الجدول الحالي للمدرسة
-</div>
-
-<h3 data-school-name>
-جاري التحميل...
-</h3>
-
-<div>
-schoolId :
-<span data-school-id></span>
-</div>
-
-<button
-class="button btn-primary"
-onclick="location.href='index.html'">
-
-رجوع للوحة المدرسة
-
-</button>
-
-<button
-class="button btn-danger"
-data-action="logout">
-
-خروج
-
-</button>
-
-</div>
-
-
-<div class="card">
-
-<div class="title">
-الجدول الأسبوعي
-</div>
-
-<div id="scheduleContainer">
-
-جاري تحميل الجدول...
-
-</div>
-
-</div><script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-query,
-where,
-getDocs,
-orderBy
-}
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-
-const firebaseConfig = {
-apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-authDomain: "madaris-ai.firebaseapp.com",
-projectId: "madaris-ai",
-storageBucket: "madaris-ai.firebasestorage.app",
-messagingSenderId: "915394447224",
-appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
-};
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-const days = [
-"السبت",
-"الأحد",
-"الإثنين",
-"الثلاثاء",
-"الأربعاء",
-"الخميس"
-];
-
-
-async function loadSchedule(){
-
-const session =
-window.MadarisSchoolSession.getSchoolSession();
-
-if(!session){
-
-document.getElementById(
-"scheduleContainer"
-).innerHTML="لا توجد جلسة مدرسة";
-
-return;
-
-}
-
-const schoolId = session.schoolId;
-
-const q =
-query(
-collection(db,"schedule"),
-where("schoolId","==",schoolId),
-orderBy("day"),
-orderBy("period")
-);
-
-const snapshot = await getDocs(q);
-
-const grouped = {};
-
-snapshot.forEach(doc=>{
-
-const data = doc.data();
-
-if(!grouped[data.day]){
-
-grouped[data.day]=[];
-
-}
-
-grouped[data.day].push(data);
-
-});
-
-renderSchedule(grouped);
-
-}function renderSchedule(grouped){
-
-const container =
-document.getElementById(
-"scheduleContainer"
-);
-
-container.innerHTML="";
-
-days.forEach(day=>{
-
-if(!grouped[day]) return;
-
-const dayDiv =
-document.createElement("div");
-
-dayDiv.className="schedule-day";
-
-dayDiv.innerHTML=`
-<div class="day-title">
-${day}
-</div>
-`;
-
-grouped[day].forEach(lesson=>{
-
-const teacher =
-lesson.teacherName ||
-(lesson.teacherType=="ai"
-? "المعلم الذكي"
-: "—");
-
-const el =
-document.createElement("div");
-
-el.className="lesson";
-
-el.innerHTML=`
-
-<div class="lesson-title">
-${lesson.subjectName}
-</div>
-
-<div class="lesson-meta">
-الصف: ${lesson.className}
-</div>
-
-<div class="lesson-meta">
-المعلم: ${teacher}
-</div>
-
-<div class="lesson-meta">
-${lesson.startTime}
--
-${lesson.endTime}
-</div>
-
-`;
-
-dayDiv.appendChild(el);
-
-});
-
-container.appendChild(dayDiv);
-
-});
-
-}
-
-loadSchedule();
-
-</script>
-
-
-<script src="./session-guard.js"></script>
-<script src="./session-guard.js"></script>
+  <div class="container">
+    <div class="card">
+      <div class="title">Madaris AI | عرض الجدول المدرسي</div>
+      <div class="text">عرض الجدول الحالي للمدرسة</div>
+
+      <div id="schoolName" class="school-name">جاري تحميل المدرسة...</div>
+      <div id="schoolIdText" class="school-id">schoolId: ...</div>
+
+      <a class="btn btn-primary" href="./index.html">رجوع للوحة المدرسة</a>
+      <button id="logoutBtn" class="btn btn-danger" type="button">خروج</button>
+    </div>
+
+    <div class="card">
+      <div class="section-title">الجدول الأسبوعي</div>
+      <div id="statusBox" class="status-box">جاري تحميل الجدول...</div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الصف</th>
+              <th>المادة</th>
+              <th>المعلم</th>
+              <th>نوع المعلم</th>
+              <th>اليوم</th>
+              <th>الحصة</th>
+              <th>من</th>
+              <th>إلى</th>
+              <th>الحالة</th>
+              <th>ملاحظة</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleBody">
+            <tr>
+              <td colspan="10" class="muted">جاري التحميل...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="./session-guard.js"></script>
+  <script type="module">
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      query,
+      where
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      authDomain: "madaris-ai.firebaseapp.com",
+      projectId: "madaris-ai",
+      storageBucket: "madaris-ai.firebasestorage.app",
+      messagingSenderId: "915394447224",
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+      measurementId: "G-SC7VE6F20S"
+    };
+
+    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const session = window.MadarisSession.requireSchoolSession();
+    if (!session) throw new Error("No session");
+
+    const schoolName = document.getElementById("schoolName");
+    const schoolIdText = document.getElementById("schoolIdText");
+    const statusBox = document.getElementById("statusBox");
+    const scheduleBody = document.getElementById("scheduleBody");
+
+    schoolName.textContent = session.name || "المدرسة الحالية";
+    schoolIdText.textContent = "schoolId: " + session.schoolId;
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      window.MadarisSession.logoutToLogin();
+    });
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    async function mapCollectionById(name) {
+      const q = query(collection(db, name), where("schoolId", "==", session.schoolId));
+      const snap = await getDocs(q);
+      const map = {};
+      snap.forEach(docSnap => {
+        map[docSnap.id] = { id: docSnap.id, ...docSnap.data() };
+      });
+      return map;
+    }
+
+    function teacherTypeBadge(roleLevel) {
+      const type = roleLevel === "ai" ? "معلم ذكي" : "معلم بشري";
+      const cls = roleLevel === "ai" ? "badge badge-ai" : "badge badge-human";
+      return `<span class="${cls}">${escapeHtml(type)}</span>`;
+    }
+
+    function activeBadge(status) {
+      return `<span class="badge badge-active">${escapeHtml(status || "نشط")}</span>`;
+    }
+
+    async function loadSchedule() {
+      try {
+        statusBox.textContent = "جاري تحميل الجدول...";
+        scheduleBody.innerHTML = `<tr><td colspan="10" class="muted">جاري التحميل...</td></tr>`;
+
+        const [classesMap, subjectsMap, teachersMap] = await Promise.all([
+          mapCollectionById("classes"),
+          mapCollectionById("subjects"),
+          mapCollectionById("teachers")
+        ]);
+
+        const schedulesSnap = await getDocs(
+          query(collection(db, "schedules"), where("schoolId", "==", session.schoolId))
+        );
+
+        const rows = [];
+        schedulesSnap.forEach(docSnap => {
+          rows.push({ id: docSnap.id, ...docSnap.data() });
+        });
+
+        rows.sort((a, b) => {
+          const d1 = String(a.day || "");
+          const d2 = String(b.day || "");
+          if (d1 !== d2) return d1.localeCompare(d2, "ar");
+          return Number(a.period || 0) - Number(b.period || 0);
+        });
+
+        if (!rows.length) {
+          statusBox.textContent = "لا توجد حصص حالية داخل المدرسة.";
+          scheduleBody.innerHTML = `<tr><td colspan="10" class="muted">لا توجد بيانات جدول الآن.</td></tr>`;
+          return;
+        }
+
+        statusBox.textContent = `تم تحميل ${rows.length} حصة بنجاح داخل المدرسة الحالية.`;
+
+        scheduleBody.innerHTML = rows.map(row => {
+          const classData = classesMap[row.classId] || {};
+          const subjectData = subjectsMap[row.subjectId] || {};
+          const teacherData = teachersMap[row.teacherId] || {};
+
+          return `
+            <tr>
+              <td>${escapeHtml(classData.name || row.className || "-")}</td>
+              <td>${escapeHtml(subjectData.name || row.subjectName || "-")}</td>
+              <td>${escapeHtml(teacherData.name || row.teacherName || "-")}</td>
+              <td>${teacherTypeBadge(teacherData.roleLevel || row.teacherRoleLevel || "human")}</td>
+              <td>${escapeHtml(row.day || "-")}</td>
+              <td>${escapeHtml(row.period || "-")}</td>
+              <td>${escapeHtml(row.from || "-")}</td>
+              <td>${escapeHtml(row.to || "-")}</td>
+              <td>${activeBadge(row.status || "نشط")}</td>
+              <td>${escapeHtml(row.note || "-")}</td>
+            </tr>
+          `;
+        }).join("");
+      } catch (error) {
+        console.error(error);
+        statusBox.textContent = "فشل تحميل الجدول.";
+        scheduleBody.innerHTML = `<tr><td colspan="10" class="muted">حدث خطأ أثناء تحميل البيانات.</td></tr>`;
+      }
+    }
+
+    loadSchedule();
+  </script>
 </body>
-
 </html>
