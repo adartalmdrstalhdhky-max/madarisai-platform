@@ -1,263 +1,168 @@
-// =========================================
+// ===============================
 // Madaris AI - Unified School Session Guard
 // File: app/school/session-guard.js
-// =========================================
-
-// هذا الملف يوحّد قراءة الجلسة داخل كل صفحات المدرسة.
-// يقرأ أولاً madaris_user_session
-// ثم madaris_session كنسخة احتياطية.
-// ويتأكد أن الدور role = school
-// وأن schoolId موجود.
-// إذا لم يجد جلسة صحيحة يرجّع المستخدم إلى صفحة تسجيل الدخول.
+// Final Stable Version
+// ===============================
 
 (function () {
   "use strict";
 
-  const PRIMARY_SESSION_KEY = "madaris_user_session";
-  const FALLBACK_SESSION_KEY = "madaris_session";
+  const LOGIN_URL = "../login.html";
 
-  function safeParse(value) {
-    if (!value || typeof value !== "string") return null;
+  function clearAllSessions() {
+    localStorage.removeItem("madaris_user_session");
+    localStorage.removeItem("madaris_session");
+    sessionStorage.removeItem("madaris_user_session");
+    sessionStorage.removeItem("madaris_session");
+  }
+
+  function parseSession(raw) {
+    if (!raw) return null;
+
     try {
-      return JSON.parse(value);
+      return JSON.parse(raw);
     } catch (error) {
-      console.warn("تعذر قراءة JSON من الجلسة:", error);
       return null;
     }
   }
 
-  function normalizeSession(raw) {
-    if (!raw || typeof raw !== "object") return null;
+  function readStoredSession() {
+    const raw =
+      localStorage.getItem("madaris_user_session") ||
+      localStorage.getItem("madaris_session") ||
+      sessionStorage.getItem("madaris_user_session") ||
+      sessionStorage.getItem("madaris_session");
 
-    const normalized = {
-      uid: raw.uid || raw.userId || raw.id || "",
-      email: raw.email || "",
-      name: raw.name || raw.fullName || raw.displayName || "",
-      role: raw.role || "",
-      roleLevel: raw.roleLevel || "",
-      schoolId: raw.schoolId || raw.schoolID || "",
-      status: raw.status || "active",
-      loginAt: raw.loginAt || raw.createdAt || Date.now()
+    return parseSession(raw);
+  }
+
+  function normalizeSession(session) {
+    if (!session) return null;
+
+    return {
+      uid: session.uid || "",
+      email: session.email || "",
+      name: session.name || "",
+      role: session.role || "",
+      roleLevel: session.roleLevel || "",
+      schoolId: session.schoolId || "",
+      status: session.status || "active",
+      loginAt: session.loginAt || Date.now()
     };
-
-    if (!normalized.role || !normalized.schoolId) {
-      return null;
-    }
-
-    return normalized;
   }
 
-  function readPrimarySession() {
-    const raw = localStorage.getItem(PRIMARY_SESSION_KEY);
-    return normalizeSession(safeParse(raw));
-  }
-
-  function readFallbackSession() {
-    const raw = localStorage.getItem(FALLBACK_SESSION_KEY);
-    return normalizeSession(safeParse(raw));
-  }
-
-  function persistUnifiedSession(session) {
-    if (!session) return;
-
-    const serialized = JSON.stringify(session);
-    localStorage.setItem(PRIMARY_SESSION_KEY, serialized);
-    localStorage.setItem(FALLBACK_SESSION_KEY, serialized);
-  }
-
-  function clearSchoolSessions() {
-    localStorage.removeItem(PRIMARY_SESSION_KEY);
-    localStorage.removeItem(FALLBACK_SESSION_KEY);
-  }
-
-  function getLoginUrl() {
-    const currentPath = window.location.pathname || "";
-    if (currentPath.includes("/app/school/")) {
-      return "../login.html";
-    }
-    if (currentPath.includes("/school/")) {
-      return "../login.html";
-    }
-    return "/app/login.html";
-  }
-
-  function redirectToLogin(reason) {
-    if (reason) {
-      console.warn("Session Guard:", reason);
-    }
-
-    clearSchoolSessions();
-
-    const loginUrl = getLoginUrl();
-
-    if (!window.location.pathname.endsWith("login.html")) {
-      window.location.href = loginUrl;
-    }
-  }
-
-  function isSchoolSession(session) {
-    return !!session &&
+  function isValidSchoolSession(session) {
+    return !!(
+      session &&
+      session.uid &&
       session.role === "school" &&
-      typeof session.schoolId === "string" &&
-      session.schoolId.trim() !== "";
+      session.schoolId &&
+      session.status !== "disabled"
+    );
   }
 
-  function getSchoolSession() {
-    let session = readPrimarySession();
-
-    if (!session) {
-      session = readFallbackSession();
-    }
-
-    if (!isSchoolSession(session)) {
-      return null;
-    }
-
-    persistUnifiedSession(session);
-    return session;
+  function saveUnifiedSession(session) {
+    localStorage.setItem("madaris_user_session", JSON.stringify(session));
+    localStorage.setItem("madaris_session", JSON.stringify(session));
   }
 
-  function requireSchoolSession(options = {}) {
-    const settings = {
-      redirectIfMissing: true,
-      onValid: null,
-      onInvalid: null,
-      ...options
-    };
-
-    const session = getSchoolSession();
-
-    if (!session) {
-      if (typeof settings.onInvalid === "function") {
-        settings.onInvalid();
-      }
-
-      if (settings.redirectIfMissing) {
-        redirectToLogin("لا توجد جلسة مدرسة صحيحة.");
-      }
-
-      return null;
-    }
-
-    if (typeof settings.onValid === "function") {
-      settings.onValid(session);
-    }
-
-    return session;
+  function redirectToLogin() {
+    window.location.href = LOGIN_URL;
   }
 
-  function getSchoolId() {
-    const session = getSchoolSession();
-    return session ? session.schoolId : "";
+  function exposeSession(session) {
+    window.MADARIS_SESSION = session;
+    window.MADARIS_SCHOOL_SESSION = session;
+    window.MADARIS_SCHOOL_ID = session.schoolId;
   }
 
-  function getSchoolName() {
-    const session = getSchoolSession();
-    return session ? (session.name || "") : "";
-  }
-
-  function fillSessionElements(session) {
-    if (!session) return;
-
-    const schoolIdNodes = document.querySelectorAll("[data-school-id]");
-    schoolIdNodes.forEach((node) => {
-      node.textContent = session.schoolId || "-";
-    });
-
-    const schoolNameNodes = document.querySelectorAll("[data-school-name]");
-    schoolNameNodes.forEach((node) => {
-      node.textContent = session.name || "حساب المدرسة";
-    });
-
-    const roleNodes = document.querySelectorAll("[data-school-role]");
-    roleNodes.forEach((node) => {
-      node.textContent = session.role || "-";
-    });
-
-    const statusNodes = document.querySelectorAll("[data-school-status]");
-    statusNodes.forEach((node) => {
-      node.textContent = session.status || "active";
-    });
-
-    const emailNodes = document.querySelectorAll("[data-school-email]");
-    emailNodes.forEach((node) => {
-      node.textContent = session.email || "-";
-    });
-}
-function bindLogoutButtons() {
-    const buttons = document.querySelectorAll(
-      "[data-action='logout'], .logout-btn, #logoutBtn, #btnLogout"
+  function fillSessionData(session) {
+    const nameEls = document.querySelectorAll(
+      "#schoolName, .school-name, [data-school-name]"
+    );
+    const schoolIdEls = document.querySelectorAll(
+      "#schoolId, .school-id, [data-school-id]"
+    );
+    const roleEls = document.querySelectorAll(
+      "#sessionRole, .session-role, [data-session-role]"
+    );
+    const statusEls = document.querySelectorAll(
+      "#sessionStatus, .session-status, [data-session-status]"
+    );
+    const ownerEls = document.querySelectorAll(
+      "#ownerName, .owner-name, [data-owner-name]"
     );
 
-    buttons.forEach((button) => {
-      if (button.dataset.sessionGuardBound === "true") return;
+    nameEls.forEach((el) => {
+      el.textContent = session.name || "لوحة المدرسة";
+    });
 
-      button.dataset.sessionGuardBound = "true";
-      button.addEventListener("click", function () {
-        clearSchoolSessions();
-        window.location.href = getLoginUrl();
+    schoolIdEls.forEach((el) => {
+      el.textContent = session.schoolId || "";
+    });
+
+    roleEls.forEach((el) => {
+      el.textContent = session.role || "";
+    });
+
+    statusEls.forEach((el) => {
+      el.textContent = session.status || "";
+    });
+
+    ownerEls.forEach((el) => {
+      el.textContent = session.name || "";
+    });
+  }
+
+  function wireLogoutButtons() {
+    const buttons = document.querySelectorAll(
+      "#logoutBtn, .logout-btn, [data-logout]"
+    );
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", function (event) {
+        event.preventDefault();
+        clearAllSessions();
+        redirectToLogin();
       });
     });
   }
 
-  function bindDashboardButtons() {
-    const buttons = document.querySelectorAll(
-      "[data-action='go-dashboard'], .go-dashboard-btn, #goDashboardBtn, #btnDashboard"
-    );
+  function boot() {
+    const rawSession = readStoredSession();
+    const session = normalizeSession(rawSession);
 
-    buttons.forEach((button) => {
-      if (button.dataset.sessionGuardBound === "true") return;
+    if (!isValidSchoolSession(session)) {
+      clearAllSessions();
+      redirectToLogin();
+      return;
+    }
 
-      button.dataset.sessionGuardBound = "true";
-      button.addEventListener("click", function () {
-        window.location.href = "index.html";
-      });
-    });
+    saveUnifiedSession(session);
+    exposeSession(session);
+    fillSessionData(session);
+    wireLogoutButtons();
+
+    document.documentElement.setAttribute("data-school-auth", "ready");
+    document.body.setAttribute("data-school-auth", "ready");
   }
 
-  function autoBoot() {
-    const session = requireSchoolSession({
-      redirectIfMissing: true
-    });
+  window.getMadarisSchoolSession = function () {
+    return window.MADARIS_SCHOOL_SESSION || null;
+  };
 
-    if (!session) return;
+  window.getMadarisSchoolId = function () {
+    return window.MADARIS_SCHOOL_ID || "";
+  };
 
-    fillSessionElements(session);
-    bindLogoutButtons();
-    bindDashboardButtons();
-
-    document.documentElement.setAttribute("data-school-session-ready", "true");
-    document.body.setAttribute("data-school-session-ready", "true");
-
-    window.dispatchEvent(
-      new CustomEvent("madaris:school-session-ready", {
-        detail: session
-      })
-    );
-  }
-
-  window.MadarisSchoolSession = {
-    PRIMARY_SESSION_KEY,
-    FALLBACK_SESSION_KEY,
-    safeParse,
-    normalizeSession,
-    readPrimarySession,
-    readFallbackSession,
-    persistUnifiedSession,
-    clearSchoolSessions,
-    getSchoolSession,
-    requireSchoolSession,
-    getSchoolId,
-    getSchoolName,
-    fillSessionElements,
-    redirectToLogin,
-    bindLogoutButtons,
-    bindDashboardButtons
+  window.logoutSchoolSession = function () {
+    clearAllSessions();
+    redirectToLogin();
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", autoBoot);
+    document.addEventListener("DOMContentLoaded", boot);
   } else {
-    autoBoot();
+    boot();
   }
 })();
