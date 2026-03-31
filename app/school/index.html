@@ -4,220 +4,419 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Madaris AI | لوحة المدرسة</title>
+
+  <script src="./session-guard.js"></script>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-1: #04142d;
+      --bg-2: #0a1f4d;
+      --card: rgba(26, 67, 160, 0.88);
+      --card-2: rgba(35, 79, 178, 0.88);
+      --line: rgba(255,255,255,0.08);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.82);
+      --cyan: #63d8ff;
+      --cyan-2: #58c4ea;
+      --pink: #ff5f8a;
+      --pink-2: #ff6d95;
+      --shadow: 0 18px 44px rgba(0,0,0,0.34);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: "Tahoma", "Arial", sans-serif;
+      background:
+        radial-gradient(circle at top, #11347f 0%, #081b44 32%, #031028 100%);
+      color: var(--text);
+    }
+
     body {
-      font-family: Tahoma, Arial, sans-serif;
-      background: linear-gradient(180deg, #07142f 0%, #03122a 100%);
-      color: #fff;
-      min-height: 100vh;
-      padding: 16px;
+      padding: 18px 14px 42px;
     }
-    .container { max-width: 760px; margin: 0 auto; }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
     .card {
-      background: linear-gradient(180deg, #214aa4 0%, #102e79 100%);
-      border-radius: 28px;
-      padding: 24px;
+      background: linear-gradient(180deg, var(--card-2), var(--card));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 18px;
       margin-bottom: 18px;
-      border: 1px solid rgba(255,255,255,.08);
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
     }
-    .title {
+
+    .hero-title {
+      margin: 0 0 14px;
       text-align: center;
-      font-size: 32px;
+      font-size: 30px;
+      line-height: 1.5;
       font-weight: 800;
-      margin-bottom: 12px;
     }
-    .text {
+
+    .hero-sub {
+      margin: 0 0 22px;
       text-align: center;
-      color: #dbe5ff;
-      line-height: 1.9;
+      color: var(--muted);
       font-size: 17px;
+      line-height: 2;
     }
+
     .school-name {
+      margin: 0 0 10px;
       text-align: center;
       font-size: 26px;
       font-weight: 800;
-      margin: 18px 0 8px;
+      line-height: 1.7;
     }
+
     .school-id {
+      margin: 0 0 16px;
       text-align: center;
-      color: #85e7ff;
-      font-size: 15px;
-      margin-bottom: 16px;
+      color: var(--cyan);
+      font-size: 16px;
       word-break: break-word;
     }
+
     .session-box {
-      background: rgba(255,255,255,.08);
-      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      border-radius: 22px;
       padding: 16px;
-      line-height: 1.9;
       text-align: center;
+      line-height: 2;
+      color: var(--muted);
+      margin-bottom: 18px;
       font-size: 16px;
-      color: #e5edff;
-      margin-bottom: 16px;
     }
-    .btn {
+
+    .primary-btn,
+    .danger-btn,
+    .section-link {
       display: block;
       width: 100%;
-      text-align: center;
+      border: 0;
       text-decoration: none;
-      border: none;
+      text-align: center;
       border-radius: 999px;
-      padding: 18px;
-      font-size: 22px;
+      padding: 20px 18px;
+      font-size: 18px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 12px;
+      transition: transform .15s ease, opacity .15s ease;
     }
-    .btn-primary {
-      background: linear-gradient(180deg, #65d7f7 0%, #4fc4ea 100%);
-      color: #fff;
+
+    .primary-btn:active,
+    .danger-btn:active,
+    .section-link:active {
+      transform: scale(0.985);
     }
-    .btn-danger {
-      background: linear-gradient(180deg, #ff6f93 0%, #f45377 100%);
-      color: #fff;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 28px;
-      font-weight: 800;
+
+    .primary-btn {
+      background: linear-gradient(180deg, #68d8fb, #59bcd9);
+      color: #ffffff;
       margin-bottom: 14px;
     }
-    .grid {
+
+    .danger-btn {
+      background: linear-gradient(180deg, var(--pink-2), var(--pink));
+      color: #ffffff;
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .sections-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 14px;
     }
-    .grid-item {
+
+    .section-link {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: #ffffff;
+      border-radius: 26px;
+      padding: 24px 18px;
+    }
+
+    .section-link strong {
       display: block;
-      text-decoration: none;
-      color: #fff;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 22px;
-      padding: 22px 18px;
-      min-height: 120px;
+      font-size: 19px;
+      margin-bottom: 8px;
     }
-    .grid-item h3 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-    .grid-item p {
-      color: #dbe5ff;
+
+    .section-link span {
+      display: block;
+      font-size: 15px;
       line-height: 1.8;
-      font-size: 16px;
+      color: var(--muted);
+      font-weight: 500;
     }
-    .mini-grid {
+
+    .summary-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
-      margin-top: 16px;
+      margin-top: 6px;
     }
-    .mini-card {
-      background: rgba(255,255,255,.05);
-      border-radius: 22px;
-      padding: 20px 14px;
+
+    .stat-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px 12px;
       text-align: center;
     }
-    .mini-number {
-      font-size: 42px;
+
+    .stat-number {
+      display: block;
+      font-size: 44px;
+      color: var(--cyan);
       font-weight: 900;
-      color: #63d3f5;
-      margin-bottom: 8px;
+      line-height: 1;
+      margin-bottom: 12px;
     }
-    .mini-label {
+
+    .stat-label {
+      color: #ffffff;
       font-size: 18px;
       line-height: 1.6;
+    }
+
+    .status-message {
+      text-align: center;
+      background: rgba(99,216,255,0.12);
+      border: 1px solid rgba(99,216,255,0.18);
+      color: #ffffff;
+      border-radius: 22px;
+      padding: 16px;
+      line-height: 1.9;
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 720px) {
+      body { padding: 26px 18px 56px; }
+      .sections-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="container">
 
-    <div class="card">
-      <div class="title">Madaris AI | لوحة المدرسة</div>
-      <div class="text">هذه الصفحة هي لوحة المدرسة الرئيسية.</div>
+    <section class="card">
+      <h1 class="hero-title">Madaris AI | لوحة المدرسة</h1>
+      <p class="hero-sub">
+        هذه الصفحة هي لوحة المدرسة الرئيسية. من هنا تنتقل بشكل واضح إلى عرض الجدول، إدارة الجدول،
+        طاقم المدرسة، الطلاب، الإعدادات باستخدام نفس جلسة المدرسة المحفوظة محلياً.
+      </p>
 
-      <div id="schoolName" class="school-name">جاري تحميل بيانات المدرسة...</div>
-      <div id="schoolIdText" class="school-id">schoolId: ...</div>
+      <h2 id="schoolName" class="school-name">جاري تحميل بيانات المدرسة...</h2>
+      <p id="schoolIdText" class="school-id">schoolId: ...</p>
 
       <div id="sessionBox" class="session-box">جاري فحص الجلسة...</div>
 
-      <a class="btn btn-primary" href="./schedule.html">عرض الجدول</a>
-      <button id="logoutBtn" class="btn btn-danger" type="button">خروج</button>
-    </div>
+      <a class="primary-btn" href="./schedule.html">عرض الجدول</a>
+      <button id="logoutBtn" class="danger-btn" type="button">خروج</button>
+    </section>
 
-    <div class="card">
-      <div class="section-title">أقسام لوحة المدرسة</div>
-      <div class="grid">
-        <a class="grid-item" href="./schedule.html">
-          <h3>عرض الجدول</h3>
-          <p>عرض الجدول الحالي للمدرسة.</p>
+    <section class="card">
+      <h3 class="section-title">أقسام لوحة المدرسة</h3>
+
+      <div class="sections-grid">
+        <a class="section-link" href="./schedule.html">
+          <strong>عرض الجدول</strong>
+          <span>عرض الجدول الحالي للمدرسة وربط الصفوف والمواد والمعلمين والحصص.</span>
         </a>
-        <a class="grid-item" href="./manage-schedule.html">
-          <h3>إدارة الجدول</h3>
-          <p>إضافة وتعديل وحذف الحصص.</p>
+
+        <a class="section-link" href="./manage-schedule.html">
+          <strong>إدارة الجدول</strong>
+          <span>إضافة وتعديل وحذف الحصص داخل المدرسة الحالية بشكل منظم.</span>
         </a>
-        <a class="grid-item" href="./staff.html">
-          <h3>طاقم المدرسة</h3>
-          <p>عرض المعلمين وربطهم بالمواد والصفوف.</p>
+
+        <a class="section-link" href="./staff.html">
+          <strong>طاقم المدرسة</strong>
+          <span>عرض المعلمين وربطهم بالمواد والصفوف والتمييز بين الذكي والبشري.</span>
         </a>
-        <a class="grid-item" href="./students.html">
-          <h3>الطلاب</h3>
-          <p>عرض الطلاب الحاليين داخل المدرسة.</p>
+
+        <a class="section-link" href="./students.html">
+          <strong>الطلاب</strong>
+          <span>عرض الطلاب الحاليين داخل المدرسة.</span>
         </a>
-        <a class="grid-item" href="./classes.html">
-          <h3>الصفوف</h3>
-          <p>عرض الصفوف الحالية الخاصة بالمدرسة.</p>
+
+        <a class="section-link" href="./classes.html">
+          <strong>الصفوف</strong>
+          <span>عرض الصفوف الحالية الخاصة بالمدرسة.</span>
         </a>
-        <a class="grid-item" href="./reports.html">
-          <h3>التقارير</h3>
-          <p>تقارير المدرسة وربط البيانات التشغيلية.</p>
+
+        <a class="section-link" href="./reports.html">
+          <strong>التقارير</strong>
+          <span>تقارير المدرسة وربط البيانات التشغيلية.</span>
         </a>
       </div>
-    </div>
+    </section>
 
-    <div class="card">
-      <div class="section-title">ملخص سريع</div>
-      <div class="mini-grid">
-        <div class="mini-card">
-          <div id="teachersCount" class="mini-number">0</div>
-          <div class="mini-label">إجمالي المعلمين</div>
+    <section class="card">
+      <h3 class="section-title">ملخص سريع</h3>
+      <div id="summaryStatus" class="status-message">جاري تحميل الملخص...</div>
+
+      <div class="summary-grid">
+        <div class="stat-card">
+          <span id="studentsCount" class="stat-number">0</span>
+          <div class="stat-label">إجمالي الطلاب</div>
         </div>
-        <div class="mini-card">
-          <div id="studentsCount" class="mini-number">0</div>
-          <div class="mini-label">إجمالي الطلاب</div>
+
+        <div class="stat-card">
+          <span id="teachersCount" class="stat-number">0</span>
+          <div class="stat-label">إجمالي المعلمين</div>
         </div>
-        <div class="mini-card">
-          <div id="attendanceRate" class="mini-number">0%</div>
-          <div class="mini-label">نسبة الحضور</div>
+
+        <div class="stat-card">
+          <span id="classesCount" class="stat-number">0</span>
+          <div class="stat-label">إجمالي الصفوف</div>
         </div>
-        <div class="mini-card">
-          <div id="classesCount" class="mini-number">0</div>
-          <div class="mini-label">إجمالي الصفوف</div>
+
+        <div class="stat-card">
+          <span id="scheduleCount" class="stat-number">0</span>
+          <div class="stat-label">إجمالي الحصص</div>
         </div>
       </div>
-    </div>
-
+    </section>
   </div>
 
-  <script src="./session-guard.js"></script>
-  <script>
-    const session = window.MadarisSession.requireSchoolSession();
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      getDoc,
+      getDocs,
+      query,
+      where
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    if (session) {
-      document.getElementById("schoolName").textContent = session.name || "لوحة المدرسة";
-      document.getElementById("schoolIdText").textContent = "schoolId: " + (session.schoolId || "-");
-      document.getElementById("sessionBox").innerHTML =
-        "تم العثور على جلسة المدرسة بنجاح.<br>" +
-        "الدور الحالي: <strong>" + (session.role || "-") + "</strong><br>" +
-        "الحالة: <strong>" + (session.status || "-") + "</strong>";
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      authDomain: "madaris-ai.firebaseapp.com",
+      projectId: "madaris-ai",
+      storageBucket: "madaris-ai.firebasestorage.app",
+      messagingSenderId: "915394447224",
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function readLocalSession() {
+      const rawPrimary = localStorage.getItem("madaris_user_session");
+      const rawLegacy = localStorage.getItem("madaris_session");
+      let parsed = null;
+
+      try {
+        if (rawPrimary) parsed = JSON.parse(rawPrimary);
+      } catch (_) {}
+
+      if (!parsed) {
+        try {
+          if (rawLegacy) parsed = JSON.parse(rawLegacy);
+        } catch (_) {}
+      }
+
+      if (!parsed || typeof parsed !== "object") return null;
+      if (!parsed.schoolId || parsed.role !== "school") return null;
+      return parsed;
     }
 
-    document.getElementById("logoutBtn").addEventListener("click", function () {
-      window.MadarisSession.logoutToLogin();
+    function safeText(value, fallback = "-") {
+      if (value === null || value === undefined || value === "") return fallback;
+      return String(value);
+    }
+
+    async function countDocsBySchool(collectionName, schoolId) {
+      try {
+        const q = query(collection(db, collectionName), where("schoolId", "==", schoolId));
+        const snap = await getDocs(q);
+        return snap.size;
+      } catch (error) {
+        console.error("Count error:", collectionName, error);
+        return 0;
+      }
+    }
+
+    async function loadPage() {
+      const session = readLocalSession();
+
+      if (!session) {
+        window.location.href = "../login.html";
+        return;
+      }
+
+      const schoolId = session.schoolId;
+      const schoolNameEl = document.getElementById("schoolName");
+      const schoolIdText = document.getElementById("schoolIdText");
+      const sessionBox = document.getElementById("sessionBox");
+
+      schoolNameEl.textContent = safeText(session.schoolName || session.name, "جاري تحميل المدرسة...");
+      schoolIdText.textContent = `schoolId: ${safeText(schoolId)}`;
+      sessionBox.innerHTML = `
+        تم العثور على جلسة المدرسة بنجاح.<br>
+        الدور الحالي: <strong>${safeText(session.role)}</strong><br>
+        الحالة: <strong>${safeText(session.status, "active")}</strong>
+      `;
+
+      try {
+        const schoolSnap = await getDoc(doc(db, "schools", schoolId));
+        if (schoolSnap.exists()) {
+          const schoolData = schoolSnap.data() || {};
+          schoolNameEl.textContent =
+            schoolData.name ||
+            schoolData.schoolName ||
+            session.schoolName ||
+            session.name ||
+            "المدرسة الحالية";
+        }
+      } catch (error) {
+        console.error("School load error:", error);
+      }
+
+      const [students, teachers, classes, schedules] = await Promise.all([
+        countDocsBySchool("students", schoolId),
+        countDocsBySchool("teachers", schoolId),
+        countDocsBySchool("classes", schoolId),
+        countDocsBySchool("schedules", schoolId)
+      ]);
+
+      document.getElementById("studentsCount").textContent = students;
+      document.getElementById("teachersCount").textContent = teachers;
+      document.getElementById("classesCount").textContent = classes;
+      document.getElementById("scheduleCount").textContent = schedules;
+
+      document.getElementById("summaryStatus").textContent =
+        `تم تحميل الملخص بنجاح للمدرسة الحالية.`;
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("madaris_user_session");
+      localStorage.removeItem("madaris_session");
+      window.location.href = "../login.html";
     });
+
+    loadPage();
   </script>
 </body>
 </html>
