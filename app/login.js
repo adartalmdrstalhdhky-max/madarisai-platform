@@ -1,5 +1,6 @@
 // ===============================
-// Madaris AI - Login System
+// Madaris AI - Unified Login System
+// File: app/login.js
 // Final Stable Version
 // ===============================
 
@@ -10,7 +11,6 @@ import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
 import {
   getFirestore,
   doc,
@@ -20,6 +20,7 @@ import {
 // ===============================
 // Firebase Config
 // ===============================
+
 const firebaseConfig = {
   apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
   authDomain: "madaris-ai.firebaseapp.com",
@@ -31,35 +32,41 @@ const firebaseConfig = {
 };
 
 // ===============================
-// Initialize Firebase
+// Init Firebase
 // ===============================
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 // ===============================
-// Internal State
-// ===============================
-let loginInProgress = false;
-let authCheckHandled = false;
-let redirectInProgress = false;
-
-// ===============================
 // Helpers
 // ===============================
-function setStatus(message) {
-  const statusEl = document.getElementById("login-status");
-  if (statusEl) {
-    statusEl.textContent = message || "";
-  }
-}
 
-function clearStoredSessions() {
+let loginInProgress = false;
+let autoRedirectHandled = false;
+
+function clearAllSessions() {
   localStorage.removeItem("madaris_user_session");
   localStorage.removeItem("madaris_session");
+  sessionStorage.removeItem("madaris_user_session");
+  sessionStorage.removeItem("madaris_session");
 }
 
-function safeParse(raw) {
+function saveUnifiedSession(session) {
+  localStorage.setItem("madaris_user_session", JSON.stringify(session));
+  localStorage.setItem("madaris_session", JSON.stringify(session));
+}
+
+function getStoredSession() {
+  const raw =
+    localStorage.getItem("madaris_user_session") ||
+    localStorage.getItem("madaris_session") ||
+    sessionStorage.getItem("madaris_user_session") ||
+    sessionStorage.getItem("madaris_session");
+
+  if (!raw) return null;
+
   try {
     return JSON.parse(raw);
   } catch (error) {
@@ -67,88 +74,10 @@ function safeParse(raw) {
   }
 }
 
-function normalizeSession(sessionLike) {
-  if (!sessionLike || typeof sessionLike !== "object") return null;
-
-  const normalized = {
-    uid: sessionLike.uid || "",
-    email: sessionLike.email || "",
-    name: sessionLike.name || "",
-    role: sessionLike.role || "",
-    roleLevel: sessionLike.roleLevel || "",
-    schoolId: sessionLike.schoolId || sessionLike.schoolid || "",
-    status: sessionLike.status || "active",
-    loginAt: sessionLike.loginAt || Date.now()
-  };
-
-  if (!normalized.uid) return null;
-  if (!normalized.role) return null;
-
-  return normalized;
-}
-
-function getStoredSession() {
-  const primary = normalizeSession(
-    safeParse(localStorage.getItem("madaris_user_session"))
-  );
-  if (primary) return primary;
-
-  const legacy = normalizeSession(
-    safeParse(localStorage.getItem("madaris_session"))
-  );
-  if (legacy) return legacy;
-
-  return null;
-}
-
-function saveSession(sessionLike) {
-  const session = normalizeSession(sessionLike);
-  if (!session) return null;
-
-  localStorage.setItem("madaris_user_session", JSON.stringify(session));
-  localStorage.setItem("madaris_session", JSON.stringify(session));
-
-  return session;
-}
-
-function getRedirectPath(role) {
-  if (role === "school") return "school/index.html";
-  if (role === "admin") return "admin/index.html";
-  if (role === "teacher") return "teacher/index.html";
-  if (role === "student") return "student/index.html";
-  return "dashboard.html";
-}
-
-function redirectByRole(role) {
-  if (redirectInProgress) return;
-  redirectInProgress = true;
-  window.location.href = getRedirectPath(role);
-}
-
-async function cleanLogout() {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.warn("signOut warning:", error);
-  }
-  clearStoredSessions();
-}
-
-async function buildSessionFromFirestore(firebaseUser) {
-  if (!firebaseUser || !firebaseUser.uid) return null;
-
-  const userRef = doc(db, "users", firebaseUser.uid);
-  const userSnap = await getDoc(userRef);
-
-  if (!userSnap.exists()) {
-    return null;
-  }
-
-  const userData = userSnap.data() || {};
-
-  const session = {
-    uid: firebaseUser.uid,
-    email: userData.email || firebaseUser.email || "",
+function buildSessionObject(uid, userData) {
+  return {
+    uid: uid,
+    email: userData.email || "",
     name: userData.name || "",
     role: userData.role || "",
     roleLevel: userData.roleLevel || "",
@@ -156,190 +85,242 @@ async function buildSessionFromFirestore(firebaseUser) {
     status: userData.status || "active",
     loginAt: Date.now()
   };
-
-  return saveSession(session);
 }
 
-async function restoreFromExistingFirebaseUser(firebaseUser) {
-  try {
-    const rebuiltSession = await buildSessionFromFirestore(firebaseUser);
+function isValidSession(session) {
+  return !!(
+    session &&
+    session.uid &&
+    session.role &&
+    session.status !== "disabled"
+  );
+}
 
-    if (!rebuiltSession) {
-      await cleanLogout();
-      setStatus("تعذر إعادة بناء الجلسة من قاعدة البيانات.");
-      return false;
-    }
-
-    setStatus("تم العثور على جلسة صالحة. جاري التحويل...");
-    redirectByRole(rebuiltSession.role);
-    return true;
-  } catch (error) {
-    console.error("restoreFromExistingFirebaseUser error:", error);
-    await cleanLogout();
-    setStatus("حدث خطأ أثناء استعادة الجلسة.");
-    return false;
+function redirectByRole(session) {
+  if (!session || !session.role) {
+    window.location.href = "dashboard.html";
+    return;
   }
+
+  if (session.role === "school") {
+    window.location.href = "school/index.html";
+    return;
+  }
+
+  if (session.role === "admin") {
+    window.location.href = "admin/index.html";
+    return;
+  }
+
+  if (session.role === "teacher") {
+    window.location.href = "teacher/index.html";
+    return;
+  }
+
+  if (session.role === "student") {
+    window.location.href = "student/index.html";
+    return;
+  }
+
+  window.location.href = "dashboard.html";
+}
+
+function setLoadingState(isLoading) {
+  const loginBtn = document.getElementById("loginBtn");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+
+  if (loginBtn) {
+    loginBtn.disabled = isLoading;
+    loginBtn.textContent = isLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول";
+  }
+
+  if (emailInput) emailInput.disabled = isLoading;
+  if (passwordInput) passwordInput.disabled = isLoading;
+}
+
+function showFriendlyError(error) {
+  const code = error?.code || "";
+  const message = error?.message || "";
+
+  console.error("Login error:", code, message, error);
+
+  if (
+    code === "auth/network-request-failed" ||
+    message.includes("network-request-failed")
+  ) {
+    alert("فشل الاتصال بالشبكة. تأكد من الإنترنت ثم حاول مرة أخرى.");
+    return;
+  }
+
+  if (code === "auth/invalid-credential") {
+    alert("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
+    return;
+  }
+
+  if (code === "auth/user-not-found") {
+    alert("هذا المستخدم غير موجود.");
+    return;
+  }
+
+  if (code === "auth/wrong-password") {
+    alert("كلمة المرور غير صحيحة.");
+    return;
+  }
+
+  if (code === "auth/too-many-requests") {
+    alert("تمت محاولات كثيرة. انتظر قليلًا ثم أعد المحاولة.");
+    return;
+  }
+
+  alert("فشل تسجيل الدخول. حاول مرة أخرى.");
+}
+
+async function buildSessionFromFirebaseUser(user) {
+  if (!user || !user.uid) {
+    throw new Error("لا يوجد مستخدم صالح في Firebase");
+  }
+
+  const uid = user.uid;
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    throw new Error("المستخدم غير موجود في قاعدة البيانات");
+  }
+
+  const userData = userSnap.data();
+  const session = buildSessionObject(uid, userData);
+
+  if (!isValidSession(session)) {
+    throw new Error("بيانات الجلسة غير مكتملة");
+  }
+
+  saveUnifiedSession(session);
+  return session;
 }
 
 // ===============================
-// Main Login Function
+// Main Login
 // ===============================
+
 window.loginUser = async function () {
   if (loginInProgress) return;
 
-  const emailEl = document.getElementById("email");
-  const passwordEl = document.getElementById("password");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
 
-  const email = emailEl ? emailEl.value.trim() : "";
-  const password = passwordEl ? passwordEl.value.trim() : "";
+  const email = emailInput ? emailInput.value.trim() : "";
+  const password = passwordInput ? passwordInput.value.trim() : "";
 
   if (!email || !password) {
-    alert("الرجاء إدخال البريد الإلكتروني وكلمة المرور.");
+    alert("الرجاء إدخال البريد الإلكتروني وكلمة المرور");
     return;
   }
 
   loginInProgress = true;
-  setStatus("جاري تسجيل الدخول...");
+  setLoadingState(true);
 
   try {
-    clearStoredSessions();
+    clearAllSessions();
 
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const firebaseUser = userCredential.user;
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    const user = credential.user;
 
-    if (!firebaseUser || !firebaseUser.uid) {
-      throw new Error("لم يتم استلام بيانات مستخدم صالحة.");
-    }
-
-    const session = await buildSessionFromFirestore(firebaseUser);
-
-    if (!session) {
-      await cleanLogout();
-      alert("تم تسجيل الدخول في Firebase لكن المستخدم غير موجود داخل قاعدة البيانات.");
-      setStatus("المستخدم غير موجود داخل Firestore.");
-      return;
-    }
-
-    setStatus("تم تسجيل الدخول بنجاح. جاري التحويل...");
-    redirectByRole(session.role);
+    const session = await buildSessionFromFirebaseUser(user);
+    redirectByRole(session);
   } catch (error) {
-    console.error("loginUser error:", error);
+    try {
+      await signOut(auth);
+    } catch (_) {}
 
-    const currentUser = auth.currentUser;
-
-    if (
-      error &&
-      error.code === "auth/network-request-failed" &&
-      currentUser &&
-      currentUser.uid
-    ) {
-      setStatus("حصلت مشكلة شبكة لكن توجد جلسة Firebase. جاري الفحص...");
-      const restored = await restoreFromExistingFirebaseUser(currentUser);
-      if (restored) return;
-    }
-
-    if (error && error.code === "auth/invalid-credential") {
-      alert("فشل تسجيل الدخول: البريد الإلكتروني أو كلمة المرور غير صحيحة.");
-      setStatus("بيانات الدخول غير صحيحة.");
-      return;
-    }
-
-    if (error && error.code === "auth/user-not-found") {
-      alert("المستخدم غير موجود.");
-      setStatus("المستخدم غير موجود.");
-      return;
-    }
-
-    if (error && error.code === "auth/wrong-password") {
-      alert("كلمة المرور غير صحيحة.");
-      setStatus("كلمة المرور غير صحيحة.");
-      return;
-}
-    if (error && error.code === "auth/too-many-requests") {
-      alert("عدد المحاولات كبير. انتظر قليلاً ثم أعد المحاولة.");
-      setStatus("عدد المحاولات كبير.");
-      return;
-    }
-
-    if (error && error.code === "auth/network-request-failed") {
-      alert("فشل تسجيل الدخول بسبب مشكلة في الشبكة. تأكد من الإنترنت ثم أعد المحاولة.");
-      setStatus("فشل الاتصال بالشبكة.");
-      return;
-    }
-
-    alert("فشل تسجيل الدخول: " + (error.message || "خطأ غير معروف"));
-    setStatus("حدث خطأ أثناء تسجيل الدخول.");
+    clearAllSessions();
+    showFriendlyError(error);
   } finally {
     loginInProgress = false;
+    setLoadingState(false);
   }
 };
 
 // ===============================
-// Auto Session Check
+// Auto Redirect Only If Session Exists
 // ===============================
-onAuthStateChanged(auth, async (firebaseUser) => {
-  if (authCheckHandled) return;
-  authCheckHandled = true;
+
+async function handleAuthenticatedUser(user) {
+  if (autoRedirectHandled) return;
+  if (!user) return;
+
+  const currentPage = window.location.pathname.split("/").pop() || "";
+  if (currentPage !== "login.html") return;
+
+  autoRedirectHandled = true;
 
   try {
-    const path = window.location.pathname || "";
-    const isLoginPage =
-      path.endsWith("/app/login.html") ||
-      path.endsWith("app/login.html") ||
-      path.endsWith("/login.html") ||
-      path.endsWith("login.html");
-
-    if (!isLoginPage) {
-      return;
-    }
-
-    if (!firebaseUser) {
-      clearStoredSessions();
-      setStatus("لا توجد جلسة حالية. الرجاء تسجيل الدخول.");
-      return;
-    }
-
     const storedSession = getStoredSession();
 
     if (
       storedSession &&
-      storedSession.uid &&
-      storedSession.uid === firebaseUser.uid &&
-      storedSession.role
+      isValidSession(storedSession) &&
+      storedSession.uid === user.uid
     ) {
-      setStatus("تم العثور على جلسة محفوظة. جاري التحويل...");
-      redirectByRole(storedSession.role);
+      saveUnifiedSession(storedSession);
+      redirectByRole(storedSession);
       return;
     }
 
-    if (
-      storedSession &&
-      storedSession.uid &&
-      firebaseUser.uid &&
-      storedSession.uid !== firebaseUser.uid
-    ) {
-      clearStoredSessions();
-    }
-
-    setStatus("تم العثور على جلسة Firebase. جاري إعادة بناء الجلسة...");
-    const rebuiltSession = await buildSessionFromFirestore(firebaseUser);
-
-    if (!rebuiltSession) {
-      await cleanLogout();
-      setStatus("تعذر إعادة بناء الجلسة. تم تنظيف الجلسة القديمة.");
-      return;
-    }
-
-    redirectByRole(rebuiltSession.role);
+    const session = await buildSessionFromFirebaseUser(user);
+    redirectByRole(session);
   } catch (error) {
-    console.error("onAuthStateChanged error:", error);
-    setStatus("حدث خطأ أثناء فحص الجلسة.");
+    console.error("Auto redirect error:", error);
+
+    try {
+      await signOut(auth);
+    } catch (_) {}
+
+    clearAllSessions();
+    autoRedirectHandled = false;
   }
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    autoRedirectHandled = false;
+    return;
+  }
+
+  await handleAuthenticatedUser(user);
 });
 
 // ===============================
-// Optional Helper
+// Logout Helper
 // ===============================
-window.goHome = function () {
-  window.location.href = "../index.html";
+
+window.logoutMadaris = async function () {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+
+  clearAllSessions();
+  window.location.href = "login.html";
 };
+
+// ===============================
+// Enter Key Support
+// ===============================
+
+window.addEventListener("DOMContentLoaded", () => {
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+
+  function onEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      window.loginUser();
+    }
+  }
+
+  if (emailInput) emailInput.addEventListener("keydown", onEnter);
+  if (passwordInput) passwordInput.addEventListener("keydown", onEnter);
+});
