@@ -1,12 +1,11 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getAuth,
-  signInWithEmailAndPassword,
-  signOut,
   setPersistence,
-  browserLocalPersistence
+  browserLocalPersistence,
+  signInWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
 import {
   getFirestore,
   doc,
@@ -23,216 +22,191 @@ const firebaseConfig = {
   measurementId: "G-SC7VE6F20S"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
+const loginStatus = document.getElementById("loginStatus");
 
-function safeAlert(message) {
-  window.alert(message);
+let isSubmitting = false;
+
+function setStatus(message) {
+  if (loginStatus) loginStatus.textContent = message;
 }
 
-function setButtonLoading(isLoading) {
-  if (!loginBtn) return;
-
-  if (isLoading) {
-    loginBtn.disabled = true;
-    loginBtn.textContent = "جاري تسجيل الدخول...";
-  } else {
-    loginBtn.disabled = false;
-    loginBtn.textContent = "تسجيل الدخول";
-  }
+function saveUnifiedSession(session) {
+  const json = JSON.stringify(session);
+  localStorage.setItem("madaris_user_session", json);
+  localStorage.setItem("madaris_session", json);
 }
 
-function clearSavedSession() {
-  try {
-    localStorage.removeItem("madaris_user_session");
-    localStorage.removeItem("madaris_session");
-    sessionStorage.removeItem("madaris_user_session");
-    sessionStorage.removeItem("madaris_session");
-  } catch (error) {
-    console.warn("تعذر حذف الجلسة المحلية:", error);
-  }
+function clearUnifiedSession() {
+  localStorage.removeItem("madaris_user_session");
+  localStorage.removeItem("madaris_session");
 }
 
-async function resetLoginPageState() {
-  clearSavedSession();
+function readExistingSession() {
+  const raw =
+    localStorage.getItem("madaris_user_session") ||
+    localStorage.getItem("madaris_session");
+
+  if (!raw) return null;
 
   try {
-    await signOut(auth);
-  } catch (error) {
-    console.warn("لا توجد جلسة Firebase قديمة أو تعذر تسجيل الخروج المسبق:", error);
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return null;
+    if (!parsed.schoolId || !parsed.role) return null;
+    return parsed;
+  } catch {
+    return null;
   }
-}
-
-function normalizeRole(role) {
-  return String(role || "").trim().toLowerCase();
-}
-
-function normalizeStatus(status) {
-  return String(status || "active").trim().toLowerCase();
 }
 
 function getRedirectPathByRole(role) {
-  const normalizedRole = normalizeRole(role);
-
-  if (normalizedRole === "school") return "./school/index.html";
-  if (normalizedRole === "admin") return "./admin/index.html";
-  if (normalizedRole === "teacher") return "./teacher/index.html";
-  if (normalizedRole === "student") return "./student/index.html";
-
-  return "./dashboard.html";
+  switch (role) {
+    case "school":
+      return "./school/index.html";
+    case "admin":
+      return "./admin/index.html";
+    case "teacher":
+      return "./teacher/index.html";
+    case "student":
+      return "./student/index.html";
+    default:
+      return "./dashboard.html";
+  }
 }
 
-function buildLegacySession(session) {
+async function loadUserProfile(uid) {
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    throw new Error("المستخدم غير موجود داخل قاعدة البيانات");
+  }
+
+  return userSnap.data();
+}
+
+function buildSession(uid, userData) {
   return {
-    uid: session.uid,
-    email: session.email,
-    name: session.name,
-    role: session.role,
-    roleLevel: session.roleLevel,
-    schoolId: session.schoolId,
-    status: session.status,
-    loginAt: session.loginAt
+    uid: uid || "",
+    email: userData.email || "",
+    name: userData.name || "",
+    role: userData.role || "",
+    roleLevel: userData.roleLevel || "",
+    schoolId: userData.schoolId || "",
+    status: userData.status || "active",
+    created: userData.created || null,
+    loginAt: Date.now()
   };
 }
 
-function mapFirebaseError(error) {
-  const code = error?.code || "";
-
-  if (code === "auth/invalid-email") {
-    return "البريد الإلكتروني غير صحيح.";
+async function redirectIfAlreadyLoggedIn() {
+  const session = readExistingSession();
+  if (!session) {
+    setStatus("أدخل البريد وكلمة المرور ثم اضغط تسجيل الدخول.");
+    return;
   }
 
-  if (code === "auth/missing-password") {
-    return "أدخل كلمة المرور.";
+  if (!session.role || !session.schoolId) {
+    clearUnifiedSession();
+    setStatus("تم تنظيف جلسة قديمة غير مكتملة.");
+    return;
   }
 
-  if (
-    code === "auth/invalid-credential" ||
-    code === "auth/user-not-found" ||
-    code === "auth/wrong-password"
-  ) {
-    return "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
-  }
-
-  if (code === "auth/too-many-requests") {
-    return "تمت محاولات كثيرة. انتظر قليلًا ثم حاول مرة أخرى.";
-  }
-
-  if (code === "auth/network-request-failed") {
-    return "فشل الاتصال بالشبكة. تأكد من الإنترنت ثم أعد المحاولة.";
-  }
-
-  return error?.message || "حدث خطأ غير متوقع أثناء تسجيل الدخول.";
+  setStatus("تم العثور على جلسة صحيحة. جاري التحويل...");
+  window.location.replace(getRedirectPathByRole(session.role));
 }
 
-window.loginUser = async function loginUser() {
-  const email = emailInput?.value?.trim() || "";
-  const password = passwordInput?.value || "";
+async function loginUser() {
+  if (isSubmitting) return;
 
-  if (!email) {
-    safeAlert("أدخل البريد الإلكتروني أولًا.");
+  const email = (emailInput?.value || "").trim();
+  const password = (passwordInput?.value || "").trim();
+
+  if (!email || !password) {
+    setStatus("الرجاء إدخال البريد وكلمة المرور.");
+    alert("الرجاء إدخال البريد وكلمة المرور");
     return;
   }
 
-  if (!password) {
-    safeAlert("أدخل كلمة المرور أولًا.");
-    return;
-  }
-
-  setButtonLoading(true);
+  isSubmitting = true;
+  loginBtn.disabled = true;
+  setStatus("جاري تسجيل الدخول...");
 
   try {
-    clearSavedSession();
+    clearUnifiedSession();
 
     await setPersistence(auth, browserLocalPersistence);
 
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    const uid = user.uid;
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    const uid = credential.user.uid;
 
-    const userRef = doc(db, "users", uid);
-    const userSnap = await getDoc(userRef);
+    const userData = await loadUserProfile(uid);
+    const session = buildSession(uid, userData);
 
-    if (!userSnap.exists()) {
+    if (!session.role) {
       await signOut(auth);
-      clearSavedSession();
-      throw new Error("هذا المستخدم غير موجود داخل مجموعة users في Firestore.");
+      clearUnifiedSession();
+      throw new Error("حقل role غير موجود داخل وثيقة المستخدم");
     }
 
-    const userData = userSnap.data() || {};
-    const role = normalizeRole(userData.role);
-    const status = normalizeStatus(userData.status);
-
-    if (!role) {
+    if (session.role === "school" && !session.schoolId) {
       await signOut(auth);
-      clearSavedSession();
-      throw new Error("حساب المستخدم لا يحتوي على role داخل Firestore.");
+      clearUnifiedSession();
+      throw new Error("حقل schoolId غير موجود داخل وثيقة المدرسة");
     }
 
-    if (status !== "active") {
-      await signOut(auth);
-      clearSavedSession();
-      throw new Error("هذا الحساب غير نشط حاليًا.");
-    }
+    saveUnifiedSession(session);
 
-    const session = {
-      uid,
-      email: userData.email || user.email || email,
-      name: userData.name || "",
-      role,
-      roleLevel: userData.roleLevel || "",
-      schoolId: userData.schoolId || "",
-      status,
-      loginAt: Date.now()
-    };
-    localStorage.setItem("madaris_user_session", JSON.stringify(session));
-    localStorage.setItem("madaris_session", JSON.stringify(buildLegacySession(session)));
-
-    sessionStorage.setItem("madaris_user_session", JSON.stringify(session));
-    sessionStorage.setItem("madaris_session", JSON.stringify(buildLegacySession(session)));
-
-    const redirectPath = getRedirectPathByRole(role);
-    window.location.replace(redirectPath);
+    setStatus("تم تسجيل الدخول بنجاح. جاري التحويل...");
+    window.location.replace(getRedirectPathByRole(session.role));
   } catch (error) {
     console.error("Login error:", error);
-    clearSavedSession();
-    safeAlert("فشل تسجيل الدخول: " + mapFirebaseError(error));
+    clearUnifiedSession();
+
+    let message = "فشل تسجيل الدخول";
+    const code = error?.code || "";
+    const raw = error?.message || "";
+
+    if (code === "auth/invalid-credential") {
+      message = "البريد أو كلمة المرور غير صحيحة";
+    } else if (code === "auth/invalid-email") {
+      message = "صيغة البريد الإلكتروني غير صحيحة";
+    } else if (code === "auth/user-disabled") {
+      message = "تم تعطيل هذا الحساب";
+    } else if (code === "auth/too-many-requests") {
+      message = "تمت محاولات كثيرة. حاول لاحقًا";
+    } else if (code === "auth/network-request-failed") {
+      message = "مشكلة في الإنترنت أو الاتصال بالشبكة";
+    } else if (raw) {
+      message = raw;
+    }
+
+    setStatus(message);
+    alert(message);
   } finally {
-    setButtonLoading(false);
+    isSubmitting = false;
+    loginBtn.disabled = false;
   }
-};
+}
+
+window.loginUser = loginUser;
+
+loginBtn?.addEventListener("click", loginUser);
+
+emailInput?.addEventListener("input", () => {
+  setStatus("أدخل كلمة المرور ثم اضغط تسجيل الدخول.");
+});
+
+passwordInput?.addEventListener("input", () => {
+  setStatus("اضغط تسجيل الدخول الآن.");
+});
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await resetLoginPageState();
-
-  if (emailInput) {
-    emailInput.focus();
-  }
-
-  if (passwordInput) {
-    passwordInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        window.loginUser();
-      }
-    });
-  }
-
-  if (emailInput) {
-    emailInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        if (passwordInput) {
-          passwordInput.focus();
-        } else {
-          window.loginUser();
-        }
-      }
-    });
-  }
+  await redirectIfAlreadyLoggedIn();
 });
