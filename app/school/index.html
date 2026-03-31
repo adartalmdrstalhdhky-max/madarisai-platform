@@ -1,564 +1,296 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  />
-  <title>Madaris AI | لوحة المدرسة</title>
 
-  <style>
-    :root {
-      --bg-1: #06142b;
-      --bg-2: #0b2452;
-      --card: rgba(18, 52, 116, 0.92);
-      --card-2: rgba(22, 63, 139, 0.88);
-      --line: rgba(255, 255, 255, 0.08);
-      --text: #f4f7ff;
-      --muted: #d8e4ff;
-      --accent: #61dafb;
-      --accent-2: #70e1ff;
-      --success: #39d66b;
-      --danger: #ff5c7a;
-      --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
-      --max-width: 1120px;
-    }
+<meta charset="UTF-8">
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      font-family: "Tahoma", "Arial", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(97, 218, 251, 0.10), transparent 30%),
-        linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
-    }
+<title>Madaris AI | لوحة المدرسة</title>
 
-    body {
-      padding: 18px 14px 40px;
-    }
+<style>
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+body{
+margin:0;
+font-family:tahoma;
+background:linear-gradient(180deg,#071a3a,#06142b);
+color:white;
+padding:15px;
+}
 
-    .page {
-      width: 100%;
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
+.container{
+max-width:900px;
+margin:auto;
+}
 
-    .card {
-      background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-    }
+.card{
+background:#0b2452;
+padding:20px;
+border-radius:18px;
+margin-bottom:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
 
-    .hero {
-      padding: 28px 18px;
-      margin-bottom: 18px;
-      text-align: center;
-    }
+.title{
+font-size:28px;
+font-weight:bold;
+margin-bottom:10px;
+}
 
-    .hero-title {
-      margin: 0 0 14px;
-      line-height: 1.35;
-      font-size: clamp(32px, 7vw, 64px);
-      font-weight: 800;
-    }
+.subtitle{
+opacity:.8;
+line-height:1.8;
+}
 
-    .hero-subtitle {
-      margin: 0 auto 18px;
-      max-width: 860px;
-      color: var(--muted);
-      line-height: 2;
-      font-size: clamp(18px, 3.8vw, 30px);
-    }
+.button{
+display:block;
+width:100%;
+padding:18px;
+margin-top:12px;
+border-radius:40px;
+border:none;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
 
-    .school-name {
-      margin: 0;
-      font-size: clamp(26px, 5.5vw, 44px);
-      font-weight: 800;
-      color: #ffffff;
-    }
+.btn-primary{
+background:#58c7e6;
+color:white;
+}
 
-    .school-id {
-      margin: 14px 0 0;
-      color: var(--accent-2);
-      font-size: clamp(14px, 3.8vw, 22px);
-      word-break: break-word;
-      line-height: 1.9;
-    }
+.btn-danger{
+background:#ff5a7b;
+color:white;
+}
 
-    .status-box {
-      margin-top: 18px;
-      padding: 16px 14px;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(9, 28, 68, 0.42);
-      color: #eaf3ff;
-      line-height: 1.9;
-      font-size: clamp(15px, 3.8vw, 21px);
-    }
+.section-title{
+font-size:24px;
+margin-bottom:10px;
+}
 
-    .status-box.error {
-      background: rgba(110, 18, 45, 0.40);
-      border-color: rgba(255, 92, 122, 0.28);
-    }
+.grid{
+display:grid;
+grid-template-columns:1fr;
+gap:15px;
+}
 
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin: 18px 0;
-    }
+.action{
+background:#0f2f68;
+padding:18px;
+border-radius:16px;
+cursor:pointer;
+}
 
-    .toolbar .btn {
-      width: 100%;
-    }
+.action-title{
+font-size:20px;
+font-weight:bold;
+}
 
-    .btn {
-      border: none;
-      outline: none;
-      cursor: pointer;
-      border-radius: 999px;
-      padding: 18px 16px;
-      font-size: clamp(19px, 4.3vw, 26px);
-      font-weight: 800;
-      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-height: 64px;
-    }
+.action-desc{
+opacity:.8;
+margin-top:5px;
+}
 
-    .btn:active {
-      transform: scale(0.985);
-    }
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-top:15px;
+}
 
-    .btn-primary {
-      background: linear-gradient(135deg, #5ccff4 0%, #6de4ff 100%);
-      color: #ffffff;
-    }
+.stat{
+background:#0f2f68;
+padding:18px;
+border-radius:14px;
+text-align:center;
+}
 
-    .btn-danger {
-      background: linear-gradient(135deg, #ff6685 0%, #ff5c7a 100%);
-      color: #ffffff;
-    }
+.stat-number{
+font-size:28px;
+color:#5ddcff;
+font-weight:bold;
+}
 
-    .btn-secondary {
-      background: linear-gradient(135deg, rgba(97, 218, 251, 0.15), rgba(97, 218, 251, 0.08));
-      color: #ffffff;
-      border: 1px solid rgba(97, 218, 251, 0.20);
-    }
+</style>
 
-    .section {
-      padding: 22px 16px;
-      margin-bottom: 18px;
-    }
-
-    .section-title {
-      margin: 0 0 12px;
-      font-size: clamp(28px, 5.8vw, 42px);
-      font-weight: 800;
-      line-height: 1.5;
-    }
-
-    .section-text {
-      margin: 0;
-      color: var(--muted);
-      line-height: 2;
-      font-size: clamp(16px, 3.9vw, 22px);
-    }
-
-    .actions-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .action-card {
-      display: block;
-      padding: 22px 16px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      background: rgba(10, 34, 84, 0.34);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
-      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-    }
-
-    .action-card:active {
-      transform: scale(0.99);
-    }
-
-    .action-card.disabled {
-      opacity: 0.55;
-      pointer-events: none;
-    }
-
-    .action-title {
-      margin: 0 0 10px;
-      font-size: clamp(24px, 5vw, 34px);
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.45;
-    }
-
-    .action-desc {
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(15px, 3.7vw, 21px);
-      line-height: 1.95;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .stat-card {
-      padding: 20px 14px;
-      text-align: center;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      background: rgba(10, 34, 84, 0.34);
-    }
-
-    .stat-value {
-      margin: 0 0 10px;
-      color: var(--accent);
-      font-size: clamp(34px, 9vw, 58px);
-      font-weight: 900;
-      line-height: 1.1;
-    }
-
-    .stat-label {
-      margin: 0;
-      color: #f6f9ff;
-      font-size: clamp(16px, 3.8vw, 22px);
-      line-height: 1.8;
-    }
-
-    .footer-note {
-      text-align: center;
-      color: var(--muted);
-      line-height: 2;
-      font-size: clamp(15px, 3.7vw, 21px);
-      padding: 4px 10px 0;
-    }
-
-    @media (min-width: 760px) {
-      body {
-        padding: 24px 18px 48px;
-      }
-
-      .toolbar {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .actions-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (min-width: 980px) {
-      .actions-grid {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-  </style>
 </head>
+
 <body>
-  <main class="page">
-    <section class="card hero">
-      <h1 class="hero-title">Madaris AI | لوحة المدرسة</h1>
 
-      <p class="hero-subtitle">
-        هذه الصفحة هي لوحة المدرسة الرئيسية. من هنا تنتقل بشكل واضح إلى عرض
-        الجدول، إدارة الجدول، طاقم المدرسة، الطلاب، والإعدادات باستخدام نفس
-        جلسة المدرسة المحفوظة محليًا.
-      </p>
+<div class="container">
 
-      <h2 id="schoolName" class="school-name">جاري تحميل بيانات المدرسة...</h2>
-      <p id="schoolIdText" class="school-id">schoolId = ...</p>
+<div class="card">
 
-      <div id="sessionStatus" class="status-box">
-        جاري فحص جلسة المدرسة الحالية...
-      </div>
+<div class="title">
+Madaris AI | لوحة المدرسة
+</div>
 
-      <div class="toolbar">
-        <a class="btn btn-primary" href="schedule.html">عرض الجدول</a>
-        <button id="logoutBtn" class="btn btn-danger" type="button">خروج</button>
-      </div>
-    </section>
+<div class="subtitle">
+هذه الصفحة هي لوحة المدرسة الرئيسية
+</div>
 
-    <section class="card section">
-      <h3 class="section-title">أقسام لوحة المدرسة</h3>
-      <p class="section-text">
-        تم ترتيب الأقسام التالية لتكون واضحة ومباشرة داخل الجوال، حتى لا يحصل
-        خلط بين صفحة عرض الجدول وصفحة إدارة الجدول.
-      </p>
+<h2 data-school-name>
+جاري التحميل...
+</h2>
 
-      <div class="actions-grid">
-        <a class="action-card" href="schedule.html">
-          <h4 class="action-title">عرض الجدول</h4>
-          <p class="action-desc">
-            عرض الربط الحالي بين الصفوف والمواد والمعلمين والحصص داخل المدرسة
-            الحالية فقط.
-          </p>
-        </a>
+<div style="opacity:.7">
+schoolId :
+<span data-school-id></span>
+</div>
 
-        <a class="action-card" href="manage-schedule.html">
-          <h4 class="action-title">إدارة الجدول</h4>
-          <p class="action-desc">
-            إضافة حصة جديدة، تعديل حصة موجودة، حذف الحصص، وتجهيز الجدول المدرسي
-            بصورة منظمة.
-          </p>
-        </a>
+<button class="button btn-primary"
+onclick="location.href='schedule.html'">
+عرض الجدول
+</button>
 
-        <a class="action-card" href="staff.html">
-          <h4 class="action-title">طاقم المدرسة</h4>
-          <p class="action-desc">
-            عرض جميع المعلمين وربطهم بالمواد والصفوف مع التمييز بين المعلم الذكي
-            والمعلم البشري.
-          </p>
-        </a>
+<button class="button btn-danger"
+data-action="logout">
+خروج
+</button>
 
-        <a class="action-card" href="students.html">
-          <h4 class="action-title">الطلاب</h4>
-          <p class="action-desc">
-            الانتقال إلى صفحة الطلاب الخاصة بالمدرسة الحالية عند تجهيز بياناتهم
-            وربطها الكامل.
-          </p>
-        </a>
+</div>
 
-        <a class="action-card" href="settings.html">
-          <h4 class="action-title">الإعدادات</h4>
-          <p class="action-desc">
-            إدارة إعدادات المدرسة والحسابات والربط العام الخاص بجلسة هذه
-            المدرسة.
-          </p>
-        </a>
 
-        <a class="action-card" href="../login.html">
-          <h4 class="action-title">تسجيل الدخول</h4>
-          <p class="action-desc">
-            الرجوع إلى صفحة الدخول الرئيسية في حال أردت تبديل الحساب أو بدء جلسة
-            جديدة.
-          </p>
-        </a>
-      </div>
-    </section><section class="card section">
-      <h3 class="section-title">ملخص سريع</h3>
-      <p class="section-text">
-        الأرقام التالية تُقرأ من جلسة المدرسة المحلية فقط، لذلك هي أرقام
-        آمنة وثابتة حتى لو لم نربط هنا قراءة Firestore التفصيلية.
-      </p>
+<div class="card">
 
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div id="studentsCount" class="stat-value">0</div>
-          <p class="stat-label">إجمالي الطلاب</p>
-        </div>
+<div class="section-title">
+أقسام لوحة المدرسة
+</div>
 
-        <div class="stat-card">
-          <div id="teachersCount" class="stat-value">0</div>
-          <p class="stat-label">إجمالي المعلمين</p>
-        </div>
+<div class="grid">
 
-        <div class="stat-card">
-          <div id="classesCount" class="stat-value">0</div>
-          <p class="stat-label">إجمالي الصفوف</p>
-        </div>
+<div class="action"
+onclick="location.href='schedule.html'">
 
-        <div class="stat-card">
-          <div id="attendanceRate" class="stat-value">0%</div>
-          <p class="stat-label">نسبة الحضور</p>
-        </div>
-      </div>
-    </section>
+<div class="action-title">
+عرض الجدول
+</div>
 
-    <p class="footer-note">
-      إذا لم تظهر المدرسة هنا، فافتح صفحة تسجيل الدخول من جديد وسجل الدخول
-      بحساب مدرسة حتى يتم حفظ <strong>schoolId</strong> داخل الجلسة المحلية
-      ثم تُفتح هذه الصفحة بشكل صحيح.
-    </p>
-  </main>
+<div class="action-desc">
+عرض الجدول الحالي
+</div>
 
-  <script>
-    (function () {
-      const schoolNameEl = document.getElementById("schoolName");
-      const schoolIdTextEl = document.getElementById("schoolIdText");
-      const sessionStatusEl = document.getElementById("sessionStatus");
-      const logoutBtn = document.getElementById("logoutBtn");
+</div>
 
-      const studentsCountEl = document.getElementById("studentsCount");
-      const teachersCountEl = document.getElementById("teachersCount");
-      const classesCountEl = document.getElementById("classesCount");
-      const attendanceRateEl = document.getElementById("attendanceRate");
 
-      function safeParse(value) {
-        try {
-          return JSON.parse(value);
-        } catch (error) {
-          return null;
-        }
-      }
+<div class="action"
+onclick="location.href='manage-schedule.html'">
 
-      function normalizeSession(rawSession) {
-        if (!rawSession || typeof rawSession !== "object") return null;
+<div class="action-title">
+إدارة الجدول
+</div>
 
-        const schoolId =
-          rawSession.schoolId ||
-          rawSession.schoolID ||
-          rawSession.schoolid ||
-          "";
+<div class="action-desc">
+إضافة وتعديل الحصص
+</div>
 
-        const role = rawSession.role || "";
-        const roleLevel = rawSession.roleLevel || "";
+</div>
 
-        return {
-          uid: rawSession.uid || "",
-          email: rawSession.email || "",
-          name: rawSession.name || "",
-          role,
-          roleLevel,
-          schoolId,
-          status: rawSession.status || "active",
-          studentsCount: Number(rawSession.studentsCount || 0),
-          teachersCount: Number(rawSession.teachersCount || 0),
-          classesCount: Number(rawSession.classesCount || 0),
-          attendanceRate:
-            rawSession.attendanceRate !== undefined &&
-            rawSession.attendanceRate !== null
-              ? String(rawSession.attendanceRate)
-              : "0",
-          schoolName:
-            rawSession.schoolName ||
-            rawSession.name ||
-            "مدرسة بدون اسم"
-        };
-      }
 
-      function getSchoolSession() {
-        const currentSession = safeParse(
-          localStorage.getItem("madaris_user_session")
-        );
-        const legacySession = safeParse(localStorage.getItem("madaris_session"));
+<div class="action"
+onclick="location.href='staff.html'">
 
-        const session = normalizeSession(currentSession) || normalizeSession(legacySession);
+<div class="action-title">
+طاقم المدرسة
+</div>
 
-        if (!session) return null;
+<div class="action-desc">
+عرض المعلمين
+</div>
 
-        if (!session.schoolId) {
-          return {
-            ...session,
-            invalid: true
-          };
-        }
+</div>
 
-        if (session.role !== "school") {
-          if (session.roleLevel !== "owner" && session.roleLevel !== "school") {
-            return {
-              ...session,
-              invalid: true
-            };
-          }
-        }
 
-        return session;
-      }
+<div class="action"
+onclick="location.href='students.html'">
 
-      function setStats(session) {
-        studentsCountEl.textContent = Number.isFinite(session.studentsCount)
-          ? session.studentsCount
-          : 0;
+<div class="action-title">
+الطلاب
+</div>
 
-        teachersCountEl.textContent = Number.isFinite(session.teachersCount)
-          ? session.teachersCount
-          : 0;
+<div class="action-desc">
+عرض الطلاب
+</div>
 
-        classesCountEl.textContent = Number.isFinite(session.classesCount)
-          ? session.classesCount
-          : 0;
+</div>
 
-        const attendanceText = String(session.attendanceRate || "0").replace("%", "");
-        attendanceRateEl.textContent = `${attendanceText}%`;
-      }
 
-      function showValidSession(session) {
-        schoolNameEl.textContent = session.schoolName || "مدرسة بدون اسم";
-        schoolIdTextEl.textContent = `schoolId = ${session.schoolId}`;
+<div class="action"
+onclick="location.href='classes.html'">
 
-        sessionStatusEl.classList.remove("error");
-        sessionStatusEl.innerHTML =
-          `تم العثور على جلسة المدرسة بنجاح.<br>` +
-          `الدور الحالي: <strong>${session.role || "school"}</strong><br>` +
-          `الحالة: <strong>${session.status || "active"}</strong>`;
+<div class="action-title">
+الصفوف
+</div>
 
-        setStats(session);
-      }
+<div class="action-desc">
+عرض الصفوف
+</div>
 
-      function showInvalidSession() {
-        schoolNameEl.textContent = "لا توجد جلسة مدرسة صالحة";
-        schoolIdTextEl.textContent = "schoolId = غير موجود";
+</div>
 
-        sessionStatusEl.classList.add("error");
-        sessionStatusEl.innerHTML =
-          `افتح صفحة تسجيل الدخول من جديد ثم سجل الدخول بحساب مدرسة.<br>` +
-          `الصفحة الحالية تحتاج وجود <strong>schoolId</strong> داخل الجلسة المحلية.`;
 
-        setStats({
-          studentsCount: 0,
-          teachersCount: 0,
-          classesCount: 0,
-          attendanceRate: "0"
-        });
-      }
+<div class="action"
+onclick="location.href='reports.html'">
 
-      function logoutNow() {
-        const confirmed = confirm("هل أنت متأكد من تسجيل الخروج؟");
-        if (!confirmed) return;
+<div class="action-title">
+التقارير
+</div>
 
-        localStorage.removeItem("madaris_user_session");
-        localStorage.removeItem("madaris_session");
-        window.location.href = "../login.html";
-      }
+<div class="action-desc">
+تقارير المدرسة
+</div>
 
-      logoutBtn.addEventListener("click", logoutNow);
+</div>
 
-      const session = getSchoolSession();
+</div>
 
-      if (!session || session.invalid) {
-        showInvalidSession();
-      } else {
-        showValidSession(session);
-      }
-    })();
-  </script>
-  <script src="./session-guard.js"></script>
+</div><div class="card">
+
+<div class="section-title">
+ملخص سريع
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-number">
+0
+</div>
+إجمالي الطلاب
+</div>
+
+<div class="stat">
+<div class="stat-number">
+0
+</div>
+إجمالي المعلمين
+</div>
+
+<div class="stat">
+<div class="stat-number">
+0
+</div>
+إجمالي الصفوف
+</div>
+
+<div class="stat">
+<div class="stat-number">
+0%
+</div>
+نسبة الحضور
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="./session-guard.js"></script>
+
 </body>
+
 </html>
