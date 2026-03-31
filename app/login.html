@@ -1,238 +1,150 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Madaris AI | تسجيل الدخول</title>
-
-<style>
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
-
-body{
-font-family:Tahoma,Arial;
-background:linear-gradient(180deg,#07142f 0%,#03122a 100%);
-color:white;
-padding:16px;
-min-height:100vh;
-}
-
-.container{
-max-width:700px;
-margin:auto;
-}
-
-.card{
-background:linear-gradient(180deg,#214aa4 0%,#102e79 100%);
-border-radius:26px;
-padding:24px;
-margin-bottom:18px;
-box-shadow:0 15px 35px rgba(0,0,0,.35);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.title{
-text-align:center;
-font-size:34px;
-font-weight:800;
-margin-bottom:6px;
-}
-
-.subtitle{
-text-align:center;
-color:#8fdfff;
-font-size:20px;
-margin-bottom:18px;
-}
-
-.text{
-text-align:center;
-line-height:1.8;
-color:#d8e4ff;
-font-size:16px;
-}
-
-.section-title{
-text-align:center;
-font-size:28px;
-font-weight:800;
-margin-bottom:12px;
-}
-
-.label{
-display:block;
-margin-bottom:8px;
-font-weight:700;
-font-size:16px;
-}
-
-.input{
-width:100%;
-padding:18px;
-border-radius:18px;
-border:1px solid rgba(255,255,255,.15);
-background:rgba(255,255,255,.08);
-color:white;
-font-size:18px;
-margin-bottom:14px;
-}
-
-.input:focus{
-outline:none;
-border-color:#63d3f5;
-}
-
-.button{
-width:100%;
-padding:18px;
-border-radius:50px;
-border:none;
-font-size:20px;
-font-weight:800;
-cursor:pointer;
-margin-top:8px;
-}
-
-.primary{
-background:linear-gradient(180deg,#63d3f5,#43bfe6);
-}
-
-.secondary{
-background:linear-gradient(180deg,#ff6f93,#ef4f76);
-margin-top:12px;
-}
-
-.note{
-text-align:center;
-margin-top:14px;
-font-size:15px;
-color:#cddaff;
-line-height:1.8;
-}
-
-.status{
-background:rgba(255,255,255,.08);
-padding:16px;
-border-radius:18px;
-margin-top:14px;
-text-align:center;
-line-height:1.8;
-font-size:15px;
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI | تسجيل الدخول</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background: linear-gradient(180deg, #07142f 0%, #03122a 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+    .card {
+      background: linear-gradient(180deg, #214aa4 0%, #102e79 100%);
+      border-radius: 28px;
+      padding: 24px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+    .title {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #89e7ff;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .text {
+      text-align: center;
+      color: #dce7ff;
+      line-height: 1.95;
+      font-size: 17px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+    .label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      border-radius: 20px;
+      padding: 18px;
+      font-size: 19px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .input::placeholder { color: rgba(255,255,255,.55); }
+    .input:focus { border-color: #65d7f7; }
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 18px;
+      font-size: 22px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .btn-login {
+      background: linear-gradient(180deg, #65d7f7 0%, #4fc4ea 100%);
+      color: #fff;
+    }
+    .btn-home {
+      background: linear-gradient(180deg, #ff6f93 0%, #f45377 100%);
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      margin-top: 14px;
+    }
+    .status-box {
+      margin-top: 16px;
+      background: rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+      line-height: 1.9;
+      color: #dbe7ff;
+      font-size: 15px;
+    }
+    .hint {
+      text-align: center;
+      margin-top: 14px;
+      color: #c9d8ff;
+      line-height: 1.9;
+      font-size: 15px;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
 
-<div class="container">
+    <div class="card">
+      <div class="title">Madaris AI</div>
+      <div class="subtitle">منصة المدرسة الذكية</div>
+      <div class="text">
+        تسجيل الدخول إلى المنصة بحسابك المعتمد.<br>
+        بعد نجاح الدخول سيتم حفظ الجلسة محليًا ثم تحويلك
+        تلقائيًا إلى صفحتك المناسبة.
+      </div>
+    </div>
 
-<div class="card">
-<div class="title">Madaris AI</div>
-<div class="subtitle">منصة المدرسة الذكية</div>
+    <div class="card">
+      <div class="section-title">تسجيل الدخول</div>
 
-<div class="text">
-تسجيل الدخول إلى المنصة بحسابك المعتمد  
-وبعد نجاح الدخول سيتم حفظ الجلسة محلياً  
-ثم تحويلك تلقائياً إلى صفحتك المناسبة
-</div>
+      <label class="label" for="email">البريد الإلكتروني</label>
+      <input id="email" class="input" type="email" placeholder="مثال: info@madarisai.com" autocomplete="username">
 
-</div>
+      <label class="label" for="password">كلمة المرور</label>
+      <input id="password" class="input" type="password" placeholder="أدخل كلمة المرور" autocomplete="current-password">
 
+      <button id="loginBtn" class="btn btn-login" type="button">تسجيل الدخول</button>
 
-<div class="card">
+      <a class="btn btn-home" href="../index.html">رجوع إلى الرئيسية</a>
 
-<div class="section-title">تسجيل الدخول</div>
+      <div id="loginStatus" class="status-box">
+        بانتظار إدخال البريد وكلمة المرور.
+      </div>
 
-<label class="label">البريد الإلكتروني</label>
-<input
-id="email"
-class="input"
-type="email"
-placeholder="info@madarisai.com"
-autocomplete="username"
->
+      <div class="hint">
+        هذه الصفحة لا تقوم بتحويلك تلقائيًا إلا إذا كانت هناك
+        جلسة صحيحة محفوظة بالفعل.
+      </div>
+    </div>
 
-<label class="label">كلمة المرور</label>
-<input
-id="password"
-class="input"
-type="password"
-placeholder="أدخل كلمة المرور"
-autocomplete="current-password"
->
+  </div>
 
-<button
-id="loginBtn"
-class="button primary"
-onclick="loginUser()"
->
-تسجيل الدخول
-</button>
-
-<button
-class="button secondary"
-onclick="location.href='./register.html'"
->
-إنشاء حساب جديد
-</button>
-
-<div id="loginStatus" class="status">
-بعد نجاح تسجيل الدخول سيتم تحويلك تلقائياً
-إلى لوحة التحكم الخاصة بك
-</div>
-
-<div class="note">
-إذا فشل تسجيل الدخول تأكد من الإنترنت
-وأعد المحاولة
-</div>
-
-</div>
-
-
-</div>
-
-
-<script type="module" src="./login.js"></script>
-
-<script>
-
-const email=document.getElementById("email")
-const password=document.getElementById("password")
-const status=document.getElementById("loginStatus")
-
-function setStatus(text){
-if(status){
-status.textContent=text
-}
-}
-
-email.addEventListener("input",()=>{
-if(email.value.trim()){
-setStatus("أدخل كلمة المرور ثم اضغط تسجيل الدخول")
-}
-})
-
-password.addEventListener("input",()=>{
-if(password.value.trim()){
-setStatus("اضغط تسجيل الدخول الآن")
-}
-})
-
-document.getElementById("loginBtn")
-.addEventListener("click",()=>{
-setStatus("جاري تسجيل الدخول...")
-})
-
-</script>
-
+  <script type="module" src="./login.js"></script>
 </body>
-
 </html>
