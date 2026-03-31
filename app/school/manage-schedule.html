@@ -1,1194 +1,481 @@
-<!-- ========= PART 1 OF 2 : app/school/manage-schedule.html ========= -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | إدارة الجدول المدرسي</title>
-
-  <style>
-    :root {
-      --bg: #07142b;
-      --panel: #123b8d;
-      --panel-2: #1d4aa4;
-      --line: rgba(255,255,255,0.08);
-      --text: #f6fbff;
-      --muted: #c9def7;
-      --cyan: #67d9ff;
-      --blue-btn: #67d9ff;
-      --red-btn: #ff6683;
-      --green-btn: #37d66b;
-      --purple-btn: #6d7cff;
-      --badge-green-bg: rgba(55,214,107,0.18);
-      --badge-green-text: #86f7a7;
-      --badge-purple-bg: rgba(109,124,255,0.22);
-      --badge-purple-text: #d7ddff;
-      --badge-blue-bg: rgba(103,217,255,0.18);
-      --badge-blue-text: #b9f0ff;
-      --warning-bg: rgba(255,102,131,0.12);
-      --info-bg: rgba(103,217,255,0.14);
-      --radius: 24px;
-      --shadow: 0 20px 40px rgba(0,0,0,0.28);
-    }
-
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      background:
-        radial-gradient(circle at top, #123b8d 0%, #0c2455 32%, #07142b 100%);
-      color: var(--text);
-      font-family: Arial, Tahoma, sans-serif;
-      min-height: 100%;
-    }
-
-    body {
-      padding: 18px 14px 60px;
-    }
-
-    .page {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(28,71,159,0.96), rgba(17,48,114,0.96));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 22px 18px;
-      margin-bottom: 18px;
-      overflow: hidden;
-    }
-
-    h1, h2, h3 {
-      margin: 0 0 12px;
-      line-height: 1.4;
-      color: var(--text);
-    }
-
-    h1 {
-      font-size: 26px;
-      text-align: center;
-      font-weight: 800;
-    }
-
-    h2 {
-      font-size: 22px;
-      text-align: center;
-      font-weight: 800;
-    }
-
-    h3 {
-      font-size: 20px;
-      font-weight: 800;
-    }
-
-    p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.95;
-      font-size: 18px;
-    }
-
-    .hero-text {
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 18px;
-    }
-
-    .school-name {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 800;
-      margin: 18px 0;
-    }
-
-    .btn-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 14px;
-    }
-
-    .btn {
-      width: 100%;
-      border: 0;
-      border-radius: 24px;
-      padding: 20px 16px;
-      font-size: 20px;
-      font-weight: 800;
-      cursor: pointer;
-      color: #fff;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-
-    .btn:active {
-      transform: scale(0.985);
-    }
-
-    .btn-cyan {
-      background: var(--blue-btn);
-      color: #ffffff;
-    }
-
-    .btn-red {
-      background: var(--red-btn);
-      color: #ffffff;
-    }
-
-    .btn-green {
-      background: var(--green-btn);
-      color: #ffffff;
-    }
-
-    .btn-purple {
-      background: linear-gradient(180deg, #7f8bff, #6273ff);
-      color: #ffffff;
-    }
-
-    .btn-gray {
-      background: rgba(255,255,255,0.09);
-      color: #ffffff;
-    }
-
-    .btn-small {
-      padding: 14px 16px;
-      border-radius: 18px;
-      font-size: 18px;
-    }
-
-    .session-box,
-    .message-box,
-    .summary-box {
-      border-radius: 22px;
-      padding: 18px 16px;
-      margin-top: 16px;
-      border: 1px solid var(--line);
-      line-height: 1.85;
-      font-size: 18px;
-    }
-
-    .session-box,
-    .info-box {
-      background: var(--info-bg);
-    }
-
-    .message-box.success {
-      background: rgba(55,214,107,0.16);
-    }
-
-    .message-box.error {
-      background: var(--warning-bg);
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .summary-box {
-      background: rgba(255,255,255,0.05);
-      text-align: center;
-      min-height: 110px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .summary-number {
-      font-size: 48px;
-      font-weight: 900;
-      color: var(--cyan);
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .summary-label {
-      font-size: 18px;
-      color: var(--text);
-    }
-
-    .section-desc {
-      text-align: center;
-      margin-top: 8px;
-      margin-bottom: 18px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 18px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .field label {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .control,
-    select,
-    input,
-    textarea {
-      width: 100%;
-      background: rgba(255,255,255,0.08);
-      color: #ffffff;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 22px;
-      padding: 18px 16px;
-      font-size: 20px;
-      outline: none;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    select option {
-      color: #111;
-      background: #fff;
-    }
-
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .form-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .helper-text {
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .edit-banner {
-      display: none;
-      background: rgba(109,124,255,0.18);
-      border: 1px solid rgba(109,124,255,0.25);
-      color: #e6eaff;
-      border-radius: 20px;
-      padding: 16px;
-      margin-top: 16px;
-      line-height: 1.9;
-      font-size: 18px;
-    }
-
-    .records-wrap {
-      margin-top: 18px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .record-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 16px;
-    }
-
-    .record-top {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .record-title {
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1.8;
-    }
-
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-size: 17px;
-      font-weight: 800;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .badge-status {
-      background: var(--badge-green-bg);
-      color: var(--badge-green-text);
-    }
-
-    .badge-type {
-      background: var(--badge-purple-bg);
-      color: var(--badge-purple-text);
-    }
-
-    .badge-day {
-      background: var(--badge-blue-bg);
-      color: var(--badge-blue-text);
-    }
-
-    .record-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .record-item {
-      background: rgba(255,255,255,0.04);
-      border-radius: 18px;
-      padding: 12px 14px;
-    }
-
-    .record-item .label {
-      color: var(--cyan);
-      font-size: 16px;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-
-    .record-item .value {
-      color: var(--text);
-      font-size: 19px;
-      line-height: 1.8;
-      word-break: break-word;
-    }
-
-    .record-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .empty-box {
-      background: rgba(255,255,255,0.05);
-      border: 1px dashed rgba(255,255,255,0.18);
-      border-radius: 22px;
-      padding: 22px 16px;
-      text-align: center;
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 18px;
-    }
-
-    .footer-note {
-      text-align: center;
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.9;
-    }
-
-    .muted-strong {
-      color: #fff;
-      font-weight: 800;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (min-width: 760px) {
-      body {
-        padding: 28px 20px 80px;
-      }
-
-      .card {
-        padding: 28px 24px;
-      }
-
-      .btn-row {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .field-full {
-        grid-column: 1 / -1;
-      }
-
-      .summary-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .record-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-  </style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | إدارة الجدول</title>
+
+<style>
+
+body{
+margin:0;
+font-family:tahoma;
+background:linear-gradient(180deg,#071a3a,#06142b);
+color:white;
+padding:15px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+.card{
+background:#0b2452;
+padding:20px;
+border-radius:18px;
+margin-bottom:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.title{
+font-size:26px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.subtitle{
+opacity:.8;
+margin-bottom:15px;
+}
+
+.input{
+width:100%;
+padding:15px;
+border-radius:12px;
+border:none;
+margin-bottom:12px;
+font-size:16px;
+background:#0f2f68;
+color:white;
+}
+
+.button{
+width:100%;
+padding:15px;
+border-radius:30px;
+border:none;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+.btn-save{
+background:#2ecc71;
+color:white;
+}
+
+.btn-clear{
+background:#34495e;
+color:white;
+}
+
+.btn-delete{
+background:#ff5a7b;
+color:white;
+margin-top:8px;
+}
+
+.lesson{
+background:#0f2f68;
+padding:15px;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+</style>
+
 </head>
+
 <body>
-  <div class="page">
-
-    <section class="card">
-      <h1>Madaris AI | إدارة الجدول المدرسي</h1>
-      <p class="hero-text">
-        هذه الصفحة مخصصة لإضافة الحصص وربطها مباشرة بين الصفوف والمواد والمعلمين
-        داخل المدرسة الحالية عبر جلسة المدرسة المحفوظة محلياً.
-      </p>
-
-      <div id="schoolNameHero" class="school-name">جاري تحميل بيانات المدرسة...</div>
-
-      <div class="btn-row">
-        <button type="button" class="btn btn-cyan" id="backBtn">رجوع إلى لوحة المدرسة</button>
-        <button type="button" class="btn btn-red" id="logoutBtn">خروج</button>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>حالة الجلسة الحالية</h2>
-      <p class="section-desc">
-        يتم هنا قراءة جلسة المدرسة من <span class="muted-strong">madaris_user_session</span> أولاً،
-        ثم من <span class="muted-strong">madaris_session</span> كنسخة احتياطية قديمة.
-      </p>
-
-      <div id="sessionBox" class="session-box">جاري فحص الجلسة...</div>
-
-      <div class="summary-grid">
-        <div class="summary-box">
-          <div id="classesCount" class="summary-number">0</div>
-          <div class="summary-label">الصفوف</div>
-        </div>
-        <div class="summary-box">
-          <div id="subjectsCount" class="summary-number">0</div>
-          <div class="summary-label">المواد</div>
-        </div>
-        <div class="summary-box">
-          <div id="teachersCount" class="summary-number">0</div>
-          <div class="summary-label">المعلمين</div>
-        </div>
-        <div class="summary-box">
-          <div id="schedulesCount" class="summary-number">0</div>
-          <div class="summary-label">الحصص الحالية</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>إضافة / تعديل حصة</h2>
-      <p class="section-desc">
-        اختر الصف، ثم المادة، ثم المعلم، ثم اليوم والوقت. عند الحفظ سيتم إنشاء حصة جديدة
-        أو تحديث الحصة التي اخترت تعديلها.
-      </p>
-
-      <div id="pageMessage" class="message-box success">النموذج جاهز. املأ البيانات ثم اضغط "حفظ الحصة".</div>
-
-      <div id="editBanner" class="edit-banner"></div>
-
-      <form id="scheduleForm" novalidate>
-        <input type="hidden" id="editingId" />
-
-        <div class="form-grid">
-          <div class="field">
-            <label for="classId">الصف</label>
-            <select id="classId" class="control" required>
-              <option value="">اختر الصف</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="subjectId">المادة</label>
-            <select id="subjectId" class="control" required>
-              <option value="">اختر المادة</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="teacherId">المعلم</label>
-            <select id="teacherId" class="control" required>
-              <option value="">اختر المعلم</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="day">اليوم</label>
-            <select id="day" class="control" required>
-              <option value="">اختر اليوم</option>
-              <option value="Saturday">السبت</option>
-              <option value="Sunday">الأحد</option>
-              <option value="Monday">الإثنين</option>
-              <option value="Tuesday">الثلاثاء</option>
-              <option value="Wednesday">الأربعاء</option>
-              <option value="Thursday">الخميس</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="period">رقم الحصة</label>
-            <input id="period" class="control" type="number" min="1" step="1" placeholder="مثال: 1" required />
-          </div>
-
-          <div class="field">
-            <label for="startTime">من</label>
-            <input id="startTime" class="control" type="time" required />
-          </div>
-
-          <div class="field">
-            <label for="endTime">إلى</label>
-            <input id="endTime" class="control" type="time" required />
-          </div>
-
-          <div class="field">
-            <label for="status">الحالة</label>
-            <select id="status" class="control">
-              <option value="active">نشط</option>
-              <option value="inactive">غير نشط</option>
-            </select>
-          </div>
-
-          <div class="field field-full">
-            <label for="note">ملاحظة</label>
-            <textarea id="note" class="control" placeholder="اختياري: مثال - ربط صحيح وجاهز"></textarea>
-            <div class="helper-text">
-              لا يتم إنشاء أي حصة تلقائياً من الكود. أي صف يظهر هنا موجود فعلاً داخل Firestore فقط.
-            </div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="btn btn-green">حفظ الحصة</button>
-          <button type="button" id="clearBtn" class="btn btn-gray">تفريغ النموذج</button>
-        </div>
-      </form>
-    </section>
-
-    <section class="card">
-      <h2>الحصص الحالية داخل المدرسة</h2>
-      <p class="section-desc">
-        هنا تظهر كل الحصص الخاصة بالمدرسة الحالية فقط. يمكنك تعديل أي حصة أو حذفها مباشرة.
-      </p>
-
-      <div id="recordsMessage" class="message-box success">جاري تحميل الحصص...</div>
-      <div id="recordsWrap" class="records-wrap"></div>
-      <div class="footer-note">
-        بعد الإضافة أو التعديل أو الحذف سيتم تحديث القائمة تلقائياً بدون إعادة تحميل الصفحة.
-      </div>
-    </section>
-
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-    import {
-      getFirestore,
-      collection,
-      getDocs,
-      addDoc,
-      updateDoc,
-      deleteDoc,
-      doc,
-      query,
-      where,
-      orderBy,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-      authDomain: "madaris-ai.firebaseapp.com",
-      projectId: "madaris-ai",
-      storageBucket: "madaris-ai.firebasestorage.app",
-      messagingSenderId: "915394447224",
-      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
-      measurementId: "G-SC7VE6F20S"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const schoolNameHero = document.getElementById("schoolNameHero");
-    const sessionBox = document.getElementById("sessionBox");
-    const pageMessage = document.getElementById("pageMessage");
-    const recordsMessage = document.getElementById("recordsMessage");
-    const recordsWrap = document.getElementById("recordsWrap");
-    const editBanner = document.getElementById("editBanner");
-
-    const classesCount = document.getElementById("classesCount");
-    const subjectsCount = document.getElementById("subjectsCount");
-    const teachersCount = document.getElementById("teachersCount");
-    const schedulesCount = document.getElementById("schedulesCount");
-
-    const scheduleForm = document.getElementById("scheduleForm");
-    const clearBtn = document.getElementById("clearBtn");
-    const backBtn = document.getElementById("backBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    const editingIdEl = document.getElementById("editingId");
-    const classIdEl = document.getElementById("classId");
-    const subjectIdEl = document.getElementById("subjectId");
-    const teacherIdEl = document.getElementById("teacherId");
-    const dayEl = document.getElementById("day");
-    const periodEl = document.getElementById("period");
-    const startTimeEl = document.getElementById("startTime");
-    const endTimeEl = document.getElementById("endTime");
-    const statusEl = document.getElementById("status");
-    const noteEl = document.getElementById("note");
-
-    let sessionData = null;
-    let currentSchoolId = "";
-    let currentSchoolName = "";
-
-    let classesMap = new Map();
-    let subjectsMap = new Map();
-    let teachersMap = new Map();
-    let schedulesList = [];
-
-    function setMessage(el, text, type = "success") {
-      el.className = `message-box ${type}`;
-      el.textContent = text;
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function getArabicDay(englishDay) {
-      const map = {
-        Saturday: "السبت",
-        Sunday: "الأحد",
-        Monday: "الإثنين",
-        Tuesday: "الثلاثاء",
-        Wednesday: "الأربعاء",
-        Thursday: "الخميس",
-        Friday: "الجمعة"
-      };
-      return map[englishDay] || englishDay || "-";
-    }
-
-    function getStatusLabel(status) {
-      if (status === "inactive") return "غير نشط";
-      return "نشط";
-    }
-
-    function getTeacherTypeLabel(type, isAI) {
-      if (type === "ai" || isAI === true) return "معلم ذكي";
-      if (type === "human" || isAI === false) return "معلم بشري";
-      return "معلم";
-    }
-
-    function readSession() {
-      try {
-        const rawNew = localStorage.getItem("madaris_user_session");
-        if (rawNew) {
-          const parsedNew = JSON.parse(rawNew);
-          if (parsedNew && parsedNew.schoolId) return parsedNew;
-        }
-      } catch (_) {}
-
-      try {
-        const rawOld = localStorage.getItem("madaris_session");
-        if (rawOld) {
-          const parsedOld = JSON.parse(rawOld);
-          if (parsedOld && parsedOld.schoolId) return parsedOld;
-        }
-      } catch (_) {}
-
-      return null;
-    }
-
-    function normalizeSession(session) {
-      if (!session) return null;
-
-      return {
-        uid: session.uid || "",
-        email: session.email || "",
-        name: session.name || "",
-        role: session.role || "",
-        roleLevel: session.roleLevel || "",
-        schoolId: session.schoolId || "",
-        status: session.status || "active",
-        loginAt: session.loginAt || Date.now()
-      };
-    }
-
-    function writeNormalizedSession(session) {
-      const normalized = normalizeSession(session);
-      if (!normalized || !normalized.schoolId) return;
-
-      localStorage.setItem("madaris_user_session", JSON.stringify(normalized));
-      localStorage.setItem("madaris_session", JSON.stringify(normalized));
-    }
-
-    function resetForm() {
-      editingIdEl.value = "";
-      scheduleForm.reset();
-      classIdEl.value = "";
-      subjectIdEl.value = "";
-      teacherIdEl.innerHTML = '<option value="">اختر المعلم</option>';
-      teacherIdEl.value = "";
-      dayEl.value = "";
-      statusEl.value = "active";
-      noteEl.value = "";
-      editBanner.style.display = "none";
-      editBanner.textContent = "";
-      setMessage(pageMessage, 'النموذج جاهز. املأ البيانات ثم اضغط "حفظ الحصة".', "success");
-    }
-
-    function buildSelectOptions(selectEl, items, placeholder, formatter) {
-      let html = `<option value="">${escapeHtml(placeholder)}</option>`;
-      for (const item of items) {
-        html += `<option value="${escapeHtml(item.id)}">${escapeHtml(formatter(item))}</option>`;
-      }
-      selectEl.innerHTML = html;
-    }
-
-    function loadTeachersOptions(selectedSubjectId = "", selectedTeacherId = "") {
-      let teachers = Array.from(teachersMap.values());
-
-      if (selectedSubjectId) {
-        teachers = teachers.filter((teacher) => {
-          const teacherSubjectId <!-- ========= PART 2 OF 2 : app/school/manage-schedule.html ========= -->
-    function renderSchedules() {
-      schedulesCount.textContent = String(schedulesList.length);
-
-      if (!schedulesList.length) {
-        recordsWrap.innerHTML = `
-          <div class="empty-box">
-            لا توجد حصص محفوظة حالياً داخل هذه المدرسة.<br>
-            ابدأ بإضافة أول حصة من النموذج أعلاه.
-          </div>
-        `;
-        setMessage(recordsMessage, "لا توجد حصص حالياً داخل المدرسة الحالية.", "error");
-        return;
-      }
-
-      setMessage(recordsMessage, `تم تحميل ${schedulesList.length} حصة بنجاح داخل المدرسة الحالية.`, "success");
-
-      let html = "";
-
-      for (const item of schedulesList) {
-        const className = classesMap.get(item.classId)?.name || item.classId || "-";
-        const subjectName = subjectsMap.get(item.subjectId)?.name || item.subjectId || "-";
-        const teacher = teachersMap.get(item.teacherId) || null;
-        const teacherName = teacher?.name || item.teacherId || "-";
-        const teacherEmail = teacher?.email || "-";
-        const teacherPhone = teacher?.phone || "-";
-        const teacherType = getTeacherTypeLabel(teacher?.teacherType, teacher?.isAI);
-        const dayArabic = getArabicDay(item.day);
-        const statusLabel = getStatusLabel(item.status);
-        const note = item.note || "-";
-
-        html += `
-          <div class="record-card">
-            <div class="record-top">
-              <div class="record-title">${escapeHtml(className)} — ${escapeHtml(subjectName)}</div>
-              <div class="badges">
-                <span class="badge badge-day">${escapeHtml(dayArabic)}</span>
-                <span class="badge badge-type">${escapeHtml(teacherType)}</span>
-                <span class="badge badge-status">${escapeHtml(statusLabel)}</span>
-              </div>
-            </div>
-
-            <div class="record-grid">
-              <div class="record-item">
-                <div class="label">الصف</div>
-                <div class="value">${escapeHtml(className)}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">المادة</div>
-                <div class="value">${escapeHtml(subjectName)}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">المعلم</div>
-                <div class="value">${escapeHtml(teacherName)}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">نوع المعلم</div>
-                <div class="value">${escapeHtml(teacherType)}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">البريد</div>
-                <div class="value">${escapeHtml(teacherEmail)}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">الهاتف</div>
-                <div class="value">${escapeHtml(teacherPhone)}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">اليوم</div>
-                <div class="value">${escapeHtml(dayArabic)}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">رقم الحصة</div>
-                <div class="value">${escapeHtml(item.period ?? "-")}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">من</div>
-                <div class="value">${escapeHtml(item.startTime || "-")}</div>
-              </div>
-
-              <div class="record-item">
-                <div class="label">إلى</div>
-                <div class="value">${escapeHtml(item.endTime || "-")}</div>
-              </div>
-
-              <div class="record-item field-full">
-                <div class="label">ملاحظة</div>
-                <div class="value">${escapeHtml(note)}</div>
-              </div>
-            </div>
-
-            <div class="record-actions">
-              <button type="button" class="btn btn-purple btn-small" data-edit-id="${escapeHtml(item.id)}">تعديل</button>
-              <button type="button" class="btn btn-red btn-small" data-delete-id="${escapeHtml(item.id)}">حذف</button>
-            </div>
-          </div>
-        `;
-      }
-
-      recordsWrap.innerHTML = html;
-
-      recordsWrap.querySelectorAll("[data-edit-id]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-edit-id");
-          startEdit(id);
-        });
-      });
-
-      recordsWrap.querySelectorAll("[data-delete-id]").forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const id = btn.getAttribute("data-delete-id");
-          await removeSchedule(id);
-        });
-      });
-    }
-
-    function startEdit(id) {
-      const item = schedulesList.find((row) => row.id === id);
-      if (!item) {
-        setMessage(pageMessage, "تعذر العثور على الحصة المطلوبة للتعديل.", "error");
-        return;
-      }
-
-      editingIdEl.value = item.id || "";
-      classIdEl.value = item.classId || "";
-      subjectIdEl.value = item.subjectId || "";
-      loadTeachersOptions(item.subjectId || "", item.teacherId || "");
-      dayEl.value = item.day || "";
-      periodEl.value = item.period ?? "";
-      startTimeEl.value = item.startTime || "";
-      endTimeEl.value = item.endTime || "";
-      statusEl.value = item.status || "active";
-      noteEl.value = item.note || "";
-
-      const className = classesMap.get(item.classId)?.name || "-";
-      const subjectName = subjectsMap.get(item.subjectId)?.name || "-";
-
-      editBanner.style.display = "block";
-      editBanner.textContent = `أنت الآن تعدّل حصة موجودة: ${className} — ${subjectName}. بعد تعديل القيم اضغط "حفظ الحصة".`;
-
-      setMessage(pageMessage, "تم تحميل بيانات الحصة داخل النموذج. عدّل القيم ثم اضغط حفظ.", "success");
-    }
-
-    async function removeSchedule(id) {
-      const item = schedulesList.find((row) => row.id === id);
-      if (!item) return;
-
-      const className = classesMap.get(item.classId)?.name || "-";
-      const subjectName = subjectsMap.get(item.subjectId)?.name || "-";
-      const teacherName = teachersMap.get(item.teacherId)?.name || "-";
-      const confirmDelete = confirm(`هل أنت متأكد من حذف هذه الحصة؟\n\nالصف: ${className}\nالمادة: ${subjectName}\nالمعلم: ${teacherName}`);
-
-      if (!confirmDelete) return;
-
-      try {
-        await deleteDoc(doc(db, "schedules", id));
-
-        if (editingIdEl.value === id) {
-          resetForm();
-        }
-
-        setMessage(pageMessage, "تم حذف الحصة بنجاح.", "success");
-        await loadSchedules();
-      } catch (error) {
-        console.error(error);
-        setMessage(pageMessage, `فشل حذف الحصة: ${error.message}`, "error");
-      }
-    }
-
-    async function loadClasses() {
-      classesMap.clear();
-
-      const q = query(collection(db, "classes"), where("schoolId", "==", currentSchoolId));
-      const snap = await getDocs(q);
-
-      const items = [];
-      snap.forEach((docSnap) => {
-        const data = docSnap.data() || {};
-        const row = { id: docSnap.id, ...data };
-        classesMap.set(row.id, row);
-        items.push(row);
-      });
-
-      items.sort((a, b) => (a.name || "").localeCompare(b.name || "", "ar"));
-      classesCount.textContent = String(items.length);
-      buildSelectOptions(classIdEl, items, "اختر الصف", (item) => item.name || item.id);
-    }
-
-    async function loadSubjects() {
-      subjectsMap.clear();
-
-      const q = query(collection(db, "subjects"), where("schoolId", "==", currentSchoolId));
-      const snap = await getDocs(q);
-
-      const items = [];
-      snap.forEach((docSnap) => {
-        const data = docSnap.data() || {};
-        const row = { id: docSnap.id, ...data };
-        subjectsMap.set(row.id, row);
-        items.push(row);
-      });
-
-      items.sort((a, b) => (a.name || "").localeCompare(b.name || "", "ar"));
-      subjectsCount.textContent = String(items.length);
-      buildSelectOptions(subjectIdEl, items, "اختر المادة", (item) => item.name || item.id);
-    }
-
-    async function loadTeachers() {
-      teachersMap.clear();
-
-      const q = query(collection(db, "teachers"), where("schoolId", "==", currentSchoolId));
-      const snap = await getDocs(q);
-
-      snap.forEach((docSnap) => {
-        const data = docSnap.data() || {};
-        const row = { id: docSnap.id, ...data };
-        teachersMap.set(row.id, row);
-      });
-
-      teachersCount.textContent = String(teachersMap.size);
-      loadTeachersOptions(subjectIdEl.value || "", teacherIdEl.value || "");
-    }
-
-    async function loadSchedules() {
-      schedulesList = [];
-
-      let snap;
-      try {
-        const q = query(
-          collection(db, "schedules"),
-          where("schoolId", "==", currentSchoolId),
-          orderBy("day"),
-          orderBy("period")
-        );
-        snap = await getDocs(q);
-      } catch (_) {
-        const fallbackQ = query(collection(db, "schedules"), where("schoolId", "==", currentSchoolId));
-        snap = await getDocs(fallbackQ);
-      }
-
-      snap.forEach((docSnap) => {
-        const data = docSnap.data() || {};
-        schedulesList.push({ id: docSnap.id, ...data });
-      });
-
-      const dayOrder = {
-        Saturday: 1,
-        Sunday: 2,
-        Monday: 3,
-        Tuesday: 4,
-        Wednesday: 5,
-        Thursday: 6,
-        Friday: 7
-      };
-
-      schedulesList.sort((a, b) => {
-        const dayA = dayOrder[a.day] || 99;
-        const dayB = dayOrder[b.day] || 99;
-        if (dayA !== dayB) return dayA - dayB;
-
-        const periodA = Number(a.period || 0);
-        const periodB = Number(b.period || 0);
-        if (periodA !== periodB) return periodA - periodB;
-
-        return String(a.startTime || "").localeCompare(String(b.startTime || ""));
-      });
-
-      renderSchedules();
-    }
-
-    async function loadSchoolHeader() {
-      try {
-        const q = query(collection(db, "schools"), where("__name__", "==", currentSchoolId));
-        const snap = await getDocs(q);
-
-        if (!snap.empty) {
-          const schoolDoc = snap.docs[0];
-          const schoolData = schoolDoc.data() || {};
-          currentSchoolName = schoolData.name || currentSchoolName || "المدرسة الحالية";
-        }
-      } catch (_) {}
-
-      schoolNameHero.textContent = currentSchoolName || "المدرسة الحالية";
-    }
-
-    async function initializePage() {
-      sessionData = normalizeSession(readSession());
-
-      if (!sessionData || !sessionData.schoolId) {
-        sessionBox.textContent = "لا توجد جلسة محفوظة بصيغة صحيحة. افتح صفحة تسجيل الدخول ثم سجّل الدخول كحساب مدرسة.";
-        schoolNameHero.textContent = "لم يتم العثور على مدرسة حالية";
-        setMessage(pageMessage, "لا توجد جلسة مدرسة محفوظة. لا يمكن المتابعة قبل تسجيل الدخول.", "error");
-        setMessage(recordsMessage, "لا يمكن تحميل الحصص لأن schoolId غير موجود داخل الجلسة.", "error");
-        return;
-      }
-
-      writeNormalizedSession(sessionData);
-
-      currentSchoolId = sessionData.schoolId;
-      currentSchoolName = sessionData.name || "المدرسة الحالية";
-
-      sessionBox.innerHTML = `
-        تم العثور على الجلسة بنجاح.<br>
-        <span class="muted-strong">schoolId = ${escapeHtml(currentSchoolId)}</span>
-      `;
-
-      await loadSchoolHeader();
-      await loadClasses();
-      await loadSubjects();
-      await loadTeachers();
-      await loadSchedules();
-
-      setMessage(pageMessage, 'النموذج جاهز. املأ البيانات ثم اضغط "حفظ الحصة".', "success");
-    }
-
-    subjectIdEl.addEventListener("change", () => {
-      loadTeachersOptions(subjectIdEl.value || "", "");
-    });
-
-    scheduleForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      if (!currentSchoolId) {
-        setMessage(pageMessage, "لا يمكن الحفظ لأن schoolId غير موجود داخل الجلسة الحالية.", "error");
-        return;
-      }
-
-      const classId = classIdEl.value.trim();
-      const subjectId = subjectIdEl.value.trim();
-      const teacherId = teacherIdEl.value.trim();
-      const day = dayEl.value.trim();
-      const period = Number(periodEl.value);
-      const startTime = startTimeEl.value.trim();
-      const endTime = endTimeEl.value.trim();
-      const status = statusEl.value.trim() || "active";
-      const note = noteEl.value.trim();
-
-      if (!classId || !subjectId || !teacherId || !day || !period || !startTime || !endTime) {
-        setMessage(pageMessage, "أكمل كل الحقول المطلوبة أولاً قبل الحفظ.", "error");
-        return;
-      }
-
-      const selectedTeacher = teachersMap.get(teacherId);
-      if (!selectedTeacher) {
-        setMessage(pageMessage, "المعلم المحدد غير موجود. اختر معلماً صالحاً ثم حاول مرة أخرى.", "error");
-        return;
-      }
-
-      const startMinutes = Number(startTime.split(":")[0]) * 60 + Number(startTime.split(":")[1]);
-      const endMinutes = Number(endTime.split(":")[0]) * 60 + Number(endTime.split(":")[1]);
-
-      if (endMinutes <= startMinutes) {
-        setMessage(pageMessage, 'وقت "إلى" يجب أن يكون بعد وقت "من".', "error");
-        return;
-      }
-
-      const payload = {
-        schoolId: currentSchoolId,
-        classId,
-        subjectId,
-        teacherId,
-        day,
-        period,
-        startTime,
-        endTime,
-        status,
-        note,
-        teacherType: selectedTeacher.teacherType || (selectedTeacher.isAI ? "ai" : "human"),
-        updatedAt: serverTimestamp()
-      };
-
-      try {
-        const editingId = editingIdEl.value.trim();
-
-        if (editingId) {
-          await updateDoc(doc(db, "schedules", editingId), payload);
-          setMessage(pageMessage, "تم تعديل الحصة بنجاح.", "success");
-        } else {
-          await addDoc(collection(db, "schedules"), {
-            ...payload,
-            createdAt: serverTimestamp()
-          });
-          setMessage(pageMessage, "تم حفظ الحصة الجديدة بنجاح.", "success");
-        }
-
-        resetForm();
-        await loadSchedules();
-      } catch (error) {
-        console.error(error);
-        setMessage(pageMessage, `فشل حفظ الحصة: ${error.message}`, "error");
-      }
-    });
-
-    clearBtn.addEventListener("click", () => {
-      resetForm();
-    });
-
-    backBtn.addEventListener("click", () => {
-      window.location.href = "index.html";
-    });
-
-    logoutBtn.addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-      } catch (_) {}
-
-      localStorage.removeItem("madaris_user_session");
-      localStorage.removeItem("madaris_session");
-      window.location.href = "../login.html";
-    });
-
-    initializePage();
-  </script>
-  <script src="./session-guard.js"></script>
+
+<div class="container">
+
+<div class="card">
+
+<div class="title">
+Madaris AI | إدارة الجدول
+</div>
+
+<div class="subtitle">
+إضافة وتعديل الحصص المدرسية
+</div>
+
+<h3 data-school-name>
+جاري التحميل...
+</h3>
+
+<div>
+schoolId :
+<span data-school-id></span>
+</div>
+
+<button
+class="button"
+onclick="location.href='index.html'">
+
+رجوع للوحة المدرسة
+
+</button>
+
+<button
+class="button btn-delete"
+data-action="logout">
+
+خروج
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="title">
+إضافة / تعديل حصة
+</div>
+
+<select id="class"
+class="input">
+<option value="">اختر الصف</option>
+</select>
+
+<select id="subject"
+class="input">
+<option value="">اختر المادة</option>
+</select>
+
+<select id="teacher"
+class="input">
+<option value="">اختر المعلم</option>
+</select>
+
+<select id="day"
+class="input">
+
+<option value="">اختر اليوم</option>
+
+<option>السبت</option>
+<option>الأحد</option>
+<option>الإثنين</option>
+<option>الثلاثاء</option>
+<option>الأربعاء</option>
+<option>الخميس</option>
+
+</select>
+
+<input
+id="period"
+class="input"
+placeholder="رقم الحصة"
+/>
+
+<input
+id="start"
+class="input"
+type="time"
+/>
+
+<input
+id="end"
+class="input"
+type="time"
+/>
+
+<textarea
+id="note"
+class="input"
+placeholder="ملاحظة"
+></textarea>
+
+
+<button
+class="button btn-save"
+onclick="saveLesson()">
+
+حفظ الحصة
+
+</button>
+
+
+<button
+class="button btn-clear"
+onclick="clearForm()">
+
+تفريغ النموذج
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="title">
+الحصص الحالية
+</div>
+
+<div id="lessons">
+
+جاري التحميل...
+
+</div>
+
+</div>
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs,
+addDoc,
+deleteDoc,
+doc,
+query,
+where
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+authDomain: "madaris-ai.firebaseapp.com",
+projectId: "madaris-ai",
+storageBucket: "madaris-ai.firebasestorage.app",
+messagingSenderId: "915394447224",
+appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+async function loadDropdowns(){
+
+const session =
+window.MadarisSchoolSession.getSchoolSession();
+
+const schoolId = session.schoolId;
+
+const classSnap =
+await getDocs(
+query(
+collection(db,"classes"),
+where("schoolId","==",schoolId)
+)
+);
+
+classSnap.forEach(doc=>{
+
+const data = doc.data();
+
+document
+.getElementById("class")
+.innerHTML+=
+`<option value="${data.name}">
+${data.name}
+</option>`
+
+});
+
+
+const subjectSnap =
+await getDocs(
+query(
+collection(db,"subjects"),
+where("schoolId","==",schoolId)
+)
+);
+
+subjectSnap.forEach(doc=>{
+
+const data = doc.data();
+
+document
+.getElementById("subject")
+.innerHTML+=
+`<option value="${data.name}">
+${data.name}
+</option>`
+
+});
+
+
+const teacherSnap =
+await getDocs(
+query(
+collection(db,"teachers"),
+where("schoolId","==",schoolId)
+)
+);
+
+teacherSnap.forEach(doc=>{
+
+const data = doc.data();
+
+document
+.getElementById("teacher")
+.innerHTML+=
+`<option value="${data.name}">
+${data.name}
+</option>`
+
+});
+
+}
+ async function saveLesson(){
+
+const session =
+window.MadarisSchoolSession.getSchoolSession();
+
+const schoolId =
+session.schoolId;
+
+await addDoc(
+collection(db,"schedule"),
+{
+
+schoolId:schoolId,
+
+className:
+document.getElementById("class").value,
+
+subjectName:
+document.getElementById("subject").value,
+
+teacherName:
+document.getElementById("teacher").value,
+
+day:
+document.getElementById("day").value,
+
+period:
+document.getElementById("period").value,
+
+startTime:
+document.getElementById("start").value,
+
+endTime:
+document.getElementById("end").value,
+
+note:
+document.getElementById("note").value
+
+}
+);
+
+loadLessons();
+
+clearForm();
+
+}
+
+
+
+function clearForm(){
+
+document
+.querySelectorAll(".input")
+.forEach(i=>i.value="");
+
+}
+
+
+
+async function loadLessons(){
+
+const session =
+window.MadarisSchoolSession.getSchoolSession();
+
+const schoolId =
+session.schoolId;
+
+const snap =
+await getDocs(
+query(
+collection(db,"schedule"),
+where("schoolId","==",schoolId)
+)
+);
+
+const container =
+document.getElementById("lessons");
+
+container.innerHTML="";
+
+snap.forEach(doc=>{
+
+const d = doc.data();
+
+const el =
+document.createElement("div");
+
+el.className="lesson";
+
+el.innerHTML=`
+
+<div>
+${d.subjectName}
+</div>
+
+<div>
+${d.className}
+</div>
+
+<div>
+${d.teacherName}
+</div>
+
+<div>
+${d.day}
+${d.startTime}
+-
+${d.endTime}
+</div>
+
+<button
+class="btn-delete"
+onclick="deleteLesson('${doc.id}')">
+
+حذف
+
+</button>
+
+`;
+
+container.appendChild(el);
+
+});
+
+}
+
+
+async function deleteLesson(id){
+
+await deleteDoc(
+doc(db,"schedule",id)
+);
+
+loadLessons();
+
+}
+
+
+loadDropdowns();
+loadLessons();
+
+</script>
+
+
+<script src="./session-guard.js"></script>
+
 </body>
-</html>
-<!-- ========= END OF FILE ========= -->
+
+</html> 
