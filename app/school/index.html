@@ -1,296 +1,223 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Madaris AI | لوحة المدرسة</title>
-
-<style>
-
-body{
-margin:0;
-font-family:tahoma;
-background:linear-gradient(180deg,#071a3a,#06142b);
-color:white;
-padding:15px;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-}
-
-.card{
-background:#0b2452;
-padding:20px;
-border-radius:18px;
-margin-bottom:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
-}
-
-.title{
-font-size:28px;
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.subtitle{
-opacity:.8;
-line-height:1.8;
-}
-
-.button{
-display:block;
-width:100%;
-padding:18px;
-margin-top:12px;
-border-radius:40px;
-border:none;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.btn-primary{
-background:#58c7e6;
-color:white;
-}
-
-.btn-danger{
-background:#ff5a7b;
-color:white;
-}
-
-.section-title{
-font-size:24px;
-margin-bottom:10px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr;
-gap:15px;
-}
-
-.action{
-background:#0f2f68;
-padding:18px;
-border-radius:16px;
-cursor:pointer;
-}
-
-.action-title{
-font-size:20px;
-font-weight:bold;
-}
-
-.action-desc{
-opacity:.8;
-margin-top:5px;
-}
-
-.stats{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
-margin-top:15px;
-}
-
-.stat{
-background:#0f2f68;
-padding:18px;
-border-radius:14px;
-text-align:center;
-}
-
-.stat-number{
-font-size:28px;
-color:#5ddcff;
-font-weight:bold;
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI | لوحة المدرسة</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background: linear-gradient(180deg, #07142f 0%, #03122a 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .container { max-width: 760px; margin: 0 auto; }
+    .card {
+      background: linear-gradient(180deg, #214aa4 0%, #102e79 100%);
+      border-radius: 28px;
+      padding: 24px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+    .title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .text {
+      text-align: center;
+      color: #dbe5ff;
+      line-height: 1.9;
+      font-size: 17px;
+    }
+    .school-name {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+      margin: 18px 0 8px;
+    }
+    .school-id {
+      text-align: center;
+      color: #85e7ff;
+      font-size: 15px;
+      margin-bottom: 16px;
+      word-break: break-word;
+    }
+    .session-box {
+      background: rgba(255,255,255,.08);
+      border-radius: 20px;
+      padding: 16px;
+      line-height: 1.9;
+      text-align: center;
+      font-size: 16px;
+      color: #e5edff;
+      margin-bottom: 16px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      border-radius: 999px;
+      padding: 18px;
+      font-size: 22px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+    .btn-primary {
+      background: linear-gradient(180deg, #65d7f7 0%, #4fc4ea 100%);
+      color: #fff;
+    }
+    .btn-danger {
+      background: linear-gradient(180deg, #ff6f93 0%, #f45377 100%);
+      color: #fff;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .grid-item {
+      display: block;
+      text-decoration: none;
+      color: #fff;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 22px;
+      padding: 22px 18px;
+      min-height: 120px;
+    }
+    .grid-item h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    .grid-item p {
+      color: #dbe5ff;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .mini-card {
+      background: rgba(255,255,255,.05);
+      border-radius: 22px;
+      padding: 20px 14px;
+      text-align: center;
+    }
+    .mini-number {
+      font-size: 42px;
+      font-weight: 900;
+      color: #63d3f5;
+      margin-bottom: 8px;
+    }
+    .mini-label {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
 
-<div class="container">
+    <div class="card">
+      <div class="title">Madaris AI | لوحة المدرسة</div>
+      <div class="text">هذه الصفحة هي لوحة المدرسة الرئيسية.</div>
 
-<div class="card">
+      <div id="schoolName" class="school-name">جاري تحميل بيانات المدرسة...</div>
+      <div id="schoolIdText" class="school-id">schoolId: ...</div>
 
-<div class="title">
-Madaris AI | لوحة المدرسة
-</div>
+      <div id="sessionBox" class="session-box">جاري فحص الجلسة...</div>
 
-<div class="subtitle">
-هذه الصفحة هي لوحة المدرسة الرئيسية
-</div>
+      <a class="btn btn-primary" href="./schedule.html">عرض الجدول</a>
+      <button id="logoutBtn" class="btn btn-danger" type="button">خروج</button>
+    </div>
 
-<h2 data-school-name>
-جاري التحميل...
-</h2>
+    <div class="card">
+      <div class="section-title">أقسام لوحة المدرسة</div>
+      <div class="grid">
+        <a class="grid-item" href="./schedule.html">
+          <h3>عرض الجدول</h3>
+          <p>عرض الجدول الحالي للمدرسة.</p>
+        </a>
+        <a class="grid-item" href="./manage-schedule.html">
+          <h3>إدارة الجدول</h3>
+          <p>إضافة وتعديل وحذف الحصص.</p>
+        </a>
+        <a class="grid-item" href="./staff.html">
+          <h3>طاقم المدرسة</h3>
+          <p>عرض المعلمين وربطهم بالمواد والصفوف.</p>
+        </a>
+        <a class="grid-item" href="./students.html">
+          <h3>الطلاب</h3>
+          <p>عرض الطلاب الحاليين داخل المدرسة.</p>
+        </a>
+        <a class="grid-item" href="./classes.html">
+          <h3>الصفوف</h3>
+          <p>عرض الصفوف الحالية الخاصة بالمدرسة.</p>
+        </a>
+        <a class="grid-item" href="./reports.html">
+          <h3>التقارير</h3>
+          <p>تقارير المدرسة وربط البيانات التشغيلية.</p>
+        </a>
+      </div>
+    </div>
 
-<div style="opacity:.7">
-schoolId :
-<span data-school-id></span>
-</div>
+    <div class="card">
+      <div class="section-title">ملخص سريع</div>
+      <div class="mini-grid">
+        <div class="mini-card">
+          <div id="teachersCount" class="mini-number">0</div>
+          <div class="mini-label">إجمالي المعلمين</div>
+        </div>
+        <div class="mini-card">
+          <div id="studentsCount" class="mini-number">0</div>
+          <div class="mini-label">إجمالي الطلاب</div>
+        </div>
+        <div class="mini-card">
+          <div id="attendanceRate" class="mini-number">0%</div>
+          <div class="mini-label">نسبة الحضور</div>
+        </div>
+        <div class="mini-card">
+          <div id="classesCount" class="mini-number">0</div>
+          <div class="mini-label">إجمالي الصفوف</div>
+        </div>
+      </div>
+    </div>
 
-<button class="button btn-primary"
-onclick="location.href='schedule.html'">
-عرض الجدول
-</button>
+  </div>
 
-<button class="button btn-danger"
-data-action="logout">
-خروج
-</button>
+  <script src="./session-guard.js"></script>
+  <script>
+    const session = window.MadarisSession.requireSchoolSession();
 
-</div>
+    if (session) {
+      document.getElementById("schoolName").textContent = session.name || "لوحة المدرسة";
+      document.getElementById("schoolIdText").textContent = "schoolId: " + (session.schoolId || "-");
+      document.getElementById("sessionBox").innerHTML =
+        "تم العثور على جلسة المدرسة بنجاح.<br>" +
+        "الدور الحالي: <strong>" + (session.role || "-") + "</strong><br>" +
+        "الحالة: <strong>" + (session.status || "-") + "</strong>";
+    }
 
-
-<div class="card">
-
-<div class="section-title">
-أقسام لوحة المدرسة
-</div>
-
-<div class="grid">
-
-<div class="action"
-onclick="location.href='schedule.html'">
-
-<div class="action-title">
-عرض الجدول
-</div>
-
-<div class="action-desc">
-عرض الجدول الحالي
-</div>
-
-</div>
-
-
-<div class="action"
-onclick="location.href='manage-schedule.html'">
-
-<div class="action-title">
-إدارة الجدول
-</div>
-
-<div class="action-desc">
-إضافة وتعديل الحصص
-</div>
-
-</div>
-
-
-<div class="action"
-onclick="location.href='staff.html'">
-
-<div class="action-title">
-طاقم المدرسة
-</div>
-
-<div class="action-desc">
-عرض المعلمين
-</div>
-
-</div>
-
-
-<div class="action"
-onclick="location.href='students.html'">
-
-<div class="action-title">
-الطلاب
-</div>
-
-<div class="action-desc">
-عرض الطلاب
-</div>
-
-</div>
-
-
-<div class="action"
-onclick="location.href='classes.html'">
-
-<div class="action-title">
-الصفوف
-</div>
-
-<div class="action-desc">
-عرض الصفوف
-</div>
-
-</div>
-
-
-<div class="action"
-onclick="location.href='reports.html'">
-
-<div class="action-title">
-التقارير
-</div>
-
-<div class="action-desc">
-تقارير المدرسة
-</div>
-
-</div>
-
-</div>
-
-</div><div class="card">
-
-<div class="section-title">
-ملخص سريع
-</div>
-
-<div class="stats">
-
-<div class="stat">
-<div class="stat-number">
-0
-</div>
-إجمالي الطلاب
-</div>
-
-<div class="stat">
-<div class="stat-number">
-0
-</div>
-إجمالي المعلمين
-</div>
-
-<div class="stat">
-<div class="stat-number">
-0
-</div>
-إجمالي الصفوف
-</div>
-
-<div class="stat">
-<div class="stat-number">
-0%
-</div>
-نسبة الحضور
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<script src="./session-guard.js"></script>
-<script src="./session-guard.js"></script>
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      window.MadarisSession.logoutToLogin();
+    });
+  </script>
 </body>
-
 </html>
