@@ -8,38 +8,41 @@
 
   <style>
     :root{
-      --bg:#06142c;
-      --bg2:#0a1f47;
-      --card:#173a71;
-      --card2:#122f5f;
+      --bg:#07142b;
+      --bg2:#0a1e45;
+      --card:#183a72;
+      --card2:#12315f;
       --line:rgba(255,255,255,.10);
       --text:#ffffff;
       --muted:rgba(255,255,255,.78);
-      --cyan:#67d8ff;
-      --cyan2:#59c9f4;
-      --pink:#ff5f87;
-      --pink2:#ff4f78;
+      --cyan:#66d8ff;
+      --cyan2:#57c8f3;
+      --pink:#ff618b;
+      --pink2:#ff4f79;
       --green:#39d86a;
       --green2:#27c45b;
-      --purple:#8e86ff;
-      --purple2:#7369ff;
+      --purple:#8b85ff;
+      --purple2:#7268ff;
+      --slate:#6f89a8;
+      --slate2:#5a7390;
       --danger:#ff6b6b;
-      --danger2:#ef5350;
-      --slate:#6d87a8;
-      --slate2:#57708f;
-      --shadow:0 18px 45px rgba(0,0,0,.28);
+      --danger2:#f05555;
+      --shadow:0 18px 48px rgba(0,0,0,.28);
     }
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
-      margin:0;padding:0;min-height:100%;
+      margin:0;
+      padding:0;
+      min-height:100%;
       font-family:"Tahoma","Arial",sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(circle at top right, rgba(103,216,255,.08), transparent 22%),
+        radial-gradient(circle at top right, rgba(102,216,255,.08), transparent 24%),
         linear-gradient(180deg,var(--bg),var(--bg2));
-      color:var(--text)
     }
-    body{padding:16px 12px 32px}
+
+    body{padding:16px 12px 34px}
     .container{width:100%;max-width:1180px;margin:0 auto}
     .card{
       background:linear-gradient(180deg,var(--card),var(--card2));
@@ -47,35 +50,35 @@
       border-radius:32px;
       box-shadow:var(--shadow);
       padding:22px 16px;
-      margin-bottom:18px
+      margin-bottom:18px;
     }
     .title{
       margin:0 0 10px;
       text-align:center;
       font-size:32px;
-      line-height:1.5;
-      font-weight:900
+      line-height:1.55;
+      font-weight:900;
     }
     .sub{
       margin:0 0 18px;
       text-align:center;
       color:var(--muted);
       font-size:17px;
-      line-height:2
+      line-height:2;
     }
     .school-name{
       margin:0 0 8px;
       text-align:center;
       font-size:25px;
       line-height:1.7;
-      font-weight:900
+      font-weight:900;
     }
     .school-id{
       margin:0 0 18px;
       text-align:center;
       color:var(--cyan);
       font-size:16px;
-      word-break:break-word
+      word-break:break-word;
     }
     .session-box,.status-box,.hint-box{
       text-align:center;
@@ -85,23 +88,23 @@
       font-size:16px;
       border:1px solid rgba(255,255,255,.08);
       background:rgba(255,255,255,.05);
-      color:#fff
+      color:#fff;
     }
     .status-box{margin-bottom:14px}
     .status-success{
       background:rgba(57,216,106,.12);
-      border-color:rgba(57,216,106,.24)
+      border-color:rgba(57,216,106,.24);
     }
     .status-error{
       background:rgba(255,107,107,.12);
-      border-color:rgba(255,107,107,.24)
+      border-color:rgba(255,107,107,.24);
     }
     .hint-box{margin-bottom:16px}
     .actions{
       display:grid;
       grid-template-columns:1fr;
       gap:12px;
-      margin-top:14px
+      margin-top:14px;
     }
     .btn,.link-btn{
       display:flex;
@@ -115,7 +118,7 @@
       cursor:pointer;
       font-size:18px;
       font-weight:900;
-      transition:transform .15s ease, opacity .15s ease
+      transition:transform .15s ease, opacity .15s ease;
     }
     .btn:active,.link-btn:active{transform:scale(.985)}
     .btn:disabled{opacity:.65;cursor:not-allowed}
@@ -125,46 +128,50 @@
     .btn-secondary{background:linear-gradient(180deg,var(--slate),var(--slate2));color:#fff}
     .btn-purple{background:linear-gradient(180deg,var(--purple),var(--purple2));color:#fff}
     .btn-small{padding:14px 14px;font-size:16px;min-height:52px}
-
     .metrics{
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:12px;
-      margin-top:14px
+      margin-top:14px;
     }
     .metric{
       border:1px solid var(--line);
       background:rgba(255,255,255,.04);
       border-radius:24px;
       padding:18px 12px;
-      text-align:center
+      text-align:center;
     }
     .metric-number{
       font-size:46px;
       font-weight:900;
       color:var(--cyan);
       line-height:1;
-      margin-bottom:10px
+      margin-bottom:10px;
     }
-    .metric-label{font-size:16px;color:#fff;line-height:1.8}
+    .metric-label{
+      font-size:16px;
+      color:#fff;
+      line-height:1.8;
+    }
+
     .section-title,.list-title{
       text-align:center;
       margin:0 0 18px;
       font-size:28px;
       line-height:1.6;
-      font-weight:900
+      font-weight:900;
     }
     .form-grid{
       display:grid;
       grid-template-columns:1fr;
-      gap:14px
+      gap:14px;
     }
     .field label{
       display:block;
       margin-bottom:8px;
       font-size:16px;
       font-weight:900;
-      color:#fff
+      color:#fff;
     }
     .select,.input,.textarea{
       width:100%;
@@ -174,23 +181,28 @@
       background:rgba(255,255,255,.05);
       color:#fff;
       font-size:17px;
-      padding:16px 14px
+      padding:16px 14px;
     }
-    .textarea{min-height:130px;resize:vertical;line-height:1.9}
     .select option{color:#111}
+    .textarea{
+      min-height:130px;
+      resize:vertical;
+      line-height:1.9;
+    }
     .form-actions{
       display:grid;
       grid-template-columns:1fr;
       gap:12px;
-      margin-top:10px
+      margin-top:10px;
     }
     .small-note{
       text-align:center;
       color:var(--muted);
       font-size:15px;
       line-height:2;
-      margin-top:6px
+      margin-top:6px;
     }
+
     .empty-box{
       text-align:center;
       color:var(--muted);
@@ -199,16 +211,16 @@
       padding:24px 12px;
       border:1px dashed rgba(255,255,255,.14);
       border-radius:24px;
-      background:rgba(255,255,255,.03)
+      background:rgba(255,255,255,.03);
     }
     .desktop-table-wrap{
       display:none;
       overflow-x:auto;
       border:1px solid var(--line);
       border-radius:24px;
-      background:rgba(255,255,255,.03)
+      background:rgba(255,255,255,.03);
     }
-    table{width:100%;min-width:1240px;border-collapse:collapse}
+    table{width:100%;min-width:1280px;border-collapse:collapse}
     th,td{
       padding:15px 12px;
       text-align:center;
@@ -216,69 +228,71 @@
       font-size:15px;
       line-height:1.8;
       color:#fff;
-      vertical-align:middle
+      vertical-align:middle;
     }
     th{
       color:var(--cyan);
       font-size:16px;
       font-weight:900;
-      background:rgba(255,255,255,.02)
+      background:rgba(255,255,255,.02);
     }
     tr:last-child td{border-bottom:none}
+
     .pill{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:94px;
+      min-width:96px;
       padding:9px 12px;
       border-radius:999px;
       font-size:14px;
       font-weight:800;
-      white-space:nowrap
+      white-space:nowrap;
     }
     .pill-status{
       background:rgba(57,216,106,.14);
       border:1px solid rgba(57,216,106,.20);
-      color:#e4fff0
+      color:#e4fff0;
     }
     .pill-human{
       background:rgba(241,196,15,.13);
       border:1px solid rgba(241,196,15,.18);
-      color:#ffeab1
+      color:#ffeab1;
     }
     .pill-ai{
       background:rgba(142,134,255,.18);
       border:1px solid rgba(142,134,255,.22);
-      color:#f0ecff
+      color:#f0ecff;
     }
+
     .mobile-list{display:block}
     .schedule-card{
       background:rgba(255,255,255,.05);
       border:1px solid var(--line);
       border-radius:24px;
       padding:16px 14px;
-      margin-bottom:12px
+      margin-bottom:12px;
     }
     .schedule-title{
       font-size:21px;
       font-weight:900;
       line-height:1.7;
       margin-bottom:12px;
-      text-align:center
+      text-align:center;
     }
     .schedule-row{
       font-size:15px;
       line-height:1.95;
       color:var(--muted);
       margin-bottom:7px;
-      word-break:break-word
+      word-break:break-word;
     }
     .schedule-row strong{color:#fff}
     .schedule-actions{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
-      margin-top:16px
+      margin-top:16px;
     }
 
     @media (min-width:760px){
@@ -314,16 +328,16 @@
     </section>
 
     <section class="card">
-      <div id="topStatus" class="status-box">جاري تحميل بيانات الإدارة...</div>
+      <div id="topStatus" class="status-box">جاري تحميل البيانات...</div>
 
       <div class="metrics">
         <div class="metric">
-          <div id="metricSubjects" class="metric-number">0</div>
-          <div class="metric-label">المواد</div>
-        </div>
-        <div class="metric">
           <div id="metricClasses" class="metric-number">0</div>
           <div class="metric-label">الصفوف</div>
+        </div>
+        <div class="metric">
+          <div id="metricSubjects" class="metric-number">0</div>
+          <div class="metric-label">المواد</div>
         </div>
         <div class="metric">
           <div id="metricTeachers" class="metric-number">0</div>
@@ -343,6 +357,7 @@
 
       <form id="scheduleForm">
         <div class="form-grid">
+
           <div class="field">
             <label for="classSelect">الصف</label>
             <select id="classSelect" class="select" required>
@@ -403,9 +418,10 @@
             <label for="noteInput">ملاحظة</label>
             <textarea id="noteInput" class="textarea" placeholder="ملاحظة"></textarea>
           </div>
+
         </div>
 
-        <p class="small-note">هذه الصفحة تقرأ من قاعدة البيانات الحقيقية وتحفظ بشكل منظم، وتدعم الصفوف والمواد والمعلمين وربط المادة بالصف، مع تنظيف التكرار قدر الإمكان.</p>
+        <p class="small-note">هذه الصفحة تقرأ من أكثر من مسار داخل Firestore، وتجمع الصفوف والمواد والمعلمين والحصص من المجموعات العامة أو الفرعية داخل المدرسة، ثم تحفظ الحصص داخل المدرسة الحالية بشكل منظم.</p>
 
         <div class="form-actions">
           <button id="saveBtn" class="btn btn-success" type="submit">حفظ الحصة</button>
@@ -500,8 +516,8 @@
       classes: [],
       subjects: [],
       teachers: [],
-      classSubjects: [],
-      schedules: []
+      schedules: [],
+      classSubjects: []
     };
 
     const schoolNameEl = document.getElementById("schoolName");
@@ -511,8 +527,8 @@
     const formStatusEl = document.getElementById("formStatus");
     const listStatusEl = document.getElementById("listStatus");
 
-    const metricSubjectsEl = document.getElementById("metricSubjects");
     const metricClassesEl = document.getElementById("metricClasses");
+    const metricSubjectsEl = document.getElementById("metricSubjects");
     const metricTeachersEl = document.getElementById("metricTeachers");
     const metricSchedulesEl = document.getElementById("metricSchedules");
 
@@ -545,10 +561,10 @@
 
     function canonicalArabic(value) {
       return normalizeText(value)
-        .replace(/^ال/, "")
         .replace(/[أإآ]/g, "ا")
         .replace(/ة/g, "ه")
         .replace(/ى/g, "ي")
+        .replace(/^ال/, "")
         .replace(/\s+/g, " ")
         .trim()
         .toLowerCase();
@@ -562,7 +578,7 @@
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#39;");
     }
-
+  
     function normalizeDay(value) {
       const raw = lower(value);
       if (!raw) return "";
@@ -581,14 +597,13 @@
 
     function normalizeStatusLabel(value) {
       const raw = lower(value);
-      if (raw === "active" || raw === "نشط") return "نشط";
       if (raw === "inactive" || raw === "غير نشط") return "غير نشط";
       return "نشط";
     }
 
     function teacherTypeLabel(value) {
       const raw = lower(value);
-      if (raw.includes("smart") || raw.includes("ai") || raw.includes("bot") || raw.includes("ذكي")) {
+      if (raw.includes("ai") || raw.includes("smart") || raw.includes("ذكي") || raw.includes("bot")) {
         return "معلم ذكي";
       }
       return "معلم بشري";
@@ -597,13 +612,16 @@
     function formatTimeLabel(value) {
       const v = normalizeText(value);
       if (!v || !v.includes(":")) return v || "غير محدد";
-      const [hhRaw, mmRaw] = v.split(":");
-      const hh = Number(hhRaw);
-      const mm = String(mmRaw).padStart(2, "0");
-      const suffix = hh < 12 ? "صباحًا" : "مساءً";
-      let displayHour = hh % 12;
-      if (displayHour === 0) displayHour = 12;
-      return `${String(displayHour).padStart(2, "0")}:${mm} ${suffix}`;
+
+      const parts = v.split(":");
+      const hour24 = Number(parts[0]);
+      const minute = String(parts[1] || "00").padStart(2, "0");
+
+      const suffix = hour24 < 12 ? "صباحًا" : "مساءً";
+      let hour12 = hour24 % 12;
+      if (hour12 === 0) hour12 = 12;
+
+      return `${String(hour12).padStart(2, "0")}:${minute} ${suffix}`;
     }
 
     function timeRangeLabel(fromValue, toValue) {
@@ -623,7 +641,13 @@
     }
 
     function readStoredSession() {
-      const keys = ["madaris_user_session","madaris_session","school_session","user_session"];
+      const keys = [
+        "madaris_user_session",
+        "madaris_session",
+        "school_session",
+        "user_session"
+      ];
+
       for (const key of keys) {
         const raw = localStorage.getItem(key);
         if (!raw) continue;
@@ -649,7 +673,6 @@
       );
     }
 
-  
     function setSessionUI() {
       schoolNameEl.textContent =
         normalizeText(state.session?.schoolName) ||
@@ -658,20 +681,61 @@
         "المدرسة الحالية";
 
       schoolIdTextEl.textContent = `schoolId: ${state.schoolId}`;
-      sessionBoxEl.textContent = "تم العثور على جلسة المدرسة بنجاح.";
+      sessionBoxEl.textContent = "تم تحميل صفحة إدارة الجدول بنجاح.";
     }
 
-    function dedupeByKey(items, keyFn) {
-      const map = new Map();
-      for (const item of items) {
-        const key = keyFn(item);
-        if (!key) continue;
-        if (!map.has(key)) map.set(key, item);
+    function buildTimeOptions() {
+      const rows = [`<option value="">اختر الوقت</option>`];
+      for (let hour = 6; hour <= 18; hour += 1) {
+        for (const minute of [0,10,20,30,40,50]) {
+          const hh = String(hour).padStart(2, "0");
+          const mm = String(minute).padStart(2, "0");
+          const value = `${hh}:${mm}`;
+          rows.push(`<option value="${value}">${formatTimeLabel(value)}</option>`);
+        }
       }
-      return Array.from(map.values());
+      const html = rows.join("");
+      fromSelectEl.innerHTML = html;
+      toSelectEl.innerHTML = html;
     }
 
-    async function fetchCollectionSafe(...pathSegments) {
+    function safeArray(value) {
+      return Array.isArray(value) ? value : [];
+    }
+
+    function getField(obj, names, fallback = "") {
+      for (const name of names) {
+        if (obj && obj[name] !== undefined && obj[name] !== null && obj[name] !== "") {
+          return obj[name];
+        }
+      }
+      return fallback;
+    }
+
+    function matchesSchool(item, schoolId) {
+      const candidates = [
+        item.schoolId,
+        item.schoolID,
+        item.school_id,
+        item.schoolRef,
+        item.school?.id,
+        item.school?.schoolId,
+        item.schoolIdRef
+      ]
+        .map((v) => normalizeText(v))
+        .filter(Boolean);
+
+      if (candidates.includes(normalizeText(schoolId))) return true;
+
+      if (!candidates.length) {
+        const nestedPath = normalizeText(item.__path || "");
+        if (nestedPath.includes(`/schools/${schoolId}/`)) return true;
+      }
+
+      return false;
+    }
+
+    async function fetchCollectionDocs(pathSegments) {
       try {
         const snap = await getDocs(collection(db, ...pathSegments));
         return snap.docs.map((d) => ({
@@ -684,103 +748,236 @@
       }
     }
 
-    async function fetchWhereSafe(collectionName, field, value) {
+    async function fetchRootCollectionFiltered(collectionName, schoolId) {
       try {
-        const qy = query(collection(db, collectionName), where(field, "==", value));
-        const snap = await getDocs(qy);
+        const q1 = query(collection(db, collectionName), where("schoolId", "==", schoolId));
+        const snap = await getDocs(q1);
         return snap.docs.map((d) => ({
           id: d.id,
           __path: collectionName,
           ...d.data()
         }));
       } catch (_) {
-        return [];
+        try {
+          const snap = await getDocs(collection(db, collectionName));
+          return snap.docs
+            .map((d) => ({
+              id: d.id,
+              __path: collectionName,
+              ...d.data()
+            }))
+            .filter((item) => matchesSchool(item, schoolId));
+        } catch (_) {
+          return [];
+        }
       }
     }
 
-    function buildTimeOptions() {
-      let options = `<option value="">اختر الوقت</option>`;
-      for (let hour = 6; hour <= 18; hour += 1) {
-        for (const minute of [0,10,20,30,40,50]) {
-          const hh = String(hour).padStart(2, "0");
-          const mm = String(minute).padStart(2, "0");
-          const value = `${hh}:${mm}`;
-          const label = formatTimeLabel(value);
-          options += `<option value="${value}">${label}</option>`;
-        }
-      }
-      fromSelectEl.innerHTML = options;
-      toSelectEl.innerHTML = options;
+    async function fetchFlexibleCollection(collectionName, schoolId) {
+      const nested = await fetchCollectionDocs(["schools", schoolId, collectionName]);
+      const root = await fetchRootCollectionFiltered(collectionName, schoolId);
+      return [...nested, ...root];
     }
+function uniqueBy(items, keyBuilder) {
+      const map = new Map();
+      for (const item of items) {
+        const key = keyBuilder(item);
+        if (!key) continue;
+        if (!map.has(key)) map.set(key, item);
+      }
+      return Array.from(map.values());
+    }
+
+    function normalizeClassRecord(item) {
+      const name =
+        normalizeText(getField(item, ["name", "className", "title", "label"])) ||
+        `صف ${item.id}`;
+
+      return {
+        id: item.id,
+        name,
+        schoolId: normalizeText(getField(item, ["schoolId", "schoolID", "school_id"])),
+        raw: item
+      };
+    }
+
+    function normalizeSubjectRecord(item) {
+      const name =
+        normalizeText(getField(item, ["name", "subjectName", "title", "label"])) ||
+        `مادة ${item.id}`;
+
+      return {
+        id: item.id,
+        name,
+        key: canonicalArabic(name),
+        schoolId: normalizeText(getField(item, ["schoolId", "schoolID", "school_id"])),
+        raw: item
+      };
+    }
+
+    function normalizeTeacherRecord(item) {
+      const name =
+        normalizeText(getField(item, ["name", "teacherName", "fullName"])) ||
+        `معلم ${item.id}`;
+
+      const subjectId = normalizeText(
+        getField(item, ["subjectId", "subjectID", "subject_id"])
+      );
+
+      const subjectName = normalizeText(
+        getField(item, ["subjectName", "specialty", "subject"])
+      );
+
+      const type = normalizeText(
+        getField(item, ["type", "teacherType", "mode"], "human")
+      ) || "human";
+
+      return {
+        id: item.id,
+        name,
+        subjectId,
+        subjectName,
+        type,
+        schoolId: normalizeText(getField(item, ["schoolId", "schoolID", "school_id"])),
+        raw: item
+      };
+    }
+
+    function normalizeClassSubjectRecord(item) {
+      return {
+        id: item.id,
+        classId: normalizeText(getField(item, ["classId", "classID", "class_id"])),
+        subjectId: normalizeText(getField(item, ["subjectId", "subjectID", "subject_id"])),
+        subjectName: normalizeText(getField(item, ["subjectName", "name"])),
+        schoolId: normalizeText(getField(item, ["schoolId", "schoolID", "school_id"])),
+        raw: item
+      };
+    }
+
+    function normalizeScheduleRecord(item) {
+      return {
+        id: item.id,
+        classId: normalizeText(getField(item, ["classId", "classID", "class_id"])),
+        subjectId: normalizeText(getField(item, ["subjectId", "subjectID", "subject_id"])),
+        teacherId: normalizeText(getField(item, ["teacherId", "teacherID", "teacher_id"])),
+        day: normalizeDay(getField(item, ["day", "dayName"], "saturday")),
+        period: Number(getField(item, ["period", "lessonNumber", "slot"], 0)),
+        from: normalizeText(getField(item, ["from", "startTime", "timeFrom"])),
+        to: normalizeText(getField(item, ["to", "endTime", "timeTo"])),
+        status: normalizeText(getField(item, ["status"], "active")) || "active",
+        note: normalizeText(getField(item, ["note", "notes", "comment"])),
+        schoolId: normalizeText(getField(item, ["schoolId", "schoolID", "school_id"])),
+        raw: item
+      };
+    }
+
+    function resolveTeacherSubjectName(teacher) {
+      if (normalizeText(teacher.subjectName)) return teacher.subjectName;
+
+      if (normalizeText(teacher.subjectId)) {
+        const byId = state.subjects.find((s) => s.id === teacher.subjectId);
+        if (byId) return byId.name;
+      }
+
+      return "مادة غير معروفة";
+    }
+
     function populateClasses() {
       const options = [
         `<option value="">اختر الصف</option>`,
         ...state.classes.map(
-          (cls) =>
-            `<option value="${escapeHtml(cls.id)}">${escapeHtml(
-              cls.name || cls.className || "بدون اسم"
-            )}</option>`
+          (cls) => `<option value="${escapeHtml(cls.id)}">${escapeHtml(cls.name)}</option>`
         )
       ];
       classSelectEl.innerHTML = options.join("");
     }
 
-    function populateSubjects() {
-      const uniqueSubjects = dedupeByKey(
-        state.subjects,
-        (s) => canonicalArabic(s.name || s.subjectName)
+    function getSubjectsAllowedForClass(classId) {
+      const classIdNorm = normalizeText(classId);
+      if (!classIdNorm) return state.subjects;
+
+      const relations = state.classSubjects.filter(
+        (r) => normalizeText(r.classId) === classIdNorm
+      );
+
+      if (!relations.length) return state.subjects;
+
+      const bySubjectId = relations
+        .map((r) => normalizeText(r.subjectId))
+        .filter(Boolean);
+
+      if (bySubjectId.length) {
+        const matched = state.subjects.filter((s) => bySubjectId.includes(normalizeText(s.id)));
+        if (matched.length) return matched;
+      }
+
+      const bySubjectNameKeys = relations
+        .map((r) => canonicalArabic(r.subjectName))
+        .filter(Boolean);
+
+      if (bySubjectNameKeys.length) {
+        const matched = state.subjects.filter((s) => bySubjectNameKeys.includes(canonicalArabic(s.name)));
+        if (matched.length) return matched;
+      }
+
+      return state.subjects;
+    }
+
+    function populateSubjects(classId = "") {
+      const allowedSubjects = getSubjectsAllowedForClass(classId);
+
+      const uniqueSubjects = uniqueBy(
+        allowedSubjects,
+        (s) => canonicalArabic(s.name) || normalizeText(s.id)
       );
 
       const options = [
         `<option value="">اختر المادة</option>`,
         ...uniqueSubjects.map(
           (subject) =>
-            `<option value="${escapeHtml(subject.id)}">${escapeHtml(
-              subject.name || subject.subjectName || "بدون اسم"
-            )}</option>`
+            `<option value="${escapeHtml(subject.id)}">${escapeHtml(subject.name)}</option>`
         )
       ];
 
       subjectSelectEl.innerHTML = options.join("");
     }
 
-    function populateTeachers() {
-      const options = [
-        `<option value="">اختر المعلم</option>`,
-        ...state.teachers.map(
-          (teacher) =>
-            `<option value="${escapeHtml(teacher.id)}">
-              ${escapeHtml(
-                teacher.name || teacher.teacherName || "بدون اسم"
-              )} - ${escapeHtml(
-              teacher.subjectName || "مادة غير معروفة"
-            )}
-            </option>`
-        )
-      ];
-
-      teacherSelectEl.innerHTML = options.join("");
+    function teacherDisplayLabel(teacher) {
+      return `${teacher.name} - ${resolveTeacherSubjectName(teacher)} - ${teacherTypeLabel(teacher.type)}`;
     }
 
-    function filterTeachersBySubject(subjectId) {
-      if (!subjectId) {
-        populateTeachers();
-        return;
+    function filterTeachers(classId = "", subjectId = "") {
+      let teachers = [...state.teachers];
+
+      if (normalizeText(subjectId)) {
+        const selectedSubject = state.subjects.find((s) => s.id === subjectId);
+        const selectedKey = canonicalArabic(selectedSubject?.name || "");
+
+        teachers = teachers.filter((teacher) => {
+          if (normalizeText(teacher.subjectId) === normalizeText(subjectId)) return true;
+          const teacherSubjectKey = canonicalArabic(resolveTeacherSubjectName(teacher));
+          return selectedKey && teacherSubjectKey === selectedKey;
+        });
       }
 
-      const filtered = state.teachers.filter(
-        (t) => t.subjectId === subjectId
-      );
+      if (normalizeText(classId)) {
+        const allowedSubjects = getSubjectsAllowedForClass(classId);
+        const allowedIds = allowedSubjects.map((s) => normalizeText(s.id));
+        const allowedKeys = allowedSubjects.map((s) => canonicalArabic(s.name));
 
+        teachers = teachers.filter((teacher) => {
+          if (normalizeText(subjectId)) return true;
+          const tSubjectId = normalizeText(teacher.subjectId);
+          const tSubjectKey = canonicalArabic(resolveTeacherSubjectName(teacher));
+          return allowedIds.includes(tSubjectId) || allowedKeys.includes(tSubjectKey);
+        });
+      }
+      
       const options = [
         `<option value="">اختر المعلم</option>`,
-        ...filtered.map(
+        ...teachers.map(
           (teacher) =>
-            `<option value="${escapeHtml(teacher.id)}">
-              ${escapeHtml(
-                teacher.name || teacher.teacherName || "بدون اسم"
-              )}
-            </option>`
+            `<option value="${escapeHtml(teacher.id)}">${escapeHtml(teacherDisplayLabel(teacher))}</option>`
         )
       ];
 
@@ -788,102 +985,106 @@
     }
 
     function updateMetrics() {
-      metricSubjectsEl.textContent = state.subjects.length;
       metricClassesEl.textContent = state.classes.length;
+      metricSubjectsEl.textContent = state.subjects.length;
       metricTeachersEl.textContent = state.teachers.length;
       metricSchedulesEl.textContent = state.schedules.length;
     }
 
     async function loadSchoolName() {
       try {
-        const docRef = doc(db, "schools", state.schoolId);
-        const snap = await getDoc(docRef);
+        const snap = await getDoc(doc(db, "schools", state.schoolId));
         if (snap.exists()) {
           const data = snap.data();
           state.schoolName =
-            data.name || data.schoolName || "مدرسة بدون اسم";
+            normalizeText(getField(data, ["name", "schoolName"])) || "مدرسة بدون اسم";
           schoolNameEl.textContent = state.schoolName;
         }
-      } catch (error) {
-        console.error("خطأ تحميل اسم المدرسة", error);
-      }
+      } catch (_) {}
     }
 
     async function loadClasses() {
-      const items = await fetchCollectionSafe(
-        "schools",
-        state.schoolId,
-        "classes"
-      );
+      const rows = await fetchFlexibleCollection("classes", state.schoolId);
 
-      state.classes = items.map((item) => ({
-        id: item.id,
-        name: item.name || item.className
-      }));
+      const normalized = rows
+        .map(normalizeClassRecord)
+        .filter((item) => normalizeText(item.name));
+
+      state.classes = uniqueBy(
+        normalized,
+        (item) => canonicalArabic(item.name) || normalizeText(item.id)
+      ).sort((a, b) => a.name.localeCompare(b.name, "ar"));
 
       populateClasses();
     }
 
     async function loadSubjects() {
-      const items = await fetchCollectionSafe(
-        "schools",
-        state.schoolId,
-        "subjects"
-      );
+      const rows = await fetchFlexibleCollection("subjects", state.schoolId);
 
-      state.subjects = items.map((item) => ({
-        id: item.id,
-        name: item.name || item.subjectName
-      }));
+      const normalized = rows
+        .map(normalizeSubjectRecord)
+        .filter((item) => normalizeText(item.name));
+
+      state.subjects = uniqueBy(
+        normalized,
+        (item) => canonicalArabic(item.name)
+      ).sort((a, b) => a.name.localeCompare(b.name, "ar"));
 
       populateSubjects();
     }
 
     async function loadTeachers() {
-      const items = await fetchCollectionSafe(
-        "schools",
-        state.schoolId,
-        "teachers"
-      );
+      const rows = await fetchFlexibleCollection("teachers", state.schoolId);
 
-      state.teachers = items.map((item) => {
-        const subject = state.subjects.find(
-          (s) => s.id === item.subjectId
-        );
+      const normalized = rows
+        .map(normalizeTeacherRecord)
+        .filter((item) => normalizeText(item.name));
 
-        return {
-          id: item.id,
-          name: item.name || item.teacherName,
-          subjectId: item.subjectId || "",
-          subjectName: subject
-            ? subject.name
-            : "مادة غير معروفة",
-          type: item.type || "human"
-        };
-      });
+      state.teachers = uniqueBy(
+        normalized,
+        (item) => canonicalArabic(item.name) + "::" + canonicalArabic(resolveTeacherSubjectName(item))
+      ).sort((a, b) => a.name.localeCompare(b.name, "ar"));
 
-      populateTeachers();
+      filterTeachers();
     }
 
     async function loadClassSubjects() {
-      const items = await fetchCollectionSafe(
-        "schools",
-        state.schoolId,
-        "classSubjects"
-      );
+      const rows = await fetchFlexibleCollection("classSubjects", state.schoolId);
 
-      state.classSubjects = items;
+      state.classSubjects = rows
+        .map(normalizeClassSubjectRecord)
+        .filter((item) => normalizeText(item.classId));
     }
 
     async function loadSchedules() {
-      const items = await fetchCollectionSafe(
-        "schools",
-        state.schoolId,
-        "schedules"
-      );
+      const rows = await fetchFlexibleCollection("schedules", state.schoolId);
 
-      state.schedules = items;
+      state.schedules = rows
+        .map(normalizeScheduleRecord)
+        .filter((item) => normalizeText(item.classId) || normalizeText(item.subjectId));
+
       renderSchedules();
+    }
+
+    function resolveClassName(classId) {
+      const cls = state.classes.find((c) => normalizeText(c.id) === normalizeText(classId));
+      return cls ? cls.name : "غير معروف";
+    }
+
+    function resolveSubjectName(subjectId, schedule = null) {
+      const byId = state.subjects.find((s) => normalizeText(s.id) === normalizeText(subjectId));
+      if (byId) return byId.name;
+
+      if (schedule?.teacherId) {
+        const teacher = state.teachers.find((t) => normalizeText(t.id) === normalizeText(schedule.teacherId));
+        if (teacher) return resolveTeacherSubjectName(teacher);
+      }
+
+      return "غير معروف";
+    }
+
+    function resolveTeacher(schedule) {
+      return state.teachers.find((t) => normalizeText(t.id) === normalizeText(schedule.teacherId)) || null;
     }
 
     function renderSchedules() {
@@ -900,433 +1101,278 @@
       const sorted = [...state.schedules].sort((a, b) => {
         const dayA = DAY_ORDER[normalizeDay(a.day)] || 99;
         const dayB = DAY_ORDER[normalizeDay(b.day)] || 99;
-
         if (dayA !== dayB) return dayA - dayB;
-
         return Number(a.period || 0) - Number(b.period || 0);
       });
 
-      tableBodyEl.innerHTML = sorted
-        .map((schedule) => {
-          const cls = state.classes.find(
-            (c) => c.id === schedule.classId
-          );
-          const subject = state.subjects.find(
-            (s) => s.id === schedule.subjectId
-          );
-          const teacher = state.teachers.find(
-            (t) => t.id === schedule.teacherId
-          );
+      tableBodyEl.innerHTML = sorted.map((schedule) => {
+        const teacher = resolveTeacher(schedule);
+        const className = resolveClassName(schedule.classId);
+        const subjectName = resolveSubjectName(schedule.subjectId, schedule);
+        const teacherName = teacher ? teacher.name : "غير معروف";
+        const teacherType = teacher ? teacherTypeLabel(teacher.type) : "معلم بشري";
+        const teacherType = teacher ? teacherTypeLabel(teacher.type) : "معلم بشري";
 
-          return `
-<tr>
-<td>${escapeHtml(cls?.name || "غير معروف")}</td>
-<td>${escapeHtml(subject?.name || "غير معروف")}</td>
-<td>${escapeHtml(teacher?.name || "غير معروف")}</td>
-<td>
-<span class="pill ${
-  teacher?.type === "ai"
-    ? "pill-ai"
-    : "pill-human"
-}">
-${teacherTypeLabel(teacher?.type)}
-</span>
-</td>
-<td>${dayLabel(schedule.day)}</td>
-<td>${escapeHtml(schedule.period)}</td>
-<td>${timeRangeLabel(
-  schedule.from,
-  schedule.to
-)}</td>
-<td>
-<span class="pill pill-status">
-${normalizeStatusLabel(
-  schedule.status
-)}
-</span>
-</td>
-<td>${escapeHtml(
-  schedule.note || "-"
-)}</td>
-<td>
-<div class="schedule-actions">
-<button 
-class="btn btn-small btn-primary"
-onclick="editSchedule('${schedule.id}')">
-تعديل
-</button>
+      return `
+        <tr>
+          <td>${escapeHtml(className)}</td>
+          <td>${escapeHtml(subjectName)}</td>
+          <td>${escapeHtml(teacherName)}</td>
+          <td>
+            <span class="pill ${teacher && teacherTypeLabel(teacher.type) === "معلم ذكي" ? "pill-ai" : "pill-human"}">
+              ${escapeHtml(teacherType)}
+            </span>
+          </td>
+          <td>${escapeHtml(dayLabel(schedule.day))}</td>
+          <td>${escapeHtml(String(schedule.period || "-"))}</td>
+          <td>${escapeHtml(timeRangeLabel(schedule.from, schedule.to))}</td>
+          <td>
+            <span class="pill pill-status">
+              ${escapeHtml(normalizeStatusLabel(schedule.status))}
+            </span>
+          </td>
+          <td>${escapeHtml(schedule.note || "-")}</td>
+          <td>
+            <div class="schedule-actions">
+              <button class="btn btn-small btn-primary" onclick="editSchedule('${schedule.id}')">تعديل</button>
+              <button class="btn btn-small btn-danger" onclick="deleteSchedule('${schedule.id}')">حذف</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
 
-<button 
-class="btn btn-small btn-danger"
-onclick="deleteSchedule('${schedule.id}')">
-حذف
-</button>
-</div>
-</td>
-</tr>
-`;
-        })
-        .join("");
+    mobileListEl.innerHTML = sorted.map((schedule) => {
+      const teacher = resolveTeacher(schedule);
+      const className = resolveClassName(schedule.classId);
+      const subjectName = resolveSubjectName(schedule.subjectId, schedule);
+      const teacherName = teacher ? teacher.name : "غير معروف";
+      const teacherType = teacher ? teacherTypeLabel(teacher.type) : "معلم بشري";
 
-      mobileListEl.innerHTML = sorted
-        .map((schedule) => {
-          const cls = state.classes.find(
-            (c) => c.id === schedule.classId
-          );
-          const subject = state.subjects.find(
-            (s) => s.id === schedule.subjectId
-          );
-          const teacher = state.teachers.find(
-            (t) => t.id === schedule.teacherId
-          );
+      return `
+        <div class="schedule-card">
+          <div class="schedule-title">${escapeHtml(className)} — ${escapeHtml(subjectName)}</div>
 
-          return `
-<div class="schedule-card">
-<div class="schedule-title">
-${escapeHtml(cls?.name || "غير معروف")} — 
-${escapeHtml(subject?.name || "غير معروف")}
-</div>
+          <div class="schedule-row"><strong>المعلم:</strong> ${escapeHtml(teacherName)}</div>
+          <div class="schedule-row"><strong>نوع المعلم:</strong> ${escapeHtml(teacherType)}</div>
+          <div class="schedule-row"><strong>اليوم:</strong> ${escapeHtml(dayLabel(schedule.day))}</div>
+          <div class="schedule-row"><strong>الحصة:</strong> ${escapeHtml(String(schedule.period || "-"))}</div>
+          <div class="schedule-row"><strong>الوقت:</strong> ${escapeHtml(timeRangeLabel(schedule.from, schedule.to))}</div>
+          <div class="schedule-row"><strong>الحالة:</strong> ${escapeHtml(normalizeStatusLabel(schedule.status))}</div>
+          <div class="schedule-row"><strong>ملاحظة:</strong> ${escapeHtml(schedule.note || "-")}</div>
 
-<div class="schedule-row">
-<strong>المعلم:</strong> 
-${escapeHtml(teacher?.name || "غير معروف")}
-</div>
+          <div class="schedule-actions">
+            <button class="btn btn-small btn-primary" onclick="editSchedule('${schedule.id}')">تعديل</button>
+            <button class="btn btn-small btn-danger" onclick="deleteSchedule('${schedule.id}')">حذف</button>
+          </div>
+        </div>
+      `;
+    }).join("");
 
-<div class="schedule-row">
-<strong>النوع:</strong> 
-${teacherTypeLabel(teacher?.type)}
-</div>
+    updateMetrics();
+  }
 
-<div class="schedule-row">
-<strong>اليوم:</strong> 
-${dayLabel(schedule.day)}
-</div>
+  window.editSchedule = function (scheduleId) {
+    const schedule = state.schedules.find((s) => s.id === scheduleId);
+    if (!schedule) return;
 
-<div class="schedule-row">
-<strong>الحصة:</strong> 
-${escapeHtml(schedule.period)}
-</div>
+    state.editingScheduleId = scheduleId;
 
-<div class="schedule-row">
-<strong>الوقت:</strong> 
-${timeRangeLabel(
-  schedule.from,
-  schedule.to
-)}
-</div>
+    classSelectEl.value = schedule.classId || "";
+    populateSubjects(schedule.classId || "");
+    subjectSelectEl.value = schedule.subjectId || "";
+    filterTeachers(schedule.classId || "", schedule.subjectId || "");
+    teacherSelectEl.value = schedule.teacherId || "";
 
-<div class="schedule-row">
-<strong>الحالة:</strong> 
-${normalizeStatusLabel(
-  schedule.status
-)}
-</div>
+    daySelectEl.value = normalizeDay(schedule.day) || "saturday";
+    periodInputEl.value = schedule.period || "";
+    fromSelectEl.value = schedule.from || "";
+    toSelectEl.value = schedule.to || "";
+    statusSelectEl.value = lower(schedule.status) === "inactive" ? "inactive" : "active";
+    noteInputEl.value = schedule.note || "";
 
-<div class="schedule-row">
-<strong>ملاحظة:</strong> 
-${escapeHtml(
-  schedule.note || "-"
-)}
-</div>
+    setStatus(formStatusEl, "تم تحميل الحصة في وضع التعديل.", "success");
 
-<div class="schedule-actions">
-<button 
-class="btn btn-small btn-primary"
-onclick="editSchedule('${schedule.id}')">
-تعديل
-</button>
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-<button 
-class="btn btn-small btn-danger"
-onclick="deleteSchedule('${schedule.id}')">
-حذف
-</button>
-</div>
-</div>
-`;
-        })
-        .join("");
+  window.deleteSchedule = async function (scheduleId) {
+    const ok = confirm("هل تريد حذف هذه الحصة نهائيًا؟");
+    if (!ok) return;
 
-      updateMetrics();
+    try {
+      await deleteDoc(doc(db, "schools", state.schoolId, "schedules", scheduleId));
+      state.schedules = state.schedules.filter((s) => s.id !== scheduleId);
+      renderSchedules();
+      setStatus(listStatusEl, "تم حذف الحصة بنجاح.", "success");
+    } catch (error) {
+      console.error(error);
+      setStatus(listStatusEl, "فشل حذف الحصة.", "error");
     }
-    window.editSchedule = function (scheduleId) {
-      const schedule = state.schedules.find((s) => s.id === scheduleId);
-      if (!schedule) return;
+  };
 
-      state.editingScheduleId = scheduleId;
+  function resetForm() {
+    state.editingScheduleId = null;
+    scheduleFormEl.reset();
+    daySelectEl.value = "saturday";
+    statusSelectEl.value = "active";
+    populateSubjects("");
+    filterTeachers("", "");
+    setStatus(formStatusEl, "تم تفريغ النموذج.", "success");
+  }
 
-      classSelectEl.value = schedule.classId || "";
-      subjectSelectEl.value = schedule.subjectId || "";
-      filterTeachersBySubject(schedule.subjectId || "");
-      teacherSelectEl.value = schedule.teacherId || "";
+  async function saveSchedule(event) {
+    event.preventDefault();
 
-      daySelectEl.value = normalizeDay(schedule.day) || "saturday";
-      periodInputEl.value = schedule.period || "";
-      fromSelectEl.value = schedule.from || "";
-      toSelectEl.value = schedule.to || "";
-      statusSelectEl.value =
-        schedule.status === "inactive" ? "inactive" : "active";
-
-      noteInputEl.value = schedule.note || "";
-
-      setStatus(
-        formStatusEl,
-        "وضع التعديل مفعل. عدّل البيانات ثم اضغط حفظ.",
-        "success"
-      );
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+    const payload = {
+      schoolId: state.schoolId,
+      classId: normalizeText(classSelectEl.value),
+      subjectId: normalizeText(subjectSelectEl.value),
+      teacherId: normalizeText(teacherSelectEl.value),
+      day: normalizeDay(daySelectEl.value),
+      period: Number(periodInputEl.value || 0),
+      from: normalizeText(fromSelectEl.value),
+      to: normalizeText(toSelectEl.value),
+      status: normalizeText(statusSelectEl.value || "active"),
+      note: normalizeText(noteInputEl.value),
+      updatedAt: serverTimestamp()
     };
 
-    window.deleteSchedule = async function (scheduleId) {
-      const ok = confirm("هل تريد حذف الحصة نهائياً؟");
-      if (!ok) return;
+    if (!payload.classId || !payload.subjectId || !payload.teacherId) {
+      setStatus(formStatusEl, "يجب اختيار الصف والمادة والمعلم.", "error");
+      return;
+    }
 
-      try {
-        await deleteDoc(
-          doc(
-            db,
-            "schools",
-            state.schoolId,
-            "schedules",
-            scheduleId
-          )
+    if (!payload.day || !payload.period || !payload.from || !payload.to) {
+      setStatus(formStatusEl, "يجب إدخال اليوم والحصة والوقت.", "error");
+      return;
+    }
+
+    if (payload.from >= payload.to) {
+      setStatus(formStatusEl, "وقت البداية يجب أن يكون قبل النهاية.", "error");
+      return;
+    }
+
+    try {
+      saveBtnEl.disabled = true;
+
+      if (state.editingScheduleId) {
+        await updateDoc(
+          doc(db, "schools", state.schoolId, "schedules", state.editingScheduleId),
+          payload
         );
 
-        state.schedules = state.schedules.filter(
-          (s) => s.id !== scheduleId
+        const index = state.schedules.findIndex((s) => s.id === state.editingScheduleId);
+        if (index !== -1) {
+          state.schedules[index] = {
+            ...state.schedules[index],
+            ...payload
+          };
+        }
+
+        setStatus(formStatusEl, "تم تحديث الحصة بنجاح.", "success");
+      } else {
+        const ref = await addDoc(
+          collection(db, "schools", state.schoolId, "schedules"),
+          {
+            ...payload,
+            createdAt: serverTimestamp()
+          }
         );
 
-        renderSchedules();
+        state.schedules.push({
+          id: ref.id,
+          ...payload
+        });
 
-        setStatus(
-          listStatusEl,
-          "تم حذف الحصة بنجاح.",
-          "success"
-        );
-      } catch (error) {
-        console.error(error);
-
-        setStatus(
-          listStatusEl,
-          "فشل حذف الحصة.",
-          "error"
-        );
+        setStatus(formStatusEl, "تم حفظ الحصة الجديدة.", "success");
       }
-    };
 
-    function resetForm() {
-      state.editingScheduleId = null;
-
-      scheduleFormEl.reset();
-      populateTeachers();
-
-      setStatus(
-        formStatusEl,
-        "تم تفريغ النموذج.",
-        "default"
-      );
+      resetForm();
+      renderSchedules();
+    } catch (error) {
+      console.error(error);
+      setStatus(formStatusEl, "فشل حفظ الحصة.", "error");
+    } finally {
+      saveBtnEl.disabled = false;
     }
+async function loadAll() {
+    try {
+      setStatus(topStatusEl, "جاري تحميل البيانات من قاعدة البيانات...");
 
-    async function saveSchedule(event) {
-      event.preventDefault();
+      await loadSchoolName();
+      await loadClasses();
+      await loadSubjects();
+      await loadTeachers();
+      await loadClassSubjects();
+      await loadSchedules();
 
-      const payload = {
-        classId: classSelectEl.value,
-        subjectId: subjectSelectEl.value,
-        teacherId: teacherSelectEl.value,
-        day: normalizeDay(daySelectEl.value),
-        period: Number(periodInputEl.value || 0),
-        from: fromSelectEl.value,
-        to: toSelectEl.value,
-        status: statusSelectEl.value,
-        note: normalizeText(noteInputEl.value),
-        updatedAt: serverTimestamp()
-      };
+      setStatus(topStatusEl, "تم تحميل البيانات بنجاح.", "success");
+      setStatus(listStatusEl, "تم تحميل الحصص الحالية.", "success");
+    } catch (error) {
+      console.error(error);
+      setStatus(topStatusEl, "حدث خطأ أثناء تحميل البيانات.", "error");
+      setStatus(listStatusEl, "تعذر تحميل قائمة الحصص.", "error");
+    }
+  }
 
-      if (!payload.classId || !payload.subjectId || !payload.teacherId) {
-        setStatus(
-          formStatusEl,
-          "يجب اختيار الصف والمادة والمعلم.",
-          "error"
-        );
+  classSelectEl.addEventListener("change", () => {
+    const classId = normalizeText(classSelectEl.value);
+    populateSubjects(classId);
+    filterTeachers(classId, "");
+  });
+
+  subjectSelectEl.addEventListener("change", () => {
+    const classId = normalizeText(classSelectEl.value);
+    const subjectId = normalizeText(subjectSelectEl.value);
+    filterTeachers(classId, subjectId);
+  });
+
+  resetBtnEl.addEventListener("click", resetForm);
+  scheduleFormEl.addEventListener("submit", saveSchedule);
+
+  logoutBtnEl.addEventListener("click", () => {
+    const ok = confirm("هل تريد تسجيل الخروج من جلسة المدرسة؟");
+    if (!ok) return;
+
+    localStorage.removeItem("madaris_user_session");
+    localStorage.removeItem("madaris_session");
+    localStorage.removeItem("school_session");
+    sessionStorage.removeItem("schoolId");
+
+    window.location.href = "./login.html";
+  });
+
+  async function init() {
+    try {
+      buildTimeOptions();
+
+      const session = readStoredSession();
+      if (!session) {
+        sessionBoxEl.textContent = "لم يتم العثور على جلسة مدرسة.";
         return;
       }
 
-      try {
-        saveBtnEl.disabled = true;
+      state.session = session;
+      state.schoolId = resolveSchoolId(session);
 
-        if (state.editingScheduleId) {
-          await updateDoc(
-            doc(
-              db,
-              "schools",
-              state.schoolId,
-              "schedules",
-              state.editingScheduleId
-            ),
-            payload
-          );
-
-          const index = state.schedules.findIndex(
-            (s) => s.id === state.editingScheduleId
-          );
-
-          if (index !== -1) {
-            state.schedules[index] = {
-              ...state.schedules[index],
-              ...payload
-            };
-          }
-
-          setStatus(
-            formStatusEl,
-            "تم تحديث الحصة بنجاح.",
-            "success"
-          );
-        } else {
-          const ref = await addDoc(
-            collection(
-              db,
-              "schools",
-              state.schoolId,
-              "schedules"
-            ),
-            {
-              ...payload,
-              createdAt: serverTimestamp()
-            }
-          );
-
-          state.schedules.push({
-            id: ref.id,
-            ...payload
-          });
-
-          setStatus(
-            formStatusEl,
-            "تم إضافة الحصة بنجاح.",
-            "success"
-          );
-        }
-
-        resetForm();
-        renderSchedules();
-      } catch (error) {
-        console.error(error);
-
-        setStatus(
-          formStatusEl,
-          "فشل حفظ الحصة.",
-          "error"
-        );
-      } finally {
-        saveBtnEl.disabled = false;
+      if (!state.schoolId) {
+        sessionBoxEl.textContent = "لم يتم العثور على schoolId.";
+        return;
       }
+
+      setSessionUI();
+
+      await loadAll();
+
+    } catch (error) {
+      console.error(error);
+      setStatus(topStatusEl, "حدث خطأ أثناء تهيئة الصفحة.", "error");
     }
+  
+  init();
 
-    async function loadAll() {
-      try {
-        setStatus(topStatusEl, "جاري تحميل البيانات...");
-
-        await loadSchoolName();
-        await loadClasses();
-        await loadSubjects();
-        await loadTeachers();
-        await loadClassSubjects();
-        await loadSchedules();
-
-        setStatus(
-          topStatusEl,
-          "تم تحميل البيانات بنجاح.",
-          "success"
-        );
-      } catch (error) {
-        console.error(error);
-
-        setStatus(
-          topStatusEl,
-          "فشل تحميل البيانات.",
-          "error"
-        );
-      }
-    }
-
-    function bindEvents() {
-      scheduleFormEl.addEventListener("submit", saveSchedule);
-
-      resetBtnEl.addEventListener("click", resetForm);
-
-      logoutBtnEl.addEventListener("click", () => {
-        localStorage.clear();
-        sessionStorage.clear();
-        window.location.href = "/login.html";
-      });
-
-      subjectSelectEl.addEventListener("change", () => {
-        filterTeachersBySubject(subjectSelectEl.value);
-      });
-    }
-    async function init() {
-      try {
-        setStatus(sessionBoxEl, "جاري التحقق من الجلسة...");
-
-        const session = readStoredSession();
-
-        if (!session) {
-          setStatus(
-            sessionBoxEl,
-            "لم يتم العثور على جلسة. سيتم تحويلك لصفحة الدخول.",
-            "error"
-          );
-
-          setTimeout(() => {
-            window.location.href = "/login.html";
-          }, 1500);
-
-          return;
-        }
-
-        state.session = session;
-        state.schoolId = resolveSchoolId(session);
-
-        if (!state.schoolId) {
-          setStatus(
-            sessionBoxEl,
-            "لم يتم العثور على schoolId.",
-            "error"
-          );
-
-          return;
-        }
-
-        setSessionUI();
-
-        buildTimeOptions();
-        bindEvents();
-
-        await loadAll();
-
-        setStatus(
-          sessionBoxEl,
-          "تم تحميل صفحة إدارة الجدول بنجاح.",
-          "success"
-        );
-      } catch (error) {
-        console.error(error);
-
-        setStatus(
-          sessionBoxEl,
-          "حدث خطأ أثناء تحميل الصفحة.",
-          "error"
-        );
-      }
-    }
-
-    init();
   </script>
+
 </body>
-</html>
+</html>    
