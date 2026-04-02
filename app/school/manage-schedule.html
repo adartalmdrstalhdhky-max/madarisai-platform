@@ -405,7 +405,7 @@
           </div>
         </div>
 
-        <p class="small-note">هذه الصفحة تقرأ من قاعدة البيانات الحقيقية وتحفظ بشكل منظم، وتدعم الصفوف والمواد والمعلمين وربط المادة بالصف.</p>
+        <p class="small-note">هذه الصفحة تقرأ من قاعدة البيانات الحقيقية وتحفظ بشكل منظم، وتدعم الصفوف والمواد والمعلمين وربط المادة بالصف، مع تنظيف التكرار قدر الإمكان.</p>
 
         <div class="form-actions">
           <button id="saveBtn" class="btn btn-success" type="submit">حفظ الحصة</button>
@@ -543,6 +543,17 @@
       return normalizeText(value).toLowerCase();
     }
 
+    function canonicalArabic(value) {
+      return normalizeText(value)
+        .replace(/^ال/, "")
+        .replace(/[أإآ]/g, "ا")
+        .replace(/ة/g, "ه")
+        .replace(/ى/g, "ي")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+    }
+
     function escapeHtml(value) {
       return normalizeText(value)
         .replaceAll("&", "&amp;")
@@ -638,13 +649,15 @@
       );
     }
 
+  
     function setSessionUI() {
       schoolNameEl.textContent =
         normalizeText(state.session?.schoolName) ||
         normalizeText(state.session?.name) ||
         normalizeText(state.session?.school?.name) ||
         "المدرسة الحالية";
-schoolIdTextEl.textContent = `schoolId: ${state.schoolId}`;
+
+      schoolIdTextEl.textContent = `schoolId: ${state.schoolId}`;
       sessionBoxEl.textContent = "تم العثور على جلسة المدرسة بنجاح.";
     }
 
@@ -692,510 +705,624 @@ schoolIdTextEl.textContent = `schoolId: ${state.schoolId}`;
           const hh = String(hour).padStart(2, "0");
           const mm = String(minute).padStart(2, "0");
           const value = `${hh}:${mm}`;
-          options += `<option value="${value}">${formatTimeLabel(value)}</option>`;
+          const label = formatTimeLabel(value);
+          options += `<option value="${value}">${label}</option>`;
         }
       }
       fromSelectEl.innerHTML = options;
       toSelectEl.innerHTML = options;
     }
+    function populateClasses() {
+      const options = [
+        `<option value="">اختر الصف</option>`,
+        ...state.classes.map(
+          (cls) =>
+            `<option value="${escapeHtml(cls.id)}">${escapeHtml(
+              cls.name || cls.className || "بدون اسم"
+            )}</option>`
+        )
+      ];
+      classSelectEl.innerHTML = options.join("");
+    }
 
-    async function loadSchoolMeta() {
-      try {
-        const snap = await getDoc(doc(db, "schools", state.schoolId));
-        if (snap.exists()) {
-          const data = snap.data() || {};
-          state.schoolName =
-            normalizeText(data.name) ||
-            normalizeText(data.schoolName) ||
-            schoolNameEl.textContent ||
-            "المدرسة الحالية";
-        } else {
-          state.schoolName = schoolNameEl.textContent || "المدرسة الحالية";
-        }
-      } catch (_) {
-        state.schoolName = schoolNameEl.textContent || "المدرسة الحالية";
+    function populateSubjects() {
+      const uniqueSubjects = dedupeByKey(
+        state.subjects,
+        (s) => canonicalArabic(s.name || s.subjectName)
+      );
+
+      const options = [
+        `<option value="">اختر المادة</option>`,
+        ...uniqueSubjects.map(
+          (subject) =>
+            `<option value="${escapeHtml(subject.id)}">${escapeHtml(
+              subject.name || subject.subjectName || "بدون اسم"
+            )}</option>`
+        )
+      ];
+
+      subjectSelectEl.innerHTML = options.join("");
+    }
+
+    function populateTeachers() {
+      const options = [
+        `<option value="">اختر المعلم</option>`,
+        ...state.teachers.map(
+          (teacher) =>
+            `<option value="${escapeHtml(teacher.id)}">
+              ${escapeHtml(
+                teacher.name || teacher.teacherName || "بدون اسم"
+              )} - ${escapeHtml(
+              teacher.subjectName || "مادة غير معروفة"
+            )}
+            </option>`
+        )
+      ];
+
+      teacherSelectEl.innerHTML = options.join("");
+    }
+
+    function filterTeachersBySubject(subjectId) {
+      if (!subjectId) {
+        populateTeachers();
+        return;
       }
-      schoolNameEl.textContent = state.schoolName;
+
+      const filtered = state.teachers.filter(
+        (t) => t.subjectId === subjectId
+      );
+
+      const options = [
+        `<option value="">اختر المعلم</option>`,
+        ...filtered.map(
+          (teacher) =>
+            `<option value="${escapeHtml(teacher.id)}">
+              ${escapeHtml(
+                teacher.name || teacher.teacherName || "بدون اسم"
+              )}
+            </option>`
+        )
+      ];
+
+      teacherSelectEl.innerHTML = options.join("");
+    }
+
+    function updateMetrics() {
+      metricSubjectsEl.textContent = state.subjects.length;
+      metricClassesEl.textContent = state.classes.length;
+      metricTeachersEl.textContent = state.teachers.length;
+      metricSchedulesEl.textContent = state.schedules.length;
+    }
+
+    async function loadSchoolName() {
+      try {
+        const docRef = doc(db, "schools", state.schoolId);
+        const snap = await getDoc(docRef);
+        if (snap.exists()) {
+          const data = snap.data();
+          state.schoolName =
+            data.name || data.schoolName || "مدرسة بدون اسم";
+          schoolNameEl.textContent = state.schoolName;
+        }
+      } catch (error) {
+        console.error("خطأ تحميل اسم المدرسة", error);
+      }
     }
 
     async function loadClasses() {
-      const rootBySchool = await fetchWhereSafe("classes", "schoolId", state.schoolId);
-      const nested = await fetchCollectionSafe("schools", state.schoolId, "classes");
+      const items = await fetchCollectionSafe(
+        "schools",
+        state.schoolId,
+        "classes"
+      );
 
-      const merged = [...rootBySchool, ...nested]
-        .map((item) => ({
-          id: item.id,
-          name: normalizeText(item.name || item.className || item.title),
-          grade: Number(item.grade || 0),
-          schoolId: normalizeText(item.schoolId || state.schoolId),
-          status: lower(item.status || "active")
-        }))
-        .filter((item) => item.name)
-        .filter((item) => item.status !== "inactive");
+      state.classes = items.map((item) => ({
+        id: item.id,
+        name: item.name || item.className
+      }));
 
-      state.classes = dedupeByKey(merged, (item) => lower(item.name)).sort((a, b) => {
-        const g = Number(a.grade || 0) - Number(b.grade || 0);
-        if (g !== 0) return g;
-        return a.name.localeCompare(b.name, "ar");
-      });
-
-      classSelectEl.innerHTML =
-        `<option value="">اختر الصف</option>` +
-        state.classes.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)}</option>`).join("");
-
-      metricClassesEl.textContent = String(state.classes.length);
+      populateClasses();
     }
 
     async function loadSubjects() {
-      const root = await fetchCollectionSafe("subjects");
-      const nested = await fetchCollectionSafe("schools", state.schoolId, "subjects");
-
-      const merged = [...root, ...nested]
-        .map((item) => ({
-          id: item.id,
-          name: normalizeText(item.name || item.subjectName || item.title),
-          status: lower(item.status || "active")
-        }))
-        .filter((item) => item.name)
-        .filter((item) => item.status !== "inactive");
-
-      state.subjects = dedupeByKey(merged, (item) => lower(item.name)).sort((a, b) =>
-        a.name.localeCompare(b.name, "ar")
+      const items = await fetchCollectionSafe(
+        "schools",
+        state.schoolId,
+        "subjects"
       );
 
-      metricSubjectsEl.textContent = String(state.subjects.length);
-                             }
+      state.subjects = items.map((item) => ({
+        id: item.id,
+        name: item.name || item.subjectName
+      }));
+
+      populateSubjects();
+    }
+
     async function loadTeachers() {
-      const root = await fetchCollectionSafe("teachers");
-      const nested = await fetchCollectionSafe("schools", state.schoolId, "teachers");
+      const items = await fetchCollectionSafe(
+        "schools",
+        state.schoolId,
+        "teachers"
+      );
 
-      const merged = [...root, ...nested]
-        .map((item) => ({
+      state.teachers = items.map((item) => {
+        const subject = state.subjects.find(
+          (s) => s.id === item.subjectId
+        );
+
+        return {
           id: item.id,
-          name: normalizeText(item.name || item.teacherName || item.title),
-          subjectId: normalizeText(item.subjectId),
-          schoolId: normalizeText(item.schoolId),
-          status: lower(item.status || "active"),
-          teacherType: teacherTypeLabel(item.teacherType || item.type || item.mode)
-        }))
-        .filter((item) => item.name)
-        .filter((item) => item.status !== "inactive")
-        .filter((item) => !item.schoolId || item.schoolId === state.schoolId);
+          name: item.name || item.teacherName,
+          subjectId: item.subjectId || "",
+          subjectName: subject
+            ? subject.name
+            : "مادة غير معروفة",
+          type: item.type || "human"
+        };
+      });
 
-      state.teachers = dedupeByKey(merged, (item) => item.id || lower(item.name));
-      metricTeachersEl.textContent = String(state.teachers.length);
+      populateTeachers();
     }
 
     async function loadClassSubjects() {
-      const root = await fetchCollectionSafe("classSubjects");
-      const nested = await fetchCollectionSafe("schools", state.schoolId, "classSubjects");
+      const items = await fetchCollectionSafe(
+        "schools",
+        state.schoolId,
+        "classSubjects"
+      );
 
-      state.classSubjects = [...root, ...nested]
-        .map((item) => ({
-          id: item.id,
-          classId: normalizeText(item.classId),
-          subjectId: normalizeText(item.subjectId),
-          schoolId: normalizeText(item.schoolId),
-          status: lower(item.status || "active")
-        }))
-        .filter((item) => item.classId && item.subjectId)
-        .filter((item) => item.status !== "inactive")
-        .filter((item) => !item.schoolId || item.schoolId === state.schoolId);
-    }
-
-    function getClassName(classId) {
-      const found = state.classes.find((item) => item.id === normalizeText(classId));
-      return found ? found.name : "صف غير معروف";
-    }
-
-    function getSubjectName(subjectId) {
-      const found = state.subjects.find((item) => item.id === normalizeText(subjectId));
-      return found ? found.name : "مادة غير معروفة";
-    }
-
-    function getTeacherById(teacherId) {
-      return state.teachers.find((item) => item.id === normalizeText(teacherId)) || null;
-    }
-
-    function renderSubjectOptions() {
-      const selectedClassId = normalizeText(classSelectEl.value);
-      let subjectsToRender = state.subjects;
-
-      if (selectedClassId) {
-        const linkedSubjectIds = state.classSubjects
-          .filter((item) => item.classId === selectedClassId)
-          .map((item) => item.subjectId);
-
-        if (linkedSubjectIds.length) {
-          subjectsToRender = state.subjects.filter((subject) => linkedSubjectIds.includes(subject.id));
-        }
-      }
-
-      subjectSelectEl.innerHTML =
-        `<option value="">اختر المادة</option>` +
-        subjectsToRender.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)}</option>`).join("");
-
-      if (!subjectsToRender.some((item) => item.id === normalizeText(subjectSelectEl.value))) {
-        subjectSelectEl.value = "";
-      }
-
-      renderTeacherOptions();
-    }
-
-    function renderTeacherOptions() {
-      const selectedSubjectId = normalizeText(subjectSelectEl.value);
-      let teachersToRender = state.teachers;
-
-      if (selectedSubjectId) {
-        const exact = state.teachers.filter((item) => normalizeText(item.subjectId) === selectedSubjectId);
-        if (exact.length) teachersToRender = exact;
-      }
-
-      teacherSelectEl.innerHTML =
-        `<option value="">اختر المعلم</option>` +
-        teachersToRender.map((item) => {
-          const subjectName = getSubjectName(item.subjectId);
-          return `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)} - ${escapeHtml(subjectName)} - ${escapeHtml(item.teacherType)}</option>`;
-        }).join("");
-
-      if (!teachersToRender.some((item) => item.id === normalizeText(teacherSelectEl.value))) {
-        teacherSelectEl.value = "";
-      }
+      state.classSubjects = items;
     }
 
     async function loadSchedules() {
-      setStatus(listStatusEl, "جاري تحميل الحصص...", "default");
+      const items = await fetchCollectionSafe(
+        "schools",
+        state.schoolId,
+        "schedules"
+      );
 
-      const rootBySchool = await fetchWhereSafe("schedules", "schoolId", state.schoolId);
-      const rootAll = await fetchCollectionSafe("schedules");
-      const nested = await fetchCollectionSafe("schools", state.schoolId, "schedules");
-
-      const validClassIds = state.classes.map((item) => item.id);
-
-      const merged = [...rootBySchool, ...rootAll, ...nested]
-        .map((item) => ({
-          id: item.id,
-          __path: item.__path || "schedules",
-          schoolId: normalizeText(item.schoolId),
-          classId: normalizeText(item.classId),
-          subjectId: normalizeText(item.subjectId),
-          subjectName: normalizeText(item.subjectName),
-          teacherId: normalizeText(item.teacherId),
-          teacherType: normalizeText(item.teacherType),
-          day: normalizeDay(item.day),
-          period: Number(item.period || 0),
-          from: normalizeText(item.from || item.startTime),
-          to: normalizeText(item.to || item.endTime),
-          status: lower(item.status || "active"),
-          note: normalizeText(item.note || item.notes)
-        }))
-        .filter((item) => item.classId && item.day && item.period > 0)
-        .filter((item) => {
-          if (item.__path === `schools/${state.schoolId}/schedules`) return true;
-          if (item.schoolId && item.schoolId === state.schoolId) return true;
-          if (!item.schoolId && validClassIds.includes(item.classId)) return true;
-          return false;
-        });
-
-      state.schedules = dedupeByKey(
-        merged,
-        (item) => `${item.classId}|${item.day}|${item.period}|${item.subjectId}|${item.teacherId}|${item.from}|${item.to}`
-      ).sort((a, b) => {
-        const dayDiff = (DAY_ORDER[a.day] || 99) - (DAY_ORDER[b.day] || 99);
-        if (dayDiff !== 0) return dayDiff;
-        const classDiff = getClassName(a.classId).localeCompare(getClassName(b.classId), "ar");
-        if (classDiff !== 0) return classDiff;
-        return Number(a.period) - Number(b.period);
-      });
-
-      metricSchedulesEl.textContent = String(state.schedules.length);
+      state.schedules = items;
       renderSchedules();
-      setStatus(listStatusEl, `تم تحميل ${state.schedules.length} حصة بنجاح.`, "success");
     }
 
     function renderSchedules() {
-      tableBodyEl.innerHTML = "";
-      mobileListEl.innerHTML = "";
-
       if (!state.schedules.length) {
         emptyBoxEl.style.display = "block";
+        tableBodyEl.innerHTML = "";
+        mobileListEl.innerHTML = "";
+        updateMetrics();
         return;
       }
 
       emptyBoxEl.style.display = "none";
 
-      for (const item of state.schedules) {
-        const className = getClassName(item.classId);
-        const subjectName = item.subjectName || getSubjectName(item.subjectId);
-        const teacher = getTeacherById(item.teacherId);
-        const teacherName = teacher?.name || "معلم غير معروف";
-        const teacherType = teacher?.teacherType || teacherTypeLabel(item.teacherType);
-        const timeLabel = timeRangeLabel(item.from, item.to);
-        const statusLabel = normalizeStatusLabel(item.status);
+      const sorted = [...state.schedules].sort((a, b) => {
+        const dayA = DAY_ORDER[normalizeDay(a.day)] || 99;
+        const dayB = DAY_ORDER[normalizeDay(b.day)] || 99;
 
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${escapeHtml(className)}</td>
-          <td>${escapeHtml(subjectName)}</td>
-          <td>${escapeHtml(teacherName)}</td>
-          <td><span class="pill ${teacherType === "معلم ذكي" ? "pill-ai" : "pill-human"}">${escapeHtml(teacherType)}</span></td>
-          <td>${escapeHtml(dayLabel(item.day))}</td>
-          <td>${escapeHtml(String(item.period))}</td>
-          <td>${escapeHtml(timeLabel)}</td>
-          <td><span class="pill pill-status">${escapeHtml(statusLabel)}</span></td>
-          <td>${escapeHtml(item.note || "—")}</td>
-          <td>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-              <button class="btn btn-small btn-purple" type="button" data-edit="${escapeHtml(item.id)}">تعديل</button>
-              <button class="btn btn-small btn-danger" type="button" data-delete="${escapeHtml(item.id)}">حذف</button>
-            </div>
-          </td>
-        `;
-        tableBodyEl.appendChild(tr);
+        if (dayA !== dayB) return dayA - dayB;
 
-        const card = document.createElement("div");
-        card.className = "schedule-card";
-        card.innerHTML = `
-          <div class="schedule-title">${escapeHtml(className)} - ${escapeHtml(subjectName)}</div>
-          <div class="schedule-row"><strong>المعلم:</strong> ${escapeHtml(teacherName)}</div>
-          <div class="schedule-row"><strong>نوع المعلم:</strong> ${escapeHtml(teacherType)}</div>
-          <div class="schedule-row"><strong>اليوم:</strong> ${escapeHtml(dayLabel(item.day))}</div>
-          <div class="schedule-row"><strong>الحصة:</strong> ${escapeHtml(String(item.period))}</div>
-          <div class="schedule-row"><strong>الوقت:</strong> ${escapeHtml(timeLabel)}</div>
-          <div class="schedule-row"><strong>الحالة:</strong> ${escapeHtml(statusLabel)}</div>
-          <div class="schedule-row"><strong>ملاحظة:</strong> ${escapeHtml(item.note || "—")}</div>
-          <div class="schedule-actions">
-            <button class="btn btn-small btn-purple" type="button" data-edit="${escapeHtml(item.id)}">تعديل</button>
-            <button class="btn btn-small btn-danger" type="button" data-delete="${escapeHtml(item.id)}">حذف</button>
-          </div>
-        `;
-        mobileListEl.appendChild(card);
-      }
-
-      document.querySelectorAll("[data-edit]").forEach((btn) => {
-        btn.addEventListener("click", () => startEditSchedule(btn.getAttribute("data-edit")));
+        return Number(a.period || 0) - Number(b.period || 0);
       });
 
-      document.querySelectorAll("[data-delete]").forEach((btn) => {
-        btn.addEventListener("click", () => deleteScheduleById(btn.getAttribute("data-delete")));
+      tableBodyEl.innerHTML = sorted
+        .map((schedule) => {
+          const cls = state.classes.find(
+            (c) => c.id === schedule.classId
+          );
+          const subject = state.subjects.find(
+            (s) => s.id === schedule.subjectId
+          );
+          const teacher = state.teachers.find(
+            (t) => t.id === schedule.teacherId
+          );
+
+          return `
+<tr>
+<td>${escapeHtml(cls?.name || "غير معروف")}</td>
+<td>${escapeHtml(subject?.name || "غير معروف")}</td>
+<td>${escapeHtml(teacher?.name || "غير معروف")}</td>
+<td>
+<span class="pill ${
+  teacher?.type === "ai"
+    ? "pill-ai"
+    : "pill-human"
+}">
+${teacherTypeLabel(teacher?.type)}
+</span>
+</td>
+<td>${dayLabel(schedule.day)}</td>
+<td>${escapeHtml(schedule.period)}</td>
+<td>${timeRangeLabel(
+  schedule.from,
+  schedule.to
+)}</td>
+<td>
+<span class="pill pill-status">
+${normalizeStatusLabel(
+  schedule.status
+)}
+</span>
+</td>
+<td>${escapeHtml(
+  schedule.note || "-"
+)}</td>
+<td>
+<div class="schedule-actions">
+<button 
+class="btn btn-small btn-primary"
+onclick="editSchedule('${schedule.id}')">
+تعديل
+</button>
+
+<button 
+class="btn btn-small btn-danger"
+onclick="deleteSchedule('${schedule.id}')">
+حذف
+</button>
+</div>
+</td>
+</tr>
+`;
+        })
+        .join("");
+
+      mobileListEl.innerHTML = sorted
+        .map((schedule) => {
+          const cls = state.classes.find(
+            (c) => c.id === schedule.classId
+          );
+          const subject = state.subjects.find(
+            (s) => s.id === schedule.subjectId
+          );
+          const teacher = state.teachers.find(
+            (t) => t.id === schedule.teacherId
+          );
+
+          return `
+<div class="schedule-card">
+<div class="schedule-title">
+${escapeHtml(cls?.name || "غير معروف")} — 
+${escapeHtml(subject?.name || "غير معروف")}
+</div>
+
+<div class="schedule-row">
+<strong>المعلم:</strong> 
+${escapeHtml(teacher?.name || "غير معروف")}
+</div>
+
+<div class="schedule-row">
+<strong>النوع:</strong> 
+${teacherTypeLabel(teacher?.type)}
+</div>
+
+<div class="schedule-row">
+<strong>اليوم:</strong> 
+${dayLabel(schedule.day)}
+</div>
+
+<div class="schedule-row">
+<strong>الحصة:</strong> 
+${escapeHtml(schedule.period)}
+</div>
+
+<div class="schedule-row">
+<strong>الوقت:</strong> 
+${timeRangeLabel(
+  schedule.from,
+  schedule.to
+)}
+</div>
+
+<div class="schedule-row">
+<strong>الحالة:</strong> 
+${normalizeStatusLabel(
+  schedule.status
+)}
+</div>
+
+<div class="schedule-row">
+<strong>ملاحظة:</strong> 
+${escapeHtml(
+  schedule.note || "-"
+)}
+</div>
+
+<div class="schedule-actions">
+<button 
+class="btn btn-small btn-primary"
+onclick="editSchedule('${schedule.id}')">
+تعديل
+</button>
+
+<button 
+class="btn btn-small btn-danger"
+onclick="deleteSchedule('${schedule.id}')">
+حذف
+</button>
+</div>
+</div>
+`;
+        })
+        .join("");
+
+      updateMetrics();
+    }
+    window.editSchedule = function (scheduleId) {
+      const schedule = state.schedules.find((s) => s.id === scheduleId);
+      if (!schedule) return;
+
+      state.editingScheduleId = scheduleId;
+
+      classSelectEl.value = schedule.classId || "";
+      subjectSelectEl.value = schedule.subjectId || "";
+      filterTeachersBySubject(schedule.subjectId || "");
+      teacherSelectEl.value = schedule.teacherId || "";
+
+      daySelectEl.value = normalizeDay(schedule.day) || "saturday";
+      periodInputEl.value = schedule.period || "";
+      fromSelectEl.value = schedule.from || "";
+      toSelectEl.value = schedule.to || "";
+      statusSelectEl.value =
+        schedule.status === "inactive" ? "inactive" : "active";
+
+      noteInputEl.value = schedule.note || "";
+
+      setStatus(
+        formStatusEl,
+        "وضع التعديل مفعل. عدّل البيانات ثم اضغط حفظ.",
+        "success"
+      );
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
       });
-    }
+    };
 
-    function resetForm() {
-      state.editingScheduleId = null;
-      scheduleFormEl.reset();
-      buildTimeOptions();
-      statusSelectEl.value = "active";
-      daySelectEl.value = "saturday";
-      noteInputEl.value = "";
-      saveBtnEl.textContent = "حفظ الحصة";
-      renderSubjectOptions();
-      setStatus(formStatusEl, 'النموذج جاهز. املأ البيانات ثم اضغط "حفظ الحصة".', "success");
-    }
-
-    function startEditSchedule(id) {
-      const item = state.schedules.find((row) => row.id === id);
-      if (!item) return;
-
-      state.editingScheduleId = item.id;
-      classSelectEl.value = item.classId;
-      renderSubjectOptions();
-      subjectSelectEl.value = item.subjectId;
-      renderTeacherOptions();
-      teacherSelectEl.value = item.teacherId;
-      daySelectEl.value = item.day || "saturday";
-      periodInputEl.value = item.period || "";
-      fromSelectEl.value = item.from || "";
-      toSelectEl.value = item.to || "";
-      statusSelectEl.value = lower(item.status) === "inactive" ? "inactive" : "active";
-      noteInputEl.value = item.note || "";
-
-      saveBtnEl.textContent = "حفظ التعديل";
-      setStatus(formStatusEl, "أنت الآن في وضع التعديل. عدل البيانات ثم اضغط حفظ التعديل.", "success");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    async function deleteScheduleById(id) {
-      const item = state.schedules.find((row) => row.id === id);
-      if (!item) return;
-
-      const ok = confirm(`هل تريد حذف هذه الحصة؟\n${getClassName(item.classId)}\n${item.subjectName || getSubjectName(item.subjectId)}`);
+    window.deleteSchedule = async function (scheduleId) {
+      const ok = confirm("هل تريد حذف الحصة نهائياً؟");
       if (!ok) return;
 
       try {
-        if (item.__path === `schools/${state.schoolId}/schedules`) {
-          await deleteDoc(doc(db, "schools", state.schoolId, "schedules", item.id));
-        } else {
-          await deleteDoc(doc(db, "schedules", item.id));
-        }
+        await deleteDoc(
+          doc(
+            db,
+            "schools",
+            state.schoolId,
+            "schedules",
+            scheduleId
+          )
+        );
 
-        if (state.editingScheduleId === id) resetForm();
-        await loadSchedules();
-        setStatus(formStatusEl, "تم حذف الحصة بنجاح.", "success");
+        state.schedules = state.schedules.filter(
+          (s) => s.id !== scheduleId
+        );
+
+        renderSchedules();
+
+        setStatus(
+          listStatusEl,
+          "تم حذف الحصة بنجاح.",
+          "success"
+        );
       } catch (error) {
         console.error(error);
-        setStatus(listStatusEl, "فشل حذف الحصة.", "error");
-      }
-    }
 
-    function validatePayload(payload) {
-      if (!payload.classId) return "اختر الصف.";
-      if (!payload.subjectId) return "اختر المادة.";
-      if (!payload.teacherId) return "اختر المعلم.";
-      if (!payload.day) return "اختر اليوم.";
-
-      const p = Number(payload.period);
-      if (!Number.isInteger(p) || p < 1 || p > 12) return "رقم الحصة يجب أن يكون من 1 إلى 12.";
-      if (!payload.from) return "اختر وقت البداية.";
-      if (!payload.to) return "اختر وقت النهاية.";
-      if (payload.from >= payload.to) return "وقت البداية يجب أن يكون قبل وقت النهاية.";
-
-      return "";
-    }
-
-    function hasConflict(payload) {
-      return state.schedules.some((item) => {
-        if (state.editingScheduleId && item.id === state.editingScheduleId) return false;
-        return (
-          normalizeText(item.classId) === payload.classId &&
-          normalizeDay(item.day) === payload.day &&
-          Number(item.period) === Number(payload.period)
+        setStatus(
+          listStatusEl,
+          "فشل حذف الحصة.",
+          "error"
         );
-      });
+      }
+    };
+
+    function resetForm() {
+      state.editingScheduleId = null;
+
+      scheduleFormEl.reset();
+      populateTeachers();
+
+      setStatus(
+        formStatusEl,
+        "تم تفريغ النموذج.",
+        "default"
+      );
     }
 
     async function saveSchedule(event) {
       event.preventDefault();
 
       const payload = {
-        schoolId: state.schoolId,
-        classId: normalizeText(classSelectEl.value),
-        subjectId: normalizeText(subjectSelectEl.value),
-        teacherId: normalizeText(teacherSelectEl.value),
+        classId: classSelectEl.value,
+        subjectId: subjectSelectEl.value,
+        teacherId: teacherSelectEl.value,
         day: normalizeDay(daySelectEl.value),
-        period: Number(periodInputEl.value),
-        from: normalizeText(fromSelectEl.value),
-        to: normalizeText(toSelectEl.value),
-        status: lower(statusSelectEl.value || "active"),
-        note: normalizeText(noteInputEl.value)
+        period: Number(periodInputEl.value || 0),
+        from: fromSelectEl.value,
+        to: toSelectEl.value,
+        status: statusSelectEl.value,
+        note: normalizeText(noteInputEl.value),
+        updatedAt: serverTimestamp()
       };
 
-      const err = validatePayload(payload);
-      if (err) {
-        setStatus(formStatusEl, err, "error");
-        return;
-      }
-
-      if (hasConflict(payload)) {
-        setStatus(formStatusEl, "يوجد تعارض: نفس الصف لديه حصة في نفس اليوم ونفس رقم الحصة.", "error");
+      if (!payload.classId || !payload.subjectId || !payload.teacherId) {
+        setStatus(
+          formStatusEl,
+          "يجب اختيار الصف والمادة والمعلم.",
+          "error"
+        );
         return;
       }
 
       try {
         saveBtnEl.disabled = true;
-        setStatus(formStatusEl, "جاري الحفظ...", "default");
-
-        const className = getClassName(payload.classId);
-        const subjectName = getSubjectName(payload.subjectId);
-        const teacher = getTeacherById(payload.teacherId);
-
-        const docPayload = {
-          schoolId: payload.schoolId,
-          classId: payload.classId,
-          className,
-          subjectId: payload.subjectId,
-          subjectName,
-          teacherId: payload.teacherId,
-          teacherName: teacher?.name || "",
-          teacherType: teacher?.teacherType || "معلم بشري",
-          day: payload.day,
-          period: payload.period,
-          from: payload.from,
-          to: payload.to,
-          status: payload.status,
-          note: payload.note,
-          updatedAt: serverTimestamp()
-        };
 
         if (state.editingScheduleId) {
-          const current = state.schedules.find((row) => row.id === state.editingScheduleId);
-          if (current && current.__path === `schools/${state.schoolId}/schedules`) {
-            await updateDoc(doc(db, "schools", state.schoolId, "schedules", state.editingScheduleId), docPayload);
-          } else {
-            await updateDoc(doc(db, "schedules", state.editingScheduleId), docPayload);
+          await updateDoc(
+            doc(
+              db,
+              "schools",
+              state.schoolId,
+              "schedules",
+              state.editingScheduleId
+            ),
+            payload
+          );
+
+          const index = state.schedules.findIndex(
+            (s) => s.id === state.editingScheduleId
+          );
+
+          if (index !== -1) {
+            state.schedules[index] = {
+              ...state.schedules[index],
+              ...payload
+            };
           }
-          setStatus(formStatusEl, "تم تعديل الحصة بنجاح.", "success");
+
+          setStatus(
+            formStatusEl,
+            "تم تحديث الحصة بنجاح.",
+            "success"
+          );
         } else {
-          await addDoc(collection(db, "schedules"), {
-            ...docPayload,
-            createdAt: serverTimestamp()
+          const ref = await addDoc(
+            collection(
+              db,
+              "schools",
+              state.schoolId,
+              "schedules"
+            ),
+            {
+              ...payload,
+              createdAt: serverTimestamp()
+            }
+          );
+
+          state.schedules.push({
+            id: ref.id,
+            ...payload
           });
-          setStatus(formStatusEl, "تم حفظ الحصة بنجاح.", "success");
+
+          setStatus(
+            formStatusEl,
+            "تم إضافة الحصة بنجاح.",
+            "success"
+          );
         }
 
-        await loadSchedules();
         resetForm();
+        renderSchedules();
       } catch (error) {
         console.error(error);
-        setStatus(formStatusEl, "فشل حفظ الحصة.", "error");
+
+        setStatus(
+          formStatusEl,
+          "فشل حفظ الحصة.",
+          "error"
+        );
       } finally {
         saveBtnEl.disabled = false;
       }
     }
 
-    function bindEvents() {
-      logoutBtnEl.addEventListener("click", () => {
-        localStorage.removeItem("madaris_user_session");
-        localStorage.removeItem("madaris_session");
-        localStorage.removeItem("school_session");
-        localStorage.removeItem("user_session");
-        localStorage.removeItem("schoolId");
-        sessionStorage.removeItem("schoolId");
-        window.location.href = "../login.html";
-      });
-
-      classSelectEl.addEventListener("change", renderSubjectOptions);
-      subjectSelectEl.addEventListener("change", renderTeacherOptions);
-      scheduleFormEl.addEventListener("submit", saveSchedule);
-      resetBtnEl.addEventListener("click", resetForm);
-    }
-
-    async function init() {
-      buildTimeOptions();
-      bindEvents();
-
-      state.session = readStoredSession();
-      state.schoolId = resolveSchoolId(state.session);
-
-      if (!state.schoolId) {
-        schoolNameEl.textContent = "لم يتم العثور على معرف المدرسة";
-        schoolIdTextEl.textContent = "schoolId: غير موجود";
-        sessionBoxEl.textContent = "لا توجد جلسة مدرسة صالحة.";
-        setStatus(topStatusEl, "فشل تحديد المدرسة الحالية.", "error");
-        return;
-      }
-
-      localStorage.setItem("schoolId", state.schoolId);
-      sessionStorage.setItem("schoolId", state.schoolId);
-
-      setSessionUI();
-      setStatus(topStatusEl, "جاري تحميل البيانات...", "default");
-
+    async function loadAll() {
       try {
-        await loadSchoolMeta();
+        setStatus(topStatusEl, "جاري تحميل البيانات...");
+
+        await loadSchoolName();
         await loadClasses();
         await loadSubjects();
         await loadTeachers();
         await loadClassSubjects();
-        renderSubjectOptions();
         await loadSchedules();
 
-        setStatus(topStatusEl, "تم تجهيز الصفحة بنجاح.", "success");
-        setStatus(formStatusEl, 'النموذج جاهز. املأ البيانات ثم اضغط "حفظ الحصة".', "success");
+        setStatus(
+          topStatusEl,
+          "تم تحميل البيانات بنجاح.",
+          "success"
+        );
       } catch (error) {
         console.error(error);
-        setStatus(topStatusEl, "حدث خطأ أثناء تحميل الصفحة.", "error");
-        setStatus(listStatusEl, "تعذر تحميل الحصص.", "error");
+
+        setStatus(
+          topStatusEl,
+          "فشل تحميل البيانات.",
+          "error"
+        );
+      }
+    }
+
+    function bindEvents() {
+      scheduleFormEl.addEventListener("submit", saveSchedule);
+
+      resetBtnEl.addEventListener("click", resetForm);
+
+      logoutBtnEl.addEventListener("click", () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = "/login.html";
+      });
+
+      subjectSelectEl.addEventListener("change", () => {
+        filterTeachersBySubject(subjectSelectEl.value);
+      });
+    }
+    async function init() {
+      try {
+        setStatus(sessionBoxEl, "جاري التحقق من الجلسة...");
+
+        const session = readStoredSession();
+
+        if (!session) {
+          setStatus(
+            sessionBoxEl,
+            "لم يتم العثور على جلسة. سيتم تحويلك لصفحة الدخول.",
+            "error"
+          );
+
+          setTimeout(() => {
+            window.location.href = "/login.html";
+          }, 1500);
+
+          return;
+        }
+
+        state.session = session;
+        state.schoolId = resolveSchoolId(session);
+
+        if (!state.schoolId) {
+          setStatus(
+            sessionBoxEl,
+            "لم يتم العثور على schoolId.",
+            "error"
+          );
+
+          return;
+        }
+
+        setSessionUI();
+
+        buildTimeOptions();
+        bindEvents();
+
+        await loadAll();
+
+        setStatus(
+          sessionBoxEl,
+          "تم تحميل صفحة إدارة الجدول بنجاح.",
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+
+        setStatus(
+          sessionBoxEl,
+          "حدث خطأ أثناء تحميل الصفحة.",
+          "error"
+        );
       }
     }
 
