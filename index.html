@@ -1,308 +1,2023 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>Madaris AI | البنية القادمة للتعليم</title>
+  <meta
+    name="description"
+    content="Madaris AI منصة تعليمية تعمل وفق فلسفة Offline-First لبناء بنية تعليمية عملية للمدارس والطلاب والمعلمين في البيئات الصعبة، بدءًا من اليمن ثم التوسع إقليميًا وعالميًا."
+  />
+  <meta
+    name="keywords"
+    content="Madaris AI, مدارس AI, تعليم, EdTech, Offline First, Edu OS, منصة تعليمية, اليمن, مدارس, شراكات"
+  />
+  <meta name="theme-color" content="#07142b" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Madaris AI | البنية القادمة للتعليم" />
+  <meta
+    property="og:description"
+    content="نبني نظام تشغيل تعليمي يعمل في الواقع، لا مجرد واجهة جميلة. منصة Offline-First للمدارس والطلاب والمعلمين."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://madarisai.com/" />
+  <meta property="og:image" content="https://madarisai.com/assets/og-cover.jpg" />
 
-<title>Madaris AI | مستقبل التعليم الذكي</title>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Madaris AI | البنية القادمة للتعليم" />
+  <meta
+    name="twitter:description"
+    content="منصة تعليمية تبدأ من الواقع الصعب وتبني نظامًا قابلًا للتشغيل والتوسع."
+  />
 
-<link rel="stylesheet" href="assets/css/main.css">
-<link rel="stylesheet" href="assets/css/responsive.css">
-<link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="canonical" href="https://madarisai.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+    rel="stylesheet"
+  />
 
-<style>
+  <style>
+    :root {
+      --bg: #07142b;
+      --bg-soft: #0b1c39;
+      --surface: rgba(20, 41, 83, 0.86);
+      --surface-strong: rgba(24, 47, 94, 0.94);
+      --surface-lite: rgba(105, 147, 255, 0.08);
+      --border: rgba(137, 182, 255, 0.16);
+      --border-strong: rgba(137, 182, 255, 0.24);
+      --text: #f5f8ff;
+      --muted: #bfd0ef;
+      --muted-2: #8da6d6;
+      --primary: #63d3ff;
+      --primary-2: #7f8cff;
+      --success: #35d98b;
+      --warning: #ffd166;
+      --danger: #ff5d8f;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --container: 1220px;
+      --header-h: 90px;
+    }
 
-body{
-margin:0;
-font-family:"Tajawal",sans-serif;
-background:#071120;
-color:white;
-}
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 30px;
-background:#071830;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.logo{
-font-size:22px;
-font-weight:700;
-}
+    body {
+      margin: 0;
+      font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 85% 8%, rgba(99, 211, 255, 0.18), transparent 16%),
+        radial-gradient(circle at 12% 22%, rgba(127, 140, 255, 0.12), transparent 18%),
+        linear-gradient(180deg, #04101f 0%, #07142b 22%, #081832 55%, #061327 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-.nav{
-display:flex;
-gap:25px;
-}
+    body.menu-open {
+      overflow: hidden;
+    }
 
-.nav a{
-color:white;
-text-decoration:none;
-opacity:.85;
-transition:.3s;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.nav a:hover{
-opacity:1;
-color:#00d4ff;
-}
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
 
-.hero{
-padding:80px 30px;
-text-align:center;
-background:linear-gradient(180deg,#071120,#020611);
-}
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
-.hero h1{
-font-size:42px;
-margin-bottom:15px;
-}
+    .site-shell {
+      position: relative;
+      isolation: isolate;
+    }
 
-.hero p{
-opacity:.75;
-max-width:700px;
-margin:auto;
-line-height:1.8;
-}
+    .site-shell::before,
+    .site-shell::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(40px);
+      opacity: 0.75;
+    }
 
-.hero-buttons{
-margin-top:30px;
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-}
+    .site-shell::before {
+      top: 120px;
+      right: -90px;
+      width: 240px;
+      height: 240px;
+      background: rgba(99, 211, 255, 0.16);
+      border-radius: 50%;
+    }
 
-.btn-primary{
-background:#00d4ff;
-border:none;
-padding:14px 25px;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-font-weight:600;
-}
+    .site-shell::after {
+      top: 45%;
+      left: -120px;
+      width: 300px;
+      height: 300px;
+      background: rgba(127, 140, 255, 0.14);
+      border-radius: 50%;
+    }
 
-.btn-secondary{
-background:transparent;
-border:1px solid #00d4ff;
-padding:14px 25px;
-border-radius:10px;
-color:#00d4ff;
-cursor:pointer;
-font-weight:600;
-}
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+    }
 
-.section{
-padding:70px 30px;
-}
+    .section {
+      padding: 34px 0;
+    }
 
-.section-title{
-text-align:center;
-margin-bottom:40px;
-font-size:32px;
-}
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(99, 211, 255, 0.26);
+      background: rgba(28, 62, 117, 0.42);
+      color: var(--primary);
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.1px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-}
+    .section-head {
+      max-width: 860px;
+      margin: 0 auto 28px;
+      text-align: center;
+    }
 
-.card{
-background:#0b1930;
-padding:30px;
-border-radius:15px;
-transition:.3s;
-border:1px solid rgba(255,255,255,.04);
-}
+    .section-head h2 {
+      margin: 16px 0 14px;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      line-height: 1.18;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
 
-.card:hover{
-transform:translateY(-5px);
-background:#0f2242;
-}
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.28rem);
+      line-height: 1.9;
+    }
 
-.card h3{
-margin-top:0;
-}
+    .highlight {
+      color: var(--primary);
+    }
 
-.card p{
-opacity:.8;
-line-height:1.7;
-}
+    .gradient-text {
+      background: linear-gradient(135deg, #7fe0ff 0%, #63d3ff 45%, #94a4ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
-.platform{
-text-align:center;
-background:#020611;
-}
+    .glass-card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(27, 53, 104, 0.88), rgba(15, 34, 72, 0.92));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
 
-.footer{
-padding:30px;
-text-align:center;
-opacity:.6;
-border-top:1px solid rgba(255,255,255,.05);
-}
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(99, 211, 255, 0.08), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,0.028), transparent 26%);
+      pointer-events: none;
+    }
 
-@media(max-width:900px){
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
 
-.grid{
-grid-template-columns:1fr;
-}
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1rem;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease, background 0.22s ease;
+      white-space: nowrap;
+    }
 
-.hero h1{
-font-size:30px;
-}
+    .btn:hover {
+      transform: translateY(-2px);
+    }
 
-}
+    .btn:active {
+      transform: translateY(0);
+    }
 
-</style>
+    .btn-primary {
+      color: #08203d;
+      background: linear-gradient(135deg, #69ddff 0%, #7cc6ff 100%);
+      box-shadow: 0 16px 36px rgba(99, 211, 255, 0.28);
+    }
 
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(77, 103, 157, 0.18);
+      border: 1px solid rgba(150, 181, 255, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .btn-outline {
+      color: var(--primary);
+      background: rgba(99, 211, 255, 0.08);
+      border: 1px solid rgba(99, 211, 255, 0.25);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(14px);
+      background: rgba(6, 18, 39, 0.74);
+      border-bottom: 1px solid rgba(132, 169, 255, 0.1);
+    }
+
+    .header-inner {
+      min-height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 900;
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,0.9), rgba(255,255,255,0.18) 26%, transparent 27%),
+        radial-gradient(circle at 68% 66%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, rgba(122, 224, 255, 0.95), rgba(147, 152, 255, 0.92));
+      box-shadow:
+        0 16px 30px rgba(99, 211, 255, 0.2),
+        inset 0 1px 0 rgba(255,255,255,0.28);
+      flex-shrink: 0;
+    }
+
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .desktop-nav a {
+      color: var(--text);
+      padding: 12px 16px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: rgba(245, 248, 255, 0.88);
+      transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease;
+    }
+
+    .desktop-nav a:hover,
+    .desktop-nav a.active {
+      background: rgba(94, 118, 170, 0.18);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      width: 60px;
+      height: 60px;
+      border: 1px solid rgba(145, 183, 255, 0.16);
+      border-radius: 22px;
+      background: rgba(66, 93, 149, 0.12);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      border-radius: 99px;
+      background: #ffffff;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: var(--header-h) 0 0 0;
+      background: rgba(4, 14, 30, 0.96);
+      backdrop-filter: blur(20px);
+      transform: translateY(14px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: 0.26s ease;
+      z-index: 999;
+      overflow-y: auto;
+      padding: 18px 16px 32px;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-panel {
+      width: min(100%, 620px);
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(18, 39, 80, 0.95), rgba(10, 25, 55, 0.98));
+      border: 1px solid rgba(145, 183, 255, 0.15);
+      border-radius: 32px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .mobile-nav {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mobile-nav a {
+      min-height: 58px;
+      border-radius: 18px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(98, 128, 192, 0.09);
+      border: 1px solid rgba(154, 184, 255, 0.1);
+      font-weight: 800;
+      font-size: 1.02rem;
+      color: var(--text);
+    }
+
+    .mobile-nav a.active {
+      background: rgba(99, 211, 255, 0.12);
+      border-color: rgba(99, 211, 255, 0.25);
+      color: var(--primary);
+    }
+
+    .mobile-cta {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero {
+      padding: 34px 0 18px;
+    }
+
+    .hero-card {
+      padding: 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      padding: 10px 4px;
+    }
+
+    .hero-copy h1 {
+      margin: 18px 0 18px;
+      font-size: clamp(2.4rem, 5vw, 5rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+    }
+
+    .hero-copy p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 1.8vw, 1.34rem);
+      line-height: 1.95;
+      max-width: 760px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 28px 0 0;
+    }
+
+    .point-card {
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      background: rgba(98, 124, 177, 0.08);
+      border: 1px solid rgba(147, 180, 255, 0.12);
+      min-height: 120px;
+    }
+
+    .point-card strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .point-card span {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.98rem;
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 100%;
+    }
+
+    .side-panel {
+      flex: 1;
+      padding: 24px;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(26, 52, 103, 0.82), rgba(13, 31, 67, 0.95));
+      border: 1px solid rgba(145, 183, 255, 0.14);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .side-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(99, 211, 255, 0.12);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+
+    .side-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 10px 15px;
+      border-radius: 999px;
+      background: rgba(99, 211, 255, 0.08);
+      border: 1px solid rgba(99, 211, 255, 0.2);
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .side-panel h3 {
+      margin: 0 0 12px;
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .side-panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.9;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mini-stat {
+      padding: 22px 18px;
+      border-radius: 24px;
+      background: rgba(102, 127, 183, 0.1);
+      border: 1px solid rgba(145, 183, 255, 0.12);
+      text-align: center;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mini-stat .value {
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .mini-stat .label {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .trust-strip {
+      margin-top: 18px;
+      padding: 18px 22px;
+      border-radius: 24px;
+      background: rgba(99, 211, 255, 0.07);
+      border: 1px solid rgba(99, 211, 255, 0.16);
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      text-align: center;
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .trust-item span {
+      color: var(--muted-2);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .problem-card {
+      padding: 24px 22px;
+      min-height: 250px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(23, 46, 91, 0.88), rgba(13, 31, 65, 0.94));
+      border: 1px solid rgba(146, 182, 255, 0.13);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .problem-card .num {
+      width: 74px;
+      height: 74px;
+      border-radius: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 2rem;
+      color: var(--primary);
+      background: rgba(109, 165, 255, 0.12);
+      border: 1px solid rgba(153, 186, 255, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      margin-bottom: 18px;
+    }
+
+    .problem-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.55rem;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .problem-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+
+    .solution-layout {
+      display: grid;
+      grid-template-columns: 0.98fr 1.02fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .solution-panel,
+    .solution-card {
+      padding: 28px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(23, 46, 91, 0.88), rgba(13, 31, 65, 0.94));
+      border: 1px solid rgba(146, 182, 255, 0.13);
+    }
+
+    .solution-panel h3,
+    .solution-card h3 {
+      margin: 0 0 14px;
+      font-size: 1.9rem;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .solution-panel p,
+    .solution-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.95;
+      font-size: 1.04rem;
+    }
+
+    .pill-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .pill-item {
+      min-height: 58px;
+      border-radius: 18px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(99, 211, 255, 0.08);
+      border: 1px solid rgba(99, 211, 255, 0.16);
+    }
+
+    .pill-item strong {
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .pill-item span {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .system-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .system-card {
+      padding: 26px 22px;
+      border-radius: 28px;
+      min-height: 260px;
+      background: linear-gradient(180deg, rgba(23, 46, 91, 0.88), rgba(13, 31, 65, 0.94));
+      border: 1px solid rgba(146, 182, 255, 0.13);
+    }
+
+    .system-card .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: rgba(99, 211, 255, 0.08);
+      border: 1px solid rgba(99, 211, 255, 0.18);
+    }
+
+    .system-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.6rem;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .system-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.92;
+      font-size: 1rem;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .audience-card {
+      padding: 26px 24px;
+      border-radius: 28px;
+      min-height: 290px;
+      background: linear-gradient(180deg, rgba(23, 46, 91, 0.88), rgba(13, 31, 65, 0.94));
+      border: 1px solid rgba(146, 182, 255, 0.13);
+    }
+
+    .audience-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      font-size: 1.9rem;
+      background: rgba(109, 165, 255, 0.12);
+      border: 1px solid rgba(153, 186, 255, 0.18);
+      color: var(--primary);
+    }
+
+    .audience-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.55rem;
+      font-weight: 900;
+    }
+
+    .audience-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.92;
+    }
+
+    .audience-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .audience-card li {
+      color: var(--text);
+      position: relative;
+      padding-right: 24px;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    .audience-card li::before {
+      content: "✓";
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: var(--success);
+      font-weight: 900;
+    }
+    .expansion-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .expansion-main,
+    .expansion-side {
+      padding: 28px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(23, 46, 91, 0.88), rgba(13, 31, 65, 0.94));
+      border: 1px solid rgba(146, 182, 255, 0.13);
+    }
+
+    .expansion-main h3,
+    .expansion-side h3 {
+      margin: 0 0 14px;
+      font-size: 1.9rem;
+      font-weight: 900;
+      line-height: 1.32;
+    }
+
+    .expansion-main p,
+    .expansion-side p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.95;
+      font-size: 1.04rem;
+    }
+
+    .expansion-steps {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .expansion-step {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(99, 211, 255, 0.07);
+      border: 1px solid rgba(99, 211, 255, 0.14);
+    }
+
+    .expansion-step .step-no {
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(127, 140, 255, 0.12);
+      border: 1px solid rgba(153, 186, 255, 0.18);
+      color: var(--primary);
+      font-size: 1.65rem;
+      font-weight: 900;
+    }
+
+    .expansion-step h4 {
+      margin: 2px 0 8px;
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .expansion-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.8;
+    }
+
+    .traction-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .traction-card {
+      padding: 24px 20px;
+      min-height: 240px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(23, 46, 91, 0.88), rgba(13, 31, 65, 0.94));
+      border: 1px solid rgba(146, 182, 255, 0.13);
+      text-align: center;
+    }
+
+    .traction-card .icon {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 16px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(99, 211, 255, 0.1);
+      border: 1px solid rgba(99, 211, 255, 0.18);
+      color: var(--primary);
+      font-size: 1.85rem;
+      font-weight: 900;
+    }
+
+    .traction-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.4rem;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .traction-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 0.98rem;
+    }
+
+    .partnership-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .partnership-card {
+      padding: 26px 22px;
+      min-height: 330px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(23, 46, 91, 0.88), rgba(13, 31, 65, 0.94));
+      border: 1px solid rgba(146, 182, 255, 0.13);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .partnership-card .type-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 15px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      width: fit-content;
+      color: var(--primary);
+      background: rgba(99, 211, 255, 0.08);
+      border: 1px solid rgba(99, 211, 255, 0.18);
+    }
+
+    .partnership-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.55rem;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .partnership-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+
+    .partnership-card ul {
+      list-style: none;
+      padding: 0;
+      margin: auto 0 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .partnership-card li {
+      position: relative;
+      padding-right: 24px;
+      line-height: 1.8;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .partnership-card li::before {
+      content: "✓";
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: var(--success);
+      font-weight: 900;
+    }
+
+    .cta-panel {
+      padding: 34px 28px;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at top left, rgba(99, 211, 255, 0.1), transparent 28%),
+        linear-gradient(180deg, rgba(25, 50, 98, 0.9), rgba(13, 31, 66, 0.95));
+      border: 1px solid rgba(146, 182, 255, 0.14);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .cta-panel h2 {
+      margin: 14px 0 16px;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .cta-panel p {
+      margin: 0 auto 26px;
+      max-width: 860px;
+      color: var(--muted);
+      line-height: 1.95;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .footer {
+      padding: 0 0 34px;
+    }
+
+    .footer-card {
+      padding: 28px 24px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(17, 36, 73, 0.95), rgba(10, 24, 50, 0.98));
+      border: 1px solid rgba(146, 182, 255, 0.12);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .footer-brand h3 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .footer-brand p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 1rem;
+      max-width: 700px;
+    }
+
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 14px;
+    }
+
+    .footer-links a {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(98, 128, 192, 0.09);
+      border: 1px solid rgba(154, 184, 255, 0.1);
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .footer-bottom {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(146, 182, 255, 0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted-2);
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1180px) {
+      .hero-grid,
+      .solution-layout,
+      .expansion-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-grid,
+      .traction-grid,
+      .partnership-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .system-grid,
+      .audience-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .trust-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 920px) {
+      :root {
+        --header-h: 84px;
+      }
+
+      .desktop-nav,
+      .header-actions .btn {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .hero-card,
+      .solution-panel,
+      .solution-card,
+      .expansion-main,
+      .expansion-side,
+      .cta-panel,
+      .footer-card {
+        padding: 24px 20px;
+      }
+
+      .hero-points,
+      .mini-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-grid,
+      .system-grid,
+      .audience-grid,
+      .traction-grid,
+      .partnership-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 28px 0;
+      }
+
+      .container {
+        width: min(100% - 20px, var(--container));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .brand {
+        font-size: 1.9rem;
+      }
+
+      .brand-mark {
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+      }
+
+      .hero {
+        padding-top: 18px;
+      }
+
+      .hero-copy h1 {
+        font-size: clamp(2.2rem, 10vw, 3.5rem);
+      }
+
+      .section-head h2,
+      .cta-panel h2 {
+        font-size: clamp(1.9rem, 9vw, 2.8rem);
+      }
+
+      .trust-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-row {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .problem-card,
+      .system-card,
+      .audience-card,
+      .traction-card,
+      .partnership-card {
+        min-height: unset;
+      }
+
+      .expansion-step {
+        grid-template-columns: 1fr;
+      }
+
+      .expansion-step .step-no {
+        width: 60px;
+        height: 60px;
+      }
+
+      .footer-links {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="container header-inner">
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="فتح القائمة"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-<header class="header">
+        <a class="brand" href="index.html" aria-label="Madaris AI">
+          <span>Madaris AI</span>
+          <span class="brand-mark" aria-hidden="true"></span>
+        </a>
 
-<div class="logo">
-Madaris AI
-</div>
+        <nav class="desktop-nav" aria-label="التنقل الرئيسي">
+          <a href="index.html" class="active">الرئيسية</a>
+          <a href="platform.html">المنصة</a>
+          <a href="vision.html">الرؤية</a>
+          <a href="schools.html">للمدارس</a>
+          <a href="partners.html">الشراكات</a>
+          <a href="about.html">من نحن</a>
+          <a href="contact.html">التواصل</a>
+        </nav>
 
-<nav class="nav">
-<a href="platform.html">المنصة</a>
-<a href="vision.html">الرؤية</a>
-<a href="schools.html">المدارس</a>
-<a href="partners.html">الشراكات</a>
-<a href="contact.html">تواصل</a>
-</nav>
+        <div class="header-actions">
+          <a class="btn btn-primary" href="contact.html">ابدأ الحوار</a>
+        </div>
+      </div>
+    </header>
 
-</header>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-panel">
+        <nav class="mobile-nav" aria-label="القائمة الجوالة">
+          <a href="index.html" class="active">الرئيسية</a>
+          <a href="platform.html">المنصة</a>
+          <a href="vision.html">الرؤية</a>
+          <a href="schools.html">للمدارس</a>
+          <a href="partners.html">الشراكات</a>
+          <a href="about.html">من نحن</a>
+          <a href="contact.html">التواصل</a>
+        </nav>
 
+        <div class="mobile-cta">
+          <a class="btn btn-primary" href="contact.html">ابدأ الحوار</a>
+          <a class="btn btn-secondary" href="partners.html">استكشف فرص الشراكة</a>
+        </div>
+      </div>
+    </div>
 
-<section class="hero">
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="glass-card hero-card reveal">
+            <div class="hero-grid">
+              <div class="hero-copy">
+                <span class="eyebrow">نظام تشغيل تعليمي يبدأ من الواقع</span>
+                <h1>
+                  نبني مع <span class="gradient-text">Madaris AI</span><br />
+                  البنية القادمة للتعليم
+                </h1>
+                <p>
+                  Madaris AI ليست مجرد واجهة مدرسية أو موقع عرض، بل بنية تعليمية عملية
+                  تعمل وفق فلسفة <span class="highlight">Offline-First</span> لتدعم المدرسة،
+                  المعلم، الطالب، والإدارة ضمن نظام واحد قادر على العمل في البيئات
+                  الضعيفة، ثم التوسع بثبات إلى نطاق أكبر.
+                </p>
 
-<h1>
-مستقبل التعليم يبدأ من هنا
-</h1>
+                <div class="btn-row">
+                  <a class="btn btn-primary" href="platform.html">اكتشف المنصة</a>
+                  <a class="btn btn-secondary" href="partners.html">استكشف فرص الشراكة</a>
+                  <a class="btn btn-outline" href="schools.html">حلول المدارس</a>
+                </div>
 
-<p>
-منصة تعليمية ذكية تربط المدارس والطلاب والمعلمين والإدارة
-في نظام واحد متكامل يعمل حتى في أصعب البيئات.
-</p>
+                <div class="hero-points">
+                  <article class="point-card">
+                    <strong>Offline-First حقيقي</strong>
+                    <span>
+                      العمل يبدأ محليًا داخل البيئة التعليمية، ثم تتم المزامنة لاحقًا
+                      دون تحويل الإنترنت إلى نقطة فشل.
+                    </span>
+                  </article>
 
-<div class="hero-buttons">
+                  <article class="point-card">
+                    <strong>Edu-OS لا أداة منفصلة</strong>
+                    <span>
+                      نحن لا نبني ميزة واحدة فقط، بل نواة تشغيل تعليمية يمكن أن تتوسع
+                      إلى منصة متكاملة للمدرسة.
+                    </span>
+                  </article>
 
-<button class="btn-primary" onclick="goPlatform()">
-دخول المنصة
-</button>
+                  <article class="point-card">
+                    <strong>بداية من اليمن</strong>
+                    <span>
+                      ننطلق من سوق حقيقي شديد الحاجة، ونحوّل البيئة الصعبة إلى نقطة قوة
+                      تثبت متانة الحل وقابليته للنقل.
+                    </span>
+                  </article>
 
-<button class="btn-secondary" onclick="goVision()">
-اكتشف المشروع
-</button>
+                  <article class="point-card">
+                    <strong>شغل مؤسسي قابل للنمو</strong>
+                    <span>
+                      كل صفحة، وكل رسالة، وكل طبقة في المشروع مصممة بعقلية شركة عالمية
+                      تبني على المدى الطويل.
+                    </span>
+                  </article>
+                </div>
+              </div>
 
-</div>
+              <div class="hero-side">
+                <article class="side-panel">
+                  <span class="side-label">ما الذي نبنيه؟</span>
+                  <h3>منصة تعليمية تجمع المدرسة والطالب والمعلم داخل نظام واحد.</h3>
+                  <p>
+                    نجمع إدارة المدرسة، الجداول، التتبع الأكاديمي، المحتوى التفاعلي،
+                    ومسارات التشغيل التعليمية داخل بنية موحدة، بدل أدوات متفرقة لا
+                    تتكامل ولا تصمد في الواقع.
+                  </p>
+                </article>
 
-</section>
+                <div class="mini-stats">
+                  <article class="mini-stat">
+                    <div class="value">1</div>
+                    <div class="label">رؤية واحدة تربط التقنية بالتعليم</div>
+                  </article>
+                  <article class="mini-stat">
+                    <div class="value">∞</div>
+                    <div class="label">قابلية توسع من اليمن إلى الإقليم ثم العالم</div>
+                  </article>
+                </div>
+              </div>
+            </div>
 
+            <div class="trust-strip">
+              <div class="trust-item">
+                <strong>مدارس</strong>
+                <span>تشغيل مدرسي منظم لا يتوقف بسبب ضعف الاتصال.</span>
+              </div>
+              <div class="trust-item">
+                <strong>معلمون</strong>
+                <span>أدوات أوضح لإدارة الصف والمتابعة والتدفق اليومي.</span>
+              </div>
+              <div class="trust-item">
+                <strong>طلاب</strong>
+                <span>تعلم أكثر انتظامًا ووضوحًا ومبنيًا على التقدم الحقيقي.</span>
+              </div>
+              <div class="trust-item">
+                <strong>شركاء</strong>
+                <span>فرصة بناء مؤسسة تعليمية لا حملة مؤقتة أو واجهة تجميلية.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<section class="section">
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">جوهر المشكلة</span>
+            <h2>نحن لا نحل خللًا تجميليًا، بل فجوة تشغيل تعليمية حقيقية.</h2>
+            <p>
+              في البيئات الصعبة، لا يتعطل التعليم فقط بسبب المنهج أو المحتوى، بل بسبب
+              غياب البنية التشغيلية القادرة على الاستمرار: ضعف اتصال، نقص معلمين،
+              أدوات مشتتة، وتدفق إداري غير منظم.
+            </p>
+          </div>
 
-<h2 class="section-title">
-منصة تعليمية متكاملة
-</h2>
+          <div class="problem-grid">
+            <article class="problem-card reveal">
+              <div class="num">01</div>
+              <h3>انقطاع البنية</h3>
+              <p>
+                كثير من الأنظمة التعليمية تفترض اتصالًا ثابتًا وبيئة مثالية، بينما
+                الواقع المدرسي في مناطق كثيرة لا يوفّر ذلك أصلًا.
+              </p>
+            </article>
 
-<div class="grid">
+            <article class="problem-card reveal">
+              <div class="num">02</div>
+              <h3>نقص المعلمين</h3>
+              <p>
+                بعض المدارس تعمل بعدد أقل من الحاجة، ما يخلق فجوات في الشرح والمتابعة
+                والانضباط الأكاديمي داخل الصفوف.
+              </p>
+            </article>
 
-<div class="card">
-<h3>للطلاب</h3>
-<p>
-دروس ذكية، واجبات، نتائج، ومعلم ذكاء اصطناعي يعمل مع الطالب خطوة بخطوة.
-</p>
-</div>
+            <article class="problem-card reveal">
+              <div class="num">03</div>
+              <h3>أدوات مفصولة</h3>
+              <p>
+                عندما تُبنى الإدارة، الجداول، التقييم، والمحتوى كأجزاء منفصلة، تصبح
+                المدرسة مجبرة على تشغيل نظام غير متماسك.
+              </p>
+            </article>
 
-<div class="card">
-<h3>للمعلمين</h3>
-<p>
-إدارة الفصول، التقييم، الحضور، والتفاعل مع الطلاب بسهولة.
-</p>
-</div>
+            <article class="problem-card reveal">
+              <div class="num">04</div>
+              <h3>تعليم بلا استمرارية</h3>
+              <p>
+                حضور الطالب وحده لا يكفي؛ المطلوب نظام يضمن استمرار التتبع والتقدم
+                والفهم لا مجرد تسجيل بيانات شكلية.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-<div class="card">
-<h3>للإدارة المدرسية</h3>
-<p>
-لوحة تحكم كاملة لإدارة الطلاب والمعلمين والتقارير.
-</p>
-</div>
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">جوهر الحل</span>
+            <h2>Madaris AI تبني بنية تشغيل تعليمية، لا مجرد صفحة أو تطبيق منفصل.</h2>
+            <p>
+              المقاربة عندنا واضحة: نظام يبدأ من المدرسة نفسها، يفهم واقعها، يعمل
+              محليًا أولًا، ثم يربط الإدارة والتعلم والمتابعة ضمن مسار واحد قابل
+              للنمو.
+            </p>
+          </div>
 
-<div class="card">
-<h3>للوزارة</h3>
-<p>
-تقارير مركزية عن جميع المدارس والأداء التعليمي.
-</p>
-</div>
+          <div class="solution-layout">
+            <article class="solution-panel reveal">
+              <h3>بنية موحدة تجمع المدرسة، الإدارة، المعلم، والطالب.</h3>
+              <p>
+                نربط التشغيل المدرسي والتجربة التعليمية داخل طبقة واحدة منطقية؛
+                فتتحول الجداول، التتبع الأكاديمي، والشرح الذكي، إلى أجزاء من نظام
+                متكامل بدل أن تبقى عناصر متفرقة.
+              </p>
 
-<div class="card">
-<h3>ذكاء اصطناعي تعليمي</h3>
-<p>
-معلم ذكي يساعد الطلاب في التعلم الفردي.
-</p>
-</div>
+              <div class="pill-list">
+                <div class="pill-item">
+                  <strong>تشغيل محلي موثوق</strong>
+                  <span>أولًا</span>
+                </div>
+                <div class="pill-item">
+                  <strong>مزامنة لاحقة عند الحاجة</strong>
+                  <span>ثانيًا</span>
+                </div>
+                <div class="pill-item">
+                  <strong>هيكل قابل للتوسع المؤسسي</strong>
+                  <span>دائمًا</span>
+                </div>
+              </div>
+            </article>
 
-<div class="card">
-<h3>عمل بدون إنترنت</h3>
-<p>
-مصمم للعمل في المناطق ذات الإنترنت الضعيف.
-</p>
-</div>
+            <article class="solution-card reveal">
+              <h3>المعيار عندنا: هل يعمل هذا النظام في الواقع أم لا؟</h3>
+              <p>
+                لذلك نبني بعقلية تنفيذية: واجهات واضحة، منطق عملي، اعتماد أقل على
+                الظروف المثالية، وتركيز على ما تحتاجه المدرسة فعلًا لتستمر وتتحسن.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-</div>
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">مكونات المنصة</span>
+            <h2>أربع طبقات أساسية تشكّل نواة Madaris AI.</h2>
+            <p>
+              هذه ليست قائمة مزايا عشوائية، بل أعمدة تشغيلية يجب أن تعمل معًا حتى يصبح
+              المنتج مؤسسيًا وقادرًا على التوسع.
+            </p>
+          </div>
 
-</section>
+          <div class="system-grid">
+            <article class="system-card reveal">
+              <span class="badge">School Operations</span>
+              <h3>إدارة المدرسة</h3>
+              <p>
+              تنظيم بيانات المدرسة، الصفوف، المعلمين، الجداول، والهيكل الإداري ضمن
+                طبقة تشغيل واضحة لا تعتمد على الفوضى اليومية.
+              </p>
+            </article>
 
+            <article class="system-card reveal">
+              <span class="badge">Learning Layer</span>
+              <h3>التعلم والتقدم</h3>
+              <p>
+                تتبع تعلم الطالب، التقدم، المحتوى، والاختبارات ضمن منطق يربط الفهم
+                بالممارسة، لا الحضور بالشكل فقط.
+              </p>
+            </article>
 
-<section class="section platform">
+            <article class="system-card reveal">
+              <span class="badge">Teacher Support</span>
+              <h3>المعلم والدعم الذكي</h3>
+              <p>
+                تمكين المعلم الحقيقي، مع إمكانية بناء دعم ذكي يخفف الضغط ويغلق بعض
+                فجوات الشرح والمتابعة عند الحاجة.
+              </p>
+            </article>
 
-<h2 class="section-title">
-ابدأ الآن
-</h2>
+            <article class="system-card reveal">
+              <span class="badge">Offline Reliability</span>
+              <h3>العمل دون اتصال</h3>
+              <p>
+                المنتج مصمم من الأصل ليبقى نافعًا حتى عند ضعف الإنترنت أو غيابه، بدل
+                أن يصبح عديم الفائدة خارج الظروف المثالية.
+              </p>
+            </article>
 
-<p>
-الدخول إلى منصة Madaris AI
-</p>
+            <article class="system-card reveal">
+              <span class="badge">Academic Flow</span>
+              <h3>التدفق الأكاديمي</h3>
+              <p>
+                ربط الجدول، الحصة، الحضور، والمتابعة الأكاديمية داخل مسار واضح يسهّل
+                العمل على المدرسة والإدارة.
+              </p>
+            </article>
 
-<br>
+            <article class="system-card reveal">
+              <span class="badge">Scalable Foundation</span>
+              <h3>بنية قابلة للنمو</h3>
+              <p>
+                ما نبنيه الآن ليس نهاية الطريق، بل أساس منظومة يمكن أن تتوسع تدريجيًا
+                من مدرسة إلى شبكة مدارس ثم إلى نطاق أكبر.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">لمن نبني؟</span>
+            <h2>المنصة مصممة لتخدم المدرسة كلها، لا مستخدمًا واحدًا فقط.</h2>
+            <p>
+              قوة Madaris AI أنها لا تنظر إلى التعليم كواجهة طالب فقط، بل كنظام
+              متكامل يحتاج إلى منطق يناسب الإدارة، المعلم، الطالب، والشريك المؤسسي.
+            </p>
+          </div>
 
-<button class="btn-primary" onclick="goPlatform()">
-دخول المنصة
-</button>
+          <div class="audience-grid">
+            <article class="audience-card reveal">
+              <div class="audience-icon">🏫</div>
+              <h3>للمدارس</h3>
+              <p>
+                المدارس تحتاج إلى تشغيل يومي منظم، لا إلى أداة جميلة فقط. لذلك نبني
+                ما يساعدها على الاستمرار، التنظيم، والمتابعة.
+              </p>
+              <ul>
+                <li>تنظيم الصفوف والمعلمين والجداول.</li>
+                <li>تقليل التشتيت بين الأدوات المنفصلة.</li>
+                <li>بناء أساس جاهز للتوسع داخل المؤسسة.</li>
+              </ul>
+            </article>
 
-</section>
+            <article class="audience-card reveal">
+              <div class="audience-icon">👨‍🏫</div>
+              <h3>للمعلمين</h3>
+              <p>
+                المعلم يحتاج إلى وضوح وسرعة وأدوات لا تزيد العبء عليه. المنصة تدعمه
+                داخل تدفق عمل حقيقي ومباشر.
+              </p>
+              <ul>
+                <li>تدفق أوضح للحصة والمتابعة.</li>
+                <li>تقليل العشوائية في الجداول والمعلومات.</li>
+                <li>إمكانية دمج الدعم الذكي تدريجيًا.</li>
+              </ul>
+            </article>
 
+            <article class="audience-card reveal">
+              <div class="audience-icon">🎓</div>
+              <h3>للطلاب</h3>
+              <p>
+                الهدف ليس مجرد فتح شاشة للطالب، بل خلق بيئة تعلم أكثر استمرارية،
+                وضوحًا، وقابلية للمتابعة الحقيقية.
+              </p>
+              <ul>
+                <li>تعلم أكثر انتظامًا.</li>
+                <li>تقدم مرتبط بالفعل بالمحتوى والمتابعة.</li>
+                <li>تجربة قابلة للعمل حتى في الظروف الضعيفة.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
 
-<footer class="footer">
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">التوسع الاستراتيجي</span>
+            <h2>نبدأ محليًا، لكننا نبني من اليوم بمنطق قابل للنقل والتوسع.</h2>
+            <p>
+              البداية من اليمن ليست تضييقًا للرؤية، بل اختبار قوة. إذا أثبت النظام
+              نفسه داخل بيئة صعبة، تصبح قابليته للنمو إلى أسواق أخرى أكثر مصداقية
+              وصلابة.
+            </p>
+          </div>
 
-Madaris AI © 2026  
-منصة تعليمية ذكية لمستقبل أفضل
+          <div class="expansion-grid">
+            <article class="expansion-main reveal">
+              <h3>من مدرسة واحدة إلى نموذج قابل للتكرار.</h3>
+              <p>
+                الاستراتيجية ليست قفزة عشوائية، بل بناء تدريجي منظم: تثبيت التشغيل،
+                إثبات القيمة، توثيق الأثر، ثم توسيع النطاق خطوة بعد خطوة.
+              </p>
 
-</footer>
+              <div class="expansion-steps">
+                <div class="expansion-step">
+                  <div class="step-no">1</div>
+                  <div>
+                    <h4>إثبات التشغيل</h4>
+                    <p>
+                      البدء ببيئة مدرسية فعلية لفهم الواقع اليومي وتحويل المنتج من فكرة
+                      إلى نظام يمكن الاعتماد عليه.
+                    </p>
+                  </div>
+                </div>
 
+                <div class="expansion-step">
+                  <div class="step-no">2</div>
+                  <div>
+                    <h4>تحسين البنية</h4>
+                    <p>
+                      تطوير المنصة بناءً على الاستخدام الفعلي، لا على افتراضات نظرية أو
+                      عروض شكلية.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="expansion-step">
+                  <div class="step-no">3</div>
+                  <div>
+                    <h4>نمو منضبط</h4>
+                    <p>
+                      نقل التجربة إلى مدارس أخرى، ثم جهات تعليمية أكبر، مع الحفاظ على
+                      جودة التشغيل والانضباط المؤسسي.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="expansion-side reveal">
+              <h3>السوق الواسع يأتي بعد صحة الأساس.</h3>
+              <p>
+                لا نسعى إلى اتساع شكلي سريع، بل إلى بناء بنية يمكن الوثوق بها. من
+                اليمن إلى الإقليم ثم إلى العالم، القيمة الحقيقية تأتي من حل يعمل في
+                الواقع ويصمد عند الضغط.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">إشارات القوة</span>
+            <h2>لماذا يستحق هذا المشروع المتابعة الجادة من شركاء المستقبل؟</h2>
+            <p>
+              المشاريع الكبيرة لا تبدأ مكتملة، لكنها تكسب الجدية عندما تكون المشكلة
+              واضحة، والرؤية منضبطة، والبناء مؤسسيًا من اليوم الأول.
+            </p>
+          </div>
+
+          <div class="traction-grid">
+            <article class="traction-card reveal">
+              <div class="icon">01</div>
+              <h3>مشكلة حقيقية</h3>
+              <p>
+                نحن لا نخترع احتياجًا نظريًا، بل نتعامل مع فجوة تعليمية وتشغيلية موجودة
+                بالفعل وتؤثر يوميًا على المدارس.
+              </p>
+            </article>
+
+            <article class="traction-card reveal">
+              <div class="icon">02</div>
+              <h3>رؤية مؤسسية</h3>
+              <p>
+                المنصة تُبنى بعقلية نظام طويل المدى، لا كحل سريع أو منتج تجميلي محدود
+                العمر.
+              </p>
+            </article>
+
+            <article class="traction-card reveal">
+              <div class="icon">03</div>
+              <h3>بداية قوية</h3>
+              <p>
+                الانطلاق من سوق حقيقي شديد الحاجة يعطي المشروع فرصة لإثبات القوة
+                التشغيلية والتميّز منذ البداية.
+              </p>
+            </article>
+
+            <article class="traction-card reveal">
+              <div class="icon">04</div>
+              <h3>قابلية شراكة</h3>
+              <p>
+                المشروع مصمم بحيث يمكن أن يدخل فيه شركاء تقنيون، تعليميون، استثماريون،
+                ومؤسسيون ضمن أدوار واضحة.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">مسارات الشراكة</span>
+            <h2>أربع بوابات شراكة واضحة لبناء Madaris AI بشكل احترافي.</h2>
+            <p>
+              الشراكة هنا ليست كلمة عامة. نحن نحدد من البداية نوع الجهات التي يمكن أن
+              تضيف قيمة حقيقية، وكيف يمكن أن ينسجم دورها مع مسار المشروع.
+            </p>
+          </div>
+
+          <div class="partnership-grid">
+            <article class="partnership-card reveal">
+              <span class="type-tag">Technical</span>
+              <h3>شراكة تقنية</h3>
+              <p>
+                موجهة للفرق التقنية، البنية السحابية، خبراء المنتج، والجهات التي تفهم
+                بناء الأنظمة القابلة للعمل في الواقع.
+              </p>
+              <ul>
+                <li>تحسين البنية والواجهات والتكاملات.</li>
+                <li>رفع الجودة والأداء والانضباط البرمجي.</li>
+                <li>المساهمة في بناء Offline-First بشكل مؤسسي.</li>
+              </ul>
+            </article>
+
+            <article class="partnership-card reveal">
+              <span class="type-tag">Education</span>
+              <h3>شراكة تعليمية</h3>
+              <p>
+                موجهة للمدارس، القيادات التربوية، والإدارات التعليمية التي تريد اختبار
+                الحل، تقييمه، أو اعتماده تدريجيًا.
+              </p>
+              <ul>
+                <li>تجارب تشغيل ميدانية داخل المدارس.</li>
+                <li>تحسين السيناريوهات بناءً على الواقع الفعلي.</li>
+                <li>بناء قصص نجاح قابلة للتكرار.</li>
+              </ul>
+            </article>
+
+            <article class="partnership-card reveal">
+              <span class="type-tag">Investment</span>
+              <h3>شراكة استثمارية</h3>
+              <p>
+                موجهة للممولين، الجهات المانحة، وبرامج الدعم التي تبحث عن مشروع قابل
+                للقياس والتوسع، لا مجرد فكرة نظرية.
+              </p>
+              <ul>
+                <li>تمويل البناء الأساسي والتجارب الميدانية.</li>
+                <li>دعم الانتقال من البنية الأولى إلى المنتج الفعلي.</li>
+                <li>فتح طريق التوسع من المحلي إلى الإقليمي.</li>
+              </ul>
+            </article>
+
+            <article class="partnership-card reveal">
+              <span class="type-tag">Institutional</span>
+              <h3>شراكة مؤسسية / حكومية</h3>
+              <p>
+                موجهة للوزارات، المنظمات، الجهات الإنسانية، وشبكات التعليم التي تريد
+                حلًا يخدم المدارس ضمن ظروف تشغيل صعبة.
+              </p>
+              <ul>
+                <li>نشر منظم على مستوى مدارس أو مناطق محددة.</li>
+                <li>مواءمة الحل مع الواقع الإداري والتشغيلي.</li>
+                <li>صناعة أثر قابل للتوثيق والقياس.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">ما الذي نبحث عنه؟</span>
+            <h2>نحن لا نبحث عن اسم كبير فقط، بل عن شريك يبني معنا بجدية.</h2>
+            <p>
+              الشريك المناسب ليس من يضيف شعارًا على الصفحة، بل من يملك عقلية تنفيذية،
+              فهمًا للواقع، وقدرة على المساهمة الفعلية في البناء والتوسع المنضبط.
+            </p>
+          </div>
+
+          <div class="problem-grid">
+            <article class="problem-card reveal">
+              <div class="num">A</div>
+              <h3>انضباط تنفيذي</h3>
+              <p>
+                نفضل الشركاء الذين يفهمون أن بناء منتج تعليمي قوي يبدأ من وضوح القرارات،
+                لا من كثرة الوعود والضجيج.
+              </p>
+            </article>
+
+            <article class="problem-card reveal">
+              <div class="num">B</div>
+              <h3>فهم للواقع</h3>
+              <p>
+                نحتاج إلى أطراف تدرك طبيعة المدارس الفعلية، وضعف الاتصال، وضغط الإدارة
+                التعليمية، لا من يصمم لبيئات مثالية فقط.
+              </p>
+            </article>
+
+            <article class="problem-card reveal">
+              <div class="num">C</div>
+              <h3>رؤية طويلة المدى</h3>
+              <p>
+                نبني لمن يفكر في بنية تستمر لسنوات وتتحول إلى معيار تشغيلي، لا تجربة
+                مؤقتة أو مبادرة قصيرة النفس.
+              </p>
+            </article>
+
+            <article class="problem-card reveal">
+              <div class="num">D</div>
+              <h3>إضافة فعلية</h3>
+              <p>
+                كل شراكة يجب أن تضيف قيمة ملموسة: تقنية، تعليمية، مؤسسية، أو
+                استثمارية. غير ذلك يشتت المسار ولا يخدم البناء.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="cta-panel reveal">
+            <span class="eyebrow">الخطوة التالية</span>
+            <h2>
+              إذا كنت ترى أن التعليم يحتاج إلى بنية حقيقية،  
+              فربما حان وقت بناء ذلك معنا.
+            </h2>
+            <p>
+              Madaris AI مشروع طويل المدى، يُبنى بعقلية مؤسسية، ويبحث عن
+              شركاء جادين يؤمنون بأن التعليم يحتاج إلى أنظمة قابلة للتشغيل،
+              لا مجرد واجهات جميلة. إذا كنت جهة تقنية، تعليمية، استثمارية،
+              أو مؤسسية — فالباب مفتوح لحوار احترافي واضح.
+            </p>
+
+            <div class="btn-row" style="justify-content:center">
+              <a href="partners.html" class="btn btn-primary">
+                استكشف فرص الشراكة
+              </a>
+
+              <a href="contact.html" class="btn btn-secondary">
+                تواصل معنا
+              </a>
+
+              <a href="platform.html" class="btn btn-outline">
+                استعرض المنصة
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-card reveal">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <h3 class="gradient-text">Madaris AI</h3>
+              <p>
+                Madaris AI ليست مجرد منصة تعليمية، بل نواة نظام تشغيل
+                تعليمي يعمل في الواقع. نبدأ من البيئات الصعبة، نبني
+                بنية موثوقة، ثم نتوسع بثبات نحو مستقبل تعليمي أكثر
+                استدامة ووضوحًا.
+              </p>
+            </div>
+
+            <div class="footer-links">
+              <a href="index.html">الرئيسية</a>
+              <a href="platform.html">المنصة</a>
+              <a href="vision.html">الرؤية</a>
+              <a href="schools.html">للمدارس</a>
+              <a href="partners.html">الشراكات</a>
+              <a href="about.html">من نحن</a>
+              <a href="contact.html">التواصل</a>
+              <a href="https://madarisai.com">madarisai.com</a>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <span>
+              © 2025 Madaris AI — جميع الحقوق محفوظة
+            </span>
+
+            <span>
+              بناء بنية تعليمية قابلة للتشغيل من اليوم
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 
 <script>
+(function () {
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const body = document.body;
 
-function goPlatform(){
-window.location.href="app/login.html"
-}
+  function openMenu() {
+    mobileMenu.classList.add("open");
+    menuToggle.classList.add("active");
+    menuToggle.setAttribute("aria-expanded", "true");
+    body.classList.add("menu-open");
+  }
 
-function goVision(){
-window.location.href="vision.html"
-}
+  function closeMenu() {
+    mobileMenu.classList.remove("open");
+    menuToggle.classList.remove("active");
+    menuToggle.setAttribute("aria-expanded", "false");
+    body.classList.remove("menu-open");
+  }
 
+  menuToggle.addEventListener("click", function () {
+    if (mobileMenu.classList.contains("open")) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  mobileMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  const revealElements = document.querySelectorAll(".reveal");
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: "0px 0px -40px 0px",
+    }
+  );
+
+  revealElements.forEach((el) => revealObserver.observe(el));
+})();
 </script>
 
 </body>
-
 </html>
