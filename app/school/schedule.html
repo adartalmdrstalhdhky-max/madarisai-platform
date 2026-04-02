@@ -20,6 +20,10 @@
       --pink:#ff5f87;
       --pink-2:#f9537f;
       --green:#2ecc71;
+      --green-2:#22b463;
+      --yellow:#f1c40f;
+      --purple:#8b7bff;
+      --purple-2:#6f60f6;
       --shadow:0 16px 40px rgba(0,0,0,.28);
     }
 
@@ -45,7 +49,7 @@
 
     .container{
       width:100%;
-      max-width:1120px;
+      max-width:1160px;
       margin:0 auto;
     }
 
@@ -132,7 +136,7 @@
       font-size:18px;
       font-weight:800;
       cursor:pointer;
-      transition:transform .15s ease;
+      transition:transform .15s ease, opacity .15s ease;
     }
 
     .btn:active{
@@ -201,33 +205,74 @@
       border-color:transparent;
     }
 
-    .day-title{
-      text-align:center;
-      font-size:22px;
-      font-weight:800;
-      margin:8px 0 2px;
-      color:#fff;
+    .summary-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-top:12px;
     }
 
-    .day-sub{
+    .summary-box{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px 14px;
       text-align:center;
+    }
+
+    .summary-number{
+      font-size:28px;
+      font-weight:900;
+      color:#fff;
+      line-height:1.2;
+      margin-bottom:6px;
+    }
+
+    .summary-label{
       color:var(--muted);
       font-size:15px;
-      margin-bottom:14px;
       line-height:1.8;
     }
 
-    .table-wrap{
+    .display-title{
+      text-align:center;
+      font-size:24px;
+      font-weight:900;
+      margin:8px 0 4px;
+      line-height:1.7;
+    }
+
+    .display-sub{
+      text-align:center;
+      color:var(--muted);
+      font-size:15px;
+      margin-bottom:16px;
+      line-height:1.8;
+    }
+
+    .empty-box{
+      display:none;
+      text-align:center;
+      color:var(--muted);
+      line-height:2;
+      font-size:16px;
+      padding:24px 12px;
+      border:1px dashed rgba(255,255,255,.14);
+      border-radius:22px;
+      background:rgba(255,255,255,.03);
+    }
+
+    .desktop-table-wrap{
+      display:none;
       overflow-x:auto;
       border:1px solid var(--line);
       border-radius:22px;
       background:rgba(255,255,255,.03);
-      display:none;
     }
 
     table{
       width:100%;
-      min-width:980px;
+      min-width:1060px;
       border-collapse:collapse;
     }
 
@@ -278,39 +323,27 @@
     }
 
     .pill-ai{
-      background:rgba(125,106,255,.18);
-      color:#f0eaff;
-      border:1px solid rgba(125,106,255,.20);
-    }
-
-    .empty-box{
-      display:none;
-      text-align:center;
-      color:var(--muted);
-      line-height:2;
-      font-size:16px;
-      padding:24px 12px;
-      border:1px dashed rgba(255,255,255,.14);
-      border-radius:22px;
-      background:rgba(255,255,255,.03);
+      background:rgba(139,123,255,.18);
+      color:#efeaff;
+      border:1px solid rgba(139,123,255,.20);
     }
 
     .mobile-list{
-      display:none;
+      display:block;
     }
 
     .mobile-item{
       background:rgba(255,255,255,.05);
       border:1px solid var(--line);
       border-radius:22px;
-      padding:14px;
+      padding:16px 14px;
       margin-bottom:12px;
     }
 
     .mobile-title{
-      font-size:18px;
-      font-weight:800;
-      margin-bottom:10px;
+      font-size:20px;
+      font-weight:900;
+      margin-bottom:12px;
       line-height:1.7;
     }
 
@@ -318,20 +351,59 @@
       font-size:15px;
       color:var(--muted);
       line-height:1.9;
-      margin-bottom:6px;
+      margin-bottom:7px;
     }
 
     .mobile-row strong{
       color:#fff;
     }
 
-    @media (max-width:820px){
-      .table-wrap{display:none !important;}
-      .mobile-list{display:block;}
+    .week-grid{
+      display:block;
     }
 
-    @media (min-width:821px){
-      .mobile-list{display:none !important;}
+    .week-day-card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:24px;
+      padding:16px 14px;
+      margin-bottom:14px;
+    }
+
+    .week-day-title{
+      font-size:20px;
+      font-weight:900;
+      margin-bottom:10px;
+      text-align:center;
+    }
+
+    .week-day-count{
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:12px;
+    }
+
+    .week-slot{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      border-radius:18px;
+      padding:12px;
+      margin-bottom:10px;
+    }
+
+    .week-slot:last-child{
+      margin-bottom:0;
+    }
+
+    .week-slot-line{
+      font-size:14px;
+      line-height:1.9;
+      color:var(--muted);
+    }
+
+    .week-slot-line strong{
+      color:#fff;
     }
 
     @media (min-width:760px){
@@ -346,6 +418,20 @@
       .days-wrap{
         grid-template-columns:repeat(6,1fr);
       }
+
+      .summary-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    @media (min-width:900px){
+      .desktop-table-wrap{
+        display:block;
+      }
+
+      .mobile-list{
+        display:none;
+      }
     }
   </style>
 </head>
@@ -355,7 +441,7 @@
       <h1 class="title">Madaris AI | عرض الجدول المدرسي</h1>
       <p class="sub">
         شاشة عرض الجدول للصف الحالي. هذه الصفحة تقرأ الحصص من قاعدة البيانات،
-        ثم تجلب أسماء المواد والمعلمين وتعرضها بشكل منظم ومناسب للجوال.
+        ثم تجلب أسماء المواد والمعلمين وتعرضها بشكل منظم واحترافي ومناسب للجوال.
       </p>
 
       <h2 id="schoolName" class="school-name">جاري تحميل بيانات المدرسة...</h2>
@@ -370,7 +456,7 @@
     </section>
 
     <section class="card">
-      <div id="topStatus" class="status-box">جاري تحميل الصفوف والجدول...</div>
+      <div id="topStatus" class="status-box">جاري تحميل الصفوف والمواد والمعلمين والجدول...</div>
 
       <div class="controls-grid">
         <div class="field">
@@ -402,26 +488,43 @@
           </div>
         </div>
       </div>
+
+      <div class="summary-grid">
+        <div class="summary-box">
+          <div id="summarySelectedClass" class="summary-number">—</div>
+          <div class="summary-label">الصف المحدد</div>
+        </div>
+        <div class="summary-box">
+          <div id="summaryVisibleCount" class="summary-number">0</div>
+          <div class="summary-label">الحصص المعروضة</div>
+        </div>
+        <div class="summary-box">
+          <div id="summaryWeekCount" class="summary-number">0</div>
+          <div class="summary-label">إجمالي حصص الأسبوع</div>
+        </div>
+      </div>
     </section>
 
     <section class="card">
-      <div id="displayTitle" class="day-title">السبت</div>
-      <div id="displaySub" class="day-sub">جاري تحميل بيانات الجدول...</div>
+      <div id="displayTitle" class="display-title">السبت</div>
+      <div id="displaySub" class="display-sub">جاري تحميل بيانات الجدول...</div>
 
       <div id="emptyBox" class="empty-box">
         لا توجد حصص مجدولة لهذا الاختيار حالياً.
       </div>
 
-      <div id="tableWrap" class="table-wrap">
+      <div id="desktopTableWrap" class="desktop-table-wrap">
         <table>
           <thead>
             <tr>
               <th>اليوم</th>
               <th>الحصة</th>
+              <th>الوقت</th>
               <th>المادة</th>
               <th>المعلم</th>
               <th>نوع المعلم</th>
               <th>الحالة</th>
+              <th>ملاحظة</th>
             </tr>
           </thead>
           <tbody id="scheduleTableBody"></tbody>
@@ -429,6 +532,7 @@
       </div>
 
       <div id="mobileList" class="mobile-list"></div>
+      <div id="weekGrid" class="week-grid" style="display:none;"></div>
     </section>
   </div>
   <script type="module">
@@ -472,6 +576,15 @@
       thursday: 6
     };
 
+    const ORDERED_DAYS = [
+      "saturday",
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday"
+    ];
+
     const state = {
       session: null,
       schoolId: "",
@@ -483,7 +596,8 @@
       classes: [],
       subjectsMap: new Map(),
       teachersMap: new Map(),
-      schedules: []
+      schedules: [],
+      visibleRows: []
     };
 
     const schoolNameEl = document.getElementById("schoolName");
@@ -496,9 +610,13 @@
     const displayTitleEl = document.getElementById("displayTitle");
     const displaySubEl = document.getElementById("displaySub");
     const emptyBoxEl = document.getElementById("emptyBox");
-    const tableWrapEl = document.getElementById("tableWrap");
+    const desktopTableWrapEl = document.getElementById("desktopTableWrap");
     const tableBodyEl = document.getElementById("scheduleTableBody");
     const mobileListEl = document.getElementById("mobileList");
+    const weekGridEl = document.getElementById("weekGrid");
+    const summarySelectedClassEl = document.getElementById("summarySelectedClass");
+    const summaryVisibleCountEl = document.getElementById("summaryVisibleCount");
+    const summaryWeekCountEl = document.getElementById("summaryWeekCount");
     const logoutBtnEl = document.getElementById("logoutBtn");
 
     function readStoredSession() {
@@ -525,8 +643,12 @@
       return String(value ?? "").trim();
     }
 
+    function lower(value) {
+      return normalizeText(value).toLowerCase();
+    }
+
     function normalizeDay(value) {
-      const raw = normalizeText(value).toLowerCase();
+      const raw = lower(value);
 
       if (!raw) return "";
       if (raw === "السبت") return "saturday";
@@ -544,7 +666,7 @@
     }
 
     function normalizeStatus(value) {
-      const raw = normalizeText(value).toLowerCase();
+      const raw = lower(value);
       if (!raw) return "نشط";
       if (raw === "active" || raw === "نشط") return "نشط";
       if (raw === "inactive" || raw === "غير نشط") return "غير نشط";
@@ -552,7 +674,7 @@
     }
 
     function teacherTypeLabel(value) {
-      const raw = normalizeText(value).toLowerCase();
+      const raw = lower(value);
 
       if (!raw) return "معلم بشري";
       if (
@@ -564,6 +686,16 @@
       }
 
       return "معلم بشري";
+    }
+
+    function formatTimeRange(fromValue, toValue) {
+      const from = normalizeText(fromValue);
+      const to = normalizeText(toValue);
+
+      if (from && to) return `${from} — ${to}`;
+      if (from && !to) return from;
+      if (!from && to) return to;
+      return "غير محدد";
     }
 
     function setTopStatus(message, type = "default") {
@@ -641,7 +773,9 @@
         const data = d.data() || {};
         state.subjectsMap.set(d.id, {
           id: d.id,
-          name: normalizeText(data.name || data.subjectName || "مادة غير معروفة")
+          code: normalizeText(data.code),
+          name: normalizeText(data.name || data.subjectName || "مادة غير معروفة"),
+          status: lower(data.status || "active")
         });
       });
     }
@@ -655,7 +789,7 @@
         state.teachersMap.set(d.id, {
           id: d.id,
           name: normalizeText(data.name || data.teacherName || "معلم غير معروف"),
-          type: teacherTypeLabel(data.teacherType || data.type || data.roleLevel || "")
+          type: teacherTypeLabel(data.teacherType || data.type || data.roleLevel || data.teacherMode || "")
         });
       });
     }
@@ -668,14 +802,19 @@
       daysWrapEl.style.display = state.viewMode === "week" ? "none" : "grid";
     }
 
+    function getSelectedClass() {
+      return state.classes.find((c) => c.id === state.selectedClassId) || null;
+    }
+
     function getSelectedClassName() {
-      const found = state.classes.find((c) => c.id === state.selectedClassId);
+      const found = getSelectedClass();
       return normalizeText(found?.name || found?.className || state.selectedClassName || "الصف الحالي");
     }
 
     async function loadSchedules() {
       if (!state.selectedClassId) {
         state.schedules = [];
+        state.visibleRows = [];
         renderSchedules();
         return;
       }
@@ -692,7 +831,7 @@
 
         state.schedules = allSchedules.filter((item) => {
           const itemClassId = normalizeText(item.classId);
-          const itemStatus = normalizeText(item.status).toLowerCase();
+          const itemStatus = lower(item.status);
 
           return (
             itemClassId === normalizeText(state.selectedClassId) &&
@@ -705,39 +844,161 @@
       } catch (error) {
         console.error("Schedules load error:", error);
         state.schedules = [];
+        state.visibleRows = [];
         renderSchedules();
         setTopStatus("فشل تحميل الجدول.", "error");
       }
     }
 
-    function renderSchedules() {
-      const className = getSelectedClassName();
+    function buildRows() {
+      const rows = state.schedules.map((item) => {
+        const subjectId = normalizeText(item.subjectId);
+        const teacherId = normalizeText(item.teacherId);
 
-      let rows = [...state.schedules].map((item) => {
-        const subject = state.subjectsMap.get(normalizeText(item.subjectId));
-        const teacher = state.teachersMap.get(normalizeText(item.teacherId));
+        const subject = state.subjectsMap.get(subjectId);
+        const teacher = state.teachersMap.get(teacherId);
+
+        const subjectName = normalizeText(
+          subject?.name ||
+          item.subjectName ||
+          item.subject ||
+          item.subject_title ||
+          "مادة غير معروفة"
+        );
+
+        const teacherName = normalizeText(
+          teacher?.name ||
+          item.teacherName ||
+          item.teacher ||
+          "معلم غير معروف"
+        );
+
+        const teacherType = normalizeText(
+          teacher?.type ||
+          teacherTypeLabel(item.teacherType || item.teacherMode || "")
+        );
+
+        const fromTime = normalizeText(item.from || item.startTime || item.timeFrom);
+        const toTime = normalizeText(item.to || item.endTime || item.timeTo);
 
         return {
           id: item.id,
+          raw: item,
           day: normalizeDay(item.day),
           dayLabel: dayLabel(item.day),
           period: Number(item.period || 0),
-          subjectName: normalizeText(subject?.name || "مادة غير معروفة"),
-          teacherName: normalizeText(teacher?.name || "معلم غير معروف"),
-          teacherType: normalizeText(teacher?.type || "معلم بشري"),
-          statusLabel: normalizeStatus(item.status)
+          fromTime,
+          toTime,
+          timeRange: formatTimeRange(fromTime, toTime),
+          subjectId,
+          teacherId,
+          subjectName,
+          teacherName,
+          teacherType,
+          statusLabel: normalizeStatus(item.status),
+          note: normalizeText(item.note || item.notes || item.remark || "")
         };
       });
-
-      if (state.viewMode === "day") {
-        rows = rows.filter((r) => r.day === state.selectedDay);
-      }
 
       rows.sort((a, b) => {
         const dayDiff = (DAY_ORDER[a.day] || 99) - (DAY_ORDER[b.day] || 99);
         if (dayDiff !== 0) return dayDiff;
         return a.period - b.period;
       });
+
+      return rows;
+    }
+
+    function renderDesktopTable(rows) {
+      tableBodyEl.innerHTML = "";
+
+      rows.forEach((row) => {
+        const teacherTypeClass = row.teacherType === "معلم ذكي" ? "pill-ai" : "pill-human";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.dayLabel}</td>
+          <td>${row.period || "—"}</td>
+          <td>${row.timeRange}</td>
+          <td>${row.subjectName}</td>
+          <td>${row.teacherName}</td>
+          <td><span class="pill ${teacherTypeClass}">${row.teacherType}</span></td>
+          <td><span class="pill pill-status">${row.statusLabel}</span></td>
+          <td>${row.note || "—"}</td>
+        `;
+        tableBodyEl.appendChild(tr);
+      });
+    }
+
+    function renderMobileList(rows) {
+      mobileListEl.innerHTML = "";
+
+      rows.forEach((row) => {
+        const mobileItem = document.createElement("div");
+        mobileItem.className = "mobile-item";
+        mobileItem.innerHTML = `
+          <div class="mobile-title">${row.dayLabel} - الحصة ${row.period || "—"}</div>
+          <div class="mobile-row"><strong>المادة:</strong> ${row.subjectName}</div>
+          <div class="mobile-row"><strong>المعلم:</strong> ${row.teacherName}</div>
+          <div class="mobile-row"><strong>نوع المعلم:</strong> ${row.teacherType}</div>
+          <div class="mobile-row"><strong>الوقت:</strong> ${row.timeRange}</div>
+          <div class="mobile-row"><strong>الحالة:</strong> ${row.statusLabel}</div>
+          <div class="mobile-row"><strong>ملاحظة:</strong> ${row.note || "—"}</div>
+        `;
+        mobileListEl.appendChild(mobileItem);
+      });
+    }
+
+    function renderWeekGrid(rows) {
+      weekGridEl.innerHTML = "";
+
+      ORDERED_DAYS.forEach((dayKey) => {
+        const dayRows = rows.filter((r) => r.day === dayKey);
+
+        const card = document.createElement("div");
+        card.className = "week-day-card";
+
+        let inner = `
+          <div class="week-day-title">${dayLabel(dayKey)}</div>
+          <div class="week-day-count">عدد الحصص: ${dayRows.length}</div>
+        `;
+
+        if (!dayRows.length) {
+          inner += `<div class="week-slot-line" style="text-align:center;">لا توجد حصص لهذا اليوم.</div>`;
+        } else {
+          dayRows.forEach((row) => {
+            inner += `
+              <div class="week-slot">
+                <div class="week-slot-line"><strong>الحصة:</strong> ${row.period || "—"}</div>
+                <div class="week-slot-line"><strong>المادة:</strong> ${row.subjectName}</div>
+                <div class="week-slot-line"><strong>المعلم:</strong> ${row.teacherName}</div>
+                <div class="week-slot-line"><strong>نوع المعلم:</strong> ${row.teacherType}</div>
+                <div class="week-slot-line"><strong>الوقت:</strong> ${row.timeRange}</div>
+              </div>
+            `;
+          });
+        }
+
+        card.innerHTML = inner;
+        weekGridEl.appendChild(card);
+      });
+    }
+
+    function renderSchedules() {
+      const className = getSelectedClassName();
+      const allRows = buildRows();
+      const weekRows = [...allRows];
+      let visibleRows = [...allRows];
+
+      if (state.viewMode === "day") {
+        visibleRows = visibleRows.filter((r) => r.day === state.selectedDay);
+      }
+
+      state.visibleRows = visibleRows;
+
+      summarySelectedClassEl.textContent = className || "—";
+      summaryVisibleCountEl.textContent = String(visibleRows.length);
+      summaryWeekCountEl.textContent = String(weekRows.length);
 
       displayTitleEl.textContent =
         state.viewMode === "week"
@@ -746,48 +1007,42 @@
 
       displaySubEl.textContent =
         state.viewMode === "week"
-          ? `عدد الحصص المعروضة: ${rows.length}`
-          : `عدد الحصص لهذا اليوم: ${rows.length}`;
+          ? `عدد الحصص المعروضة: ${visibleRows.length}`
+          : `عدد الحصص لهذا اليوم: ${visibleRows.length}`;
 
-      tableBodyEl.innerHTML = "";
       mobileListEl.innerHTML = "";
+      tableBodyEl.innerHTML = "";
+      weekGridEl.innerHTML = "";
 
-      if (!rows.length) {
+      if (!visibleRows.length) {
         emptyBoxEl.style.display = "block";
-        tableWrapEl.style.display = "none";
-        mobileListEl.style.display = window.innerWidth <= 820 ? "block" : "none";
+        desktopTableWrapEl.style.display = "none";
+        mobileListEl.style.display = "none";
+        weekGridEl.style.display = "none";
         return;
       }
 
       emptyBoxEl.style.display = "none";
-      tableWrapEl.style.display = window.innerWidth > 820 ? "block" : "none";
-      mobileListEl.style.display = window.innerWidth <= 820 ? "block" : "none";
 
-      rows.forEach((row) => {
-        const teacherTypeClass = row.teacherType === "معلم ذكي" ? "pill-ai" : "pill-human";
+      if (state.viewMode === "week") {
+        desktopTableWrapEl.style.display = window.innerWidth >= 900 ? "block" : "none";
+        weekGridEl.style.display = "block";
+        mobileListEl.style.display = window.innerWidth >= 900 ? "none" : "block";
 
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${row.dayLabel}</td>
-          <td>${row.period}</td>
-          <td>${row.subjectName}</td>
-          <td>${row.teacherName}</td>
-          <td><span class="pill ${teacherTypeClass}">${row.teacherType}</span></td>
-          <td><span class="pill pill-status">${row.statusLabel}</span></td>
-        `;
-        tableBodyEl.appendChild(tr);
+        renderDesktopTable(visibleRows);
+        renderWeekGrid(visibleRows);
 
-        const mobileItem = document.createElement("div");
-        mobileItem.className = "mobile-item";
-        mobileItem.innerHTML = `
-          <div class="mobile-title">${row.dayLabel} - الحصة ${row.period}</div>
-          <div class="mobile-row"><strong>المادة:</strong> ${row.subjectName}</div>
-          <div class="mobile-row"><strong>المعلم:</strong> ${row.teacherName}</div>
-          <div class="mobile-row"><strong>نوع المعلم:</strong> ${row.teacherType}</div>
-          <div class="mobile-row"><strong>الحالة:</strong> ${row.statusLabel}</div>
-        `;
-        mobileListEl.appendChild(mobileItem);
-      });
+        if (window.innerWidth < 900) {
+          renderMobileList(visibleRows);
+        }
+      } else {
+        weekGridEl.style.display = "none";
+        desktopTableWrapEl.style.display = window.innerWidth >= 900 ? "block" : "none";
+        mobileListEl.style.display = window.innerWidth >= 900 ? "none" : "block";
+
+        renderDesktopTable(visibleRows);
+        renderMobileList(visibleRows);
+      }
     }
 
     function bindEvents() {
@@ -838,7 +1093,7 @@
       updateDayButtons();
 
       try {
-        setTopStatus("جاري تحميل المدرسة والصفوف والمواد والمعلمين...", "default");
+        setTopStatus("جاري تحميل المدرسة والصفوف والمواد والمعلمين والجدول...", "default");
 
         await loadSchoolMeta();
         await loadClasses();
