@@ -6,33 +6,30 @@
   <title>الشراكات | Madaris AI</title>
   <meta
     name="description"
-    content="شارك في بناء مستقبل التعليم مع Madaris AI — شراكات تقنية، تعليمية، استثمارية، ومؤسسية لبناء نظام تشغيل تعليمي Offline-First لليمن ثم المنطقة والعالم."
+    content="شارك في بناء مستقبل التعليم مع Madaris AI — شراكات تقنية، تعليمية، استثمارية، ومؤسسية لبناء نظام تشغيل تعليمي Offline-First يبدأ من اليمن ويتوسع إقليميًا وعالميًا."
   />
 
   <style>
     :root {
       --bg: #061226;
-      --bg-soft: #0a1d3d;
-      --panel: rgba(15, 37, 76, 0.88);
-      --panel-2: rgba(18, 49, 95, 0.88);
+      --bg-soft: #091a36;
+      --panel: rgba(14, 35, 72, 0.9);
+      --panel-2: rgba(18, 47, 92, 0.88);
       --line: rgba(255, 255, 255, 0.10);
-      --line-strong: rgba(102, 216, 255, 0.24);
+      --line-strong: rgba(102, 216, 255, 0.22);
       --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.78);
+      --muted: rgba(255, 255, 255, 0.80);
       --muted-2: rgba(255, 255, 255, 0.62);
       --cyan: #66d8ff;
       --cyan-2: #4fc8f4;
-      --blue: #7aa8ff;
       --purple: #8f87ff;
       --green: #3ad86d;
-      --green-2: #2ec25d;
       --pink: #ff5d8b;
-      --pink-2: #ff4779;
       --amber: #ffcf5a;
-      --shadow: 0 22px 60px rgba(0, 0, 0, 0.32);
+      --shadow: 0 24px 64px rgba(0, 0, 0, 0.34);
       --radius-xl: 34px;
-      --radius-lg: 26px;
-      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-md: 22px;
       --max: 1220px;
     }
 
@@ -52,18 +49,13 @@
       background:
         radial-gradient(circle at top right, rgba(102, 216, 255, 0.10), transparent 22%),
         radial-gradient(circle at top left, rgba(143, 135, 255, 0.08), transparent 20%),
-        linear-gradient(180deg, var(--bg) 0%, #081a35 55%, #061226 100%);
+        linear-gradient(180deg, var(--bg) 0%, #081a35 55%, var(--bg) 100%);
       line-height: 1.9;
     }
 
     a {
       color: inherit;
       text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
     }
 
     .container {
@@ -74,14 +66,14 @@
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 100;
-      backdrop-filter: blur(14px);
+      z-index: 1000;
+      backdrop-filter: blur(16px);
       background: rgba(6, 18, 38, 0.72);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .nav-wrap {
-      min-height: 82px;
+      min-height: 84px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -94,16 +86,15 @@
       gap: 12px;
       font-weight: 900;
       font-size: 22px;
-      letter-spacing: 0.2px;
       white-space: nowrap;
     }
 
     .brand-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
       background: linear-gradient(135deg, var(--cyan), var(--purple));
-      box-shadow: 0 10px 24px rgba(102, 216, 255, 0.24);
+      box-shadow: 0 12px 28px rgba(102, 216, 255, 0.24);
       position: relative;
       overflow: hidden;
       flex: 0 0 auto;
@@ -113,17 +104,16 @@
     .brand-badge::after {
       content: "";
       position: absolute;
-      inset: auto;
-      background: rgba(255, 255, 255, 0.92);
       border-radius: 999px;
+      background: rgba(255,255,255,0.92);
     }
 
     .brand-badge::before {
       width: 24px;
       height: 24px;
-      right: 10px;
-      top: 10px;
-      opacity: 0.18;
+      top: 9px;
+      right: 9px;
+      opacity: 0.16;
     }
 
     .brand-badge::after {
@@ -134,7 +124,7 @@
       opacity: 0.95;
     }
 
-    .nav {
+    .desktop-nav {
       display: flex;
       align-items: center;
       gap: 10px;
@@ -142,7 +132,7 @@
       justify-content: flex-end;
     }
 
-    .nav a {
+    .desktop-nav a {
       padding: 10px 14px;
       border-radius: 999px;
       color: var(--muted);
@@ -151,8 +141,8 @@
       transition: 0.18s ease;
     }
 
-    .nav a:hover,
-    .nav a.active {
+    .desktop-nav a:hover,
+    .desktop-nav a.active {
       color: var(--text);
       background: rgba(255, 255, 255, 0.07);
     }
@@ -164,26 +154,80 @@
       min-height: 48px;
       padding: 0 20px;
       border-radius: 999px;
-      font-weight: 900;
       font-size: 15px;
+      font-weight: 900;
       background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
-      color: #fff;
+      color: white;
       box-shadow: 0 16px 32px rgba(79, 200, 244, 0.24);
-      transition: transform 0.16s ease, opacity 0.16s ease;
     }
 
-    .nav-cta:hover,
-    .btn:hover {
-      transform: translateY(-1px);
+    .mobile-toggle {
+      display: none;
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .mobile-menu {
+      display: none;
+      padding: 0 0 14px;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu-box {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(13, 34, 71, 0.96), rgba(11, 28, 58, 0.96));
+      border-radius: 26px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 14px 16px;
+      border-radius: 18px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .mobile-menu a.active,
+    .mobile-menu a:hover {
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+    }
+
+    .mobile-menu .nav-cta-mobile {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
     }
 
     .hero {
-      padding: 44px 0 28px;
+      padding: 46px 0 26px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 22px;
       align-items: stretch;
     }
@@ -198,19 +242,27 @@
       position: relative;
     }
 
-    .hero-card {
-      padding: 34px 28px 30px;
-    }
-
     .hero-card::before,
-    .hero-side::before {
+    .hero-side::before,
+    .section-card::before {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at top right, rgba(102, 216, 255, 0.10), transparent 22%),
-        radial-gradient(circle at bottom left, rgba(143, 135, 255, 0.08), transparent 20%);
+        radial-gradient(circle at top right, rgba(102,216,255,0.10), transparent 22%),
+        radial-gradient(circle at bottom left, rgba(143,135,255,0.08), transparent 20%);
       pointer-events: none;
+    }
+
+    .hero-card {
+      padding: 34px 28px 30px;
+    }
+
+    .hero-side {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     .eyebrow {
@@ -221,10 +273,12 @@
       border-radius: 999px;
       border: 1px solid var(--line-strong);
       color: var(--cyan);
-      background: rgba(102, 216, 255, 0.08);
+      background: rgba(102,216,255,0.08);
       font-size: 14px;
       font-weight: 900;
       margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-title {
@@ -232,10 +286,11 @@
       font-size: clamp(34px, 5vw, 62px);
       line-height: 1.28;
       font-weight: 900;
-      letter-spacing: -0.5px;
+      position: relative;
+      z-index: 1;
     }
 
-    .hero-title .accent {
+    .accent {
       color: var(--cyan);
     }
 
@@ -243,7 +298,8 @@
       margin: 0;
       color: var(--muted);
       font-size: 18px;
-      max-width: 760px;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-actions {
@@ -251,6 +307,8 @@
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 22px;
+      position: relative;
+      z-index: 1;
     }
 
     .btn {
@@ -259,24 +317,28 @@
       justify-content: center;
       min-height: 56px;
       padding: 0 22px;
-      border: 0;
-      cursor: pointer;
       border-radius: 999px;
+      border: 0;
       font-size: 16px;
       font-weight: 900;
+      cursor: pointer;
       transition: transform 0.16s ease, opacity 0.16s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
     }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
-      color: white;
+      color: #fff;
       box-shadow: 0 16px 34px rgba(79, 200, 244, 0.24);
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.10);
     }
 
     .hero-stats {
@@ -284,10 +346,12 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-top: 28px;
+      position: relative;
+      z-index: 1;
     }
 
     .stat {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       border: 1px solid var(--line);
       border-radius: 24px;
       padding: 18px 14px;
@@ -309,20 +373,13 @@
       font-weight: 700;
     }
 
-    .hero-side {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
     .side-panel {
-      background: rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.05);
       border: 1px solid var(--line);
       border-radius: 26px;
       padding: 18px 16px;
-      position: relative;
-      z-index: 1;
     }
 
     .side-kicker {
@@ -359,16 +416,6 @@
       position: relative;
     }
 
-    .section-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top left, rgba(102, 216, 255, 0.08), transparent 20%),
-        radial-gradient(circle at bottom right, rgba(143, 135, 255, 0.08), transparent 20%);
-      pointer-events: none;
-    }
-
     .section-head {
       position: relative;
       z-index: 1;
@@ -397,9 +444,13 @@
       font-size: 17px;
     }
 
+    .grid-2,
     .grid-3,
     .grid-4,
-    .grid-2 {
+    .partnership-grid,
+    .signal-wrap,
+    .journey,
+    .cta-panel {
       position: relative;
       z-index: 1;
       display: grid;
@@ -418,8 +469,29 @@
       grid-template-columns: repeat(4, 1fr);
     }
 
-    .info-card {
-      background: rgba(255, 255, 255, 0.05);
+    .partnership-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .signal-wrap {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .journey {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .cta-panel {
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: stretch;
+    }
+    .info-card,
+    .partner-card,
+    .signal-card,
+    .journey-step,
+    .cta-box,
+    .contact-box {
+      background: rgba(255,255,255,0.05);
       border: 1px solid var(--line);
       border-radius: 28px;
       padding: 22px 18px;
@@ -432,22 +504,29 @@
       border-radius: 18px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, rgba(102, 216, 255, 0.22), rgba(143, 135, 255, 0.18));
-      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: linear-gradient(135deg, rgba(102,216,255,0.22), rgba(143,135,255,0.18));
+      border: 1px solid rgba(255,255,255,0.10);
       color: var(--cyan);
       font-size: 24px;
       margin-bottom: 14px;
+      font-weight: 900;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
     }
 
-    .info-title {
+    .info-title,
+    .partner-name,
+    .step-title {
       margin: 0 0 8px;
-      font-size: 21px;
+      font-size: 22px;
       line-height: 1.6;
       font-weight: 900;
     }
 
-    .info-text {
+    .info-text,
+    .partner-desc,
+    .step-text,
+    .cta-box p,
+    .contact-box p {
       margin: 0;
       color: var(--muted);
       font-size: 15px;
@@ -478,27 +557,11 @@
       display: grid;
       place-items: center;
       margin-top: 2px;
-      background: rgba(58, 216, 109, 0.16);
-      border: 1px solid rgba(58, 216, 109, 0.24);
+      background: rgba(58,216,109,0.16);
+      border: 1px solid rgba(58,216,109,0.24);
       color: #d8ffe6;
       font-size: 14px;
       font-weight: 900;
-    }
-
-    .partnership-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .partner-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.04));
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 22px 18px;
-      height: 100%;
     }
 
     .partner-top {
@@ -507,13 +570,6 @@
       justify-content: space-between;
       gap: 10px;
       margin-bottom: 10px;
-    }
-
-    .partner-name {
-      margin: 0;
-      font-size: 23px;
-      line-height: 1.5;
-      font-weight: 900;
     }
 
     .tag {
@@ -552,25 +608,7 @@
       border: 1px solid rgba(255,207,90,0.18);
     }
 
-    .partner-desc {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .signal-wrap {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
     .signal-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      padding: 18px 16px;
       text-align: center;
     }
 
@@ -588,21 +626,8 @@
       line-height: 1.8;
     }
 
-    .journey {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
     .journey-step {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      padding: 20px 16px;
       text-align: center;
-      position: relative;
     }
 
     .step-num {
@@ -613,40 +638,10 @@
       place-items: center;
       margin: 0 auto 12px;
       background: linear-gradient(135deg, var(--cyan), var(--purple));
-      color: white;
+      color: #fff;
       font-weight: 900;
       font-size: 18px;
       box-shadow: 0 12px 24px rgba(102, 216, 255, 0.20);
-    }
-
-    .step-title {
-      margin: 0 0 8px;
-      font-size: 19px;
-      line-height: 1.6;
-      font-weight: 900;
-    }
-
-    .step-text {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .cta-panel {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .cta-box,
-    .contact-box {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 24px 20px;
     }
 
     .cta-box h3,
@@ -655,13 +650,6 @@
       font-size: 28px;
       line-height: 1.5;
       font-weight: 900;
-    }
-
-    .cta-box p,
-    .contact-box p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
     }
 
     .cta-actions {
@@ -702,10 +690,6 @@
       flex: 0 0 auto;
       font-size: 18px;
       font-weight: 900;
-    }
-
-    .contact-meta {
-      min-width: 0;
     }
 
     .contact-label {
@@ -777,25 +761,23 @@
       }
     }
 
-    @media (max-width: 760px) {
-      body {
-        padding-bottom: 24px;
+    @media (max-width: 860px) {
+      .desktop-nav {
+        display: none;
       }
 
-      .container {
-        width: min(var(--max), calc(100% - 18px));
+      .mobile-toggle {
+        display: inline-flex;
       }
 
       .nav-wrap {
-        min-height: auto;
-        padding: 14px 0;
-        align-items: flex-start;
-        flex-direction: column;
+        min-height: 76px;
       }
+    }
 
-      .nav {
-        width: 100%;
-        justify-content: flex-start;
+    @media (max-width: 760px) {
+      .container {
+        width: min(var(--max), calc(100% - 18px));
       }
 
       .hero-card,
@@ -808,6 +790,11 @@
         padding: 24px 18px 22px;
       }
 
+      .hero-text,
+      .section-desc {
+        font-size: 16px;
+      }
+
       .hero-stats,
       .grid-4,
       .partnership-grid,
@@ -815,18 +802,13 @@
         grid-template-columns: 1fr;
       }
 
-      .title-mobile-break {
-        display: block;
-      }
-
-      .hero-text,
-      .section-desc {
-        font-size: 16px;
-      }
-
       .footer-card {
         flex-direction: column;
         align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 20px;
       }
     }
   </style>
@@ -840,7 +822,7 @@
         <span>Madaris AI</span>
       </a>
 
-      <nav class="nav" aria-label="التنقل الرئيسي">
+      <nav class="desktop-nav" aria-label="التنقل الرئيسي">
         <a href="./index.html">الرئيسية</a>
         <a href="./platform.html">المنصة</a>
         <a href="./vision.html">الرؤية</a>
@@ -850,6 +832,21 @@
         <a href="./contact.html">التواصل</a>
         <a href="./contact.html" class="nav-cta">ابدأ الحوار</a>
       </nav>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="فتح القائمة">☰</button>
+    </div>
+
+    <div class="container mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-box">
+        <a href="./index.html">الرئيسية</a>
+        <a href="./platform.html">المنصة</a>
+        <a href="./vision.html">الرؤية</a>
+        <a href="./schools.html">للمدارس</a>
+        <a href="./partners.html" class="active">الشراكات</a>
+        <a href="./about.html">من نحن</a>
+        <a href="./contact.html">التواصل</a>
+        <a href="./contact.html" class="nav-cta-mobile">ابدأ الحوار</a>
+      </div>
     </div>
   </header>
 
@@ -862,7 +859,7 @@
           <h1 class="hero-title">
             شارك في بناء
             <span class="accent">Madaris AI</span>
-            <span class="title-mobile-break">— البنية القادمة للتعليم</span>
+            — البنية القادمة للتعليم
           </h1>
 
           <p class="hero-text">
@@ -896,7 +893,7 @@
         <aside class="hero-side">
           <div class="side-panel">
             <div class="side-kicker">لماذا الآن؟</div>
-            h2 class="side-title">لأن فجوة التعليم ليست نظرية، بل أزمة تشغيل يومية.</h2>
+            <h2 class="side-title">لأن فجوة التعليم ليست نظرية، بل أزمة تشغيل يومية.</h2>
             <p class="side-text">
               مدارس تعمل بضغط، معلمون أقل من الحاجة، اتصال غير مستقر، وطلاب يحتاجون
               إلى نظام يضمن التعلم الفعلي لا مجرد الحضور.
@@ -923,7 +920,6 @@
         </aside>
       </div>
     </section>
-
     <section class="section">
       <div class="container section-card">
         <div class="section-head">
@@ -1053,6 +1049,7 @@
         </div>
       </div>
     </section>
+
     <section class="section">
       <div class="container section-card">
         <div class="section-head">
@@ -1130,7 +1127,6 @@
         </div>
       </div>
     </section>
-
     <section class="section">
       <div class="container section-card">
         <div class="section-head">
@@ -1259,7 +1255,7 @@
             <ul class="contact-list">
               <li class="contact-item">
                 <span class="contact-icon">✉</span>
-                <div class="contact-meta">
+                <div>
                   <div class="contact-label">البريد الرسمي</div>
                   <div class="contact-value">info@madarisai.com</div>
                 </div>
@@ -1267,7 +1263,7 @@
 
               <li class="contact-item">
                 <span class="contact-icon">⌂</span>
-                <div class="contact-meta">
+                <div>
                   <div class="contact-label">الموقع</div>
                   <div class="contact-value">madarisai.com</div>
                 </div>
@@ -1275,7 +1271,7 @@
 
               <li class="contact-item">
                 <span class="contact-icon">◎</span>
-                <div class="contact-meta">
+                <div>
                   <div class="contact-label">نوع الجهة المناسبة</div>
                   <div class="contact-value">تقنية — تعليمية — استثمارية — مؤسسية</div>
                 </div>
@@ -1303,6 +1299,18 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    const mobileToggle = document.getElementById("mobileToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+        mobileToggle.textContent = mobileMenu.classList.contains("open") ? "×" : "☰";
+      });
+    }
+  </script>
 
 </body>
 </html>
