@@ -8,11 +8,11 @@
   <title>مدارس الذكاء الاصطناعي | نظام تشغيل التعليم</title>
   <meta
     name="description"
-    content="مدارس الذكاء الاصطناعي منصة تعليمية مؤسسية تعمل بفلسفة Offline-First، تجمع التعلم، العمليات المدرسية، والسجلات الموثوقة في نظام واحد."
+    content="مدارس الذكاء الاصطناعي منصة تعليمية مؤسسية تعمل بفلسفة Offline-First، وتجمع التعلم، الإدارة المدرسية، والسجلات التعليمية في نظام واحد موثوق."
   />
   <meta
     name="keywords"
-    content="مدارس الذكاء الاصطناعي, Madaris AI, نظام تشغيل التعليم, تعليم بدون إنترنت, منصة مدارس, منصة تعليمية, نظام مدرسي"
+    content="مدارس الذكاء الاصطناعي, Madaris AI, نظام تشغيل التعليم, منصة تعليمية, تعليم بدون إنترنت, إدارة المدارس, الذكاء الاصطناعي التعليمي"
   />
   <meta name="author" content="Madaris AI" />
   <meta name="theme-color" content="#081322" />
@@ -21,7 +21,7 @@
   <meta property="og:title" content="مدارس الذكاء الاصطناعي | نظام تشغيل التعليم" />
   <meta
     property="og:description"
-    content="بنية تعليمية مرنة تجمع التعلم، العمليات المدرسية، والعمل دون اعتماد دائم على الإنترنت."
+    content="منصة تعليمية مؤسسية توحد التعلم والإدارة والسجلات التعليمية، وتعمل حتى بدون اتصال دائم بالإنترنت."
   />
   <meta property="og:url" content="https://madarisai.com/" />
   <meta property="og:site_name" content="Madaris AI" />
@@ -36,27 +36,28 @@
 
   <style>
     :root {
-      --bg: #06111d;
-      --bg-soft: #0b1830;
-      --panel: rgba(18, 34, 60, 0.78);
-      --panel-2: rgba(15, 29, 52, 0.92);
+      --bg: #05101c;
+      --bg-soft: #09182a;
+      --panel: rgba(13, 27, 48, 0.78);
+      --panel-strong: rgba(15, 30, 54, 0.92);
       --line: rgba(255, 255, 255, 0.08);
       --line-strong: rgba(255, 255, 255, 0.14);
-      --text: #f7fbff;
-      --muted: #a7b7cf;
-      --muted-2: #8392a8;
-      --primary: #59d8ff;
-      --primary-2: #2db8ee;
-      --secondary: #7a63ff;
-      --success: #8ff0b3;
-      --glow: 0 18px 45px rgba(45, 184, 238, 0.24);
-      --shadow: 0 18px 55px rgba(0, 0, 0, 0.34);
+      --text: #f8fbff;
+      --muted: #a9b9d0;
+      --muted-2: #8393aa;
+      --primary: #63dcff;
+      --primary-strong: #30bfee;
+      --secondary: #7c67ff;
+      --success: #8ff3b8;
+      --danger: #ff7b7b;
+      --glow: 0 18px 48px rgba(48, 191, 238, 0.24);
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.34);
       --radius-xl: 30px;
       --radius-lg: 22px;
       --radius-md: 18px;
       --radius-sm: 14px;
       --container: 1240px;
-      --nav-height: 86px;
+      --nav-height: 84px;
       --transition: 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
@@ -79,12 +80,12 @@
     body {
       font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 15% 12%, rgba(89, 216, 255, 0.12), transparent 24%),
-        radial-gradient(circle at 82% 18%, rgba(122, 99, 255, 0.12), transparent 22%),
-        radial-gradient(circle at 50% 78%, rgba(45, 184, 238, 0.08), transparent 24%),
-        linear-gradient(180deg, #06111d 0%, #071522 26%, #081526 56%, #06101a 100%);
+        radial-gradient(circle at 15% 14%, rgba(99, 220, 255, 0.12), transparent 23%),
+        radial-gradient(circle at 82% 16%, rgba(124, 103, 255, 0.12), transparent 22%),
+        radial-gradient(circle at 48% 82%, rgba(48, 191, 238, 0.08), transparent 24%),
+        linear-gradient(180deg, #05101c 0%, #071523 26%, #081526 58%, #050e18 100%);
       color: var(--text);
-      line-height: 1.75;
+      line-height: 1.78;
       direction: rtl;
       text-align: right;
     }
@@ -105,7 +106,8 @@
 
     button,
     input,
-    textarea {
+    textarea,
+    select {
       font: inherit;
     }
 
@@ -134,7 +136,7 @@
     }
 
     .section-header {
-      max-width: 760px;
+      max-width: 780px;
       margin-bottom: 42px;
     }
 
@@ -145,12 +147,11 @@
       min-height: 40px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(89, 216, 255, 0.08);
-      border: 1px solid rgba(89, 216, 255, 0.18);
-      color: #d7f7ff;
+      background: rgba(99, 220, 255, 0.08);
+      border: 1px solid rgba(99, 220, 255, 0.18);
+      color: #def8ff;
       font-size: 0.82rem;
       font-weight: 800;
-      letter-spacing: 0.04em;
       margin-bottom: 16px;
     }
 
@@ -160,12 +161,12 @@
       height: 8px;
       border-radius: 50%;
       background: var(--primary);
-      box-shadow: 0 0 0 6px rgba(89, 216, 255, 0.12);
+      box-shadow: 0 0 0 6px rgba(99, 220, 255, 0.12);
     }
 
     .section-title {
       font-size: clamp(2rem, 4vw, 3.7rem);
-      line-height: 1.15;
+      line-height: 1.14;
       letter-spacing: -0.03em;
       font-weight: 900;
       margin-bottom: 16px;
@@ -188,7 +189,7 @@
       border: 1px solid var(--line);
       background:
         linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.028)),
-        rgba(9, 19, 35, 0.65);
+        rgba(10, 21, 38, 0.68);
       backdrop-filter: blur(18px);
       box-shadow: var(--shadow);
       overflow: hidden;
@@ -199,15 +200,15 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at top right, rgba(89, 216, 255, 0.07), transparent 28%),
-        radial-gradient(circle at bottom left, rgba(122, 99, 255, 0.06), transparent 24%);
+        radial-gradient(circle at top right, rgba(99, 220, 255, 0.07), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(124, 103, 255, 0.06), transparent 24%);
       pointer-events: none;
     }
 
     .card-body {
       position: relative;
       z-index: 1;
-      padding: 28px;
+      padding: 30px;
     }
 
     .btn {
@@ -234,7 +235,7 @@
 
     .btn-primary {
       color: #07131d;
-      background: linear-gradient(135deg, #7de6ff 0%, #59d8ff 45%, #2db8ee 100%);
+      background: linear-gradient(135deg, #7de7ff 0%, #63dcff 45%, #30bfee 100%);
       box-shadow: var(--glow);
     }
 
@@ -248,25 +249,6 @@
     .btn-secondary:hover {
       background: rgba(255,255,255,0.08);
       border-color: rgba(255,255,255,0.16);
-    }
-
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 38px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 700;
     }
 
     .topbar {
@@ -284,7 +266,7 @@
     }
 
     .topbar.scrolled {
-      background: rgba(6, 17, 29, 0.86);
+      background: rgba(5, 16, 28, 0.86);
       border-color: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(16px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
@@ -315,7 +297,7 @@
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.14);
       background:
-        linear-gradient(135deg, rgba(89,216,255,0.2), rgba(122,99,255,0.16)),
+        linear-gradient(135deg, rgba(99,220,255,0.2), rgba(124,103,255,0.16)),
         rgba(255,255,255,0.03);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.12),
@@ -328,7 +310,7 @@
       inset: 10px;
       border-radius: 999px;
       border: 3px solid rgba(255,255,255,0.92);
-      border-left-color: rgba(89,216,255,0.42);
+      border-left-color: rgba(99,220,255,0.42);
       border-bottom-color: transparent;
       transform: rotate(16deg);
     }
@@ -363,11 +345,13 @@
       font-size: 0.8rem;
       color: var(--muted-2);
       line-height: 1.2;
-    }.nav-links {
+    }
+
+    .nav-links {
       display: flex;
       align-items: center;
       gap: 22px;
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       font-weight: 700;
       color: var(--muted);
     }
@@ -466,7 +450,7 @@
     }
 
     .hero {
-      padding-top: calc(var(--nav-height) + 60px);
+      padding-top: calc(var(--nav-height) + 64px);
       padding-bottom: 110px;
       position: relative;
       overflow: hidden;
@@ -474,1483 +458,431 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 40px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 42px;
       align-items: center;
     }
 
     .hero-title {
-      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-size: clamp(2.6rem, 6vw, 5rem);
       font-weight: 900;
-      line-height: 1.15;
+      line-height: 1.08;
       margin-bottom: 18px;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-title .accent {
+      color: var(--primary);
     }
 
     .hero-description {
       color: var(--muted);
-      font-size: 1.1rem;
+      font-size: 1.14rem;
       margin-bottom: 26px;
-      max-width: 560px;
+      max-width: 640px;
+      line-height: 1.95;
     }
 
     .hero-actions {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
 
-    .hero-stats {
+    .hero-points {
       display: flex;
-      gap: 30px;
       flex-wrap: wrap;
-      margin-top: 24px;
+      gap: 10px;
     }
 
-    .hero-stat {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .hero-stat strong {
-      font-size: 1.3rem;
-      font-weight: 900;
-      color: #fff;
-    }
-
-    .hero-stat span {
-      font-size: 0.85rem;
+    .hero-point {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
       color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
     }
 
     .hero-visual {
       position: relative;
     }
 
-    .hero-card {
+    .hero-panel {
+      position: relative;
       padding: 28px;
-      border-radius: 24px;
+      border-radius: 28px;
       border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(15, 28, 48, 0.7);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)),
+        rgba(11, 23, 41, 0.85);
       backdrop-filter: blur(18px);
       box-shadow: var(--shadow);
     }
 
-    .hero-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
+    .hero-panel-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
     }
 
-    .hero-card p {
+    .window-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .window-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .window-dots span:nth-child(1) {
+      background: #ff6b6b;
+    }
+
+    .window-dots span:nth-child(2) {
+      background: #f7b731;
+    }
+
+    .window-dots span:nth-child(3) {
+      background: #20bf6b;
+    }
+
+    .hero-panel-label {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #d9ebff;
+    }
+
+    .hero-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .hero-kpi {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-kpi strong {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .hero-kpi span {
       color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.7;
+      font-size: 0.88rem;
     }
 
-    @media (max-width: 980px) {
-      .nav-links {
-        display: none;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: calc(var(--nav-height) + 40px);
-      }
+    .hero-flow {
+      display: grid;
+      gap: 12px;
     }
 
-    @media (max-width: 640px) {
-      .section {
-        padding: 80px 0;
-      }
+    .hero-flow-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-      .hero-title {
-        font-size: 2.2rem;
-      }
+    .hero-flow-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.98rem;
+    }
 
-      .hero-actions {
-        flex-direction: column;
-      }
+    .hero-flow-item span {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
 
-      .btn {
-        width: 100%;
-      }
+    .flow-badge {
+      min-width: 80px;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #a5efff, #63dcff);
+      color: #07131d;
+      font-size: 0.84rem;
+      font-weight: 900;
     }
   </style>
 </head>
 <body>
 
-<header class="topbar" id="topbar">
-  <div class="container nav-shell">
+  <header class="topbar" id="topbar">
+    <div class="container nav-shell">
 
-    <div class="brand">
-      <div class="brand-mark"></div>
-      <div class="brand-text">
-        <span class="brand-name">مدارس الذكاء الاصطناعي</span>
-        <span class="brand-subtitle">نظام تشغيل التعليم</span>
-      </div>
-    </div>
-
-    <nav class="nav-links">
-      <a href="/">الرئيسية</a>
-      <a href="/platform.html">المنصة</a>
-      <a href="/schools.html">للمدارس</a>
-      <a href="/partners.html">الشركاء</a>
-      <a href="/about.html">من نحن</a>
-      <a href="/contact.html">تواصل</a>
-    </nav>
-
-    <div class="nav-cta">
-      <a href="/app/login.html" class="btn btn-secondary">دخول المنصة</a>
-      <button class="menu-toggle" id="menuToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-
-  </div>
-</header>
-
-<div class="mobile-menu" id="mobileMenu">
-  <a href="/">الرئيسية</a>
-  <a href="/platform.html">المنصة</a>
-  <a href="/schools.html">للمدارس</a>
-  <a href="/partners.html">الشركاء</a>
-  <a href="/about.html">من نحن</a>
-  <a href="/contact.html">تواصل</a>
-  <a href="/app/login.html" class="btn btn-primary">دخول المنصة</a>
-</div>
-
-<section class="hero">
-  <div class="container hero-grid">
-
-    <div>
-
-      <h1 class="hero-title">
-        نظام تشغيل التعليم
-        للمدارس الذكية
-      </h1>
-
-      <p class="hero-description">
-        منصة تعليمية مؤسسية تعمل حتى بدون إنترنت،
-        تجمع التعلم، العمليات المدرسية،
-        والسجلات التعليمية في نظام واحد موثوق.
-      </p>
-
-      <div class="hero-actions">
-        <a href="/app/login.html" class="btn btn-primary">
-          دخول المنصة
-        </a>
-
-        <a href="/platform.html" class="btn btn-secondary">
-          استكشف المنصة
-        </a>
-      </div>
-
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <strong>Offline-First</strong>
-          <span>يعمل بدون إنترنت</span>
+      <a href="/" class="brand" aria-label="Madaris AI Home">
+        <div class="brand-mark"></div>
+        <div class="brand-text">
+          <span class="brand-name">مدارس الذكاء الاصطناعي</span>
+          <span class="brand-subtitle">نظام تشغيل التعليم</span>
         </div>
+      </a>
 
-        <div class="hero-stat">
-          <strong>AI-Powered</strong>
-          <span>ذكاء اصطناعي تعليمي</span>
-        </div>
+      <nav class="nav-links" aria-label="القائمة الرئيسية">
+        <a href="/">الرئيسية</a>
+        <a href="/platform.html">المنصة</a>
+        <a href="/schools.html">للمدارس</a>
+        <a href="/partners.html">الشركاء</a>
+        <a href="/about.html">من نحن</a>
+        <a href="/contact.html">تواصل</a>
+      </nav>
 
-        <div class="hero-stat">
-          <strong>Enterprise</strong>
-          <span>بنية مؤسسية</span>
-        </div>
+      <div class="nav-cta">
+        <a href="/app/login.html" class="btn btn-secondary">دخول المنصة</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
 
     </div>
-
-    <div class="hero-visual">
-
-      <div class="hero-card">
-        <h3>منصة تعليمية متكاملة</h3>
-        <p>
-          إدارة المدارس، التعلم الذكي،
-          التقييمات، والتقارير،
-          كلها في نظام واحد موحد.
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">الرؤية</span>
-      <h2 class="section-title">
-        إعادة بناء البنية التعليمية
-        من الأساس
-      </h2>
-      <p class="section-description">
-        مدارس الذكاء الاصطناعي ليست مجرد منصة تعليمية،
-        بل نظام تشغيل كامل للتعليم يعمل في البيئات
-        محدودة الموارد ويعيد تعريف المدرسة الرقمية.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تعليم بدون إنترنت</h3>
-          <p>
-            النظام يعمل محليًا داخل المدرسة
-            ويستمر التعليم حتى في غياب الاتصال.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>ذكاء اصطناعي تعليمي</h3>
-          <p>
-            معلم ذكي يساعد الطلاب
-            ويقدم شرحًا وتقييمًا ذكيًا.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>نظام مدرسي متكامل</h3>
-          <p>
-            حضور، درجات، جداول،
-            تقارير، وكل العمليات في منصة واحدة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">النموذج التشغيلي</span>
-      <h2 class="section-title">
-        من العمل المحلي إلى
-        مزامنة موثوقة
-      </h2>
-      <p class="section-description">
-        يعمل النظام محليًا داخل المدرسة،
-        ثم تتم المزامنة عند توفر الإنترنت
-        دون تعطيل العملية التعليمية.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>العمل المحلي</h3>
-          <p>
-            يعمل النظام داخل المدرسة
-            دون الحاجة للإنترنت.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تسجيل الأحداث</h3>
-          <p>
-            يتم تسجيل كل العمليات
-            محليًا بشكل آمن.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المزامنة الذكية</h3>
-          <p>
-            تتم المزامنة تلقائيًا
-            عند توفر الإنترنت.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تقارير مركزية</h3>
-          <p>
-            يتم تجميع البيانات
-            في لوحة تحكم مركزية.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">المنصة</span>
-      <h2 class="section-title">
-        منصة تعليمية مؤسسية
-        متكاملة
-      </h2>
-      <p class="section-description">
-        منصة واحدة تجمع التعلم، الإدارة المدرسية،
-        والذكاء الاصطناعي في نظام موحد قابل للتوسع.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(280px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>إدارة المدارس</h3>
-          <p>
-            إدارة الطلاب، المعلمين، الفصول،
-            والجداول في نظام واحد متكامل.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>التعلم الذكي</h3>
-          <p>
-            دروس تفاعلية مدعومة بالذكاء الاصطناعي
-            لتحسين تجربة التعلم.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>التقييم الذكي</h3>
-          <p>
-            اختبارات وتقييمات تلقائية
-            مع تحليل مستوى الطلاب.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تقارير متقدمة</h3>
-          <p>
-            تقارير تعليمية وإدارية
-            لمتابعة أداء المدرسة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">لمن المنصة</span>
-      <h2 class="section-title">
-        منصة لجميع أطراف
-        العملية التعليمية
-      </h2>
-      <p class="section-description">
-        مصممة للطلاب والمعلمين والإدارة
-        في نظام واحد موحد.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>الطلاب</h3>
-          <p>
-            تعلم تفاعلي،
-            اختبارات،
-            ومتابعة تقدم.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المعلمون</h3>
-          <p>
-            إدارة الدروس،
-            متابعة الطلاب،
-            والتقييم.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>الإدارة</h3>
-          <p>
-            إدارة المدرسة،
-            التقارير،
-            والإحصائيات.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">المعمارية</span>
-      <h2 class="section-title">
-        بنية قوية قابلة للتوسع
-      </h2>
-      <p class="section-description">
-        تم تصميم المنصة لتعمل في البيئات الصعبة
-        وتدعم التوسع من مدرسة واحدة إلى نظام وطني كامل.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>Offline First</h3>
-          <p>
-            يعمل النظام بدون إنترنت
-            مع مزامنة لاحقة.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>Event Based System</h3>
-          <p>
-            تسجيل كل العمليات
-            كأحداث قابلة للتتبع.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>Sync Engine</h3>
-          <p>
-            محرك مزامنة ذكي
-            يعمل عند توفر الاتصال.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>Modular Architecture</h3>
-          <p>
-            بنية مرنة تسمح
-            بإضافة مميزات جديدة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">الأثر</span>
-      <h2 class="section-title">
-        تأثير حقيقي على التعليم
-      </h2>
-      <p class="section-description">
-        المنصة تهدف إلى تحسين جودة التعليم
-        وتسهيل إدارة المدارس.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تحسين جودة التعليم</h3>
-          <p>
-            تعليم تفاعلي
-            وتحليل مستوى الطلاب.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تقليل الأعباء الإدارية</h3>
-          <p>
-            أتمتة العمليات المدرسية
-            وتقليل العمل اليدوي.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تقارير دقيقة</h3>
-          <p>
-            بيانات واضحة
-            لدعم اتخاذ القرار.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">النشر</span>
-      <h2 class="section-title">
-        نموذج نشر مرن
-        وقابل للتوسع
-      </h2>
-      <p class="section-description">
-        يمكن نشر المنصة في مدرسة واحدة،
-        أو شبكة مدارس، أو نظام وطني كامل.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>مدرسة واحدة</h3>
-          <p>
-            تشغيل محلي داخل مدرسة واحدة
-            مع مزامنة لاحقة.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>شبكة مدارس</h3>
-          <p>
-            ربط عدة مدارس
-            ضمن شبكة موحدة.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>نظام وطني</h3>
-          <p>
-            تشغيل المنصة
-            على مستوى دولة كاملة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">التقنية</span>
-      <h2 class="section-title">
-        تقنيات حديثة
-        وموثوقة
-      </h2>
-      <p class="section-description">
-        تم بناء المنصة باستخدام
-        أحدث التقنيات لضمان الأداء والاستقرار.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>Flutter</h3>
-          <p>
-            تطبيق موحد
-            لجميع الأجهزة.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>Offline Database</h3>
-          <p>
-            قاعدة بيانات
-            تعمل بدون إنترنت.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>Cloud Sync</h3>
-          <p>
-            مزامنة ذكية
-            عند توفر الإنترنت.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">الأمان</span>
-      <h2 class="section-title">
-        أمان مؤسسي
-        لحماية البيانات التعليمية
-      </h2>
-      <p class="section-description">
-        تم تصميم المنصة مع مراعاة الأمان والخصوصية
-        لحماية بيانات الطلاب والمدارس.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تشفير البيانات</h3>
-          <p>
-            جميع البيانات يتم
-            تشفيرها لحماية المعلومات.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>صلاحيات المستخدمين</h3>
-          <p>
-            نظام صلاحيات مرن
-            لكل مستخدم.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تتبع العمليات</h3>
-          <p>
-            تسجيل جميع العمليات
-            داخل النظام.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">الشركاء</span>
-      <h2 class="section-title">
-        شركاء بناء
-        النظام التعليمي
-      </h2>
-      <p class="section-description">
-        نعمل مع المدارس،
-        المؤسسات، والجهات التعليمية
-        لبناء نظام تعليمي مستدام.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المدارس</h3>
-          <p>
-            شراكات مع المدارس
-            لتطبيق النظام.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المؤسسات</h3>
-          <p>
-            التعاون مع المؤسسات
-            التعليمية.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>الجهات الداعمة</h3>
-          <p>
-            العمل مع الجهات
-            الداعمة للتعليم.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">للمدارس</span>
-      <h2 class="section-title">
-        منصة مصممة
-        خصيصًا للمدارس
-      </h2>
-      <p class="section-description">
-        تم تصميم النظام ليلائم احتياجات المدارس
-        من الإدارة إلى التعليم.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>إدارة الطلاب</h3>
-          <p>
-            تسجيل الطلاب
-            ومتابعة الأداء.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>إدارة المعلمين</h3>
-          <p>
-            إدارة المعلمين
-            والجداول الدراسية.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>التقارير</h3>
-          <p>
-            تقارير تعليمية
-            وإدارية شاملة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">المستقبل</span>
-      <h2 class="section-title">
-        رؤية طويلة
-        المدى
-      </h2>
-      <p class="section-description">
-        بناء بنية تعليمية
-        رقمية مستدامة.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>مدارس ذكية</h3>
-          <p>
-            تحويل المدارس
-            إلى بيئة ذكية.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تعليم رقمي</h3>
-          <p>
-            تطوير التعليم
-            باستخدام التقنية.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>نظام عالمي</h3>
-          <p>
-            التوسع إلى
-            دول متعددة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">الطلاب</span>
-      <h2 class="section-title">
-        تجربة تعلم حديثة
-        للطلاب
-      </h2>
-      <p class="section-description">
-        نظام تعليمي تفاعلي يساعد الطلاب
-        على التعلم بطريقة ذكية ومتقدمة.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تعلم تفاعلي</h3>
-          <p>
-            محتوى تعليمي تفاعلي
-            يساعد الطلاب على الفهم.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>اختبارات ذكية</h3>
-          <p>
-            اختبارات تقييم
-            لمتابعة مستوى الطلاب.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>متابعة التقدم</h3>
-          <p>
-            متابعة تقدم الطالب
-            بشكل مستمر.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">المعلمون</span>
-      <h2 class="section-title">
-        أدوات قوية
-        للمعلمين
-      </h2>
-      <p class="section-description">
-        تمكين المعلمين من إدارة
-        العملية التعليمية بسهولة.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>إدارة الدروس</h3>
-          <p>
-            إنشاء وإدارة
-            الدروس بسهولة.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>متابعة الطلاب</h3>
-          <p>
-            متابعة أداء
-            الطلاب.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>التقارير</h3>
-          <p>
-            تقارير دقيقة
-            للمعلمين.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">الإدارة</span>
-      <h2 class="section-title">
-        إدارة مدرسية
-        متكاملة
-      </h2>
-      <p class="section-description">
-        أدوات متقدمة تساعد الإدارة
-        على إدارة المدرسة بكفاءة عالية.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>إدارة الفصول</h3>
-          <p>
-            تنظيم الفصول
-            والمواد الدراسية.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>إدارة الحضور</h3>
-          <p>
-            متابعة حضور الطلاب
-            والمعلمين.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>التقارير الإدارية</h3>
-          <p>
-            تقارير إدارية
-            دقيقة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">المميزات</span>
-      <h2 class="section-title">
-        مميزات
-        متقدمة
-      </h2>
-      <p class="section-description">
-        مميزات حديثة تجعل
-        المنصة قوية ومتطورة.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>Offline First</h3>
-          <p>
-            يعمل بدون
-            اتصال دائم.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>ذكاء اصطناعي</h3>
-          <p>
-            دعم ذكي
-            للعملية التعليمية.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>تقارير متقدمة</h3>
-          <p>
-            تحليلات تعليمية
-            دقيقة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">لماذا مدارس AI</span>
-      <h2 class="section-title">
-        لماذا تختار
-        مدارس الذكاء الاصطناعي
-      </h2>
-      <p class="section-description">
-        منصة مصممة خصيصًا لتحديات التعليم
-        في البيئات الواقعية.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>يعمل بدون إنترنت</h3>
-          <p>
-            مناسب للمدارس
-            ذات الاتصال المحدود.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>نظام متكامل</h3>
-          <p>
-            التعلم والإدارة
-            في منصة واحدة.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>قابل للتوسع</h3>
-          <p>
-            من مدرسة واحدة
-            إلى نظام وطني.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">الشركاء</span>
-      <h2 class="section-title">
-        شركاء
-        النجاح
-      </h2>
-      <p class="section-description">
-        نعمل مع الجهات التعليمية
-        لبناء مستقبل التعليم.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المدارس</h3>
-          <p>
-            تطبيق المنصة
-            داخل المدارس.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المؤسسات</h3>
-          <p>
-            شراكات تعليمية
-            استراتيجية.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>الجهات الداعمة</h3>
-          <p>
-            دعم مشاريع
-            التعليم.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">التوسع</span>
-      <h2 class="section-title">
-        خطة توسع
-        تدريجية
-      </h2>
-      <p class="section-description">
-        تبدأ المنصة من مدرسة واحدة
-        ثم تتوسع تدريجيًا.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المرحلة الأولى</h3>
-          <p>
-            تطبيق النظام
-            في مدرسة واحدة.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المرحلة الثانية</h3>
-          <p>
-            التوسع إلى
-            عدة مدارس.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>المرحلة الثالثة</h3>
-          <p>
-            التوسع إلى
-            مستوى وطني.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">الأسئلة الشائعة</span>
-      <h2 class="section-title">
-        أسئلة
-        متكررة
-      </h2>
-      <p class="section-description">
-        إجابات على
-        أهم الأسئلة.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: 1fr;">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>هل تعمل المنصة بدون إنترنت؟</h3>
-          <p>
-            نعم، المنصة تعمل محليًا
-            وتتم المزامنة لاحقًا.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>هل المنصة مناسبة للمدارس الصغيرة؟</h3>
-          <p>
-            نعم، المنصة مرنة
-            وقابلة للتوسع.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>هل يمكن التوسع لاحقًا؟</h3>
-          <p>
-            نعم، تم تصميم النظام
-            ليكون قابلًا للتوسع.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><section class="section section-soft">
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">التواصل</span>
-      <h2 class="section-title">
-        تواصل معنا
-      </h2>
-      <p class="section-description">
-        نرحب بالتواصل من المدارس والشركاء
-        والجهات المهتمة بالتعليم.
-      </p>
-    </div>
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <h3>البريد الإلكتروني</h3>
-          <p>
-            info@madarisai.com
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>الشراكات</h3>
-          <p>
-            info@madarisai.com
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3>التعاون المؤسسي</h3>
-          <p>
-            info@madarisai.com
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container">
-
-    <div class="card">
-      <div class="card-body" style="text-align:center;">
-
-        <h2 style="margin-bottom:16px;">
-          ابدأ الآن مع
-          مدارس الذكاء الاصطناعي
-        </h2>
-
-        <p style="color:var(--muted); margin-bottom:24px;">
-          انضم إلى مستقبل التعليم
-          وابدأ باستخدام المنصة.
-        </p>
-
-        <div class="hero-actions" style="justify-content:center;">
-
-          <a href="/app/login.html" class="btn btn-primary">
-            دخول المنصة
-          </a>
-
-          <a href="/partners.html" class="btn btn-secondary">
-            كن شريكًا
-          </a>
-
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section><footer class="section" style="padding-bottom:40px;">
-
-  <div class="container">
-
-    <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:40px;">
-
-      <div>
-        <h3 style="margin-bottom:14px;">
-          مدارس الذكاء الاصطناعي
-        </h3>
-
-        <p style="color:var(--muted);">
-          نظام تشغيل التعليم
-          لبناء مدارس ذكية
-          تعمل في كل البيئات.
-        </p>
-      </div>
-
-
-      <div>
-        <h4 style="margin-bottom:14px;">المنصة</h4>
-
-        <div style="display:flex;flex-direction:column;gap:10px;color:var(--muted);">
-          <a href="/platform.html">المنصة</a>
-          <a href="/schools.html">للمدارس</a>
-          <a href="/partners.html">الشركاء</a>
-        </div>
-      </div>
-
-
-      <div>
-        <h4 style="margin-bottom:14px;">الشركة</h4>
-
-        <div style="display:flex;flex-direction:column;gap:10px;color:var(--muted);">
-          <a href="/about.html">من نحن</a>
-          <a href="/contact.html">تواصل</a>
-          <a href="/vision.html">الرؤية</a>
-        </div>
-      </div>
-
-
-      <div>
-        <h4 style="margin-bottom:14px;">الدخول</h4>
-
-        <div style="display:flex;flex-direction:column;gap:10px;color:var(--muted);">
-          <a href="/app/login.html">دخول المنصة</a>
-          <a href="/app/register.html">إنشاء حساب</a>
-        </div>
-      </div>
-
-    </div>
-
-
-    <div style="margin-top:50px; border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; text-align:center; color:var(--muted);">
-
-      © <span id="year"></span> مدارس الذكاء الاصطناعي  
-      جميع الحقوق محفوظة
-
-    </div>
-
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">الرئيسية</a>
+    <a href="/platform.html">المنصة</a>
+    <a href="/schools.html">للمدارس</a>
+    <a href="/partners.html">الشركاء</a>
+    <a href="/about.html">من نحن</a>
+    <a href="/contact.html">تواصل</a>
+    <a href="/app/login.html" class="btn btn-primary">دخول المنصة</a>
   </div>
 
-</footer><script>
+  <main>
 
-const menuToggle = document.getElementById("menuToggle");
-const mobileMenu = document.getElementById("mobileMenu");
+    <section class="hero">
+      <div class="container hero-grid">
 
-if(menuToggle){
-menuToggle.addEventListener("click", () => {
-menuToggle.classList.toggle("active");
-mobileMenu.classList.toggle("active");
-});
-}
+        <div class="hero-copy">
+          <div class="eyebrow">منصة تعليمية مؤسسية تعمل من الواقع</div>
+
+          <h1 class="hero-title">
+            <span class="accent">نظام تشغيل التعليم</span><br />
+            للمدارس الذكية
+          </h1>
+
+          <p class="hero-description">
+            مدارس الذكاء الاصطناعي ليست مجرد تطبيق تعليمي. إنها منصة مؤسسية
+            توحد التعلم، والإدارة المدرسية، والسجلات التعليمية في نظام واحد
+            موثوق، ويعمل حتى في البيئات التي لا يمكن فيها الاعتماد على اتصال دائم بالإنترنت.
+          </p>
+
+          <div class="hero-actions">
+            <a href="/app/login.html" class="btn btn-primary">دخول المنصة</a>
+            <a href="/platform.html" class="btn btn-secondary">استكشف المنصة</a>
+          </div>
+
+          <div class="hero-points">
+            <span class="hero-point">Offline-First</span>
+            <span class="hero-point">ذكاء اصطناعي تعليمي</span>
+            <span class="hero-point">إدارة مدرسية موحدة</span>
+            <span class="hero-point">سجلات موثوقة</span>
+            <span class="hero-point">قابلية توسع مؤسسية</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-panel">
+            <div class="hero-panel-top">
+              <div class="window-dots" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="hero-panel-label">لوحة تشغيل مدرسة ذكية</div>
+            </div>
+
+            <div class="hero-kpis">
+              <div class="hero-kpi">
+                <strong>84%</strong>
+                <span>إتقان الطلاب</span>
+              </div>
+
+              <div class="hero-kpi">
+                <strong>96%</strong>
+                <span>انتظام العمليات</span>
+              </div>
+
+              <div class="hero-kpi">
+                <strong>10s</strong>
+                <span>نافذة مزامنة ذكية</span>
+              </div>
+            </div>
+
+            <div class="hero-flow">
+              <div class="hero-flow-item">
+                <div>
+                  <strong>التعلم يعمل محليًا</strong>
+                  <span>الدروس، التقييمات، والمتابعة تستمر داخل المدرسة</span>
+                </div>
+                <div class="flow-badge">محلي</div>
+              </div>
+
+              <div class="hero-flow-item">
+                <div>
+                  <strong>الأحداث تُسجل بشكل منظم</strong>
+                  <span>كل عملية تعليمية أو إدارية تُحفظ ضمن تدفق موثوق</span>
+                </div>
+                <div class="flow-badge">آمن</div>
+              </div>
+
+              <div class="hero-flow-item">
+                <div>
+                  <strong>المزامنة تتم عند توفر الاتصال</strong>
+                  <span>بدون تعطيل التعلم أو ربط المدرسة باتصال دائم</span>
+                </div>
+                <div class="flow-badge">مرن</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+  </section>
+ <section class="section section-soft" id="problem">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="eyebrow">المشكلة</span>
+          <h2 class="section-title">
+            التعليم اليوم يعمل بدون
+            نظام تشغيل حقيقي
+          </h2>
+          <p class="section-description">
+            معظم المدارس تعمل اليوم بأنظمة متفرقة، أو بدون نظام رقمي أصلاً.
+            وهذا يؤدي إلى ضعف الإدارة، وصعوبة التوسع، وفقدان البيانات التعليمية.
+          </p>
+        </div>
+
+        <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
+
+          <div class="card">
+            <div class="card-body">
+              <h3>فوضى الإدارة</h3>
+              <p>
+                إدارة الطلاب والمعلمين تتم بطرق تقليدية
+                غير مترابطة وغير قابلة للتوسع.
+              </p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h3>غياب الأنظمة الموحدة</h3>
+              <p>
+                كل مدرسة تستخدم أسلوب مختلف
+                بدون بنية تشغيل تعليمية موحدة.
+              </p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h3>ضعف البنية الرقمية</h3>
+              <p>
+                الاعتماد على الإنترنت الدائم
+                يجعل الأنظمة غير مناسبة للواقع.
+              </p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h3>صعوبة التوسع</h3>
+              <p>
+                المدارس لا تستطيع التوسع
+                بدون نظام مركزي قوي.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
 
 
-document.querySelectorAll(".mobile-menu a").forEach(link => {
-link.addEventListener("click", () => {
-mobileMenu.classList.remove("active");
-menuToggle.classList.remove("active");
-});
-});
+    <section class="section" id="solution">
+      <div class="container">
 
+        <div class="section-header">
+          <span class="eyebrow">الحل</span>
+          <h2 class="section-title">
+            مدارس الذكاء الاصطناعي
+            كنظام تشغيل للتعليم
+          </h2>
+          <p class="section-description">
+            منصة تعليمية مؤسسية توحد التعلم والإدارة
+            والسجلات التعليمية في نظام واحد موثوق.
+          </p>
+        </div>
 
-const topbar = document.getElementById("topbar");
+        <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
 
-window.addEventListener("scroll", () => {
-if(window.scrollY > 20){
-topbar.classList.add("scrolled");
-}else{
-topbar.classList.remove("scrolled");
-}
-});
+          <div class="card">
+            <div class="card-body">
+              <h3>منصة موحدة</h3>
+              <p>
+                التعلم، الإدارة، والتقارير
+                في نظام واحد متكامل.
+              </p>
+            </div>
+          </div>
 
+          <div class="card">
+            <div class="card-body">
+              <h3>تشغيل بدون إنترنت</h3>
+              <p>
+                يعمل النظام محليًا
+                ثم تتم المزامنة لاحقًا.
+              </p>
+            </div>
+          </div>
 
-const year = document.getElementById("year");
-if(year){
-year.textContent = new Date().getFullYear();
-}
+          <div class="card">
+            <div class="card-body">
+              <h3>ذكاء اصطناعي تعليمي</h3>
+              <p>
+                دعم تعليمي ذكي
+                لتحسين التعلم.
+              </p>
+            </div>
+          </div>
 
+          <div class="card">
+            <div class="card-body">
+              <h3>قابل للتوسع</h3>
+              <p>
+                من مدرسة واحدة
+                إلى نظام وطني كامل.
+              </p>
+            </div>
+          </div>
 
-const observer = new IntersectionObserver((entries)=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.style.opacity = 1;
-entry.target.style.transform = "translateY(0)";
-}
-});
-});
+        </div>
 
-
-document.querySelectorAll(".card").forEach(card=>{
-card.style.opacity = 0;
-card.style.transform = "translateY(30px)";
-card.style.transition = "all 0.6s ease";
-observer.observe(card);
-});
-
-</script>
-</body>
-</html>
+      </div>
+    </section> 
