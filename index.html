@@ -1006,6 +1006,695 @@
       }
     }
   </style>
+<style>
+  /* =========================
+     MOBILE HOTFIX — INDEX.HTML
+     ضع هذا قبل </head>
+     ========================= */
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    direction: rtl;
+    text-align: right;
+  }
+
+  .container,
+  .section,
+  .card,
+  .hero,
+  .hero-grid,
+  .hero-copy,
+  .hero-panel,
+  .hero-stack,
+  .hero-main-card,
+  .dashboard-layout,
+  .dashboard-content,
+  .dashboard-summary,
+  .dashboard-panels,
+  .vision-grid-3,
+  .platform-grid,
+  .persona-layout,
+  .architecture-grid,
+  .architecture-showcase,
+  .diagram-flow,
+  .impact-layout,
+  .principles-grid,
+  .deployment-grid,
+  .technology-grid,
+  .ecosystem-grid,
+  .partners-grid,
+  .metrics-grid,
+  .usecases-grid,
+  .security-grid,
+  .contact-grid,
+  .faq-grid,
+  .footer-grid {
+    max-width: 100%;
+  }
+
+  .topbar,
+  .hero,
+  .section,
+  .footer {
+    overflow-x: clip;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-text {
+    min-width: 0;
+  }
+
+  .brand-name,
+  .brand-subtitle {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .nav-shell {
+    direction: rtl;
+  }
+
+  .nav-cta {
+    margin-right: auto;
+    margin-left: 0;
+  }
+
+  .hero-grid,
+  .persona-layout,
+  .architecture-showcase,
+  .impact-layout,
+  .cta-body,
+  .footer-grid,
+  .dashboard-panels,
+  .dashboard-summary,
+  .vision-grid-3,
+  .platform-grid,
+  .architecture-grid,
+  .principles-grid,
+  .deployment-grid,
+  .technology-grid,
+  .ecosystem-grid,
+  .partners-grid,
+  .metrics-grid,
+  .usecases-grid,
+  .security-grid,
+  .contact-grid,
+  .faq-grid {
+    align-items: stretch;
+  }
+
+  .card,
+  .vision-card,
+  .feature-card,
+  .architecture-card,
+  .principle-card,
+  .deployment-card,
+  .tech-card,
+  .ecosystem-card,
+  .partner-card,
+  .metric-card,
+  .usecase-card,
+  .security-card,
+  .contact-card,
+  .faq-item,
+  .impact-card,
+  .timeline-item {
+    height: auto;
+    min-height: 0;
+  }
+
+  .card-body {
+    height: auto;
+  }
+
+  .feature-card-large,
+  .impact-center,
+  .architecture-diagram-card {
+    grid-column: auto !important;
+  }
+
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-sidebar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    width: auto;
+    margin-top: 0;
+  }
+
+  .dashboard-summary,
+  .dashboard-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .diagram-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .diagram-arrow {
+    display: none !important;
+  }
+
+  .impact-column,
+  .impact-center {
+    min-width: 0;
+  }
+
+  .timeline-body {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .timeline-marker {
+    margin-bottom: 0;
+  }
+
+  .trusted-strip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .trusted-logos {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .persona-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+  }
+
+  .persona-tab {
+    flex: 0 0 auto;
+  }
+
+  .screen-shell,
+  .teacher-shell,
+  .admin-shell,
+  .partner-shell {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .floating-card.one,
+  .floating-card.two {
+    right: auto;
+    left: auto;
+  }
+
+  .feature-list,
+  .section-description,
+  .hero-description,
+  .muted,
+  p,
+  li {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* =========================
+     TABLET
+     ========================= */
+  @media (max-width: 1024px) {
+    .hero-grid,
+    .architecture-showcase,
+    .impact-layout,
+    .persona-layout,
+    .footer-grid,
+    .vision-grid-3,
+    .platform-grid,
+    .architecture-grid,
+    .principles-grid,
+    .deployment-grid,
+    .technology-grid,
+    .ecosystem-grid,
+    .partners-grid,
+    .metrics-grid,
+    .usecases-grid,
+    .security-grid,
+    .contact-grid,
+    .faq-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-grid,
+    .architecture-showcase,
+    .impact-layout,
+    .persona-layout,
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-card-large {
+      grid-column: 1 / -1 !important;
+    }
+
+    .platform-grid,
+    .vision-grid-3,
+    .architecture-grid,
+    .principles-grid,
+    .deployment-grid,
+    .technology-grid,
+    .ecosystem-grid,
+    .partners-grid,
+    .metrics-grid,
+    .usecases-grid,
+    .security-grid,
+    .contact-grid,
+    .faq-grid {
+      gap: 18px;
+    }
+  }
+
+  /* =========================
+     PHONE — الأهم
+     ========================= */
+  @media (max-width: 768px) {
+    :root {
+      --nav-height: 78px;
+    }
+
+    body {
+      font-size: 16px;
+    }
+
+    .container {
+      width: min(100% - 18px, var(--container));
+    }
+
+    .section {
+      padding: 64px 0;
+    }
+
+    .section-header {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 8vw, 2.4rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .section-description {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .topbar {
+      background: rgba(7, 17, 31, 0.92);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-shell {
+      min-height: var(--nav-height);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .brand {
+      gap: 10px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      flex: 0 0 42px;
+    }
+
+    .brand-name {
+      font-size: 0.95rem;
+      line-height: 1.15;
+    }
+
+    .brand-subtitle {
+      font-size: 0.72rem;
+      line-height: 1.2;
+    }
+
+    .nav-links,
+    .nav-cta .btn-secondary {
+      display: none !important;
+    }
+
+    .nav-cta {
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+
+    .nav-cta .btn-primary {
+      min-height: 46px;
+      padding: 0 16px;
+      font-size: 0.95rem;
+    }
+
+    .menu-toggle {
+      display: inline-flex !important;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      flex: 0 0 46px;
+    }
+
+    .hero {
+      padding-top: calc(var(--nav-height) + 18px);
+      padding-bottom: 46px;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr !important;
+      gap: 18px;
+    }
+
+    .hero-copy,
+    .hero-panel {
+      max-width: 100%;
+    }
+
+    .hero-badge {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+      min-height: auto;
+      padding: 10px 12px;
+      line-height: 1.5;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 11vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+    }
+
+    .tag-list {
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 0.84rem;
+      padding: 8px 12px;
+    }
+
+    .hero-proof {
+      grid-template-columns: 1fr !important;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .proof-item {
+      padding: 14px;
+      border-radius: 16px;
+    }
+
+    .hero-stack {
+      min-height: 0 !important;
+    }
+
+    .hero-main-card {
+      padding: 14px;
+      border-radius: 22px;
+    }
+
+    .dashboard-topbar {
+      margin-bottom: 14px;
+    }
+
+    .dashboard-label {
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .dashboard-sidebar {
+      padding: 12px;
+      border-radius: 18px;
+    }
+
+    .sidebar-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      flex: 0 0 40px;
+    }
+
+    .sidebar-nav {
+      gap: 8px;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    .sidebar-pill {
+      min-width: 38px;
+      min-height: 38px;
+      border-radius: 12px;
+    }
+
+    .summary-card,
+    .lesson-panel,
+    .insight-panel {
+      padding: 14px;
+      border-radius: 18px;
+    }
+
+    .lesson-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 14px;
+    }
+
+    .progress-chip {
+      width: fit-content;
+      min-width: 0;
+    }
+
+    .insight-graph {
+      height: 170px;
+    }
+
+    .floating-card.one,
+    .floating-card.two {
+      position: relative !important;
+      top: auto !important;
+      bottom: auto !important;
+      left: auto !important;
+      right: auto !important;
+      width: 100% !important;
+      margin-top: 12px;
+      border-radius: 18px;
+    }
+
+    .floating-card .inner {
+      padding: 14px;
+    }
+
+    .vision-grid-3,
+    .platform-grid,
+    .architecture-grid,
+    .principles-grid,
+    .deployment-grid,
+    .technology-grid,
+    .ecosystem-grid,
+    .partners-grid,
+    .metrics-grid,
+    .usecases-grid,
+    .security-grid,
+    .contact-grid,
+    .faq-grid,
+    .persona-layout,
+    .impact-layout,
+    .architecture-showcase,
+    .footer-grid {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+    }
+
+    .vision-card,
+    .feature-card,
+    .architecture-card,
+    .principle-card,
+    .deployment-card,
+    .tech-card,
+    .ecosystem-card,
+    .partner-card,
+    .metric-card,
+    .usecase-card,
+    .security-card,
+    .contact-card,
+    .faq-item,
+    .impact-card,
+    .timeline-item,
+    .persona-panel,
+    .architecture-diagram-card,
+    .side-metric-card,
+    .impact-center {
+      min-height: 0 !important;
+      height: auto !important;
+    }
+
+    .card-body,
+    .persona-layout,
+    .impact-center-body,
+    .timeline-body,
+    .vision-band-body {
+      padding: 18px;
+    }
+  }
+    </style>
+ <script>
+  /* =========================
+     MOBILE HOTFIX — INDEX.HTML
+     ضع هذا قبل </body>
+     ========================= */
+
+  (function () {
+    const menuToggle = document.getElementById("menuToggle");
+    const body = document.body;
+
+    if (menuToggle) {
+      menuToggle.setAttribute("aria-expanded", "false");
+
+      menuToggle.addEventListener("click", function () {
+        const isOpen = body.classList.contains("menu-open");
+        menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    }
+
+    /* لو كان في لينكات قائمة جوال مخفية/ظاهرة لاحقًا */
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", () => {
+        body.classList.remove("menu-open");
+        if (menuToggle) {
+          menuToggle.classList.remove("active");
+          menuToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+
+    /* إصلاح العناصر التي قد تبقى بعرض كبير بسبب inline styles أو قياسات سابقة */
+    const forceMobileSafeLayout = () => {
+      if (window.innerWidth > 768) return;
+
+      const selectors = [
+        ".hero-stack",
+        ".floating-card.one",
+        ".floating-card.two",
+        ".feature-card-large",
+        ".impact-center",
+        ".architecture-diagram-card",
+        ".dashboard-summary",
+        ".dashboard-panels",
+        ".vision-grid-3",
+        ".platform-grid",
+        ".architecture-grid",
+        ".principles-grid",
+        ".deployment-grid",
+        ".technology-grid",
+        ".ecosystem-grid",
+        ".partners-grid",
+        ".metrics-grid",
+        ".usecases-grid",
+        ".security-grid",
+        ".contact-grid",
+        ".faq-grid",
+        ".footer-grid",
+        ".impact-layout",
+        ".architecture-showcase",
+        ".persona-layout"
+      ];
+
+      selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => {
+          el.style.minWidth = "0";
+          el.style.width = "100%";
+          el.style.maxWidth = "100%";
+        });
+      });
+
+      document.querySelectorAll(".card").forEach(card => {
+        card.style.minHeight = "0";
+        card.style.height = "auto";
+      });
+
+      document.querySelectorAll(".card-body").forEach(bodyEl => {
+        bodyEl.style.height = "auto";
+      });
+    };
+
+    /* إصلاح إضافي لبطاقات الأقسام الطويلة جدًا في الجوال */
+    const normalizeTextBlocks = () => {
+      if (window.innerWidth > 768) return;
+
+      document.querySelectorAll("h1, h2, h3, p, li, span, a, strong").forEach(el => {
+        el.style.wordBreak = "break-word";
+        el.style.overflowWrap = "anywhere";
+      });
+    };
+
+    /* منع أي عنصر يسبب سحب أفقي */
+    const killHorizontalOverflow = () => {
+      if (window.innerWidth > 768) return;
+
+      document.querySelectorAll("body *").forEach(el => {
+        const style = window.getComputedStyle(el);
+        if (style.position !== "fixed" && el.scrollWidth > window.innerWidth + 8) {
+          el.style.maxWidth = "100%";
+        }
+      });
+    };
+
+    const applyAllHotfixes = () => {
+      forceMobileSafeLayout();
+      normalizeTextBlocks();
+      killHorizontalOverflow();
+    };
+
+    window.addEventListener("load", applyAllHotfixes);
+    window.addEventListener("resize", applyAllHotfixes);
+
+    setTimeout(applyAllHotfixes, 150);
+    setTimeout(applyAllHotfixes, 500);
+    setTimeout(applyAllHotfixes, 1200);
+  })();
+ </script> 
 </head>
 <body>
   <header class="topbar" id="topbar">
