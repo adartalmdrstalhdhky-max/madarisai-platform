@@ -7,18 +7,18 @@
 
   <meta
     name="description"
-    content="اكتشف كيف تساعد Madaris AI المدارس على تنظيم الإدارة والجداول والمعلمين والطلاب ضمن نظام تشغيل تعليمي Offline-First مصمم للواقع المدرسي الحقيقي."
+    content="Madaris AI للمدارس: نظام تشغيل تعليمي يساعد المدارس على تنظيم الإدارة، الجداول، المعلمين، الصفوف، ومتابعة الطلاب ضمن منصة واحدة واضحة."
   />
   <meta
     name="keywords"
-    content="Madaris AI, مدارس, منصة مدارس, إدارة مدرسة, جدول مدرسي, Offline First, تعليم, Edu OS"
+    content="Madaris AI, للمدارس, إدارة المدارس, نظام تشغيل تعليمي, الجداول المدرسية, المعلمين, الصفوف, الطلاب"
   />
   <meta name="theme-color" content="#07142b" />
 
   <meta property="og:title" content="للمدارس | Madaris AI" />
   <meta
     property="og:description"
-    content="Madaris AI تساعد المدارس على التشغيل المنظم، وضوح الإدارة، وتقليل الفوضى اليومية داخل المدرسة."
+    content="منصة تشغيل تعليمية للمدارس تساعد على التنظيم، وضوح الإدارة، إدارة الجداول، ومتابعة المعلمين والطلاب."
   />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://madarisai.com/schools.html" />
@@ -36,7 +36,7 @@
       --bg: #07142b;
       --bg-deep: #04101f;
       --bg-soft: #0b1c39;
-      --surface: rgba(18, 38, 79, 0.88);
+      --surface: rgba(20, 41, 83, 0.86);
       --surface-2: rgba(25, 48, 94, 0.92);
       --surface-3: rgba(255, 255, 255, 0.04);
       --border: rgba(148, 184, 255, 0.14);
@@ -48,7 +48,6 @@
       --primary-2: #7ea4ff;
       --success: #35d98b;
       --danger: #ff5d8f;
-      --warning: #ffd166;
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
       --radius-xl: 34px;
       --radius-lg: 26px;
@@ -161,8 +160,8 @@
       min-height: 46px;
       padding: 12px 18px;
       border-radius: 999px;
-      border: 1px solid rgba(99, 211, 255, 0.26);
-      background: rgba(28, 62, 117, 0.42);
+      border: 1px solid rgba(99, 211, 255, 0.25);
+      background: rgba(31, 68, 124, 0.34);
       color: var(--primary);
       font-size: 0.98rem;
       font-weight: 800;
@@ -170,7 +169,7 @@
     }
 
     .section-head {
-      max-width: 880px;
+      max-width: 900px;
       margin: 0 auto 30px;
       text-align: center;
     }
@@ -188,10 +187,6 @@
       color: var(--muted);
       font-size: clamp(1rem, 2vw, 1.2rem);
       line-height: 1.95;
-    }
-
-    .highlight {
-      color: var(--primary);
     }
 
     .gradient-text {
@@ -239,12 +234,6 @@
       background: rgba(77, 103, 157, 0.16);
       border: 1px solid rgba(150, 181, 255, 0.14);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
-    }
-
-    .btn-outline {
-      color: var(--primary);
-      background: rgba(99, 211, 255, 0.08);
-      border: 1px solid rgba(99, 211, 255, 0.25);
     }
 
     .site-header {
@@ -443,7 +432,7 @@
     .hero-copy p {
       margin: 0 0 24px;
       color: var(--muted);
-      font-size: clamp(1.08rem, 1.8vw, 1.3rem);
+      font-size: clamp(1.08rem, 1.8vw, 1.28rem);
       line-height: 1.95;
       max-width: 760px;
     }
@@ -475,630 +464,731 @@
       line-height: 1.8;
       font-size: 0.98rem;
     }
-
     .hero-side {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       gap: 16px;
-      min-height: 100%;
     }
 
-    .school-panel {
-      padding: 26px;
-      border-radius: 30px;
-      background:
-        radial-gradient(circle at top right, rgba(99,211,255,0.1), transparent 28%),
-        linear-gradient(180deg, rgba(26, 52, 103, 0.82), rgba(13, 31, 67, 0.95));
-      border: 1px solid rgba(145, 183, 255, 0.14);
+    .hero-side-card {
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(98, 124, 177, 0.08);
+      border: 1px solid rgba(147, 180, 255, 0.12);
     }
 
-    .school-panel h3 {
-      margin: 0 0 14px;
-      font-size: clamp(1.4rem, 2.2vw, 2rem);
-      line-height: 1.3;
-      font-weight: 900;
+    .hero-side-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
     }
 
-    .school-panel p {
-      margin: 0 0 18px;
+    .hero-side-card p {
+      margin: 0;
       color: var(--muted);
-      font-size: 1.02rem;
+      line-height: 1.8;
+      font-size: 0.98rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(98, 124, 177, 0.08);
+      border: 1px solid rgba(147, 180, 255, 0.12);
+      min-height: 160px;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .benefit-card {
+      padding: 24px;
+      border-radius: 26px;
+      background: rgba(98, 124, 177, 0.08);
+      border: 1px solid rgba(147, 180, 255, 0.12);
+      min-height: 180px;
+    }
+
+    .benefit-card h3 {
+      margin: 0 0 14px;
+      font-size: 1.2rem;
+    }
+
+    .benefit-card p {
+      margin: 0;
+      color: var(--muted);
       line-height: 1.9;
     }
 
-    .school-flow {
+    .types-grid {
       display: grid;
-      gap: 12px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
     }
 
-    .school-flow-item {
-      min-height: 62px;
-      border-radius: 18px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(154,184,255,0.12);
+    .type-card {
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(98, 124, 177, 0.08);
+      border: 1px solid rgba(147, 180, 255, 0.12);
+      min-height: 150px;
+      text-align: center;
     }
 
-    .school-flow-item strong {
-      font-size: 1rem;
-      font-weight: 800;
+    .type-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
     }
 
-    .school-flow-item span {
-      color: var(--primary);
-      font-size: 0.94rem;
-      font-weight: 800;
-      white-space: nowrap;
+    .type-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+    .cta-card {
+      padding: 40px;
+      text-align: center;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .cta-card h2 {
+      margin: 0 0 18px;
+      font-size: clamp(2rem,4vw,3.2rem);
     }
+
+    .cta-card p {
+      margin: 0 0 26px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    footer {
+      margin-top: 30px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .types-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .desktop-nav {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .types-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-card {
+        padding: 28px 20px;
+      }
+
+    }
+
   </style>
 </head>
 
 <body>
-  <div class="site-shell">
 
-    <header class="site-header">
-      <div class="container header-inner">
+<div class="site-shell">
 
-        <div class="brand">
-          <div class="brand-mark"></div>
-          <span class="gradient-text">Madaris AI</span>
-        </div>
+<header class="site-header">
+  <div class="container header-inner">
 
-        <nav class="desktop-nav">
-          <a href="index.html">الرئيسية</a>
-          <a href="platform.html">المنصة</a>
-          <a href="vision.html">الرؤية</a>
-          <a href="schools.html" class="active">للمدارس</a>
-          <a href="partners.html">الشراكات</a>
-          <a href="about.html">من نحن</a>
-          <a href="contact.html">التواصل</a>
-        </nav>
-
-        <div class="header-actions">
-          <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-
-      </div>
-    </header>
-
-    <div class="mobile-menu" id="mobileMenu">
-      <div class="mobile-menu-panel">
-        <nav class="mobile-nav">
-          <a href="index.html">الرئيسية</a>
-          <a href="platform.html">المنصة</a>
-          <a href="vision.html">الرؤية</a>
-          <a href="schools.html" class="active">للمدارس</a>
-          <a href="partners.html">الشراكات</a>
-          <a href="about.html">من نحن</a>
-          <a href="contact.html">التواصل</a>
-        </nav>
-      </div>
+    <div class="brand">
+      <div class="brand-mark"></div>
+      Madaris AI
     </div>
 
-    <main>
-
-      <section class="section hero">
-        <div class="container">
-          <div class="glass-card hero-card">
-            <div class="hero-grid">
-
-              <div class="hero-copy">
-                <span class="eyebrow">حل تشغيلي للمدارس</span>
-
-                <h1>
-                  <span class="gradient-text">Madaris AI</span>
-                  للمدارس التي تريد
-                  تشغيلًا أوضح،
-                  لا عبئًا رقميًا جديدًا
-                </h1>
-
-                <p>
-                  صُممت Madaris AI لمساعدة المدارس على تنظيم العمل اليومي:
-                  الجداول، المعلمين، الطلاب، المتابعة الأكاديمية، والإدارة
-                  داخل نظام واحد مترابط. الهدف ليس إضافة شاشة فوق الفوضى،
-                  بل تقليل الفوضى نفسها وبناء تشغيل يمكن الاعتماد عليه.
-                </p>
-
-                <div class="btn-row">
-                  <a href="contact.html" class="btn btn-primary">اطلب عرضًا تعريفيًا</a>
-                  <a href="platform.html" class="btn btn-secondary">استعرض المنصة</a>
-                </div>
-
-                <div class="hero-points">
-                  <div class="point-card">
-                    <strong>تشغيل أبسط</strong>
-                    <span>تقليل التشتت بين الجداول الورقية، الرسائل، والعمليات غير المنظمة.</span>
-                  </div>
-
-                  <div class="point-card">
-                    <strong>إدارة أوضح</strong>
-                    <span>رؤية أفضل لحالة الصفوف، الحصص، ضغط المعلمين، وسير اليوم الدراسي.</span>
-                  </div>
-
-                  <div class="point-card">
-                    <strong>جاهزية للنمو</strong>
-                    <span>ابدأ بمدرسة واحدة ثم توسع لاحقًا دون الحاجة إلى إعادة البناء من الصفر.</span>
-                  </div>
-
-                  <div class="point-card">
-                    <strong>ملاءمة للواقع</strong>
-                    <span>مصممة لمدارس تواجه ضعف اتصال، ضغط تشغيل، أو نقصًا في الموارد.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="hero-side">
-                <div class="school-panel">
-                  <h3>كيف تعمل المدرسة داخل Madaris AI؟</h3>
-                  <p>
-                    المدرسة لا تدخل إلى صفحات مشتتة، بل إلى بيئة تشغيل مترابطة
-                    تبدأ من الإدارة اليومية وتصل إلى التتبع الأكاديمي.
-                  </p>
-
-                  <div class="school-flow">
-                    <div class="school-flow-item">
-                      <strong>لوحة إدارة المدرسة</strong>
-                      <span>Dashboard</span>
-                    </div>
-
-                    <div class="school-flow-item">
-                      <strong>إدارة الجداول والحصص</strong>
-                      <span>Schedule System</span>
-                    </div>
-
-                    <div class="school-flow-item">
-                      <strong>تنظيم المعلمين والصفوف</strong>
-                      <span>Teachers & Classes</span>
-                    </div>
-
-                    <div class="school-flow-item">
-                      <strong>متابعة الطلاب والتقدم</strong>
-                      <span>Student Tracking</span>
-                    </div>
-
-                    <div class="school-flow-item">
-                      <strong>الربط مع التعلم الذكي</strong>
-                      <span>AI Learning Layer</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-  </section>
-  <section class="section reveal">
-        <div class="container">
-
-          <div class="section-head">
-            <span class="eyebrow">التحديات التي تواجه المدارس</span>
-
-            <h2>
-              مدارس كثيرة تعمل تحت
-              <span class="gradient-text">ضغط يومي</span>
-              بدون نظام واضح
-            </h2>
-
-            <p>
-              الجداول غير المنظمة، تضارب الحصص، صعوبة متابعة المعلمين،
-              وعدم وضوح مستوى الطلاب — كلها تحديات تواجه المدارس يوميًا،
-              وتؤثر مباشرة على جودة التعليم.
-            </p>
-          </div>
-
-          <div class="hero-points">
-
-            <div class="point-card">
-              <strong>تضارب الجداول</strong>
-              <span>
-                تغيير حصص مفاجئ، غياب معلم،
-                أو تعديل يدوي يسبب فوضى في الجدول.
-              </span>
-            </div>
-
-            <div class="point-card">
-              <strong>ضغط على الإدارة</strong>
-              <span>
-                الإدارة تضطر لمتابعة كل شيء يدويًا
-                بدون رؤية واضحة لوضع المدرسة.
-              </span>
-            </div>
-
-            <div class="point-card">
-              <strong>صعوبة متابعة المعلمين</strong>
-              <span>
-                من الصعب معرفة توزيع الحصص
-                أو ضغط العمل لكل معلم.
-              </span>
-            </div>
-
-            <div class="point-card">
-              <strong>ضعف متابعة الطلاب</strong>
-              <span>
-                لا توجد رؤية واضحة لتقدم الطلاب
-                أو مستوى الصف بالكامل.
-              </span>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-
-
-      <section class="section reveal">
-        <div class="container">
-
-          <div class="section-head">
-            <span class="eyebrow">الحل</span>
-
-            <h2>
-              Madaris AI تحول المدرسة إلى
-              <span class="gradient-text">
-                نظام تشغيل تعليمي منظم
-              </span>
-            </h2>
-
-            <p>
-              بدلاً من العمل بأساليب منفصلة،
-              تجمع Madaris AI كل عناصر المدرسة
-              داخل نظام واحد مترابط.
-            </p>
-          </div>
-
-          <div class="hero-points">
-
-            <div class="point-card">
-              <strong>نظام الجداول الذكي</strong>
-              <span>
-                إنشاء الجداول بسهولة
-                وتجنب التضارب تلقائيًا
-              </span>
-            </div>
-
-            <div class="point-card">
-              <strong>إدارة المعلمين</strong>
-              <span>
-                توزيع الحصص
-                ومعرفة ضغط العمل
-                لكل معلم
-              </span>
-            </div>
-
-            <div class="point-card">
-              <strong>إدارة الصفوف</strong>
-              <span>
-                رؤية واضحة
-                لكل صف دراسي
-              </span>
-            </div>
-
-            <div class="point-card">
-              <strong>متابعة الطلاب</strong>
-              <span>
-                متابعة التقدم الأكاديمي
-                داخل المدرسة
-              </span>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-      <section class="section reveal">
-        <div class="container">
-
-          <div class="section-head">
-            <span class="eyebrow">ماذا تحصل المدرسة؟</span>
-
-            <h2>
-              كل ما تحتاجه المدرسة
-              <span class="gradient-text">
-                في منصة واحدة
-              </span>
-            </h2>
-
-            <p>
-              Madaris AI ليست مجرد أداة،
-              بل بيئة تشغيل كاملة تساعد المدرسة
-              على العمل بشكل منظم وواضح.
-            </p>
-
-          </div>
-
-          <div class="hero-points">
-
-            <div class="point-card">
-              <strong>
-                لوحة إدارة المدرسة
-              </strong>
-
-              <span>
-                رؤية شاملة لحالة المدرسة
-                الصفوف والمعلمين والطلاب
-              </span>
-            </div>
-
-
-            <div class="point-card">
-              <strong>
-                إدارة الجداول
-              </strong>
-
-              <span>
-                إنشاء جدول المدرسة
-                وتوزيع الحصص بسهولة
-              </span>
-            </div>
-
-
-            <div class="point-card">
-              <strong>
-                إدارة المعلمين
-              </strong>
-
-              <span>
-                تنظيم توزيع المعلمين
-                داخل المدرسة
-              </span>
-            </div>
-
-
-            <div class="point-card">
-              <strong>
-                إدارة الصفوف
-              </strong>
-
-              <span>
-                متابعة كل صف
-                داخل النظام
-              </span>
-            </div>
-
-
-            <div class="point-card">
-              <strong>
-                إدارة الطلاب
-              </strong>
-
-              <span>
-                متابعة الطلاب
-                والتقدم الدراسي
-              </span>
-            </div>
-
-
-            <div class="point-card">
-              <strong>
-                تقارير المدرسة
-              </strong>
-
-              <span>
-                معرفة وضع المدرسة
-                بشكل واضح
-              </span>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-
-
-      <section class="section reveal">
-
-        <div class="container">
-
-          <div class="section-head">
-
-            <span class="eyebrow">
-              لمن هذه المنصة؟
+    <nav class="desktop-nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="vision.html">الرؤية</a>
+      <a href="platform.html">المنصة</a>
+      <a href="schools.html" class="active">للمدارس</a>
+      <a href="partners.html">الشراكات</a>
+      <a href="about.html">من نحن</a>
+      <a href="contact.html">التواصل</a>
+    </nav>
+
+    <div class="header-actions">
+
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-panel">
+
+    <nav class="mobile-nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="vision.html">الرؤية</a>
+      <a href="platform.html">المنصة</a>
+      <a href="schools.html" class="active">للمدارس</a>
+      <a href="partners.html">الشراكات</a>
+      <a href="about.html">من نحن</a>
+      <a href="contact.html">التواصل</a>
+    </nav>
+
+  </div>
+</div>
+
+<main>
+  <section class="hero section">
+  <div class="container">
+    <div class="glass-card hero-card">
+
+      <div class="hero-grid">
+
+        <div class="hero-copy">
+
+          <span class="eyebrow">
+            حل تشغيلي للمدارس
+          </span>
+
+          <h1>
+            Madaris AI للمدارس
+            <span class="gradient-text">
+              التي تريد تشغيلًا
             </span>
+            أوضح وتنظيمًا رقميًا
+          </h1>
 
-            <h2>
-              مصممة خصيصاً
-              <span class="gradient-text">
-                للمدارس الحقيقية
-              </span>
-            </h2>
+          <p>
+            صممت Madaris AI لمساعدة المدارس على تنظيم العمل اليومي:
+            الجداول، المعلمين، الطلاب، المتابعة الأكاديمية،
+            والإدارة داخل نظام واحد مترابط.
+          </p>
 
-            <p>
-              سواء كانت مدرسة صغيرة أو كبيرة،
-              Madaris AI تتكيف مع واقع المدرسة.
-            </p>
+          <div class="btn-row">
+            <a href="contact.html" class="btn btn-primary">
+              اطلب عرضًا تعريفيًا
+            </a>
 
+            <a href="platform.html" class="btn btn-secondary">
+              استعرض المنصة
+            </a>
           </div>
-
 
           <div class="hero-points">
 
             <div class="point-card">
-
               <strong>
-                المدارس الخاصة
+                تشغيل أبسط
               </strong>
-
               <span>
-                تنظيم أفضل
-                وإدارة أكثر وضوحاً
+                تقليل التشتت بين الجداول الورقية
+                والأنظمة المنفصلة
               </span>
-
             </div>
 
-
-
             <div class="point-card">
-
               <strong>
-                المدارس الحكومية
+                إدارة أوضح
               </strong>
-
               <span>
-                تقليل الفوضى
-                وتحسين التنظيم
+                رؤية أفضل لحالة الصفوف
+                والحصص والمعلمين
               </span>
-
             </div>
 
-
-
             <div class="point-card">
-
               <strong>
-                المدارس الصغيرة
+                جاهزية للنمو
               </strong>
-
               <span>
-                إدارة بسيطة
-                بدون تعقيد
+                ابدأ بمدرسة واحدة
+                وتوسع بسهولة
               </span>
-
             </div>
 
-
-
             <div class="point-card">
-
               <strong>
-                المدارس الكبيرة
+                ملائمة للواقع
               </strong>
-
               <span>
-                إدارة شاملة
-                لكل الصفوف
+                مصممة للمدارس التي تواجه
+                ضغط التشغيل اليومي
               </span>
-
             </div>
 
           </div>
 
         </div>
 
-      </section>
-      <section class="section reveal">
-        <div class="container">
 
-          <div class="glass-card" style="padding:40px">
+        <div class="hero-side">
 
-            <div class="section-head">
-              <span class="eyebrow">
-                ابدأ الآن
-              </span>
-
-              <h2>
-                هل تريد تشغيل مدرستك
-                <span class="gradient-text">
-                  بشكل احترافي؟
-                </span>
-              </h2>
-
-              <p>
-                Madaris AI مصممة لمساعدة المدارس
-                على الانتقال من الفوضى التشغيلية
-                إلى إدارة واضحة ومنظمة.
-              </p>
-
-            </div>
-
-            <div class="btn-row" style="justify-content:center">
-
-              <a href="contact.html" class="btn btn-primary">
-                اطلب عرض للمدرسة
-              </a>
-
-              <a href="platform.html" class="btn btn-secondary">
-                استكشف المنصة
-              </a>
-
-            </div>
-
+          <div class="hero-side-card">
+            <h3>
+              إدارة الجداول
+            </h3>
+            <p>
+              إنشاء جدول المدرسة
+              وتوزيع الحصص بسهولة
+              وتقليل تضارب الحصص.
+            </p>
           </div>
 
-        </div>
-      </section>
+          <div class="hero-side-card">
+            <h3>
+              تنظيم المعلمين
+            </h3>
+            <p>
+              توزيع المعلمين حسب
+              الصفوف والمواد
+              ومتابعة ضغط العمل.
+            </p>
+          </div>
 
-
-
-    </main>
-
-
-
-    <footer class="section">
-
-      <div class="container">
-
-        <div class="glass-card" style="padding:30px">
-
-          <div style="display:grid;gap:20px">
-
-            <div>
-
-              <h3 style="margin:0 0 10px">
-                Madaris AI
-              </h3>
-
-              <p style="margin:0;color:var(--muted)">
-                نظام تشغيل تعليمي يساعد المدارس
-                على التنظيم والإدارة والتوسع.
-              </p>
-
-            </div>
-
-
-            <div
-              style="
-              display:flex;
-              gap:20px;
-              flex-wrap:wrap;
-              "
-            >
-
-              <a href="index.html">الرئيسية</a>
-              <a href="platform.html">المنصة</a>
-              <a href="vision.html">الرؤية</a>
-              <a href="schools.html">للمدارس</a>
-              <a href="partners.html">الشراكات</a>
-              <a href="contact.html">التواصل</a>
-
-            </div>
-
-
-            <div style="color:var(--muted-2)">
-              © 2026 Madaris AI
-            </div>
-
+          <div class="hero-side-card">
+            <h3>
+              متابعة الطلاب
+            </h3>
+            <p>
+              رؤية واضحة لتقدم
+              الطلاب ومستوى
+              الصفوف الدراسية.
+            </p>
           </div>
 
         </div>
 
       </div>
 
-    </footer>
+    </div>
+  </div>
+  </section>
+  <section class="section">
+  <div class="container">
+
+    <div class="section-head">
+      <span class="eyebrow">
+        التحديات التي تواجه المدارس
+      </span>
+
+      <h2>
+        مدارس كثيرة تعمل تحت
+        <span class="gradient-text">
+          ضغط يومي
+        </span>
+        بدون نظام واضح
+      </h2>
+
+      <p>
+        الجداول غير المنظمة، تضارب الحصص، صعوبة متابعة المعلمين،
+        وعدم وضوح مستوى الطلاب — كلها تحديات تواجه المدارس يومياً.
+      </p>
+    </div>
 
 
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <h3>
+          تضارب الجداول
+        </h3>
+
+        <p>
+          تغيير الحصص المفاجئ،
+          أو غياب المعلمين،
+          يسبب فوضى في الجدول اليومي.
+        </p>
+      </div>
+
+
+      <div class="feature-card">
+        <h3>
+          ضغط على الإدارة
+        </h3>
+
+        <p>
+          متابعة كل شيء يدويًا
+          بدون رؤية واضحة
+          لحالة المدرسة.
+        </p>
+      </div>
+
+
+      <div class="feature-card">
+        <h3>
+          صعوبة متابعة المعلمين
+        </h3>
+
+        <p>
+          توزيع المعلمين ومعرفة
+          ضغط العمل لكل معلم
+          أمر صعب بدون نظام.
+        </p>
+      </div>
+
+
+      <div class="feature-card">
+        <h3>
+          ضعف متابعة الطلاب
+        </h3>
+
+        <p>
+          لا توجد رؤية واضحة
+          لتقدم الطلاب أو
+          مستوى الصف بالكامل.
+        </p>
+      </div>
+
+
+      <div class="feature-card">
+        <h3>
+          العمل بأنظمة متعددة
+        </h3>
+
+        <p>
+          ملفات منفصلة وجداول
+          مختلفة تسبب
+          تشتت الإدارة.
+        </p>
+      </div>
+
+
+      <div class="feature-card">
+        <h3>
+          صعوبة التوسع
+        </h3>
+
+        <p>
+          عند نمو المدرسة
+          يصبح التنظيم أكثر
+          صعوبة بدون نظام.
+        </p>
+      </div>
+
+    </div>
 
   </div>
+  </section>
+  <section class="section">
+  <div class="container">
+
+    <div class="section-head">
+      <span class="eyebrow">
+        الحل
+      </span>
+
+      <h2>
+        Madaris AI تحول المدرسة
+        إلى
+        <span class="gradient-text">
+          نظام تشغيل تعليمي منظم
+        </span>
+      </h2>
+
+      <p>
+        بدلاً من العمل بأساليب منفصلة، تجمع Madaris AI
+        كل عناصر المدرسة داخل نظام واحد مترابط.
+      </p>
+    </div>
+
+
+    <div class="benefits-grid">
+
+      <div class="benefit-card">
+        <h3>
+          لوحة إدارة المدرسة
+        </h3>
+
+        <p>
+          رؤية شاملة لحالة المدرسة
+          الصفوف والمعلمين
+          والطلاب داخل لوحة
+          واحدة واضحة.
+        </p>
+      </div>
+
+
+      <div class="benefit-card">
+        <h3>
+          نظام الجداول الذكي
+        </h3>
+
+        <p>
+          إنشاء الجداول بسهولة
+          وتجنب تضارب الحصص
+          وتنظيم اليوم الدراسي.
+        </p>
+      </div>
+
+
+      <div class="benefit-card">
+        <h3>
+          إدارة المعلمين
+        </h3>
+
+        <p>
+          توزيع المعلمين
+          ومتابعة ضغط العمل
+          داخل المدرسة.
+        </p>
+      </div>
+
+
+      <div class="benefit-card">
+        <h3>
+          إدارة الصفوف
+        </h3>
+
+        <p>
+          رؤية واضحة لكل صف
+          وتنظيم المواد
+          والحصص بسهولة.
+        </p>
+      </div>
+
+
+      <div class="benefit-card">
+        <h3>
+          متابعة الطلاب
+        </h3>
+
+        <p>
+          متابعة التقدم الأكاديمي
+          للطلاب داخل
+          المدرسة.
+        </p>
+      </div>
+
+
+      <div class="benefit-card">
+        <h3>
+          تقارير المدرسة
+        </h3>
+
+        <p>
+          تقارير واضحة عن
+          الأداء العام
+          للمدرسة.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+  </section>
+  <section class="section">
+  <div class="container">
+
+    <div class="section-head">
+      <span class="eyebrow">
+        لمن هذه المنصة
+      </span>
+
+      <h2>
+        مصممة لجميع
+        <span class="gradient-text">
+          أنواع المدارس
+        </span>
+      </h2>
+
+      <p>
+        سواء كانت مدرسة صغيرة أو كبيرة،
+        Madaris AI تتكيف مع واقع المدرسة
+        وتدعم نموها.
+      </p>
+    </div>
+
+
+    <div class="types-grid">
+
+      <div class="type-card">
+        <h3>
+          المدارس الخاصة
+        </h3>
+
+        <p>
+          تنظيم أفضل
+          وإدارة أكثر وضوحًا
+        </p>
+      </div>
+
+
+      <div class="type-card">
+        <h3>
+          المدارس الحكومية
+        </h3>
+
+        <p>
+          تقليل الفوضى
+          وتحسين التشغيل
+        </p>
+      </div>
+
+
+      <div class="type-card">
+        <h3>
+          المدارس الصغيرة
+        </h3>
+
+        <p>
+          إدارة بسيطة
+          بدون تعقيد
+        </p>
+      </div>
+
+
+      <div class="type-card">
+        <h3>
+          المدارس الكبيرة
+        </h3>
+
+        <p>
+          إدارة شاملة
+          لجميع الصفوف
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container">
+
+    <div class="glass-card cta-card">
+
+      <h2>
+        ابدأ تشغيل مدرستك
+        <span class="gradient-text">
+          بشكل احترافي
+        </span>
+      </h2>
+
+      <p>
+        Madaris AI تساعد المدارس
+        على الانتقال من الفوضى التشغيلية
+        إلى إدارة واضحة ومنظمة.
+      </p>
+
+      <div class="btn-row" style="justify-content:center">
+
+        <a href="contact.html" class="btn btn-primary">
+          اطلب عرض للمدرسة
+        </a>
+
+        <a href="platform.html" class="btn btn-secondary">
+          استكشف المنصة
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<footer class="section">
+  <div class="container">
+
+    <div class="glass-card" style="padding:30px">
+
+      <div style="display:grid;gap:20px">
+
+        <div>
+          <h3 style="margin:0 0 10px">
+            Madaris AI
+          </h3>
+
+          <p style="margin:0;color:var(--muted)">
+            نظام تشغيل تعليمي يساعد المدارس
+            على التنظيم والإدارة والتوسع.
+          </p>
+        </div>
+
+
+        <div
+          style="
+          display:flex;
+          gap:20px;
+          flex-wrap:wrap;
+          "
+        >
+
+          <a href="index.html">الرئيسية</a>
+          <a href="platform.html">المنصة</a>
+          <a href="vision.html">الرؤية</a>
+          <a href="schools.html">للمدارس</a>
+          <a href="partners.html">الشراكات</a>
+          <a href="about.html">من نحن</a>
+          <a href="contact.html">التواصل</a>
+
+        </div>
+
+
+        <div style="color:var(--muted-2)">
+          © 2026 Madaris AI
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</footer>
+</main>
+
+</div>
 
 
 
@@ -1107,12 +1197,16 @@
 const menuToggle = document.getElementById("menuToggle")
 const mobileMenu = document.getElementById("mobileMenu")
 
+if(menuToggle){
+
 menuToggle.addEventListener("click", () => {
 
   menuToggle.classList.toggle("active")
   mobileMenu.classList.toggle("open")
 
 })
+
+}
 
 
 
@@ -1133,8 +1227,7 @@ const observer = new IntersectionObserver((entries) => {
 })
 
 
-
-document.querySelectorAll(".reveal").forEach(el=>{
+document.querySelectorAll(".section").forEach(el=>{
 
   observer.observe(el)
 
