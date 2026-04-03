@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>الأمان | Madaris AI</title>
+
+  <meta
+    name="description"
+    content="صفحة الأمان الرسمية لـ Madaris AI: مبادئ الأمان، حماية البيانات، الخصوصية، الموثوقية، ونهج المنصة في بناء نظام تعليمي آمن وقابل للتوسع."
+  />
+  <meta
+    name="keywords"
+    content="Madaris AI, security, privacy, data protection, education security, edtech security, الأمان, الخصوصية"
+  />
+  <meta name="theme-color" content="#07142b" />
+
+  <meta property="og:title" content="الأمان | Madaris AI" />
+  <meta
+    property="og:description"
+    content="تعرف على نهج Madaris AI في الأمان، حماية البيانات، والموثوقية داخل النظام التعليمي."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://madarisai.com/security.html" />
+
+  <link rel="canonical" href="https://madarisai.com/security.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root{
+      --bg:#07142b;
+      --bg-deep:#04101f;
+      --surface:rgba(20,41,83,.86);
+      --surface-2:rgba(25,48,94,.92);
+      --border:rgba(148,184,255,.14);
+      --text:#f5f8ff;
+      --muted:#bfd0ef;
+      --muted-2:#8ea8d9;
+      --primary:#63d3ff;
+      --primary-2:#7ea4ff;
+      --success:#35d98b;
+      --warning:#ffd166;
+      --danger:#ff5d8f;
+      --shadow:0 20px 60px rgba(0,0,0,.28);
+      --radius-xl:34px;
+      --radius-lg:26px;
+      --radius-md:20px;
+      --container:1220px;
+      --header-h:92px;
+    }
+
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:"Tajawal",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 85% 8%, rgba(99,211,255,.18), transparent 16%),
+        radial-gradient(circle at 12% 22%, rgba(127,140,255,.11), transparent 18%),
+        linear-gradient(180deg, #04101f 0%, #07142b 25%, #081832 58%, #061327 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body.menu-open{
+      overflow:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button{
+      font:inherit;
+    }
+
+    .site-shell{
+      position:relative;
+      isolation:isolate;
+    }
+
+    .site-shell::before,
+    .site-shell::after{
+      content:"";
+      position:fixed;
+      z-index:-1;
+      pointer-events:none;
+      filter:blur(42px);
+      opacity:.76;
+      border-radius:50%;
+    }
+
+    .site-shell::before{
+      top:120px;
+      right:-90px;
+      width:240px;
+      height:240px;
+      background:rgba(99,211,255,.14);
+    }
+
+    .site-shell::after{
+      top:50%;
+      left:-120px;
+      width:280px;
+      height:280px;
+      background:rgba(126,164,255,.14);
+    }
+
+    .container{
+      width:min(var(--container), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .section{
+      padding:34px 0;
+    }
+
+    .glass-card{
+      position:relative;
+      background:linear-gradient(180deg, rgba(24,48,95,.9), rgba(13,31,67,.94));
+      border:1px solid var(--border);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .glass-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at top right, rgba(99,211,255,.08), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.025), transparent 28%);
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid rgba(99,211,255,.25);
+      background:rgba(31,68,124,.34);
+      color:var(--primary);
+      font-size:.98rem;
+      font-weight:800;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .gradient-text{
+      background:linear-gradient(135deg,#7fe0ff 0%, #63d3ff 45%, #94a4ff 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .section-head{
+      max-width:920px;
+      margin:0 auto 30px;
+      text-align:center;
+    }
+
+    .section-head h2{
+      margin:16px 0 14px;
+      font-size:clamp(2rem, 5vw, 3.8rem);
+      line-height:1.15;
+      font-weight:900;
+      letter-spacing:-.03em;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:clamp(1rem,2vw,1.2rem);
+      line-height:1.95;
+    }
+
+    .btn-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      align-items:center;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:58px;
+      padding:14px 24px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:1rem;
+      transition:transform .22s ease, box-shadow .22s ease, opacity .22s ease, background .22s ease;
+      white-space:nowrap;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-primary{
+      color:#08203d;
+      background:linear-gradient(135deg,#69ddff 0%, #7cc6ff 100%);
+      box-shadow:0 16px 36px rgba(99,211,255,.28);
+    }
+
+    .btn-secondary{
+      color:var(--text);
+      background:rgba(77,103,157,.16);
+      border:1px solid rgba(150,181,255,.14);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+    }
+
+    .btn-outline{
+      color:var(--primary);
+      background:rgba(99,211,255,.08);
+      border:1px solid rgba(99,211,255,.25);
+    }
+
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(14px);
+      background:rgba(6,18,39,.74);
+      border-bottom:1px solid rgba(132,169,255,.1);
+    }
+
+    .header-inner{
+      min-height:var(--header-h);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:14px;
+      font-weight:900;
+      font-size:clamp(1.35rem,2vw,2rem);
+      letter-spacing:-.03em;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      background:
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,.9), rgba(255,255,255,.18) 26%, transparent 27%),
+        radial-gradient(circle at 68% 66%, rgba(255,255,255,.22), transparent 30%),
+        linear-gradient(135deg, rgba(122,224,255,.95), rgba(147,152,255,.92));
+      box-shadow:
+        0 16px 30px rgba(99,211,255,.2),
+        inset 0 1px 0 rgba(255,255,255,.28);
+      flex-shrink:0;
+    }
+
+    .desktop-nav{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .desktop-nav a{
+      color:rgba(245,248,255,.88);
+      padding:12px 16px;
+      min-height:48px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      font-weight:700;
+      font-size:1rem;
+      transition:background .22s ease, color .22s ease, transform .22s ease;
+    }
+
+    .desktop-nav a:hover,
+    .desktop-nav a.active{
+      background:rgba(94,118,170,.18);
+      color:var(--text);
+      transform:translateY(-1px);
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .menu-toggle{
+      width:60px;
+      height:60px;
+      border:1px solid rgba(145,183,255,.16);
+      border-radius:22px;
+      background:rgba(66,93,149,.12);
+      display:none;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      cursor:pointer;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+    }
+
+    .menu-toggle span{
+      display:block;
+      width:24px;
+      height:2.5px;
+      border-radius:99px;
+      background:#ffffff;
+      transition:transform .25s ease, opacity .25s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1){
+      transform:translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2){
+      opacity:0;
+    }
+
+    .menu-toggle.active span:nth-child(3){
+      transform:translateY(-8px) rotate(-45deg);
+    }
+
+    .mobile-menu{
+      position:fixed;
+      inset:var(--header-h) 0 0 0;
+      background:rgba(4,14,30,.96);
+      backdrop-filter:blur(20px);
+      transform:translateY(14px);
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      transition:.26s ease;
+      z-index:999;
+      overflow-y:auto;
+      padding:18px 16px 32px;
+    }
+
+    .mobile-menu.open{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+      transform:translateY(0);
+    }
+
+    .mobile-menu-panel{
+      width:min(100%, 620px);
+      margin:0 auto;
+      background:linear-gradient(180deg, rgba(18,39,80,.95), rgba(10,25,55,.98));
+      border:1px solid rgba(145,183,255,.15);
+      border-radius:32px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .mobile-nav{
+      display:grid;
+      gap:12px;
+    }
+
+    .mobile-nav a{
+      min-height:58px;
+      border-radius:18px;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:rgba(98,128,192,.09);
+      border:1px solid rgba(154,184,255,.1);
+      font-weight:800;
+      font-size:1.02rem;
+      color:var(--text);
+    }
+
+    .mobile-nav a.active{
+      background:rgba(99,211,255,.12);
+      border-color:rgba(99,211,255,.25);
+      color:var(--primary);
+    }
+
+    .hero{
+      padding:34px 0 18px;
+    }
+
+    .hero-card{
+      padding:30px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .hero-copy{
+      padding:10px 4px;
+    }
+
+    .hero-copy h1{
+      margin:18px 0 18px;
+      font-size:clamp(2.35rem,5vw,4.65rem);
+      line-height:1.06;
+      letter-spacing:-.04em;
+      font-weight:900;
+    }
+
+    .hero-copy p{
+      margin:0 0 24px;
+      color:var(--muted);
+      font-size:clamp(1.08rem,1.8vw,1.28rem);
+      line-height:1.95;
+      max-width:760px;
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin:28px 0 0;
+    }
+
+    .point-card{
+      padding:18px 18px 16px;
+      border-radius:22px;
+      background:rgba(98,124,177,.08);
+      border:1px solid rgba(147,180,255,.12);
+      min-height:124px;
+    }
+
+    .point-card strong{
+      display:block;
+      font-size:1.05rem;
+      margin-bottom:10px;
+      color:var(--text);
+    }
+
+    .point-card span{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:.98rem;
+    }
+
+    .hero-side{
+      display:grid;
+      gap:16px;
+      min-height:100%;
+    }
+
+    .security-panel{
+      padding:26px;
+      border-radius:30px;
+      background:
+        radial-gradient(circle at top right, rgba(99,211,255,.1), transparent 28%),
+        linear-gradient(180deg, rgba(26,52,103,.82), rgba(13,31,67,.95));
+      border:1px solid rgba(145,183,255,.14);
+    }
+
+    .security-panel h3{
+      margin:0 0 14px;
+      font-size:clamp(1.4rem,2.2vw,2rem);
+      line-height:1.3;
+      font-weight:900;
+    }
+
+    .security-panel p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:1.02rem;
+      line-height:1.9;
+    }
+
+    .security-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .security-list-item{
+      min-height:62px;
+      border-radius:18px;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(154,184,255,.12);
+    }
+
+    .security-list-item strong{
+      font-size:1rem;
+      font-weight:800;
+    }
+
+    .security-list-item span{
+      color:var(--primary);
+      font-size:.94rem;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(22px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site-shell">
+
+    <header class="site-header">
+      <div class="container header-inner">
+
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <span class="gradient-text">Madaris AI</span>
+        </div>
+
+        <nav class="desktop-nav">
+          <a href="index.html">الرئيسية</a>
+          <a href="platform.html">المنصة</a>
+          <a href="vision.html">الرؤية</a>
+          <a href="schools.html">للمدارس</a>
+          <a href="partners.html">الشراكات</a>
+          <a href="about.html">من نحن</a>
+          <a href="security.html" class="active">الأمان</a>
+          <a href="contact.html">التواصل</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-panel">
+        <nav class="mobile-nav">
+          <a href="index.html">الرئيسية</a>
+          <a href="platform.html">المنصة</a>
+          <a href="vision.html">الرؤية</a>
+          <a href="schools.html">للمدارس</a>
+          <a href="partners.html">الشراكات</a>
+          <a href="about.html">من نحن</a>
+          <a href="security.html" class="active">الأمان</a>
+          <a href="contact.html">التواصل</a>
+        </nav>
+      </div>
+    </div>
+
+    <main>
+
+      <section class="section hero">
+        <div class="container">
+          <div class="glass-card hero-card">
+            <div class="hero-grid">
+
+              <div class="hero-copy">
+                <span class="eyebrow">الأمان والموثوقية</span>
+
+                <h1>
+                  نهج <span class="gradient-text">Madaris AI</span>
+                  في الأمان،
+                  الخصوصية،
+                  وحماية البيانات
+                </h1>
+
+                <p>
+                  نبني Madaris AI على أساس أن الأنظمة التعليمية يجب أن تكون
+                  آمنة، موثوقة، وتحترم البيانات. لذلك ننظر إلى الأمان
+                  كجزء من بنية المنصة نفسها، لا كطبقة إضافية بعد الانتهاء.
+                </p>
+
+                <div class="btn-row">
+                  <a href="contact.html" class="btn btn-primary">تواصل بخصوص الأمان</a>
+                  <a href="platform.html" class="btn btn-secondary">استعرض المنصة</a>
+                  <a href="about.html" class="btn btn-outline">اقرأ عن المشروع</a>
+                </div>
+
+                <div class="hero-points">
+                  <div class="point-card">
+                    <strong>أمان بالتصميم</strong>
+                    <span>القرارات التقنية الأساسية تُبنى مع مراعاة حماية البيانات والموثوقية من البداية.</span>
+                  </div>
+
+                  <div class="point-card">
+                    <strong>خصوصية واعية</strong>
+                    <span>التعامل مع البيانات التعليمية يتطلب احترامًا عاليًا للسياق والحساسية والمسؤولية.</span>
+                  </div>
+
+                  <div class="point-card">
+                    <strong>تقليل المخاطر</strong>
+                    <span>نركز على تقليل نقاط الفشل، وتحسين الثقة، وبناء تشغيل يمكن الاعتماد عليه.</span>
+                  </div>
+
+                  <div class="point-card">
+                    <strong>موثوقية تشغيلية</strong>
+                    <span>الهدف ليس الأمان النظري فقط، بل نظام يصمد في البيئات المدرسية الحقيقية.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-side">
+                <div class="security-panel">
+                  <h3>ما الذي نعنيه بالأمان في Madaris AI؟</h3>
+                  <p>
+                    الأمان عندنا يشمل حماية البيانات، ضبط الوصول،
+                    تقليل المخاطر التشغيلية، والقدرة على بناء نظام
+                    تعليمي موثوق في ظروف واقعية ومتغيرة.
+                  </p>
+
+                  <div class="security-list">
+                    <div class="security-list-item">
+                      <strong>حماية البيانات</strong>
+                      <span>Data Protection</span>
+                    </div>
+
+                    <div class="security-list-item">
+                      <strong>ضبط الصلاحيات</strong>
+                      <span>Access Control</span>
+                    </div>
+
+                    <div class="security-list-item">
+                      <strong>الموثوقية</strong>
+                      <span>Reliability</span>
+                    </div>
+
+                    <div class="security-list-item">
+                      <strong>الاستمرارية التشغيلية</strong>
+                      <span>Operational Trust</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+  </section>
+   <section class="section reveal">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">مبادئ الأمان</span>
+            <h2>
+              مبادئ
+              <span class="gradient-text">
+                الأمان الأساسية
+              </span>
+            </h2>
+            <p>
+              تم تصميم Madaris AI وفق مجموعة من المبادئ التي تضمن بناء
+              منصة تعليمية موثوقة وآمنة وقابلة للتوسع عالمياً.
+            </p>
+          </div>
+
+          <div class="grid security-grid">
+
+            <div class="glass-card security-card">
+              <h3>الأمان منذ البداية</h3>
+              <p>
+                يتم تضمين الأمان في بنية النظام الأساسية وليس كإضافة لاحقة.
+                كل مكون يتم تصميمه مع مراعاة المخاطر المحتملة.
+              </p>
+            </div>
+
+            <div class="glass-card security-card">
+              <h3>تقليل البيانات الحساسة</h3>
+              <p>
+                نقوم بتقليل جمع البيانات إلى الحد الأدنى اللازم
+                لتقديم تجربة تعليمية فعالة وآمنة.
+              </p>
+            </div>
+
+            <div class="glass-card security-card">
+              <h3>فصل الصلاحيات</h3>
+              <p>
+                يتم تقسيم الصلاحيات بين الإدارة، المعلمين، والطلاب
+                لضمان التحكم الكامل في الوصول إلى البيانات.
+              </p>
+            </div>
+
+            <div class="glass-card security-card">
+              <h3>الموثوقية التشغيلية</h3>
+              <p>
+                تم تصميم النظام ليعمل بثبات حتى في البيئات ذات
+                الاتصال المحدود أو غير المستقر.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <section class="section reveal">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">حماية البيانات</span>
+            <h2>
+              حماية
+              <span class="gradient-text">
+                البيانات التعليمية
+              </span>
+            </h2>
+            <p>
+              البيانات التعليمية حساسة بطبيعتها، لذلك يتم التعامل معها
+              وفق أعلى معايير الأمان والخصوصية.
+            </p>
+          </div>
+
+          <div class="grid security-grid">
+
+            <div class="glass-card security-card">
+              <h3>تشفير البيانات</h3>
+              <p>
+                يتم استخدام تقنيات التشفير القياسية لحماية البيانات
+                أثناء النقل والتخزين.
+              </p>
+            </div>
+
+            <div class="glass-card security-card">
+              <h3>عزل البيانات</h3>
+              <p>
+                يتم فصل بيانات المدارس لضمان عدم اختلاط البيانات
+                بين المؤسسات المختلفة.
+              </p>
+            </div>
+
+            <div class="glass-card security-card">
+              <h3>إدارة الوصول</h3>
+              <p>
+                يتم التحكم في الوصول إلى البيانات وفق دور المستخدم
+                وصلاحياته داخل النظام.
+              </p>
+            </div>
+
+            <div class="glass-card security-card">
+              <h3>تدقيق العمليات</h3>
+              <p>
+                يتم تسجيل العمليات الحساسة لضمان الشفافية
+                وتحسين الأمان.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+      <section class="section reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">الخصوصية</span>
+      <h2>
+        حماية
+        <span class="gradient-text">
+          خصوصية المستخدمين
+        </span>
+      </h2>
+      <p>
+        نحترم خصوصية الطلاب والمعلمين والإدارات التعليمية، ونلتزم
+        ببناء نظام يحافظ على بياناتهم بشكل مسؤول وآمن.
+      </p>
+    </div>
+
+    <div class="grid security-grid">
+
+      <div class="glass-card security-card">
+        <h3>الحد الأدنى من البيانات</h3>
+        <p>
+          يتم جمع أقل قدر ممكن من البيانات لضمان الخصوصية وتقليل
+          المخاطر الأمنية.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>التحكم في البيانات</h3>
+        <p>
+          يمكن للمؤسسات التعليمية التحكم الكامل في بياناتها
+          داخل النظام.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>الشفافية</h3>
+        <p>
+          نلتزم بالوضوح في كيفية استخدام البيانات التعليمية
+          وحمايتها.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>احترام المستخدم</h3>
+        <p>
+          يتم تصميم المنصة بطريقة تحترم المستخدمين
+          وتحافظ على خصوصيتهم.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">الموثوقية</span>
+      <h2>
+        نظام
+        <span class="gradient-text">
+          موثوق وقابل للتوسع
+        </span>
+      </h2>
+      <p>
+        يتم تصميم Madaris AI ليكون منصة تعليمية موثوقة تعمل
+        بكفاءة في مختلف البيئات.
+      </p>
+    </div>
+
+    <div class="grid security-grid">
+
+      <div class="glass-card security-card">
+        <h3>تشغيل مستقر</h3>
+        <p>
+          تم تصميم النظام للعمل بثبات في البيئات التعليمية
+          المختلفة.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>تحمل الأعطال</h3>
+        <p>
+          يتم تقليل نقاط الفشل لضمان استمرارية التشغيل.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>قابلية التوسع</h3>
+        <p>
+          تم بناء النظام لدعم النمو العالمي دون التأثير
+          على الأداء.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>موثوقية البيانات</h3>
+        <p>
+          الحفاظ على دقة البيانات واستمراريتها داخل النظام.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="section reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">الامتثال والمعايير</span>
+      <h2>
+        التزامنا
+        <span class="gradient-text">
+          بالمعايير العالمية
+        </span>
+      </h2>
+      <p>
+        نعمل على بناء Madaris AI وفق أفضل الممارسات العالمية
+        لضمان أمان واستقرار النظام على المدى الطويل.
+      </p>
+    </div>
+
+    <div class="grid security-grid">
+
+      <div class="glass-card security-card">
+        <h3>أفضل الممارسات</h3>
+        <p>
+          اعتماد أفضل الممارسات العالمية في بناء الأنظمة
+          التعليمية الآمنة.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>تحسين مستمر</h3>
+        <p>
+          نقوم بمراجعة وتحسين الأمان بشكل مستمر
+          لضمان أعلى مستوى حماية.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>مراجعات دورية</h3>
+        <p>
+          تنفيذ مراجعات أمنية دورية لضمان استقرار النظام.
+        </p>
+      </div>
+
+      <div class="glass-card security-card">
+        <h3>بنية قابلة للتطور</h3>
+        <p>
+          تصميم المنصة لتتكيف مع التحديات المستقبلية
+          والتوسع العالمي.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container">
+    <div class="glass-card" style="padding:40px;text-align:center">
+
+      <h2 style="margin-bottom:20px">
+        هل لديك استفسار أمني؟
+      </h2>
+
+      <p style="color:var(--muted);margin-bottom:25px">
+        فريق Madaris AI ملتزم ببناء منصة تعليمية آمنة.
+        يمكنك التواصل معنا بخصوص أي استفسار أمني.
+      </p>
+
+      <div class="btn-row" style="justify-content:center">
+        <a href="contact.html" class="btn btn-primary">
+          تواصل معنا
+        </a>
+
+        <a href="about.html" class="btn btn-secondary">
+          تعرف على المشروع
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<footer style="
+padding:40px;
+text-align:center;
+color:#9ca3af;
+margin-top:60px;
+border-top:1px solid rgba(255,255,255,0.05);
+">
+
+<div class="container">
+
+<p>
+
+© 2026 Madaris AI  
+All Rights Reserved
+
+</p>
+
+</div>
+
+</footer>
+
+
+<script>
+
+const menuToggle = document.getElementById("menuToggle");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuToggle.addEventListener("click", () => {
+  menuToggle.classList.toggle("active");
+  mobileMenu.classList.toggle("open");
+  document.body.classList.toggle("menu-open");
+});
+
+
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
+  });
+},{
+  threshold:0.15
+});
+
+document.querySelectorAll(".reveal").forEach(el=>{
+  observer.observe(el);
+});
+
+</script>
+
+</div>
+</body>
+</html>      
