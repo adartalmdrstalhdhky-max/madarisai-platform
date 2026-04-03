@@ -625,6 +625,146 @@
       font-size: 0.84rem;
       font-weight: 900;
     }
+/* ===== Mobile Navbar Fix ===== */
+
+@media (max-width: 980px) {
+  .nav-shell {
+    min-height: 78px;
+    gap: 10px;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .menu-toggle {
+    display: flex !important;
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    flex: 0 0 48px;
+  }
+
+  .nav-cta {
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .nav-cta .btn-secondary {
+    min-height: 46px;
+    padding: 0 16px;
+    font-size: 0.95rem;
+  }
+
+  .brand {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .brand-mark {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    border-radius: 16px;
+  }
+
+  .brand-name {
+    font-size: 0.95rem;
+    line-height: 1.1;
+  }
+
+  .brand-subtitle {
+    font-size: 0.72rem;
+    line-height: 1.15;
+  }
+
+  .mobile-menu {
+    padding: 110px 22px 32px;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 14px;
+    overflow-y: auto;
+  }
+
+  .mobile-menu a {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    text-align: center;
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .mobile-menu .btn {
+    width: 100%;
+    min-height: 52px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --nav-height: 78px;
+  }
+
+  .container {
+    width: min(100% - 18px, var(--container));
+  }
+
+  .topbar {
+    background: rgba(5, 16, 28, 0.9);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+  }
+
+  .nav-shell {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .menu-toggle {
+    order: 1;
+  }
+
+  .nav-cta {
+    order: 2;
+    justify-self: stretch;
+  }
+
+  .nav-cta .btn-secondary {
+    width: 100%;
+    min-width: 0;
+    padding: 0 14px;
+    font-size: 0.92rem;
+  }
+
+  .brand {
+    order: 3;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .brand-text {
+    min-width: 0;
+    max-width: 120px;
+  }
+
+  .brand-name,
+  .brand-subtitle {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .brand-name {
+    font-size: 0.88rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.68rem;
+  }
+}
   </style>
 </head>
 <body>
