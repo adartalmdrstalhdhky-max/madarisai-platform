@@ -2,192 +2,158 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>تواصل معنا | Madaris AI</title>
+<title>تواصل معنا | مدارس الذكاء الاصطناعي</title>
 
-<meta name="description" content="تواصل مع Madaris AI — للمدارس، الشركاء، المستثمرين، والجهات التعليمية.">
-<meta name="theme-color" content="#07142b">
+<meta name="description" content="تواصل مع فريق مدارس الذكاء الاصطناعي — نظام تشغيل التعليم الحديث">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
-
---bg:#07142b;
---bg2:#04101f;
---primary:#63d3ff;
---text:#f5f8ff;
---muted:#9bb2dd;
---card:rgba(20,41,83,.85);
---border:rgba(148,184,255,.14);
-
---radius:28px;
-
+--bg:#07111f;
+--bg-soft:#0b1728;
+--panel:rgba(15,29,52,0.82);
+--text:#f7fbff;
+--muted:#9fb0c8;
+--primary:#5fdcff;
+--secondary:#7d64ff;
+--radius:20px;
+--container:1180px;
 }
 
 *{
-box-sizing:border-box;
 margin:0;
 padding:0;
+box-sizing:border-box;
 }
 
 body{
 font-family:"Tajawal",sans-serif;
-background:linear-gradient(180deg,#04101f,#07142b);
+background:linear-gradient(180deg,#07111f,#081424);
 color:var(--text);
-min-height:100vh;
+line-height:1.7;
 }
 
 .container{
-width:min(1200px,92%);
+width:min(100% - 24px,var(--container));
 margin:auto;
 }
 
 .section{
-padding:60px 0;
+padding:80px 0;
 }
 
-.header{
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:14px 22px;
+border-radius:999px;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+
+.btn-primary{
+background:linear-gradient(135deg,#5fdcff,#2ab8ea);
+color:#07111f;
+}
+
+.btn-secondary{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.card{
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:20px;
+padding:24px;
+}
+
+.topbar{
 position:sticky;
 top:0;
-background:rgba(5,16,34,.85);
-backdrop-filter:blur(12px);
-border-bottom:1px solid var(--border);
+background:rgba(7,17,31,0.85);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.06);
 z-index:1000;
-}
-
-.header-inner{
-display:flex;
-align-items:center;
-justify-content:space-between;
-height:80px;
-}
-
-.logo{
-font-weight:900;
-font-size:22px;
 }
 
 .nav{
 display:flex;
-gap:20px;
+align-items:center;
+justify-content:space-between;
+padding:18px 0;
 }
 
-.nav a{
-color:var(--text);
-text-decoration:none;
-font-weight:600;
-opacity:.9;
+.brand{
+font-weight:900;
+font-size:18px;
 }
 
 .hero{
-padding-top:60px;
+padding:50px 0 40px;
 }
 
-.hero-card{
-background:var(--card);
-border:1px solid var(--border);
-padding:40px;
-border-radius:var(--radius);
+.hero-title{
+font-size:clamp(2rem,6vw,3rem);
+font-weight:900;
+margin-bottom:16px;
 }
 
-.hero h1{
-font-size:42px;
-margin-bottom:20px;
-}
-
-.hero p{
+.hero-desc{
 color:var(--muted);
-line-height:1.8;
-max-width:700px;
+max-width:600px;
+margin-bottom:24px;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
 gap:20px;
-margin-top:40px;
 }
 
-.card{
-background:var(--card);
-padding:28px;
-border-radius:var(--radius);
-border:1px solid var(--border);
-}
-
-.card h3{
-margin-bottom:12px;
-}
-
-.card p{
-color:var(--muted);
-line-height:1.7;
-}
-
-.contact-box{
-background:var(--card);
-padding:40px;
-border-radius:var(--radius);
-border:1px solid var(--border);
-}
-
-.contact-grid{
-display:grid;
+@media(min-width:900px){
+.grid-2{
 grid-template-columns:1fr 1fr;
-gap:30px;
+}
 }
 
-input,textarea,select{
-
+input,
+textarea{
 width:100%;
-padding:16px;
-border-radius:14px;
-border:1px solid var(--border);
-background:transparent;
+padding:14px;
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:12px;
 color:white;
-margin-top:10px;
-margin-bottom:18px;
-
 }
 
-button{
+textarea{
+min-height:140px;
+resize:vertical;
+}
 
-padding:16px 28px;
-background:linear-gradient(45deg,#63d3ff,#7ea4ff);
-border:none;
-border-radius:999px;
-font-weight:700;
-cursor:pointer;
+.form-group{
+margin-bottom:16px;
+}
 
+label{
+display:block;
+margin-bottom:6px;
+font-size:.9rem;
+color:var(--muted);
 }
 
 .footer{
-margin-top:60px;
-padding:30px;
-text-align:center;
+border-top:1px solid rgba(255,255,255,0.08);
+padding:30px 0;
+margin-top:40px;
 color:var(--muted);
-}
-
-@media(max-width:900px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.contact-grid{
-grid-template-columns:1fr;
-}
-
-.hero h1{
-font-size:32px;
-}
-
+text-align:center;
 }
 
 </style>
@@ -196,598 +162,161 @@ font-size:32px;
 
 <body>
 
-<header class="header">
-<div class="container header-inner">
+<header class="topbar">
+<div class="container nav">
 
-<div class="logo">
-Madaris AI
+<div class="brand">
+مدارس الذكاء الاصطناعي
 </div>
 
-<nav class="nav">
-<a href="index.html">الرئيسية</a>
-<a href="platform.html">المنصة</a>
-<a href="schools.html">للمدارس</a>
-<a href="partners.html">الشراكات</a>
-<a href="about.html">من نحن</a>
-<a href="contact.html">التواصل</a>
-</nav>
+<a href="/app/login.html" class="btn btn-secondary">
+دخول المنصة
+</a>
 
 </div>
 </header>
 
 <main>
 
-<section class="hero section">
+<section class="hero">
 <div class="container">
 
-<div class="hero-card">
-
-<h1>
-تواصل مع Madaris AI
+<h1 class="hero-title">
+تواصل مع فريق Madaris AI
 </h1>
 
-<p>
-سواء كنت مدرسة، جهة تعليمية، شريك تقني،
-أو مستثمر — نحن نرحب بالتواصل لبناء
-مستقبل التعليم معاً.
+<p class="hero-desc">
+إذا كنت مدرسة أو شريك أو جهة تعليمية مهتمة بمنصة مدارس الذكاء الاصطناعي،
+يمكنك التواصل معنا وسنعود إليك قريبًا.
 </p>
-
-</div>
 
 </div>
 </section>
 <section class="section">
 <div class="container">
 
-<div class="grid">
+<div class="grid grid-2">
 
 <div class="card">
-<h3>
-للمدارس
-</h3>
 
-<p>
-إذا كنت مدرسة وتريد استخدام
-Madaris AI لتنظيم الإدارة
-والجداول والمعلمين
-تواصل معنا مباشرة.
-</p>
-
-</div>
-
-
-<div class="card">
-<h3>
-للشركاء
-</h3>
-
-<p>
-نرحب بالشراكات مع
-المؤسسات التعليمية
-والشركات التقنية
-والجهات التعليمية.
-</p>
-
-</div>
-
-
-<div class="card">
-<h3>
-للمستثمرين
-</h3>
-
-<p>
-Madaris AI مشروع طويل المدى
-لبناء بنية تعليمية قوية
-وقابلة للتوسع.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-</section>
-
-
-
-<section class="section">
-<div class="container">
-
-<div class="contact-box">
-
-<h2 style="margin-bottom:30px">
+<h2 style="margin-bottom:18px;">
 أرسل رسالة
 </h2>
 
-<div class="contact-grid">
+<form>
 
-<div>
-
-<label>
-الاسم
-</label>
-
-<input type="text" placeholder="اسمك">
-
-
-<label>
-البريد الإلكتروني
-</label>
-
-<input type="email" placeholder="example@email.com">
-
-
-<label>
-نوع التواصل
-</label>
-
-<select>
-<option>مدرسة</option>
-<option>شراكة</option>
-<option>استثمار</option>
-<option>استفسار</option>
-</select>
-
+<div class="form-group">
+<label>الاسم</label>
+<input type="text" placeholder="اكتب اسمك">
 </div>
 
+<div class="form-group">
+<label>البريد الإلكتروني</label>
+<input type="email" placeholder="example@email.com">
+</div>
 
-<div>
+<div class="form-group">
+<label>الجهة</label>
+<input type="text" placeholder="مدرسة / شركة / جهة تعليمية">
+</div>
 
-<label>
-الرسالة
-</label>
+<div class="form-group">
+<label>الرسالة</label>
+<textarea placeholder="اكتب رسالتك هنا..."></textarea>
+</div>
 
-<textarea rows="10" placeholder="اكتب رسالتك هنا"></textarea>
-
-<button>
+<button class="btn btn-primary" style="width:100%;">
 إرسال الرسالة
 </button>
 
-</div>
+</form>
 
-</div>
-
-</div>
-
-</div>
-</section>
-<section class="section">
-<div class="container">
-
-<div class="section-head">
-
-<span class="eyebrow">
-طرق التواصل
-</span>
-
-<h2>
-يمكنك التواصل معنا عبر
-<span class="gradient-text">
-عدة طرق
-</span>
-</h2>
-
-<p>
-نحن متاحون للتواصل مع المدارس،
-الشركاء، والمستثمرين لبناء
-مستقبل التعليم.
-</p>
-
-</div>
-
-
-<div class="grid">
-
-<div class="card">
-<h3>
-البريد الإلكتروني
-</h3>
-
-<p>
-info@madarisai.com  
-تواصل معنا مباشرة عبر البريد
-وسنرد عليك في أقرب وقت.
-</p>
-</div>
-
-
-
-<div class="card">
-<h3>
-الشراكات
-</h3>
-
-<p>
-نرحب بالشراكات مع المدارس،
-المؤسسات التعليمية،
-والشركات التقنية.
-</p>
-</div>
-
-
-
-<div class="card">
-<h3>
-الدعم
-</h3>
-
-<p>
-للاستفسارات العامة أو
-الدعم التقني
-يمكنك التواصل معنا.
-</p>
-</div>
-
-
-</div>
-
-</div>
-</section>
-
-
-
-<section class="section">
-<div class="container">
-
-<div class="contact-box">
-
-<h2 style="margin-bottom:30px">
-لماذا التواصل معنا
-</h2>
-
-<div class="contact-grid">
-
-<div>
-
-<div class="card">
-<h3>
-مدارس
-</h3>
-
-<p>
-ابدأ استخدام Madaris AI
-داخل مدرستك
-بسهولة.
-</p>
 </div>
 
 
 <div class="card">
-<h3>
-شراكات
-</h3>
 
-<p>
-بناء شراكات تعليمية
-طويلة المدى.
-</p>
-</div>
-
-</div>
-
-
-<div>
-
-<div class="card">
-<h3>
-استثمار
-</h3>
-
-<p>
-فرصة لبناء منصة تعليمية
-قابلة للتوسع.
-</p>
-</div>
-
-
-<div class="card">
-<h3>
-استفسار
-</h3>
-
-<p>
-نحن جاهزون للإجابة
-على جميع استفساراتك.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</section>
-<section class="section">
-<div class="container">
-
-<div class="section-head">
-<span class="eyebrow">
-معلومات إضافية
-</span>
-
-<h2>
-Madaris AI
-حول العالم
-</h2>
-
-<p>
-نهدف إلى دعم المدارس في اليمن
-ثم التوسع إلى المنطقة
-ثم إلى العالم.
-</p>
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h3>
-اليمن
-</h3>
-
-<p>
-بداية المشروع
-في المدارس اليمنية
-لدعم التعليم.
-</p>
-</div>
-
-<div class="card">
-<h3>
-الشرق الأوسط
-</h3>
-
-<p>
-التوسع إلى الدول
-العربية
-والمنطقة.
-</p>
-</div>
-
-<div class="card">
-<h3>
-العالم
-</h3>
-
-<p>
-منصة تعليمية
-عالمية
-للجميع.
-</p>
-</div>
-
-</div>
-
-</div>
-</section>
-
-
-
-<section class="section">
-<div class="container">
-
-<div class="contact-box">
-
-<h2 style="margin-bottom:30px">
-هل أنت مستعد للانضمام؟
-</h2>
-
-<p style="margin-bottom:30px">
-ابدأ التواصل معنا اليوم
-لبناء مستقبل التعليم
-مع Madaris AI
-</p>
-
-<button>
-تواصل الآن
-</button>
-
-</div>
-
-</div>
-</section>
-<!-- FAQ Section -->
-<section class="section">
-<div class="container">
-
-<div class="section-head">
-<span class="eyebrow">
-الأسئلة الشائعة
-</span>
-
-<h2>
-أسئلة
-<span class="gradient-text">
-شائعة
-</span>
-</h2>
-
-<p>
-إجابات على أهم الأسئلة حول
-Madaris AI
-</p>
-
-</div>
-
-
-<div class="grid">
-
-<div class="card">
-<h3>
-كيف يمكن للمدرسة الانضمام؟
-</h3>
-
-<p>
-يمكن للمدارس التواصل معنا
-عبر نموذج التواصل
-وسيتم التواصل معكم.
-</p>
-</div>
-
-
-<div class="card">
-<h3>
-هل المنصة مجانية؟
-</h3>
-
-<p>
-نقدم خطط مختلفة
-تشمل النسخة المجانية
-والنسخة الاحترافية.
-</p>
-</div>
-
-
-<div class="card">
-<h3>
-هل تعمل بدون إنترنت؟
-</h3>
-
-<p>
-نعم
-تم تصميم Madaris AI
-للعمل Offline First
-ثم المزامنة لاحقًا.
-</p>
-</div>
-
-</div>
-
-</div>
-</section>
-
-
-
-<!-- Map Section -->
-<section class="section">
-<div class="container">
-
-<div class="section-head">
-<span class="eyebrow">
-التوسع
-</span>
-
-<h2>
-خطة التوسع
-العالمية
-</h2>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h3>
-المرحلة الأولى
-</h3>
-
-<p>
-اليمن
-المدارس المحلية
-</p>
-</div>
-
-<div class="card">
-<h3>
-المرحلة الثانية
-</h3>
-
-<p>
-الشرق الأوسط
-الدول العربية
-</p>
-</div>
-
-<div class="card">
-<h3>
-المرحلة الثالثة
-</h3>
-
-<p>
-العالم
-التوسع العالمي
-</p>
-</div>
-
-</div>
-
-</div>
-</section>
-<!-- Contact Info Section -->
-<section class="section">
-<div class="container">
-
-<div class="section-head">
-<span class="eyebrow">
+<h2 style="margin-bottom:18px;">
 معلومات التواصل
-</span>
-
-<h2>
-بيانات
-<span class="gradient-text">
-التواصل
-</span>
 </h2>
 
-<p>
-يمكنك التواصل معنا عبر القنوات التالية
-</p>
+<div style="display:flex;flex-direction:column;gap:18px;">
 
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h3>
-البريد الإلكتروني
-</h3>
-
-<p>
+<div>
+<strong>البريد الإلكتروني</strong>
+<div style="color:var(--muted);margin-top:6px;">
 info@madarisai.com
-</p>
+</div>
+</div>
 
-<p>
-للتواصل العام
-والشراكات
-</p>
+<div>
+<strong>المنصة</strong>
+<div style="color:var(--muted);margin-top:6px;">
+Madaris AI Platform
+</div>
+</div>
+
+<div>
+<strong>نوع التواصل</strong>
+<div style="color:var(--muted);margin-top:6px;">
+شراكات — مدارس — استفسارات عامة
+</div>
+</div>
 
 </div>
 
-
-<div class="card">
-<h3>
-الموقع الرسمي
-</h3>
-
-<p>
-www.madarisai.com
-</p>
-
-<p>
-المنصة الرسمية
-لمشروع Madaris AI
-</p>
+</div>
 
 </div>
 
-
+</div>
+</section>
+<section class="section">
+<div class="container">
 
 <div class="card">
-<h3>
+
+<h2 style="margin-bottom:20px;">
+لماذا تتواصل معنا؟
+</h2>
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+
+<div>
+<strong style="display:block;margin-bottom:8px;">
+المدارس
+</strong>
+<p style="color:var(--muted);">
+إذا كنت مدرسة وترغب بتجربة المنصة أو معرفة كيف يمكن تطبيقها.
+</p>
+</div>
+
+<div>
+<strong style="display:block;margin-bottom:8px;">
 الشراكات
-</h3>
-
-<p>
-Partnerships
+</strong>
+<p style="color:var(--muted);">
+إذا كنت جهة تعليمية أو تقنية وترغب بالتعاون معنا.
 </p>
+</div>
 
-<p>
-نرحب بالشراكات
-العالمية
+<div>
+<strong style="display:block;margin-bottom:8px;">
+الاستثمار
+</strong>
+<p style="color:var(--muted);">
+للمهتمين بدعم وتطوير منصة Madaris AI.
 </p>
+</div>
+
+<div>
+<strong style="display:block;margin-bottom:8px;">
+استفسارات عامة
+</strong>
+<p style="color:var(--muted);">
+لأي أسئلة أو معلومات إضافية حول المشروع.
+</p>
+</div>
 
 </div>
 
@@ -795,105 +324,195 @@ Partnerships
 
 </div>
 </section>
+<section class="section section-soft">
+<div class="container">
 
+<div class="card">
 
+<h2 style="margin-bottom:18px;">
+نستجيب بسرعة
+</h2>
 
-<!-- CTA Section -->
+<p style="color:var(--muted);margin-bottom:24px;">
+نحن نحرص على الرد على جميع الرسائل في أقرب وقت ممكن.  
+فريق Madaris AI يعمل على دراسة كل طلب بعناية لضمان تقديم أفضل تجربة.
+</p>
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
+
+<div class="card" style="padding:18px;">
+<strong>المدارس</strong>
+<p style="color:var(--muted);margin-top:6px;">
+الرد خلال 24 - 48 ساعة
+</p>
+</div>
+
+<div class="card" style="padding:18px;">
+<strong>الشراكات</strong>
+<p style="color:var(--muted);margin-top:6px;">
+مراجعة الطلب والتواصل المباشر
+</p>
+</div>
+
+<div class="card" style="padding:18px;">
+<strong>الاستفسارات العامة</strong>
+<p style="color:var(--muted);margin-top:6px;">
+الرد عبر البريد الإلكتروني
+</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
 <section class="section">
 <div class="container">
 
-<div class="contact-box">
-
-<h2>
-ابدأ الآن
+<div class="section-header">
+<span class="eyebrow">أنواع التواصل</span>
+<h2 class="section-title">
+كيف يمكننا مساعدتك
 </h2>
-
-<p>
-انضم إلى Madaris AI
-وابدأ رحلة التعليم الذكي
+<p class="section-description">
+نحن نوفر عدة طرق للتواصل حسب احتياجك، سواء كنت مدرسة أو جهة تعليمية أو شريك تقني.
 </p>
+</div>
 
-<button>
-ابدأ الآن
-</button>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+
+<div class="card">
+<div class="card-body">
+<h3 style="margin-bottom:10px;">طلب تجربة</h3>
+<p style="color:var(--muted);">
+يمكن للمدارس طلب تجربة أولية للمنصة لمعرفة كيف يمكن تطبيقها في بيئتهم التعليمية.
+</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<h3 style="margin-bottom:10px;">شراكات تعليمية</h3>
+<p style="color:var(--muted);">
+نتعاون مع الجهات التعليمية لتطوير حلول تعليمية مشتركة.
+</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<h3 style="margin-bottom:10px;">شراكات تقنية</h3>
+<p style="color:var(--muted);">
+نرحب بالتعاون مع الشركات التقنية لتطوير المنصة.
+</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<h3 style="margin-bottom:10px;">استفسارات عامة</h3>
+<p style="color:var(--muted);">
+لأي استفسارات حول المشروع أو المنصة.
+</p>
+</div>
+</div>
 
 </div>
 
 </div>
 </section>
-<!-- Social Section -->
+<section class="section section-soft">
+<div class="container">
+
+<div class="card">
+
+<h2 style="margin-bottom:20px;">
+من يمكنه التواصل معنا
+</h2>
+
+<p style="color:var(--muted); margin-bottom:24px;">
+تم تصميم منصة Madaris AI لخدمة مختلف الجهات التعليمية، لذلك نرحب
+بالتواصل من جميع الأطراف المهتمة بتطوير التعليم.
+</p>
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">
+
+<div class="card" style="padding:18px;">
+<strong>المدارس الخاصة</strong>
+<p style="color:var(--muted); margin-top:6px;">
+المدارس التي ترغب بتطوير نظامها التعليمي والإداري.
+</p>
+</div>
+
+<div class="card" style="padding:18px;">
+<strong>المدارس الحكومية</strong>
+<p style="color:var(--muted); margin-top:6px;">
+الجهات التعليمية الحكومية المهتمة بالتحول الرقمي.
+</p>
+</div>
+
+<div class="card" style="padding:18px;">
+<strong>الجهات التعليمية</strong>
+<p style="color:var(--muted); margin-top:6px;">
+المؤسسات التعليمية ومراكز التدريب.
+</p>
+</div>
+
+<div class="card" style="padding:18px;">
+<strong>الشركاء التقنيون</strong>
+<p style="color:var(--muted); margin-top:6px;">
+الشركات التقنية التي ترغب بالتعاون.
+</p>
+</div>
+
+<div class="card" style="padding:18px;">
+<strong>المستثمرون</strong>
+<p style="color:var(--muted); margin-top:6px;">
+الجهات المهتمة بدعم المشروع وتطويره.
+</p>
+</div>
+
+<div class="card" style="padding:18px;">
+<strong>المبادرات التعليمية</strong>
+<p style="color:var(--muted); margin-top:6px;">
+المبادرات المجتمعية التعليمية.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
 <section class="section">
 <div class="container">
 
-<div class="section-head">
-<span class="eyebrow">
-تابعنا
-</span>
+<div class="card" style="text-align:center; padding:40px 24px;">
 
-<h2>
-تابع
-<span class="gradient-text">
-Madaris AI
-</span>
+<h2 style="margin-bottom:12px;">
+ابدأ التواصل معنا الآن
 </h2>
 
-<p>
-تابعنا لمعرفة آخر التحديثات
-والإعلانات التعليمية
+<p style="color:var(--muted); max-width:600px; margin:0 auto 24px;">
+نحن نؤمن أن تطوير التعليم يبدأ بالحوار والتعاون.  
+تواصل معنا الآن وسنكون سعداء بالاستماع إليك.
 </p>
 
-</div>
+<div style="
+display:flex;
+gap:14px;
+justify-content:center;
+flex-wrap:wrap;
+">
 
-<div class="grid">
-
-<div class="card">
-<h3>
-LinkedIn
-</h3>
-
-<p>
-تابعنا على لينكد إن
-لمعرفة آخر الشراكات
-والتحديثات
-</p>
-
-<a href="#" class="btn">
-زيارة
+<a href="mailto:info@madarisai.com" class="btn btn-primary">
+إرسال بريد إلكتروني
 </a>
 
-</div>
-
-
-
-<div class="card">
-<h3>
-Twitter
-</h3>
-
-<p>
-تابع أخبار المنصة
-والتحديثات
-</p>
-
-<a href="#" class="btn">
-زيارة
-</a>
-
-</div>
-
-
-
-<div class="card">
-<h3>
-Email
-</h3>
-
-<p>
-تواصل معنا مباشرة
-</p>
-
-<a href="mailto:info@madarisai.com" class="btn">
-إرسال بريد
+<a href="/platform.html" class="btn btn-secondary">
+استكشاف المنصة
 </a>
 
 </div>
@@ -905,88 +524,107 @@ Email
 
 
 
-<!-- Final CTA -->
-<section class="section">
-<div class="container">
-
-<div class="contact-box">
-
-<h2>
-لنبدأ معًا
-</h2>
-
-<p>
-Madaris AI
-منصة تعليمية عالمية
-للمدارس
-والطلاب
-والمعلمين
-</p>
-
-<a href="partners.html" class="btn">
-كن شريكًا
-</a>
-
-</div>
-
-</div>
-</section>
-<!-- Footer -->
 <footer class="footer">
-
 <div class="container">
 
-<div class="footer-grid">
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:30px;
+text-align:right;
+">
 
 <div>
-<h3>Madaris AI</h3>
-<p>
-منصة تعليمية ذكية
-لبناء مستقبل التعليم
-في اليمن والعالم
+<h4 style="margin-bottom:12px;">Madaris AI</h4>
+<p style="color:var(--muted);">
+نظام تشغيل التعليم الحديث للمدارس والمؤسسات التعليمية.
 </p>
 </div>
 
 <div>
-<h4>المنصة</h4>
-<ul>
-<li><a href="platform.html">المنصة</a></li>
-<li><a href="schools.html">المدارس</a></li>
-<li><a href="partners.html">الشراكات</a></li>
-<li><a href="about.html">حول</a></li>
-</ul>
+<h4 style="margin-bottom:12px;">الروابط</h4>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<a href="/">الرئيسية</a>
+<a href="/about.html">من نحن</a>
+<a href="/platform.html">المنصة</a>
+<a href="/contact.html">تواصل</a>
+</div>
 </div>
 
 <div>
-<h4>روابط</h4>
-<ul>
-<li><a href="contact.html">تواصل</a></li>
-<li><a href="#">الخصوصية</a></li>
-<li><a href="#">الشروط</a></li>
-</ul>
+<h4 style="margin-bottom:12px;">الدخول</h4>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<a href="/app/login.html">دخول المنصة</a>
+</div>
 </div>
 
 <div>
-<h4>التواصل</h4>
-<p>info@madarisai.com</p>
-<p>Madaris AI</p>
+<h4 style="margin-bottom:12px;">البريد</h4>
+<div style="color:var(--muted);">
+info@madarisai.com
+</div>
 </div>
 
 </div>
 
-<div class="footer-bottom">
+<div style="
+border-top:1px solid rgba(255,255,255,0.08);
+margin-top:30px;
+padding-top:20px;
+text-align:center;
+color:var(--muted);
+">
 
-<p>
-© 2026 Madaris AI  
-All Rights Reserved
-</p>
+© <span id="year"></span> مدارس الذكاء الاصطناعي
 
 </div>
 
 </div>
-
 </footer>
+<script>
 
+const year = document.getElementById("year");
+
+if(year){
+year.textContent = new Date().getFullYear();
+}
+
+
+/* Animation Observer */
+
+const observer = new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.style.opacity="1";
+entry.target.style.transform="translateY(0)";
+}
+});
+},{
+threshold:0.1
+});
+
+document.querySelectorAll(".card").forEach(el=>{
+el.style.opacity="0";
+el.style.transform="translateY(30px)";
+el.style.transition="all .6s ease";
+observer.observe(el);
+});
+
+
+/* Smooth Scroll */
+
+document.querySelectorAll("a[href^='#']").forEach(anchor=>{
+anchor.addEventListener("click",function(e){
+e.preventDefault();
+document.querySelector(this.getAttribute("href")).scrollIntoView({
+behavior:"smooth"
+});
+});
+});
+
+</script>
+
+</main>
 
 </body>
 </html>
