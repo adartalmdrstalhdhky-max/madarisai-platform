@@ -6,78 +6,218 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>الرؤية — Madaris AI</title>
+<title>الرؤية | Madaris AI</title>
 
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/responsive.css">
+<meta name="description" content="رؤية Madaris AI — بناء نظام تشغيل للتعليم يساعد المدارس على العمل بوضوح، ويقود تحول التعليم من الفوضى إلى بنية تعليمية قوية وقابلة للتوسع">
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
-body{
-font-family: system-ui;
-background:#0b0f1a;
-color:white;
+:root{
+
+--bg:#07111f;
+--bg-soft:#0b1728;
+--text:#ffffff;
+--muted:#a8b3c7;
+--primary:#5fdcff;
+--secondary:#7c67ff;
+--card:rgba(255,255,255,0.04);
+--border:rgba(255,255,255,0.08);
+
+}
+
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:"Tajawal",sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.75;
 }
 
 .container{
+width:90%;
 max-width:1200px;
 margin:auto;
-padding:40px 20px;
 }
 
 .section{
-padding:80px 0;
+padding:90px 0;
 }
 
-.section-head{
-text-align:center;
-margin-bottom:60px;
+.section-soft{
+background:var(--bg-soft);
 }
 
-.gradient-text{
-background:linear-gradient(90deg,#4f8cff,#6be5ff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+.section-title{
+font-size:38px;
+font-weight:900;
+margin-bottom:20px;
+line-height:1.3;
+}
+
+.section-description{
+color:var(--muted);
+max-width:760px;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
+gap:20px;
 }
 
 .card{
-background:#111827;
-padding:30px;
-border-radius:14px;
-transition:.3s;
+background:var(--card);
+border:1px solid var(--border);
+border-radius:18px;
+padding:25px;
 }
 
-.card:hover{
-transform:translateY(-5px);
+.btn{
+display:inline-block;
+padding:14px 26px;
+border-radius:40px;
+font-weight:700;
+text-decoration:none;
+}
+
+.btn-primary{
+background:linear-gradient(135deg,#5fdcff,#7c67ff);
+color:white;
+}
+
+.btn-secondary{
+border:1px solid var(--border);
+color:white;
+}
+
+.topbar{
+padding:20px 0;
+border-bottom:1px solid var(--border);
+}
+
+.nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+}
+
+.logo{
+font-weight:900;
+font-size:22px;
+}
+
+.nav-links{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.nav-links a{
+color:var(--muted);
+text-decoration:none;
+}
+
+.nav-links a:hover{
+color:white;
 }
 
 .hero{
-padding:120px 0;
-text-align:center;
+padding:80px 0;
 }
 
 .hero h1{
-font-size:48px;
+font-size:44px;
+font-weight:900;
 margin-bottom:20px;
+line-height:1.25;
 }
 
 .hero p{
-color:#9ca3af;
-font-size:18px;
+color:var(--muted);
+margin-bottom:30px;
+max-width:760px;
+}
+
+.eyebrow{
+display:inline-block;
+padding:8px 14px;
+border-radius:999px;
+background:rgba(95,220,255,0.08);
+border:1px solid rgba(95,220,255,0.16);
+font-size:14px;
+font-weight:700;
+margin-bottom:20px;
+color:#d7f7ff;
+}
+
+.footer{
+border-top:1px solid var(--border);
+padding:30px 0;
+margin-top:40px;
+color:var(--muted);
+text-align:center;
+}
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:32px;
+}
+
+.section-title{
+font-size:28px;
+}
+
+.nav{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.nav-links{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px 18px;
+width:100%;
+}
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
+
+<header class="topbar">
+
+<div class="container nav">
+
+<div class="logo">
+Madaris AI
+</div>
+
+<div class="nav-links">
+<a href="/">الرئيسية</a>
+<a href="/platform.html">المنصة</a>
+<a href="/technology.html">التقنية</a>
+<a href="/schools.html">للمدارس</a>
+<a href="/partners.html">الشركاء</a>
+<a href="/about.html">من نحن</a>
+<a href="/contact.html">تواصل</a>
+</div>
+
+</div>
+
+</header>
 
 
 
@@ -85,188 +225,93 @@ font-size:18px;
 
 <div class="container">
 
+<div class="eyebrow">
+الرؤية
+</div>
+
 <h1>
-
-رؤية
-
-<span class="gradient-text">
-Madaris AI
-</span>
-
+رؤيتنا ليست بناء تطبيق تعليمي فقط<br>
+بل بناء نظام تشغيل للتعليم
 </h1>
 
 <p>
-
-بناء مستقبل التعليم الذكي  
-في اليمن ثم المنطقة ثم العالم
-
+Madaris AI تنطلق من رؤية واضحة: التعليم لا يحتاج فقط إلى محتوى أو أدوات منفصلة،
+بل يحتاج إلى بنية تشغيل تعليمية متكاملة تساعد المدارس على العمل بوضوح،
+وتمنح الطلاب والمعلمين والإدارة نظامًا واحدًا مترابطًا وقابلًا للتوسع.
 </p>
+
+<a href="/platform.html" class="btn btn-primary">
+استكشف المنصة
+</a>
 
 </div>
 
 </section>
-
-
-
-<section class="section">
+<section class="section section-soft" id="vision-problem">
 
 <div class="container">
 
-<div class="section-head">
-
-<h2>
-
-لماذا
-
-<span class="gradient-text">
-Madaris AI
-</span>
-
+<h2 class="section-title">
+المشكلة التي نراها
 </h2>
 
-<p>
-
-التعليم يواجه تحديات كبيرة  
-Madaris AI يبني الحل
-
+<p class="section-description">
+في العديد من المدارس، تعمل الأنظمة التعليمية بشكل متفرق وغير مترابط،
+مما يؤدي إلى صعوبة في الإدارة، وضعف في المتابعة، وغياب رؤية واضحة
+للعملية التعليمية بالكامل.
 </p>
 
-</div>
 
-<div class="grid">
-
-<div class="card">
-
-<h3>
-
-المدارس بدون نظام
-
-</h3>
-
-<p>
-
-الكثير من المدارس  
-تدار بشكل يدوي  
-بدون نظام ذكي
-
-</p>
-
-</div>
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
 
 
 <div class="card">
 
-<h3>
+<h3>أنظمة متفرقة</h3>
 
-نقص المعلمين
-
-</h3>
-
-<p>
-
-العديد من المدارس  
-تعاني من نقص  
-المعلمين
-
+<p class="section-description">
+المدارس تستخدم أدوات منفصلة وغير مترابطة.
 </p>
 
 </div>
+
 
 
 <div class="card">
 
-<h3>
+<h3>صعوبة المتابعة</h3>
 
-ضعف المتابعة
-
-</h3>
-
-<p>
-
-لا يوجد نظام  
-لمتابعة الطلاب  
-بشكل احترافي
-
+<p class="section-description">
+عدم وجود رؤية واضحة لتقدم الطلاب.
 </p>
 
 </div>
 
-</div>
-
-</div>
-
-</section>
-<section class="section">
-
-<div class="container">
-
-<div class="section-head">
-
-<h2>
-
-رؤيتنا
-
-<span class="gradient-text">
-المستقبلية
-</span>
-
-</h2>
-
-<p>
-
-نهدف إلى بناء منصة تعليمية عالمية  
-تدير المدارس وتدعم التعليم الذكي
-
-</p>
-
-</div>
-
-
-<div class="grid">
-
-<div class="card">
-
-<h3>
-تعليم ذكي
-</h3>
-
-<p>
-منصة تعليمية  
-تعتمد على الذكاء الاصطناعي  
-لدعم الطلاب والمعلمين
-</p>
-
-</div>
 
 
 <div class="card">
 
-<h3>
-إدارة المدارس
-</h3>
+<h3>إدارة معقدة</h3>
 
-<p>
-نظام كامل لإدارة  
-المدارس والطلاب  
-والمعلمين
+<p class="section-description">
+العمليات المدرسية تتم بشكل غير منظم.
 </p>
 
 </div>
+
 
 
 <div class="card">
 
-<h3>
-التوسع العالمي
-</h3>
+<h3>ضعف البيانات</h3>
 
-<p>
-البدء من اليمن  
-ثم التوسع  
-إلى العالم
+<p class="section-description">
+غياب التحليل التعليمي المبني على بيانات.
 </p>
 
 </div>
+
 
 </div>
 
@@ -276,142 +321,126 @@ Madaris AI يبني الحل
 
 
 
-<section class="section">
+<section class="section" id="vision-solution">
 
 <div class="container">
 
-<div class="section-head">
-
-<h2>
-
-مراحل
-
-<span class="gradient-text">
-التوسع
-</span>
-
+<h2 class="section-title">
+رؤيتنا للحل
 </h2>
 
-</div>
+<p class="section-description">
+نرى أن الحل يكمن في بناء منصة تشغيل تعليمية موحدة،
+تجمع جميع العمليات التعليمية داخل نظام واحد.
+</p>
 
-<div class="grid">
+
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+
 
 <div class="card">
 
-<h3>
-المرحلة الأولى
-</h3>
+<h3>منصة موحدة</h3>
 
-<p>
-اليمن  
-إطلاق المدارس الأولى
+<p class="section-description">
+جميع العمليات داخل نظام واحد.
 </p>
 
 </div>
 
 
+
 <div class="card">
 
-<h3>
-المرحلة الثانية
-</h3>
+<h3>رؤية واضحة</h3>
 
-<p>
-الشرق الأوسط  
-التوسع الإقليمي
+<p class="section-description">
+متابعة شاملة للعملية التعليمية.
 </p>
 
 </div>
 
 
+
 <div class="card">
 
-<h3>
-المرحلة الثالثة
-</h3>
+<h3>إدارة ذكية</h3>
 
-<p>
-العالم  
-منصة عالمية
+<p class="section-description">
+تنظيم العمليات التعليمية.
 </p>
 
 </div>
+
+
+
+<div class="card">
+
+<h3>تحليل البيانات</h3>
+
+<p class="section-description">
+قرارات تعليمية أفضل.
+</p>
+
+</div>
+
 
 </div>
 
 </div>
 
 </section>
-<section class="section">
+<section class="section section-soft" id="vision-future">
 
 <div class="container">
 
-<div class="section-head">
-
-<h2>
-
-كيف سنحقق
-
-<span class="gradient-text">
-الرؤية
-</span>
-
+<h2 class="section-title">
+مستقبل التعليم الذي نطمح إليه
 </h2>
 
-<p>
-
-Madaris AI ليس مجرد موقع  
-بل نظام تعليمي متكامل
-
+<p class="section-description">
+نطمح إلى بناء بيئة تعليمية متكاملة تعمل فيها المدارس
+بوضوح وتنظيم، ويستفيد فيها الطلاب والمعلمون والإدارة
+من نظام تشغيل تعليمي موحد.
 </p>
 
-</div>
 
-<div class="grid">
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+
 
 <div class="card">
-
-<h3>
-منصة موحدة
-</h3>
-
-<p>
-نظام واحد  
-لإدارة المدارس  
-والطلاب والمعلمين
+<h3>مدارس منظمة</h3>
+<p class="section-description">
+بيئة تعليمية تعمل بوضوح وتنظيم.
 </p>
-
 </div>
 
 
 <div class="card">
-
-<h3>
-ذكاء اصطناعي تعليمي
-</h3>
-
-<p>
-مساعد ذكي  
-لدعم التعليم  
-وتحليل الأداء
+<h3>تعلم أفضل</h3>
+<p class="section-description">
+تحسين تجربة التعلم للطلاب.
 </p>
-
 </div>
 
 
 <div class="card">
-
-<h3>
-عمل بدون إنترنت
-</h3>
-
-<p>
-تصميم Offline First  
-مناسب للدول  
-ذات الإنترنت الضعيف
+<h3>إدارة فعالة</h3>
+<p class="section-description">
+تحسين إدارة المدرسة.
 </p>
-
 </div>
+
+
+<div class="card">
+<h3>بيانات تعليمية</h3>
+<p class="section-description">
+رؤية واضحة للتعليم.
+</p>
+</div>
+
 
 </div>
 
@@ -421,142 +450,125 @@ Madaris AI ليس مجرد موقع
 
 
 
-<section class="section">
+<section class="section" id="vision-impact">
 
 <div class="container">
 
-<div class="section-head">
-
-<h2>
-
-أهداف
-
-<span class="gradient-text">
-Madaris AI
-</span>
-
+<h2 class="section-title">
+الأثر الذي نهدف إليه
 </h2>
 
-</div>
-
-<div class="grid">
-
-<div class="card">
-
-<h3>
-تحسين التعليم
-</h3>
-
-<p>
-رفع جودة التعليم  
-في المدارس
+<p class="section-description">
+نهدف إلى تحسين التعليم من خلال بناء بنية تعليمية قوية
+تساعد المدارس على النمو والتطور.
 </p>
 
-</div>
+
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
 
 
 <div class="card">
-
-<h3>
-دعم المعلمين
-</h3>
-
-<p>
-توفير أدوات ذكية  
-للمعلمين
+<h3>تحسين التعليم</h3>
+<p class="section-description">
+رفع جودة التعليم.
 </p>
-
 </div>
 
 
 <div class="card">
-
-<h3>
-تطوير المدارس
-</h3>
-
-<p>
-تحويل المدارس  
-إلى مدارس ذكية
+<h3>تنظيم المدارس</h3>
+<p class="section-description">
+تنظيم العمل المدرسي.
 </p>
-
 </div>
+
+
+<div class="card">
+<h3>توسع تعليمي</h3>
+<p class="section-description">
+نشر المنصة في مدارس متعددة.
+</p>
+</div>
+
+
+<div class="card">
+<h3>تأثير طويل المدى</h3>
+<p class="section-description">
+تحسين التعليم بشكل مستدام.
+</p>
+</div>
+
 
 </div>
 
 </div>
 
 </section>
-<section class="section">
+<section class="section section-soft" id="vision-principles">
 
 <div class="container">
 
-<div class="section-head">
-
-<h2>
-
-المستقبل
-
-<span class="gradient-text">
-الذي نبنيه
-</span>
-
+<h2 class="section-title">
+المبادئ التي نبني عليها
 </h2>
 
-<p>
-
-Madaris AI ليست مجرد منصة  
-بل بنية تعليمية عالمية
-
+<p class="section-description">
+تعتمد رؤية Madaris AI على مجموعة من المبادئ الأساسية التي توجه
+بناء المنصة وتطورها.
 </p>
 
-</div>
 
-<div class="grid">
-
-<div class="card">
-
-<h3>
-مدارس ذكية
-</h3>
-
-<p>
-كل مدرسة  
-تدار بنظام ذكي  
-ومتكامل
-</p>
-
-</div>
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
 
 
 <div class="card">
 
-<h3>
-تعليم متطور
-</h3>
+<h3>الوضوح</h3>
 
-<p>
-تعليم يعتمد  
-على البيانات  
-والذكاء الاصطناعي
+<p class="section-description">
+نؤمن بأن التعليم يجب أن يكون واضحاً ومنظماً.
 </p>
 
 </div>
+
 
 
 <div class="card">
 
-<h3>
-انتشار عالمي
-</h3>
+<h3>البساطة</h3>
 
-<p>
-Madaris AI  
-في كل دولة  
-حول العالم
+<p class="section-description">
+منصة سهلة الاستخدام للمدارس والمعلمين.
 </p>
 
 </div>
+
+
+
+<div class="card">
+
+<h3>القابلية للتوسع</h3>
+
+<p class="section-description">
+بنية تقنية تنمو مع المدارس.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>الاستدامة</h3>
+
+<p class="section-description">
+تحسين التعليم على المدى الطويل.
+</p>
+
+</div>
+
 
 </div>
 
@@ -566,58 +578,249 @@ Madaris AI
 
 
 
-<section class="section">
+<section class="section" id="vision-goals">
 
 <div class="container">
 
-<div class="card" style="text-align:center">
-
-<h2>
-
-انضم إلى
-
-<span class="gradient-text">
-Madaris AI
-</span>
-
+<h2 class="section-title">
+أهدافنا
 </h2>
 
-<p>
-
-كن جزءًا من مستقبل التعليم
-
+<p class="section-description">
+نسعى لتحقيق مجموعة من الأهداف التعليمية والتقنية.
 </p>
 
-<br>
 
-<a href="contact.html" style="
-background:#4f8cff;
-padding:14px 28px;
-border-radius:8px;
-color:white;
-text-decoration:none;
-display:inline-block;
-">
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:40px;">
 
+
+<div class="card">
+
+<h3>تنظيم التعليم</h3>
+
+<p class="section-description">
+بناء منصة تعليمية منظمة.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>تطوير المدارس</h3>
+
+<p class="section-description">
+مساعدة المدارس على النمو.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>تحسين التعلم</h3>
+
+<p class="section-description">
+رفع جودة التعليم.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>بناء مستقبل التعليم</h3>
+
+<p class="section-description">
+بناء بنية تعليمية حديثة.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+<section class="section section-soft" id="vision-roadmap">
+
+<div class="container">
+
+<h2 class="section-title">
+خارطة الرؤية
+</h2>
+
+<p class="section-description">
+رؤية Madaris AI تبدأ من مدرسة واحدة ثم تتوسع تدريجياً
+حتى تصل إلى شبكة تعليمية واسعة.
+</p>
+
+
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:40px;">
+
+
+<div class="card">
+<h3>المرحلة الأولى</h3>
+<p class="section-description">
+تطبيق المنصة في مدرسة واحدة.
+</p>
+</div>
+
+
+<div class="card">
+<h3>المرحلة الثانية</h3>
+<p class="section-description">
+التوسع إلى عدة مدارس.
+</p>
+</div>
+
+
+<div class="card">
+<h3>المرحلة الثالثة</h3>
+<p class="section-description">
+توسيع الشبكة التعليمية.
+</p>
+</div>
+
+
+<div class="card">
+<h3>المرحلة الرابعة</h3>
+<p class="section-description">
+منصة تعليمية واسعة النطاق.
+</p>
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section" id="vision-longterm">
+
+<div class="container">
+
+<h2 class="section-title">
+رؤية طويلة المدى
+</h2>
+
+<p class="section-description">
+نطمح إلى بناء منصة تعليمية تساعد في تطوير التعليم
+بشكل مستمر وعلى نطاق واسع.
+</p>
+
+
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+
+
+<div class="card">
+<h3>تحسين مستمر</h3>
+<p class="section-description">
+تطوير المنصة بشكل دائم.
+</p>
+</div>
+
+
+<div class="card">
+<h3>توسع تدريجي</h3>
+<p class="section-description">
+نمو تدريجي للمنصة.
+</p>
+</div>
+
+
+<div class="card">
+<h3>تأثير تعليمي</h3>
+<p class="section-description">
+تحسين التعليم على نطاق واسع.
+</p>
+</div>
+
+
+<div class="card">
+<h3>بناء المستقبل</h3>
+<p class="section-description">
+بناء مستقبل التعليم.
+</p>
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+<section class="section section-soft" id="vision-final">
+
+<div class="container">
+
+<div style="text-align:center;max-width:720px;margin:auto;">
+
+<h2 class="section-title">
+نحو مستقبل تعليمي أفضل
+</h2>
+
+<p class="section-description" style="margin-top:20px;">
+Madaris AI ليست مجرد منصة تعليمية، بل رؤية لبناء
+نظام تشغيل للتعليم يساعد المدارس على العمل بوضوح
+ويمنح الطلاب والمعلمين بيئة تعليمية متكاملة.
+</p>
+
+<div style="margin-top:35px;">
+
+<a href="/platform.html" class="btn btn-primary">
+استكشف المنصة
+</a>
+
+<a href="/contact.html"
+class="btn btn-secondary"
+style="margin-right:12px;">
 تواصل معنا
-
 </a>
 
 </div>
 
 </div>
 
+</div>
+
 </section>
 
+</main>
 
 
-<footer style="padding:40px;text-align:center;color:#9ca3af">
 
-© 2026 Madaris AI  
-All Rights Reserved
+<footer class="footer">
+
+<div class="container">
+
+© <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+
+</div>
 
 </footer>
 
+
+
+<script>
+
+const year = document.getElementById("year");
+
+if(year){
+year.textContent = new Date().getFullYear();
+}
+
+</script>
 
 </body>
 
