@@ -1,1316 +1,937 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الشراكات | Madaris AI</title>
-  <meta
-    name="description"
-    content="شارك في بناء مستقبل التعليم مع Madaris AI — شراكات تقنية، تعليمية، استثمارية، ومؤسسية لبناء نظام تشغيل تعليمي Offline-First يبدأ من اليمن ويتوسع إقليميًا وعالميًا."
-  />
-
-  <style>
-    :root {
-      --bg: #061226;
-      --bg-soft: #091a36;
-      --panel: rgba(14, 35, 72, 0.9);
-      --panel-2: rgba(18, 47, 92, 0.88);
-      --line: rgba(255, 255, 255, 0.10);
-      --line-strong: rgba(102, 216, 255, 0.22);
-      --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.80);
-      --muted-2: rgba(255, 255, 255, 0.62);
-      --cyan: #66d8ff;
-      --cyan-2: #4fc8f4;
-      --purple: #8f87ff;
-      --green: #3ad86d;
-      --pink: #ff5d8b;
-      --amber: #ffcf5a;
-      --shadow: 0 24px 64px rgba(0, 0, 0, 0.34);
-      --radius-xl: 34px;
-      --radius-lg: 28px;
-      --radius-md: 22px;
-      --max: 1220px;
-    }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: "Tahoma", "Arial", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(102, 216, 255, 0.10), transparent 22%),
-        radial-gradient(circle at top left, rgba(143, 135, 255, 0.08), transparent 20%),
-        linear-gradient(180deg, var(--bg) 0%, #081a35 55%, var(--bg) 100%);
-      line-height: 1.9;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: min(var(--max), calc(100% - 28px));
-      margin-inline: auto;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(16px);
-      background: rgba(6, 18, 38, 0.72);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .nav-wrap {
-      min-height: 84px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 900;
-      font-size: 22px;
-      white-space: nowrap;
-    }
-
-    .brand-badge {
-      width: 46px;
-      height: 46px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
-      box-shadow: 0 12px 28px rgba(102, 216, 255, 0.24);
-      position: relative;
-      overflow: hidden;
-      flex: 0 0 auto;
-    }
-
-    .brand-badge::before,
-    .brand-badge::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.92);
-    }
-
-    .brand-badge::before {
-      width: 24px;
-      height: 24px;
-      top: 9px;
-      right: 9px;
-      opacity: 0.16;
-    }
-
-    .brand-badge::after {
-      width: 12px;
-      height: 12px;
-      left: 8px;
-      bottom: 8px;
-      opacity: 0.95;
-    }
-
-    .desktop-nav {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .desktop-nav a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 15px;
-      font-weight: 800;
-      transition: 0.18s ease;
-    }
-
-    .desktop-nav a:hover,
-    .desktop-nav a.active {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.07);
-    }
-
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 20px;
-      border-radius: 999px;
-      font-size: 15px;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
-      color: white;
-      box-shadow: 0 16px 32px rgba(79, 200, 244, 0.24);
-    }
-
-    .mobile-toggle {
-      display: none;
-      width: 52px;
-      height: 52px;
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 16px;
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 900;
-    }
-
-    .mobile-menu {
-      display: none;
-      padding: 0 0 14px;
-    }
-
-    .mobile-menu.open {
-      display: block;
-    }
-
-    .mobile-menu-box {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(13, 34, 71, 0.96), rgba(11, 28, 58, 0.96));
-      border-radius: 26px;
-      padding: 12px;
-      box-shadow: var(--shadow);
-    }
-
-    .mobile-menu a {
-      display: block;
-      padding: 14px 16px;
-      border-radius: 18px;
-      color: var(--muted);
-      font-size: 15px;
-      font-weight: 900;
-    }
-
-    .mobile-menu a.active,
-    .mobile-menu a:hover {
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-    }
-
-    .mobile-menu .nav-cta-mobile {
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 54px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
-      color: white;
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .hero {
-      padding: 46px 0 26px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 22px;
-      align-items: stretch;
-    }
-
-    .hero-card,
-    .hero-side {
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero-card::before,
-    .hero-side::before,
-    .section-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top right, rgba(102,216,255,0.10), transparent 22%),
-        radial-gradient(circle at bottom left, rgba(143,135,255,0.08), transparent 20%);
-      pointer-events: none;
-    }
-
-    .hero-card {
-      padding: 34px 28px 30px;
-    }
-
-    .hero-side {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line-strong);
-      color: var(--cyan);
-      background: rgba(102,216,255,0.08);
-      font-size: 14px;
-      font-weight: 900;
-      margin-bottom: 18px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-title {
-      margin: 0 0 14px;
-      font-size: clamp(34px, 5vw, 62px);
-      line-height: 1.28;
-      font-weight: 900;
-      position: relative;
-      z-index: 1;
-    }
-
-    .accent {
-      color: var(--cyan);
-    }
-
-    .hero-text {
-      margin: 0;
-      color: var(--muted);
-      font-size: 18px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 56px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 0;
-      font-size: 16px;
-      font-weight: 900;
-      cursor: pointer;
-      transition: transform 0.16s ease, opacity 0.16s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
-      color: #fff;
-      box-shadow: 0 16px 34px rgba(79, 200, 244, 0.24);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.10);
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 28px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stat {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 18px 14px;
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: clamp(26px, 4vw, 40px);
-      font-weight: 900;
-      color: var(--cyan);
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-      font-weight: 700;
-    }
-
-    .side-panel {
-      position: relative;
-      z-index: 1;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      padding: 18px 16px;
-    }
-
-    .side-kicker {
-      color: var(--cyan);
-      font-size: 13px;
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-
-    .side-title {
-      margin: 0 0 8px;
-      font-size: 20px;
-      line-height: 1.6;
-      font-weight: 900;
-    }
-
-    .side-text {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .section {
-      padding: 14px 0;
-    }
-
-    .section-card {
-      background: linear-gradient(180deg, rgba(14, 34, 70, 0.84), rgba(12, 28, 58, 0.88));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius-xl);
-      padding: 28px 22px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .section-head {
-      position: relative;
-      z-index: 1;
-      margin-bottom: 18px;
-      text-align: center;
-    }
-
-    .section-kicker {
-      color: var(--cyan);
-      font-size: 14px;
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-
-    .section-title {
-      margin: 0 0 10px;
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.4;
-      font-weight: 900;
-    }
-
-    .section-desc {
-      margin: 0 auto;
-      max-width: 860px;
-      color: var(--muted);
-      font-size: 17px;
-    }
-
-    .grid-2,
-    .grid-3,
-    .grid-4,
-    .partnership-grid,
-    .signal-wrap,
-    .journey,
-    .cta-panel {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 16px;
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .grid-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .partnership-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .signal-wrap {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .journey {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .cta-panel {
-      grid-template-columns: 1.05fr 0.95fr;
-      align-items: stretch;
-    }
-    .info-card,
-    .partner-card,
-    .signal-card,
-    .journey-step,
-    .cta-box,
-    .contact-box {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 22px 18px;
-      height: 100%;
-    }
-
-    .info-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, rgba(102,216,255,0.22), rgba(143,135,255,0.18));
-      border: 1px solid rgba(255,255,255,0.10);
-      color: var(--cyan);
-      font-size: 24px;
-      margin-bottom: 14px;
-      font-weight: 900;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-    }
-
-    .info-title,
-    .partner-name,
-    .step-title {
-      margin: 0 0 8px;
-      font-size: 22px;
-      line-height: 1.6;
-      font-weight: 900;
-    }
-
-    .info-text,
-    .partner-desc,
-    .step-text,
-    .cta-box p,
-    .contact-box p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .list {
-      list-style: none;
-      padding: 0;
-      margin: 14px 0 0;
-      display: grid;
-      gap: 10px;
-    }
-
-    .list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.9;
-    }
-
-    .check {
-      flex: 0 0 auto;
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      margin-top: 2px;
-      background: rgba(58,216,109,0.16);
-      border: 1px solid rgba(58,216,109,0.24);
-      color: #d8ffe6;
-      font-size: 14px;
-      font-weight: 900;
-    }
-
-    .partner-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .tag-tech {
-      background: rgba(102,216,255,0.12);
-      color: var(--cyan);
-      border: 1px solid rgba(102,216,255,0.18);
-    }
-
-    .tag-school {
-      background: rgba(58,216,109,0.12);
-      color: #d7ffe3;
-      border: 1px solid rgba(58,216,109,0.18);
-    }
-
-    .tag-invest {
-      background: rgba(255,93,139,0.12);
-      color: #ffd6e1;
-      border: 1px solid rgba(255,93,139,0.18);
-    }
-
-    .tag-public {
-      background: rgba(255,207,90,0.12);
-      color: #ffe8ab;
-      border: 1px solid rgba(255,207,90,0.18);
-    }
-
-    .signal-card {
-      text-align: center;
-    }
-
-    .signal-value {
-      font-size: 38px;
-      font-weight: 900;
-      line-height: 1;
-      color: var(--cyan);
-      margin-bottom: 10px;
-    }
-
-    .signal-label {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .journey-step {
-      text-align: center;
-    }
-
-    .step-num {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 12px;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
-      color: #fff;
-      font-weight: 900;
-      font-size: 18px;
-      box-shadow: 0 12px 24px rgba(102, 216, 255, 0.20);
-    }
-
-    .cta-box h3,
-    .contact-box h3 {
-      margin: 0 0 10px;
-      font-size: 28px;
-      line-height: 1.5;
-      font-weight: 900;
-    }
-
-    .cta-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .contact-list {
-      list-style: none;
-      padding: 0;
-      margin: 18px 0 0;
-      display: grid;
-      gap: 12px;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-height: 58px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-    }
-
-    .contact-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: rgba(102,216,255,0.14);
-      border: 1px solid rgba(102,216,255,0.18);
-      color: var(--cyan);
-      flex: 0 0 auto;
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    .contact-label {
-      font-size: 12px;
-      color: var(--muted-2);
-      font-weight: 800;
-      margin-bottom: 2px;
-    }
-
-    .contact-value {
-      font-size: 15px;
-      color: #fff;
-      font-weight: 900;
-      word-break: break-word;
-    }
-
-    .site-footer {
-      padding: 22px 0 38px;
-    }
-
-    .footer-card {
-      background: linear-gradient(180deg, rgba(10, 29, 61, 0.78), rgba(8, 22, 45, 0.84));
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      box-shadow: var(--shadow);
-      padding: 22px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .footer-text {
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .footer-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--muted);
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-    }
-
-    @media (max-width: 1120px) {
-      .hero-grid,
-      .cta-panel,
-      .grid-3,
-      .journey,
-      .signal-wrap {
-        grid-template-columns: 1fr;
-      }
-
-      .grid-4,
-      .partnership-grid,
-      .grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 860px) {
-      .desktop-nav {
-        display: none;
-      }
-
-      .mobile-toggle {
-        display: inline-flex;
-      }
-
-      .nav-wrap {
-        min-height: 76px;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .container {
-        width: min(var(--max), calc(100% - 18px));
-      }
-
-      .hero-card,
-      .hero-side,
-      .section-card {
-        border-radius: 26px;
-      }
-
-      .hero-card {
-        padding: 24px 18px 22px;
-      }
-
-      .hero-text,
-      .section-desc {
-        font-size: 16px;
-      }
-
-      .hero-stats,
-      .grid-4,
-      .partnership-grid,
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-card {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .brand {
-        font-size: 20px;
-      }
-    }
-  </style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>الشركاء | Madaris AI</title>
+
+<meta name="description" content="شراكات Madaris AI — التعاون مع المدارس والمؤسسات والجهات التعليمية لبناء مستقبل التعليم">
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+
+<style>
+
+:root {
+
+--bg:#07111f;
+--bg-soft:#0b1728;
+--text:#ffffff;
+--muted:#a8b3c7;
+--primary:#5fdcff;
+--secondary:#7c67ff;
+--card:rgba(255,255,255,0.04);
+--border:rgba(255,255,255,0.08);
+
+}
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+
+body{
+
+font-family:"Tajawal",sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.7;
+
+}
+
+
+.container{
+
+width:90%;
+max-width:1200px;
+margin:auto;
+
+}
+
+
+.section{
+
+padding:90px 0;
+
+}
+
+
+.section-soft{
+
+background:var(--bg-soft);
+
+}
+
+
+.section-title{
+
+font-size:38px;
+font-weight:900;
+margin-bottom:20px;
+
+}
+
+
+.section-description{
+
+color:var(--muted);
+max-width:700px;
+
+}
+
+
+.grid{
+
+display:grid;
+gap:20px;
+
+}
+
+
+.card{
+
+background:var(--card);
+border:1px solid var(--border);
+border-radius:18px;
+padding:25px;
+
+}
+
+
+.btn{
+
+display:inline-block;
+padding:14px 26px;
+border-radius:40px;
+font-weight:700;
+text-decoration:none;
+
+}
+
+
+.btn-primary{
+
+background:linear-gradient(135deg,#5fdcff,#7c67ff);
+color:white;
+
+}
+
+
+.btn-secondary{
+
+border:1px solid var(--border);
+
+}
+
+
+.topbar{
+
+padding:20px 0;
+border-bottom:1px solid var(--border);
+
+}
+
+
+.nav{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+
+.logo{
+
+font-weight:900;
+font-size:22px;
+
+}
+
+
+.nav-links{
+
+display:flex;
+gap:20px;
+
+}
+
+
+.hero{
+
+padding:80px 0;
+
+}
+
+
+.hero h1{
+
+font-size:44px;
+font-weight:900;
+margin-bottom:20px;
+
+}
+
+
+.hero p{
+
+color:var(--muted);
+margin-bottom:30px;
+
+}
+
+
+
+@media(max-width:900px){
+
+.hero h1{
+
+font-size:32px;
+
+}
+
+.section-title{
+
+font-size:28px;
+
+}
+
+.nav-links{
+
+display:none;
+
+}
+
+}
+
+</style>
+
 </head>
+
+
 <body>
 
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="./index.html" aria-label="Madaris AI Home">
-        <span class="brand-badge"></span>
-        <span>Madaris AI</span>
-      </a>
 
-      <nav class="desktop-nav" aria-label="التنقل الرئيسي">
-        <a href="./index.html">الرئيسية</a>
-        <a href="./platform.html">المنصة</a>
-        <a href="./vision.html">الرؤية</a>
-        <a href="./schools.html">للمدارس</a>
-        <a href="./partners.html" class="active">الشراكات</a>
-        <a href="./about.html">من نحن</a>
-        <a href="./contact.html">التواصل</a>
-        <a href="./contact.html" class="nav-cta">ابدأ الحوار</a>
-      </nav>
 
-      <button class="mobile-toggle" id="mobileToggle" aria-label="فتح القائمة">☰</button>
-    </div>
+<header class="topbar">
 
-    <div class="container mobile-menu" id="mobileMenu">
-      <div class="mobile-menu-box">
-        <a href="./index.html">الرئيسية</a>
-        <a href="./platform.html">المنصة</a>
-        <a href="./vision.html">الرؤية</a>
-        <a href="./schools.html">للمدارس</a>
-        <a href="./partners.html" class="active">الشراكات</a>
-        <a href="./about.html">من نحن</a>
-        <a href="./contact.html">التواصل</a>
-        <a href="./contact.html" class="nav-cta-mobile">ابدأ الحوار</a>
-      </div>
-    </div>
-  </header>
+<div class="container nav">
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-card">
-          <div class="eyebrow">نظام شراكات عالمي لمستقبل التعليم</div>
+<div class="logo">
+Madaris AI
+</div>
 
-          <h1 class="hero-title">
-            شارك في بناء
-            <span class="accent">Madaris AI</span>
-            — البنية القادمة للتعليم
-          </h1>
+<div class="nav-links">
 
-          <p class="hero-text">
-            Madaris AI ليس مجرد موقع أو تطبيق مدرسي. نحن نبني بنية تعليمية جديدة تبدأ من
-            البيئات الأشد صعوبة، وتعمل حتى في ظروف ضعف الاتصال ونقص المعلمين والموارد.
-            نبحث عن شركاء تقنيين وتعليميين واستثماريين ومؤسسيين يملكون الرغبة في بناء
-            أثر طويل المدى، لا مجرد تعاون قصير.
-          </p>
+<a href="/">الرئيسية</a>
+<a href="/platform.html">المنصة</a>
+<a href="/technology.html">التقنية</a>
+<a href="/schools.html">للمدارس</a>
+<a href="/partners.html">الشركاء</a>
+<a href="/about.html">من نحن</a>
+<a href="/contact.html">تواصل</a>
 
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#partnership-types">استكشف فرص الشراكة</a>
-            <a class="btn btn-secondary" href="./contact.html">تواصل معنا الآن</a>
-          </div>
+</div>
 
-          <div class="hero-stats">
-            <div class="stat">
-              <div class="stat-num">4</div>
-              <div class="stat-label">مسارات شراكة رئيسية</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">1</div>
-              <div class="stat-label">رؤية واحدة تربط التقنية بالتعليم</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">∞</div>
-              <div class="stat-label">قابلية توسع من اليمن إلى العالم</div>
-            </div>
-          </div>
-        </div>
+</div>
 
-        <aside class="hero-side">
-          <div class="side-panel">
-            <div class="side-kicker">لماذا الآن؟</div>
-            <h2 class="side-title">لأن فجوة التعليم ليست نظرية، بل أزمة تشغيل يومية.</h2>
-            <p class="side-text">
-              مدارس تعمل بضغط، معلمون أقل من الحاجة، اتصال غير مستقر، وطلاب يحتاجون
-              إلى نظام يضمن التعلم الفعلي لا مجرد الحضور.
-            </p>
-          </div>
+</header>
 
-          <div class="side-panel">
-            <div class="side-kicker">ما الذي نبنيه؟</div>
-            <h2 class="side-title">نظام تشغيل تعليمي Offline-First.</h2>
-            <p class="side-text">
-              منصة تجمع إدارة المدرسة، الجداول، التتبع الأكاديمي، والمعلم الذكي ضمن
-              بنية واحدة تعمل محليًا أولًا ثم تتزامن لاحقًا.
-            </p>
-          </div>
 
-          <div class="side-panel">
-            <div class="side-kicker">نوع الشريك المثالي</div>
-            <h2 class="side-title">شريك يريد بناء أساس، لا إضافة هامشية.</h2>
-            <p class="side-text">
-              نفضل الشركاء الذين يفكرون بمنطق البنية الأساسية، الجودة طويلة المدى،
-              والانضباط التنفيذي.
-            </p>
-          </div>
-        </aside>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="section-kicker">لماذا Madaris AI</div>
-          <h2 class="section-title">شراكة مع مشروع يحل مشكلة حقيقية من الجذر</h2>
-          <p class="section-desc">
-            القيمة هنا ليست في واجهة جميلة فقط، بل في مشروع يعالج جوهر التعطل التعليمي:
-            الوصول، الاستمرارية، الموثوقية، وإمكانية التشغيل في بيئات غير مثالية.
-          </p>
-        </div>
 
-        <div class="grid-4">
-          <article class="info-card">
-            <div class="info-icon">01</div>
-            <h3 class="info-title">أزمة واضحة</h3>
-            <p class="info-text">
-              التعليم في البيئات الهشة لا يفشل بسبب المناهج فقط، بل بسبب غياب البنية
-              التشغيلية القادرة على الاستمرار.
-            </p>
-          </article>
+<section class="hero">
 
-          <article class="info-card">
-            <div class="info-icon">02</div>
-            <h3 class="info-title">حل قابل للتشغيل</h3>
-            <p class="info-text">
-              نبني منصة تعمل محليًا أولًا، تقلل الاعتماد على الاتصال، وتدعم المدرسة
-              والمعلم والطالب ضمن نظام واحد.
-            </p>
-          </article>
+<div class="container">
 
-          <article class="info-card">
-            <div class="info-icon">03</div>
-            <h3 class="info-title">سوق واسع</h3>
-            <p class="info-text">
-              البداية من اليمن ليست قيدًا. إنها بيئة تثبت متانة الحل. وما ينجح هنا
-              يمكن توسيعه إقليميًا ثم عالميًا.
-            </p>
-          </article>
+<h1>
 
-          <article class="info-card">
-            <div class="info-icon">04</div>
-            <h3 class="info-title">أثر طويل</h3>
-            <p class="info-text">
-              كل شراكة معنا يمكن أن تتحول إلى بنية مستدامة في التعليم، لا إلى حملة
-              مؤقتة أو تجربة تجميلية.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
+شراكات تبني<br>
+مستقبل التعليم
 
-    <section class="section" id="partnership-types">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="section-kicker">أنواع الشراكة</div>
-          <h2 class="section-title">أربعة مسارات شراكة، هدفها واحد: بناء تعليم قابل للعمل</h2>
-          <p class="section-desc">
-            صممنا فرص الشراكة بحيث تكون واضحة ومباشرة، وتخدم مختلف الجهات التي يمكن أن
-            تبني القيمة معنا: تقنية، تعليمية، استثمارية، ومؤسسية.
-          </p>
-        </div>
+</h1>
 
-        <div class="partnership-grid">
-          <article class="partner-card">
-            <div class="partner-top">
-              <h3 class="partner-name">شراكة تقنية</h3>
-              <span class="tag tag-tech">Technical</span>
-            </div>
-            <p class="partner-desc">
-              موجهة للمطورين، الفرق التقنية، الجهات السحابية، وخبراء البنية والمنتج.
-              نبحث عن من يفهم بناء الأنظمة التي يجب أن تعمل في العالم الحقيقي.
-            </p>
-            <ul class="list">
-              <li><span class="check">✓</span><span>بناء الواجهات، الأنظمة، والتكاملات.</span></li>
-              <li><span class="check">✓</span><span>تحسين الأداء، الجودة، وهيكلية المنتج.</span></li>
-              <li><span class="check">✓</span><span>المساهمة في بنية Offline-First والتوسع المستقبلي.</span></li>
-            </ul>
-          </article>
+<p>
 
-          <article class="partner-card">
-            <div class="partner-top">
-              <h3 class="partner-name">شراكة تعليمية</h3>
-              <span class="tag tag-school">Education</span>
-            </div>
-            <p class="partner-desc">
-              موجهة للمدارس، الإدارات التعليمية، القيادات التربوية، والجهات التي تريد
-              تجربة النظام، المشاركة في التقييم، أو اعتماده تدريجيًا.
-            </p>
-            <ul class="list">
-              <li><span class="check">✓</span><span>تجارب ميدانية منظمة داخل المدارس.</span></li>
-              <li><span class="check">✓</span><span>تحسين السيناريوهات بناءً على الواقع التشغيلي.</span></li>
-              <li><span class="check">✓</span><span>تأسيس قصص نجاح قابلة للتوسع.</span></li>
-            </ul>
-          </article>
+نعمل مع المدارس والمؤسسات والجهات التعليمية
+لبناء منصة تعليمية قوية وقابلة للتوسع
 
-          <article class="partner-card">
-            <div class="partner-top">
-              <h3 class="partner-name">شراكة استثمارية</h3>
-              <span class="tag tag-invest">Investment</span>
-            </div>
-            <p class="partner-desc">
-              موجهة للمستثمرين، الممولين، الجهات المانحة، وبرامج الدعم التي تبحث عن
-              حلول تعليمية قابلة للقياس والتوسع لا مجرد فكرة نظرية.
-            </p>
-            <ul class="list">
-              <li><span class="check">✓</span><span>تمويل البناء الأساسي والاختبارات الميدانية.</span></li>
-              <li><span class="check">✓</span><span>دعم الانتقال من البنية الأولى إلى المنتج الفعلي.</span></li>
-              <li><span class="check">✓</span><span>إتاحة التوسع من سوق محلي إلى إقليمي.</span></li>
-            </ul>
-          </article>
+</p>
 
-          <article class="partner-card">
-            <div class="partner-top">
-              <h3 class="partner-name">شراكة مؤسسية / حكومية</h3>
-              <span class="tag tag-public">Institutional</span>
-            </div>
-            <p class="partner-desc">
-              موجهة للوزارات، المنظمات، الجهات الإنسانية، وشبكات التعليم التي تريد
-              حلًا قادرًا على خدمة المدارس ضمن ظروف تشغيل صعبة.
-            </p>
-            <ul class="list">
-              <li><span class="check">✓</span><span>نشر منظم على مستوى مدارس أو مناطق محددة.</span></li>
-              <li><span class="check">✓</span><span>مواءمة الحل مع الواقع الإداري والتشغيلي.</span></li>
-              <li><span class="check">✓</span><span>صناعة أثر واسع قابل للتوثيق والقياس.</span></li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
+<a href="/contact.html" class="btn btn-primary">
+ابدأ الشراكة
+</a>
 
-    <section class="section">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="section-kicker">إشارات القوة</div>
-          <h2 class="section-title">لماذا الشريك الجاد يجب أن ينظر إلى Madaris AI الآن</h2>
-          <p class="section-desc">
-            المشاريع الكبيرة لا تبدأ عندما تصبح مكتملة، بل عندما تتضح الحاجة ويظهر فريق
-            مستعد لبناء الأساس. هذه هي لحظة البناء المؤسس.
-          </p>
-        </div>
+</div>
 
-        <div class="signal-wrap">
-          <article class="signal-card">
-            <div class="signal-value">Offline-First</div>
-            <div class="signal-label">
-              فلسفة بناء أساسية تقلل الاعتماد على الإنترنت وتزيد الموثوقية في الواقع.
-            </div>
-          </article>
+</section>
+<section class="section section-soft">
 
-          <article class="signal-card">
-            <div class="signal-value">Edu-OS</div>
-            <div class="signal-label">
-              المنصة ليست أداة منفصلة، بل نواة نظام تشغيل تعليمي قابل للتوسع.
-            </div>
-          </article>
+<div class="container">
 
-          <article class="signal-card">
-            <div class="signal-value">From Yemen</div>
-            <div class="signal-label">
-              البداية من بيئة صعبة تمنح الحل صلابة أعلى وقابلية نقل أقوى لاحقًا.
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+<h2 class="section-title">
+لماذا الشراكة مع Madaris AI
+</h2>
 
-    <section class="section">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="section-kicker">ما الذي يبحث عنه Madaris AI في شريك المستقبل</div>
-          <h2 class="section-title">نحن لا نبحث عن اسم كبير فقط، بل عن شريك يبني معنا بجدية</h2>
-          <p class="section-desc">
-            الشراكة التي نريدها ليست شكلية. نريد أطرافًا تستطيع المساهمة الفعلية في
-            التنفيذ، الاختبار، التوسع، أو التمويل المرحلي المنضبط.
-          </p>
-        </div>
+<p class="section-description">
+نؤمن أن بناء مستقبل التعليم يحتاج إلى تعاون بين المدارس 
+والمؤسسات والجهات التعليمية المختلفة.
+</p>
 
-        <div class="grid-3">
-          <article class="info-card">
-            <div class="info-icon">A</div>
-            <h3 class="info-title">انضباط تنفيذي</h3>
-            <p class="info-text">
-              نفضل الشركاء الذين يفهمون أن بناء منتج تعليمي قوي يبدأ من وضوح القرارات،
-              لا من كثرة الوعود.
-            </p>
-          </article>
 
-          <article class="info-card">
-            <div class="info-icon">B</div>
-            <h3 class="info-title">فهم للسياق الواقعي</h3>
-            <p class="info-text">
-              نحتاج إلى شركاء يدركون طبيعة المدارس الفعلية، وضعف الاتصال، وضغط الإدارة
-              التعليمية، لا من يصمم لبيئات مثالية فقط.
-            </p>
-          </article>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
 
-          <article class="info-card">
-            <div class="info-icon">C</div>
-            <h3 class="info-title">رؤية طويلة المدى</h3>
-            <p class="info-text">
-              نبحث عن من يفكر في بناء بنية تستمر لسنوات، وتتحول إلى معيار تشغيلي،
-              وليس إلى تجربة مؤقتة.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="section-kicker">رحلة الشراكة</div>
-          <h2 class="section-title">كيف نبدأ الشراكة بشكل احترافي</h2>
-          <p class="section-desc">
-            صممنا المسار بطريقة واضحة ومباشرة حتى لا تضيع الشراكات الجادة في رسائل عامة
-            أو نقاشات غير منظمة.
-          </p>
-        </div>
 
-        <div class="journey">
-          <article class="journey-step">
-            <div class="step-num">1</div>
-            <h3 class="step-title">التواصل الأولي</h3>
-            <p class="step-text">
-              نبدأ بحوار مختصر لفهم نوع الجهة، مجال اهتمامها، وما إذا كانت الشراكة
-              مناسبة استراتيجيًا.
-            </p>
-          </article>
+<div class="card">
 
-          <article class="journey-step">
-            <div class="step-num">2</div>
-            <h3 class="step-title">تحديد المسار</h3>
-            <p class="step-text">
-              نحدد هل الشراكة تقنية، تعليمية، استثمارية، أو مؤسسية، وما هو نطاقها
-              الواقعي في المرحلة الحالية.
-            </p>
-          </article>
+<h3>بناء مشترك</h3>
 
-          <article class="journey-step">
-            <div class="step-num">3</div>
-            <h3 class="step-title">صياغة نطاق واضح</h3>
-            <p class="step-text">
-              ننتقل من الرغبة العامة إلى نطاق عملي محدد: ماذا سنفعل، خلال أي فترة،
-              وما الذي يعتبر نجاحًا.
-            </p>
-          </article>
+<p class="section-description">
+نعمل مع الشركاء لتطوير حلول تعليمية مناسبة للواقع.
+</p>
 
-          <article class="journey-step">
-            <div class="step-num">4</div>
-            <h3 class="step-title">بدء التنفيذ</h3>
-            <p class="step-text">
-              نبدأ بخطوة تنفيذية واضحة يمكن قياسها، ثم نبني عليها توسعًا تدريجيًا
-              حسب النتائج.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
+</div>
 
-    <section class="section">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="section-kicker">من يمكنه الشراكة معنا؟</div>
-          <h2 class="section-title">جهات نرى أنها مناسبة طبيعيًا لبناء القيمة معنا</h2>
-          <p class="section-desc">
-            نحن منفتحون على الشراكات التي تضيف قيمة حقيقية، خصوصًا مع الجهات التي
-            تعمل عند تقاطع التعليم، التقنية، والتمويل المؤثر.
-          </p>
-        </div>
 
-        <div class="grid-2">
-          <article class="info-card">
-            <div class="info-icon">◉</div>
-            <h3 class="info-title">مدارس وإدارات تعليمية</h3>
-            <p class="info-text">
-              المدارس التي تريد تحسين الإدارة المدرسية، عرض الجداول، وضبط العمل
-              الأكاديمي تدريجيًا ضمن نظام واضح.
-            </p>
-          </article>
 
-          <article class="info-card">
-            <div class="info-icon">◉</div>
-            <h3 class="info-title">شركاء تقنيون</h3>
-            <p class="info-text">
-              فرق البرمجة، البنية، التصميم، المنتجات، والاستضافة التي تفهم بناء
-              منتجات متينة لا هشة.
-            </p>
-          </article>
+<div class="card">
 
-          <article class="info-card">
-            <div class="info-icon">◉</div>
-            <h3 class="info-title">جهات دعم وتمويل</h3>
-            <p class="info-text">
-              مستثمرون، برامج دعم، منظمات، وصناديق ترى في التعليم الموثوق فرصة
-              ذات أثر عالي.
-            </p>
-          </article>
+<h3>توسع مستقبلي</h3>
 
-          <article class="info-card">
-            <div class="info-icon">◉</div>
-            <h3 class="info-title">جهات حكومية ومؤسسية</h3>
-            <p class="info-text">
-              الجهات التي تريد حلولًا قابلة للتشغيل في المدارس، لا عروضًا تجميلية
-              أو أنظمة منفصلة عن الواقع.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
+<p class="section-description">
+شراكة طويلة المدى للنمو والتوسع.
+</p>
 
-    <section class="section" id="contact-cta">
-      <div class="container section-card">
-        <div class="cta-panel">
-          <div class="cta-box">
-            <h3>هل ترى أن هناك مساحة للعمل معنا؟</h3>
-            <p>
-              إذا كنت تمثل مدرسة، جهة تقنية، مؤسسة، أو جهة استثمارية وترى أن Madaris AI
-              يستحق حوارًا جادًا، فنحن مستعدون لبدء هذا الحوار بشكل منظم وواضح.
-            </p>
+</div>
 
-            <div class="cta-actions">
-              <a class="btn btn-primary" href="./contact.html">ابدأ شراكة معنا</a>
-              <a class="btn btn-secondary" href="mailto:info@madarisai.com">راسلنا مباشرة</a>
-            </div>
-          </div>
 
-          <div class="contact-box">
-            <h3>قنوات التواصل</h3>
-            <p>
-              يمكنك التواصل معنا مباشرة لمناقشة فرص الشراكة، أو طلب عرض تعريفي، أو
-              بدء نقاش حول نطاق تعاون محدد.
-            </p>
 
-            <ul class="contact-list">
-              <li class="contact-item">
-                <span class="contact-icon">✉</span>
-                <div>
-                  <div class="contact-label">البريد الرسمي</div>
-                  <div class="contact-value">info@madarisai.com</div>
-                </div>
-              </li>
+<div class="card">
 
-              <li class="contact-item">
-                <span class="contact-icon">⌂</span>
-                <div>
-                  <div class="contact-label">الموقع</div>
-                  <div class="contact-value">madarisai.com</div>
-                </div>
-              </li>
+<h3>تقنية متقدمة</h3>
 
-              <li class="contact-item">
-                <span class="contact-icon">◎</span>
-                <div>
-                  <div class="contact-label">نوع الجهة المناسبة</div>
-                  <div class="contact-value">تقنية — تعليمية — استثمارية — مؤسسية</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+<p class="section-description">
+منصة تقنية قابلة للتوسع والتطوير.
+</p>
 
-  <footer class="site-footer">
-    <div class="container footer-card">
-      <div class="footer-text">
-        © Madaris AI — بناء تعليم أكثر موثوقية، قابليةً للتشغيل، وعدلًا في الوصول.
-      </div>
+</div>
 
-      <div class="footer-links">
-        <a href="./index.html">الرئيسية</a>
-        <a href="./platform.html">المنصة</a>
-        <a href="./vision.html">الرؤية</a>
-        <a href="./schools.html">للمدارس</a>
-        <a href="./partners.html">الشراكات</a>
-        <a href="./contact.html">التواصل</a>
-      </div>
-    </div>
-  </footer>
 
-  <script>
-    const mobileToggle = document.getElementById("mobileToggle");
-    const mobileMenu = document.getElementById("mobileMenu");
 
-    if (mobileToggle && mobileMenu) {
-      mobileToggle.addEventListener("click", () => {
-        mobileMenu.classList.toggle("open");
-        mobileToggle.textContent = mobileMenu.classList.contains("open") ? "×" : "☰";
-      });
-    }
-  </script>
+<div class="card">
+
+<h3>أثر تعليمي</h3>
+
+<p class="section-description">
+تحسين التعليم بشكل فعلي داخل المدارس.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+أنواع الشراكات
+</h2>
+
+<p class="section-description">
+نرحب بأنواع مختلفة من الشراكات التعليمية والتقنية.
+</p>
+
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:40px;">
+
+
+<div class="card">
+
+<h3>المدارس</h3>
+
+<p class="section-description">
+التعاون مع المدارس لتطبيق المنصة.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>المؤسسات التعليمية</h3>
+
+<p class="section-description">
+شراكات تعليمية طويلة المدى.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>الجهات الحكومية</h3>
+
+<p class="section-description">
+التعاون مع الجهات التعليمية الرسمية.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>الشركات التقنية</h3>
+
+<p class="section-description">
+التكامل التقني مع الأنظمة المختلفة.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+<section class="section section-soft">
+
+<div class="container">
+
+<h2 class="section-title">
+فوائد الشراكة
+</h2>
+
+<p class="section-description">
+توفر الشراكة مع Madaris AI فرصاً لبناء حلول تعليمية 
+قابلة للتوسع وتحقيق أثر تعليمي أكبر.
+</p>
+
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+
+
+<div class="card">
+
+<h3>توسع تعليمي</h3>
+
+<p class="section-description">
+الوصول إلى مدارس ومؤسسات تعليمية مختلفة.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>تطوير مشترك</h3>
+
+<p class="section-description">
+العمل على تطوير حلول تعليمية جديدة.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>نمو مستقبلي</h3>
+
+<p class="section-description">
+فرص توسع طويلة المدى.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>تأثير أكبر</h3>
+
+<p class="section-description">
+تحسين التعليم على نطاق أوسع.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+كيف تبدأ الشراكة
+</h2>
+
+<p class="section-description">
+بدء الشراكة يتم بخطوات بسيطة وواضحة.
+</p>
+
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:40px;">
+
+
+<div class="card">
+
+<h3>1. التواصل</h3>
+
+<p class="section-description">
+إرسال طلب الشراكة.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>2. النقاش</h3>
+
+<p class="section-description">
+مناقشة تفاصيل التعاون.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>3. الاتفاق</h3>
+
+<p class="section-description">
+تحديد نموذج الشراكة.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>4. التنفيذ</h3>
+
+<p class="section-description">
+بدء العمل المشترك.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+<section class="section section-soft" id="partner-types">
+
+<div class="container">
+
+<h2 class="section-title">
+نبحث عن شركاء في المجالات التالية
+</h2>
+
+<p class="section-description">
+نرحب بالشراكات التي تساهم في تطوير التعليم وبناء منصة تعليمية
+قابلة للتوسع عالمياً.
+</p>
+
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+
+
+<div class="card">
+<h3>شركاء التعليم</h3>
+<p class="section-description">
+مدارس ومؤسسات تعليمية ترغب في تطبيق المنصة.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>شركاء التقنية</h3>
+<p class="section-description">
+شركات تقنية ترغب في التعاون وتطوير المنصة.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>شركاء الاستثمار</h3>
+<p class="section-description">
+جهات ترغب في دعم وتوسيع المشروع.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>شركاء التوسع</h3>
+<p class="section-description">
+مؤسسات ترغب في نشر المنصة في مناطق جديدة.
+</p>
+</div>
+
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section" id="partners-vision">
+
+<div class="container">
+
+<h2 class="section-title">
+رؤية الشراكات
+</h2>
+
+<p class="section-description">
+نهدف إلى بناء شبكة شراكات تعليمية وتقنية تدعم 
+تحول التعليم وتطوير المنصات التعليمية.
+</p>
+
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:40px;">
+
+
+<div class="card">
+<h3>بناء شبكة تعليمية</h3>
+<p class="section-description">
+التعاون مع مدارس ومؤسسات تعليمية.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>توسع عالمي</h3>
+<p class="section-description">
+نشر المنصة في مناطق مختلفة.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>ابتكار تعليمي</h3>
+<p class="section-description">
+تطوير حلول تعليمية جديدة.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>تأثير طويل المدى</h3>
+<p class="section-description">
+تحسين التعليم بشكل مستدام.
+</p>
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+<section class="section section-soft" id="partnership-process">
+
+<div class="container">
+
+<h2 class="section-title">
+عملية الشراكة
+</h2>
+
+<p class="section-description">
+نحرص على أن تكون عملية الشراكة واضحة وبسيطة لجميع الجهات.
+</p>
+
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:40px;">
+
+
+<div class="card">
+<h3>الخطوة 1</h3>
+<p class="section-description">
+إرسال طلب الشراكة عبر الموقع.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>الخطوة 2</h3>
+<p class="section-description">
+مراجعة الطلب والتواصل معكم.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>الخطوة 3</h3>
+<p class="section-description">
+مناقشة نموذج الشراكة.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>الخطوة 4</h3>
+<p class="section-description">
+بدء تنفيذ الشراكة.
+</p>
+</div>
+
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section" id="partners-impact">
+
+<div class="container">
+
+<h2 class="section-title">
+أثر الشراكات
+</h2>
+
+<p class="section-description">
+تساعد الشراكات في توسيع نطاق المنصة وتحسين التعليم.
+</p>
+
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+
+
+<div class="card">
+<h3>توسع أسرع</h3>
+<p class="section-description">
+الوصول إلى عدد أكبر من المدارس.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>تطوير مستمر</h3>
+<p class="section-description">
+تحسين المنصة بشكل مستمر.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>حلول أقوى</h3>
+<p class="section-description">
+تطوير حلول تعليمية متقدمة.
+</p>
+</div>
+
+
+
+<div class="card">
+<h3>تأثير أوسع</h3>
+<p class="section-description">
+تحسين التعليم على نطاق واسع.
+</p>
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+<section class="section section-soft" id="partners-final-cta">
+
+<div class="container">
+
+<div style="text-align:center;max-width:700px;margin:auto;">
+
+<h2 class="section-title">
+ابدأ شراكتك مع<br>
+Madaris AI
+</h2>
+
+<p class="section-description" style="margin-top:20px;">
+نرحب بالتعاون مع المدارس والمؤسسات والجهات التعليمية
+لبناء مستقبل التعليم معاً.
+</p>
+
+
+<div style="margin-top:35px;">
+
+<a href="/contact.html" class="btn btn-primary">
+ابدأ الشراكة
+</a>
+
+<a href="/platform.html"
+class="btn btn-secondary"
+style="margin-right:12px;">
+استكشف المنصة
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<footer class="section">
+
+<div class="container">
+
+<div class="grid"
+style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;">
+
+
+<div>
+
+<h3 style="margin-bottom:14px;">
+Madaris AI
+</h3>
+
+<p class="section-description">
+منصة تشغيل تعليمية تهدف إلى تطوير التعليم 
+وبناء مستقبل تعليمي أفضل.
+</p>
+
+</div>
+
+
+
+<div>
+
+<h4 style="margin-bottom:14px;">
+المنصة
+</h4>
+
+<div style="display:flex;flex-direction:column;gap:8px;">
+
+<a href="/">الرئيسية</a>
+<a href="/platform.html">المنصة</a>
+<a href="/technology.html">التقنية</a>
+<a href="/schools.html">للمدارس</a>
+
+</div>
+
+</div>
+
+
+
+<div>
+
+<h4 style="margin-bottom:14px;">
+الشركة
+</h4>
+
+<div style="display:flex;flex-direction:column;gap:8px;">
+
+<a href="/about.html">من نحن</a>
+<a href="/partners.html">الشركاء</a>
+<a href="/contact.html">تواصل</a>
+
+</div>
+
+</div>
+
+
+
+<div>
+
+<h4 style="margin-bottom:14px;">
+ابدأ
+</h4>
+
+<div style="display:flex;flex-direction:column;gap:8px;">
+
+<a href="/app/login.html">دخول المنصة</a>
+<a href="/contact.html">ابدأ الشراكة</a>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+<div style="
+margin-top:40px;
+padding-top:20px;
+border-top:1px solid rgba(255,255,255,0.1);
+text-align:center;
+color:var(--muted);
+">
+
+© <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+
+</div>
+
+</div>
+
+</footer>
+
+
+
+<script>
+
+const year = document.getElementById("year");
+if(year){
+year.textContent = new Date().getFullYear();
+}
+
+</script>
 
 </body>
 </html>
