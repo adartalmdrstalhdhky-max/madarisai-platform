@@ -1,1492 +1,1301 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Madaris AI | للمدارس</title>
+
   <meta
     name="description"
-    content="للمدارس — مدارس الذكاء الاصطناعي. منصة تشغيل تعليمية تساعد المدارس على تنظيم التعلم، الإدارة، والمتابعة في نظام واحد واضح وقابل للتوسع."
+    content="Madaris AI منصة تشغيل تعليمية مؤسسية تساعد المدارس على تنظيم التعلم، والإدارة المدرسية، والمتابعة التعليمية، والسجلات في نظام واحد واضح، موثوق، وقابل للتوسع."
   />
+
   <meta name="theme-color" content="#07111f" />
-  <title>للمدارس | مدارس الذكاء الاصطناعي</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
-    rel="stylesheet"
-  />
 
   <style>
-    :root {
-      --bg: #07111f;
-      --bg-soft: #0b1728;
-      --panel: rgba(15, 29, 52, 0.82);
-      --panel-2: rgba(19, 38, 66, 0.92);
-      --line: rgba(255, 255, 255, 0.08);
-      --line-strong: rgba(255, 255, 255, 0.14);
-      --text: #f7fbff;
-      --muted: #a9b7cc;
-      --muted-2: #7f8ca1;
-      --primary: #5fdcff;
-      --primary-strong: #2ab8ea;
-      --secondary: #7d64ff;
-      --success: #8ef0b0;
-      --warning: #ffd27a;
-      --shadow-xl: 0 24px 70px rgba(0, 0, 0, 0.38);
-      --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.28);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-      --container: 1180px;
-      --nav-height: 76px;
-      --transition: 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    :root{
+      --bg:#07111f;
+      --bg-soft:#0b1728;
+      --panel:rgba(15,29,52,.82);
+      --panel-2:rgba(19,38,66,.92);
+      --border:rgba(255,255,255,.08);
+      --line-strong:rgba(255,255,255,.14);
+
+      --text:#ffffff;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8a9b7c;
+      --muted:#8fa7cc;
+      --muted-2:#87f8ca;
+
+      --primary:#85fdff;
+      --primary-strong:#82ab8ea;
+      --secondary:#87d64ff;
+      --glass:#88ef0b0;
+      --warning:#8ffd27a;
+
+      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
+      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
+
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --radius-sm:12px;
+
+      --container:min(1200px,92%);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html{
+      scroll-behavior:smooth;
     }
 
-    html,
-    body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-
-    body {
-      font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    body{
+      font-family:
+        "Tajawal",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
       background:
-        radial-gradient(circle at 15% 10%, rgba(95, 220, 255, 0.10), transparent 23%),
-        radial-gradient(circle at 85% 18%, rgba(125, 100, 255, 0.10), transparent 22%),
-        linear-gradient(180deg, #07111f 0%, #081424 45%, #07101c 100%);
-      color: var(--text);
-      line-height: 1.75;
-      text-align: right;
-      direction: rtl;
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
+        radial-gradient(circle at left 20%, rgba(135,246,79,.04), transparent 18%),
+        linear-gradient(180deg, #07111f 0%, #081728 100%);
+      color:var(--text);
+      line-height:1.9;
+      overflow-x:hidden;
     }
 
-    body.menu-open {
-      overflow: hidden;
+    a{
+      color:inherit;
+      text-decoration:none;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    img{
+      max-width:100%;
+      display:block;
     }
 
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
+    .container{
+      width:var(--container);
+      margin:auto;
     }
 
-    button {
-      background: none;
-      border: 0;
-      color: inherit;
-      cursor: pointer;
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(7,17,31,.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:20px 0;
     }
 
-    img {
-      display: block;
-      max-width: 100%;
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
     }
 
-    .container {
-      width: min(100% - 24px, var(--container));
-      margin-inline: auto;
+    .logo{
+      font-weight:900;
+      font-size:22px;
+      line-height:1.2;
+      letter-spacing:.2px;
+      flex-shrink:0;
     }
 
-    .section {
-      position: relative;
-      padding: 84px 0;
+    .logo a{
+      color:inherit;
+      text-decoration:none;
     }
 
-    .section-soft {
-      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
+    .nav-links{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
     }
 
-    .section-header {
-      max-width: 780px;
-      margin-bottom: 28px;
+    .nav-links a{
+      color:var(--muted);
+      text-decoration:none;
+      transition:.25s ease;
+      font-weight:700;
+      font-size:15px;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-height: 40px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(95, 220, 255, 0.18);
-      background: rgba(95, 220, 255, 0.08);
-      color: #d7f7ff;
-      font-size: 0.82rem;
-      font-weight: 800;
-      margin-bottom: 16px;
+    .nav-links a:hover{
+      color:white;
     }
 
-    .eyebrow::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 0 6px rgba(95, 220, 255, 0.12);
+    .menu-toggle{
+      display:none;
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      font-size:26px;
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
     }
 
-    .section-title {
-      font-size: clamp(2rem, 7vw, 3.6rem);
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      font-weight: 900;
-      margin-bottom: 14px;
+    .mobile-menu{
+      display:none;
+      margin-top:16px;
+      border-top:1px solid var(--border);
+      padding-top:16px;
     }
 
-    .section-description {
-      color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.9;
+    .mobile-menu.active{
+      display:block;
     }
 
-    .grid {
-      display: grid;
-      gap: 16px;
+    .mobile-menu-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px 18px;
+      width:100%;
     }
 
-    .card {
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
+    .mobile-menu-grid a{
+      display:block;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      color:#e8f1fb;
+      font-weight:700;
+      text-align:center;
+    }
+
+    .hero{
+      position:relative;
+      padding:72px 0 42px;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:auto auto -120px -120px;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(133,253,255,.10), transparent 68%);
+      pointer-events:none;
+    }
+
+    .hero-shell{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:32px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025)),
-        rgba(10, 20, 36, 0.72);
-      backdrop-filter: blur(16px);
-      box-shadow: var(--shadow-lg);
+        radial-gradient(circle at top right, rgba(133,253,255,.14), transparent 26%),
+        linear-gradient(180deg, rgba(10,24,48,.98) 0%, rgba(10,22,39,.98) 100%);
+      box-shadow:var(--shadow-xl);
+      padding:42px 30px 34px;
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:52px;
+      border-radius:999px;
+      padding:10px 20px;
+      background:rgba(133,253,255,.06);
+      border:1px solid rgba(133,253,255,.16);
+      color:#e9fcff;
+      font-weight:800;
+      font-size:15px;
+      margin-bottom:22px;
+    }
+
+    .hero-title{
+      font-size:clamp(40px,6vw,78px);
+      line-height:1.04;
+      font-weight:950;
+      letter-spacing:-.03em;
+      margin-bottom:18px;
+    }
+
+    .hero-title span{
+      color:var(--primary);
+    }
+
+    .hero-desc{
+      color:#d3dfec;
+      font-size:clamp(18px,2vw,22px);
+      max-width:780px;
+      margin-bottom:26px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px 24px;
+      border-radius:999px;
+      font-weight:800;
+      border:1px solid transparent;
+      transition:.22s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #85fdff, #67d8ff);
+      color:#07111f;
+      box-shadow:0 14px 30px rgba(103,216,255,.24);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
+      color:white;
+      border-color:var(--border);
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .point{
+      padding:14px 16px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      color:#dce8f5;
+      font-weight:700;
+      font-size:15px;
+    }
+
+    .hero-side{
+      display:grid;
+      gap:14px;
+    }
+
+    .hero-card{
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      padding:22px;
+      box-shadow:var(--shadow-lg);
+    }
+
+    .hero-card h3{
+      margin-bottom:8px;
+      font-size:20px;
+      line-height:1.3;
+    }
+
+    .hero-card p{
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .hero-stat{
+      font-size:42px;
+      font-weight:950;
+      line-height:1;
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+
+    .section{
+      padding:60px 0;
+    }
+
+    .section-header{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:24px;
+    }
+
+    .section-kicker{
+      color:var(--primary);
+      font-weight:900;
+      font-size:15px;
+    }
+
+    .section-title{
+      font-size:clamp(28px,4vw,48px);
+      line-height:1.15;
+      font-weight:950;
+      letter-spacing:-.03em;
+    }
+
+    .section-description{
+      color:var(--muted);
+      font-size:18px;
+      max-width:900px;
+    }
+
+    .grid{
+      display:grid;
+      gap:20px;
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .grid-4{
+      grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.025));
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:24px;
+      min-height:100%;
+      box-shadow:var(--shadow-lg);
+      opacity:1;
+      transform:none;
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      font-size:22px;
+      line-height:1.3;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:16px;
+    }
+
+    .highlight-box{
+      padding:26px;
+      border-radius:24px;
+      border:1px solid var(--border);
       background:
-        radial-gradient(circle at top right, rgba(95, 220, 255, 0.06), transparent 26%),
-        radial-gradient(circle at bottom left, rgba(125, 100, 255, 0.05), transparent 24%);
-      pointer-events: none;
+        radial-gradient(circle at top left, rgba(133,253,255,.08), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
     }
 
-    .card-body {
-      position: relative;
-      z-index: 1;
-      padding: 22px;
+    .footer{
+      border-top:1px solid var(--border);
+      padding:40px 0 30px;
+      margin-top:40px;
+      color:var(--muted);
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 50px;
-      padding: 0 18px;
-      border-radius: 999px;
-      font-weight: 800;
-      transition:
-        transform var(--transition),
-        background var(--transition),
-        border-color var(--transition),
-        color var(--transition),
-        box-shadow var(--transition);
-      white-space: nowrap;
-    }
+    @media(max-width:1100px){
 
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      color: #07131d;
-      background: linear-gradient(135deg, #80e7ff 0%, #5fdcff 50%, #2ab8ea 100%);
-      box-shadow: 0 16px 36px rgba(42, 184, 234, 0.24);
-    }
-
-    .btn-secondary {
-      color: var(--text);
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.16);
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(7, 17, 31, 0.88);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .nav-shell {
-      min-height: var(--nav-height);
-      display: grid;
-      grid-template-columns: 44px 1fr auto;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .menu-toggle {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 5px;
-      order: 1;
-    }
-
-    .menu-toggle span {
-      width: 18px;
-      height: 2px;
-      border-radius: 2px;
-      background: #fff;
-      transition: transform var(--transition), opacity var(--transition);
-    }
-
-    .menu-toggle.active span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-toggle.active span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
-
-    .nav-cta {
-      order: 2;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-self: stretch;
-    }
-
-    .nav-cta .btn {
-      width: 100%;
-      min-width: 0;
-      min-height: 44px;
-      font-size: 0.92rem;
-    }
-
-    .brand {
-      order: 3;
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      width: 42px;
-      height: 42px;
-      flex: 0 0 42px;
-      border-radius: 14px;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.14);
-      background:
-        linear-gradient(135deg, rgba(95,220,255,0.18), rgba(125,100,255,0.16)),
-        rgba(255,255,255,0.03);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.12),
-        0 10px 24px rgba(0,0,0,0.24);
-    }
-
-    .brand-mark::before {
-      content: "";
-      position: absolute;
-      inset: 8px;
-      border-radius: 999px;
-      border: 3px solid rgba(255,255,255,0.92);
-      border-left-color: rgba(95,220,255,0.42);
-      border-bottom-color: transparent;
-      transform: rotate(16deg);
-    }
-
-    .brand-mark::after {
-      content: "";
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      top: 8px;
-      left: 10px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 0 16px rgba(255,255,255,0.55);
-    }
-
-    .brand-text {
-      min-width: 0;
-      max-width: 120px;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .brand-name {
-      font-size: 0.86rem;
-      line-height: 1.08;
-      font-weight: 900;
-      color: #fff;
-      word-break: break-word;
-    }
-
-    .brand-subtitle {
-      font-size: 0.66rem;
-      line-height: 1.15;
-      color: var(--muted-2);
-      word-break: break-word;
-    }
-
-    .nav-links {
-      display: none;
-    }
-
-    .mobile-menu {
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      background: rgba(4, 10, 18, 0.96);
-      backdrop-filter: blur(18px);
-      padding: 96px 18px 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transform: translateY(-100%);
-      transition: transform 0.35s ease;
-      overflow-y: auto;
-    }
-
-    .mobile-menu.active {
-      transform: translateY(0);
-    }
-
-    .mobile-menu a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 50px;
-      padding: 0 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      font-size: 1rem;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .mobile-menu .btn {
-      width: 100%;
-    }
-
-    .page-hero {
-      padding: 34px 0 54px;
-    }
-
-    .page-hero-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      align-items: start;
-    }
-
-    .page-hero-copy {
-      order: 1;
-    }
-
-    .page-hero-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 50px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(95, 220, 255, 0.16);
-      background: rgba(95, 220, 255, 0.08);
-      color: #dff8ff;
-      font-weight: 800;
-      font-size: 0.9rem;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .page-hero-title {
-      font-size: clamp(2.2rem, 11vw, 3.8rem);
-      line-height: 1.08;
-      letter-spacing: -0.04em;
-      font-weight: 900;
-      margin-bottom: 16px;
-    }
-
-    .page-hero-title .accent {
-      color: var(--primary);
-    }
-
-    .page-hero-description {
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.95;
-      margin-bottom: 20px;
-    }
-
-    .page-hero-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .page-hero-actions .btn {
-      width: 100%;
-      min-height: 52px;
-      font-size: 1rem;
-    }
-
-    .schools-panel {
-      order: 2;
-      padding: 18px;
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(255,255,255,0.10);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)),
-        rgba(10, 20, 36, 0.82);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .panel-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .panel-label {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: #d9ebff;
-    }
-
-    .window-dots {
-      display: flex;
-      gap: 8px;
-    }
-
-    .window-dots span {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    .window-dots span:nth-child(1) { background: #ff6b6b; }
-    .window-dots span:nth-child(2) { background: #f7b731; }
-    .window-dots span:nth-child(3) { background: #20bf6b; }
-
-    .schools-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .schools-strip {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .schools-box {
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .schools-box strong {
-      display: block;
-      font-size: 1rem;
-      font-weight: 900;
-      margin-bottom: 4px;
-    }
-
-    .schools-box span {
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    @media (min-width: 981px) {
-      :root {
-        --nav-height: 84px;
+      .hero-grid{
+        grid-template-columns:1fr;
       }
 
-      .section {
-        padding: 108px 0;
+      .grid-4{
+        grid-template-columns:repeat(2,minmax(0,1fr));
       }
 
-      .container {
-        width: min(100% - 40px, var(--container));
+      .grid-3{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:900px){
+
+      .nav{
+        flex-direction:column;
+        align-items:flex-start;
       }
 
-      .nav-shell {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
+      .nav-links{
+        display:none;
       }
 
-      .menu-toggle {
-        display: none;
+      .menu-toggle{
+        display:inline-flex;
       }
 
-      .nav-cta {
-        order: 3;
-        justify-self: auto;
+      .hero{
+        padding:34px 0 20px;
       }
 
-      .nav-cta .btn {
-        width: auto;
-        min-height: 50px;
-        padding: 0 22px;
+      .hero-shell{
+        padding:26px 18px 22px;
       }
 
-      .brand {
-        order: 1;
-        justify-content: flex-start;
-        gap: 12px;
+      .hero-actions{
+        flex-direction:column;
       }
 
-      .brand-mark {
-        width: 52px;
-        height: 52px;
-        flex: 0 0 52px;
-        border-radius: 18px;
+      .btn{
+        width:100%;
       }
 
-      .brand-text {
-        max-width: none;
+      .hero-points{
+        grid-template-columns:1fr;
       }
 
-      .brand-name {
-        font-size: 1rem;
+      .grid-4,
+      .grid-3,
+      .grid-2{
+        grid-template-columns:1fr;
       }
 
-      .brand-subtitle {
-        font-size: 0.8rem;
+      .mobile-menu-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:560px){
+
+      .mobile-menu-grid{
+        grid-template-columns:1fr;
       }
 
-      .nav-links {
-        order: 2;
-        display: flex;
-        align-items: center;
-        gap: 22px;
-        color: var(--muted);
-        font-size: 0.95rem;
-        font-weight: 700;
+      .hero-title{
+        font-size:42px;
       }
 
-      .nav-links a {
-        position: relative;
-        padding: 6px 2px;
-        transition: color var(--transition);
-      }
-
-      .nav-links a::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        bottom: -8px;
-        width: 0;
-        height: 2px;
-        border-radius: 2px;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        transition: width var(--transition);
-      }
-
-      .nav-links a:hover {
-        color: #fff;
-      }
-
-      .nav-links a:hover::after {
-        width: 100%;
-      }
-
-      .mobile-menu {
-        display: none;
-      }
-
-      .page-hero {
-        padding: 58px 0 100px;
-      }
-
-      .page-hero-grid {
-        grid-template-columns: 1.05fr 0.95fr;
-        gap: 42px;
-        align-items: center;
-      }
-
-      .page-hero-copy,
-      .schools-panel {
-        order: initial;
-      }
-
-      .page-hero-badge {
-        width: fit-content;
-        min-width: 0;
-        margin-bottom: 20px;
-      }
-
-      .page-hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 14px;
-      }
-
-      .page-hero-actions .btn {
-        width: auto;
-      }
-
-      .schools-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .section-title{
+        font-size:32px;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <header class="topbar" id="topbar">
-    <div class="container nav-shell">
+<header class="topbar">
 
-      <a href="/" class="brand" aria-label="Madaris AI Home">
-        <div class="brand-mark"></div>
-        <div class="brand-text">
-          <span class="brand-name">مدارس الذكاء الاصطناعي</span>
-          <span class="brand-subtitle">نظام تشغيل التعليم</span>
-        </div>
-      </a>
+  <div class="container nav">
 
-      <nav class="nav-links" aria-label="القائمة الرئيسية">
-        <a href="/">الرئيسية</a>
-        <a href="/platform.html">المنصة</a>
-        <a href="/technology.html">التقنية</a>
-        <a href="/schools.html">للمدارس</a>
-        <a href="/partners.html">الشركاء</a>
-        <a href="/about.html">من نحن</a>
-        <a href="/contact.html">تواصل</a>
-      </nav>
-
-      <div class="nav-cta">
-        <a href="/app/login.html" class="btn btn-secondary">دخول المنصة</a>
-      </div>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
+    <div class="logo">
+      <a href="/" style="color:inherit;text-decoration:none;">Madaris AI</a>
     </div>
-  </header>
 
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <a href="/">الرئيسية</a>
-    <a href="/platform.html">المنصة</a>
-    <a href="/technology.html">التقنية</a>
-    <a href="/schools.html">للمدارس</a>
-    <a href="/partners.html">الشركاء</a>
-    <a href="/about.html">من نحن</a>
-    <a href="/contact.html">تواصل</a>
-    <a href="/app/login.html" class="btn btn-primary">دخول المنصة</a>
+    <div class="nav-links">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+    </div>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+
   </div>
 
-  <main>
+  <div class="container mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-grid">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+      <a href="/app/login.html">دخول المنصة</a>
+    </div>
+  </div>
 
-    <section class="page-hero">
-      <div class="container page-hero-grid">
+</header>
 
-        <div class="page-hero-copy">
-          <div class="page-hero-badge">للمدارس</div>
+<main>
 
-          <h1 class="page-hero-title">
-            منصة تساعد المدرسة على<br />
-            العمل <span class="accent">بوضوح وانتظام</span>
+<section class="hero">
+  <div class="container">
+    <div class="hero-shell">
+
+      <div class="eyebrow">للمدارس</div>
+
+      <div class="hero-grid">
+
+        <div>
+          <h1 class="hero-title">
+            منصة تشغيل تعليمية
+            <span>مصممة للمدارس من الواقع</span>
           </h1>
 
-          <p class="page-hero-description">
-            Madaris AI تمنح المدارس منصة تشغيل تعليمية موحدة تساعد على تنظيم
-            التعلم، والإدارة، والمتابعة، والبيانات التعليمية ضمن نظام واحد
-            واضح وقابل للتوسع.
+          <p class="hero-desc">
+            Madaris AI تساعد المدرسة على تنظيم التعلم، والإدارة، والمتابعة،
+            والسجلات التعليمية داخل نظام واحد واضح، موثوق، وقابل للتوسع،
+            دون تعقيد أو اعتماد كامل على اتصال دائم بالإنترنت.
           </p>
 
-          <div class="page-hero-actions">
-            <a href="/contact.html" class="btn btn-primary">اطلب عرضًا للمدرسة</a>
-            <a href="/platform.html" class="btn btn-secondary">استكشف المنصة</a>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/contact.html">ابدأ مع مدرستك</a>
+            <a class="btn btn-secondary" href="/platform.html">استكشف المنصة</a>
+          </div>
+
+          <div class="hero-points">
+            <div class="point">تنظيم العملية التعليمية في نظام واحد</div>
+            <div class="point">متابعة الطلاب بشكل أوضح</div>
+            <div class="point">إدارة مدرسية أكثر كفاءة</div>
+            <div class="point">بنية قابلة للتوسع مستقبلًا</div>
           </div>
         </div>
 
-        <div class="schools-panel">
-          <div class="panel-top">
-            <div class="window-dots" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="panel-label">داخل بيئة المدرسة</div>
+        <div class="hero-side">
+
+          <div class="hero-card">
+            <div class="hero-stat">01</div>
+            <h3>وضوح تشغيلي</h3>
+            <p>لوحة موحدة تجعل المدرسة أوضح في الإدارة والمتابعة اليومية.</p>
           </div>
 
-          <div class="schools-grid">
-            <div class="schools-strip">
-              <div class="schools-box">
-                <strong>تشغيل أوضح</strong>
-                <span>تعلم، إدارة، وبيانات ضمن بيئة واحدة</span>
-              </div>
-
-              <div class="schools-box">
-                <strong>متابعة أفضل</strong>
-                <span>رؤية أسرع للحضور والتقدم والأداء</span>
-              </div>
-
-              <div class="schools-box">
-                <strong>مرونة أعلى</strong>
-                <span>عمل مستمر حتى في البيئات محدودة الاتصال</span>
-              </div>
-
-              <div class="schools-box">
-                <strong>نمو تدريجي</strong>
-                <span>من مدرسة واحدة إلى شبكة أوسع مع الوقت</span>
-              </div>
-            </div>
+          <div class="hero-card">
+            <div class="hero-stat">02</div>
+            <h3>استمرارية العمل</h3>
+            <p>تشغيل مستقر حتى في البيئات ذات الاتصال المحدود أو المتقطع.</p>
           </div>
+
+          <div class="hero-card">
+            <div class="hero-stat">03</div>
+            <h3>نمو تدريجي</h3>
+            <p>ابدأ من مدرسة واحدة ثم توسع دون الحاجة لإعادة بناء النظام.</p>
+          </div>
+
         </div>
 
-      </div>
-    </section>
-<section class="section section-soft" id="why-schools">
-
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">لماذا المدارس</span>
-
-      <h2 class="section-title">
-        منصة مصممة خصيصاً<br>
-        لاحتياجات المدارس
-      </h2>
-
-      <p class="section-description">
-        تم تصميم Madaris AI لفهم احتياجات المدارس الحقيقية 
-        ومساعدتها على تنظيم العملية التعليمية بشكل واضح 
-        وبسيط وقابل للتوسع.
-      </p>
-    </div>
-
-
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <strong>تنظيم العملية التعليمية</strong>
-          <p class="section-description">
-            إدارة التعلم والمواد والحصص ضمن نظام واحد واضح.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>متابعة أداء الطلاب</strong>
-          <p class="section-description">
-            رؤية واضحة لمستوى الطلاب والتقدم التعليمي.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>إدارة المدرسة</strong>
-          <p class="section-description">
-            تنظيم العمليات الإدارية اليومية للمدرسة.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>تقارير وتحليلات</strong>
-          <p class="section-description">
-            تقارير تعليمية واضحة تساعد في اتخاذ القرار.
-          </p>
-        </div>
       </div>
 
     </div>
-
   </div>
+</section>
+<section class="section">
+<div class="container">
 
+<div class="section-header">
+<div class="section-kicker">لماذا Madaris AI</div>
+<h2 class="section-title">
+لماذا تحتاج المدارس Madaris AI
+</h2>
+
+<p class="section-description">
+Madaris AI تم تصميمه لمعالجة التحديات الواقعية داخل المدارس
+وتحويل العملية التعليمية إلى نظام واضح ومنظم وقابل للتطوير.
+</p>
+
+</div>
+
+<div class="grid grid-3">
+
+<div class="card">
+<h3>
+تنظيم العملية التعليمية
+</h3>
+<p>
+تنظيم الدروس والواجبات والتقييم
+ضمن منصة واحدة واضحة.
+</p>
+</div>
+
+<div class="card">
+<h3>
+متابعة تقدم الطلاب
+</h3>
+<p>
+متابعة أداء الطلاب
+بشكل واضح ودقيق.
+</p>
+</div>
+
+<div class="card">
+<h3>
+إدارة المدرسة
+</h3>
+<p>
+تنظيم الحضور والجداول
+والعمليات المدرسية.
+</p>
+</div>
+
+<div class="card">
+<h3>
+تقارير واضحة
+</h3>
+<p>
+تقارير تساعد الإدارة
+في اتخاذ القرار.
+</p>
+</div>
+
+<div class="card">
+<h3>
+سهولة الاستخدام
+</h3>
+<p>
+واجهة واضحة وسهلة
+للمعلمين والإدارة.
+</p>
+</div>
+
+<div class="card">
+<h3>
+قابلية التوسع
+</h3>
+<p>
+من مدرسة واحدة
+إلى شبكة مدارس.
+</p>
+</div>
+
+</div>
+
+</div>
 </section>
 
 
 
-<section class="section" id="school-features">
+<section class="section">
+<div class="container">
 
-  <div class="container">
+<div class="section-header">
 
-    <div class="section-header">
-      <span class="eyebrow">المميزات</span>
+<div class="section-kicker">
+ماذا تحصل المدرسة
+</div>
 
-      <h2 class="section-title">
-        ماذا تقدم المنصة<br>
-        للمدارس
-      </h2>
+<h2 class="section-title">
+ماذا تقدم Madaris AI للمدارس
+</h2>
 
-      <p class="section-description">
-        تقدم منصة Madaris AI مجموعة من الأدوات التي تساعد المدارس
-        على العمل بشكل أكثر تنظيماً ووضوحاً.
-      </p>
-    </div>
+<p class="section-description">
+توفر المنصة أدوات متكاملة لإدارة التعليم
+بشكل واضح واحترافي.
+</p>
 
+</div>
 
+<div class="grid grid-4">
 
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+<div class="card">
+<h3>
+إدارة الطلاب
+</h3>
+<p>
+تنظيم بيانات الطلاب
+ومتابعة تقدمهم.
+</p>
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>إدارة الطلاب</strong>
-          <p class="section-description">
-            تنظيم بيانات الطلاب ومتابعة تقدمهم.
-          </p>
-        </div>
-      </div>
+<div class="card">
+<h3>
+إدارة المعلمين
+</h3>
+<p>
+تنظيم المعلمين
+والجداول.
+</p>
+</div>
 
+<div class="card">
+<h3>
+إدارة الصفوف
+</h3>
+<p>
+تنظيم الصفوف
+والمواد الدراسية.
+</p>
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>إدارة المعلمين</strong>
-          <p class="section-description">
-            تنظيم الجداول والمواد الدراسية.
-          </p>
-        </div>
-      </div>
+<div class="card">
+<h3>
+إدارة التقييم
+</h3>
+<p>
+اختبارات وتقارير
+متكاملة.
+</p>
+</div>
 
+<div class="card">
+<h3>
+إدارة الحضور
+</h3>
+<p>
+متابعة حضور الطلاب
+والمعلمين.
+</p>
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>إدارة الحصص</strong>
-          <p class="section-description">
-            تنظيم جدول الحصص الدراسية.
-          </p>
-        </div>
-      </div>
+<div class="card">
+<h3>
+لوحة تحكم موحدة
+</h3>
+<p>
+إدارة المدرسة
+من لوحة واحدة.
+</p>
+</div>
 
+<div class="card">
+<h3>
+تقارير ذكية
+</h3>
+<p>
+تحليل الأداء
+التعليمي.
+</p>
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>التقارير</strong>
-          <p class="section-description">
-            تقارير تعليمية وإدارية واضحة.
-          </p>
-        </div>
-      </div>
+<div class="card">
+<h3>
+نظام متكامل
+</h3>
+<p>
+كل العمليات داخل
+منصة واحدة.
+</p>
+</div>
 
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>المتابعة اليومية</strong>
-          <p class="section-description">
-            متابعة الحضور والغياب.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>لوحة تحكم المدرسة</strong>
-          <p class="section-description">
-            رؤية شاملة للمدرسة بالكامل.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-<section class="section section-soft" id="how-schools-use">
-
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">كيف تعمل</span>
-
-      <h2 class="section-title">
-        كيف تستخدم المدارس<br>
-        Madaris AI
-      </h2>
-
-      <p class="section-description">
-        تبدأ المدرسة باستخدام المنصة بخطوات بسيطة،
-        ثم تتوسع تدريجياً حتى تصبح منصة التشغيل الأساسية للمدرسة.
-      </p>
-    </div>
-
-
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <strong>1. تسجيل المدرسة</strong>
-          <p class="section-description">
-            يتم إنشاء حساب المدرسة داخل المنصة.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>2. إضافة الطلاب</strong>
-          <p class="section-description">
-            إضافة بيانات الطلاب بسهولة.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>3. إضافة المعلمين</strong>
-          <p class="section-description">
-            تنظيم المعلمين والمواد.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>4. بدء التشغيل</strong>
-          <p class="section-description">
-            تشغيل المنصة داخل المدرسة.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>5. متابعة الأداء</strong>
-          <p class="section-description">
-            مراقبة التقدم التعليمي.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>6. التوسع</strong>
-          <p class="section-description">
-            توسيع استخدام المنصة تدريجياً.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
+</div>
 </section>
 
 
 
-<section class="section" id="school-benefits">
+<section class="section">
+<div class="container">
 
-  <div class="container">
+<div class="section-header">
 
-    <div class="section-header">
-      <span class="eyebrow">الفوائد</span>
+<div class="section-kicker">
+كيف تبدأ
+</div>
 
-      <h2 class="section-title">
-        فوائد المنصة<br>
-        للمدارس
-      </h2>
+<h2 class="section-title">
+كيف تبدأ المدرسة مع Madaris AI
+</h2>
 
-      <p class="section-description">
-        تساعد منصة Madaris AI المدارس على تحسين الأداء التعليمي
-        وتنظيم العمل بشكل أفضل.
-      </p>
-    </div>
+<p class="section-description">
+البدء مع Madaris AI بسيط
+وواضح.
+</p>
 
+</div>
 
+<div class="grid grid-3">
 
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+<div class="card">
+<h3>
+1. تسجيل المدرسة
+</h3>
+<p>
+إضافة بيانات المدرسة
+بسهولة.
+</p>
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>تحسين جودة التعليم</strong>
-          <p class="section-description">
-            تنظيم التعلم وتحسين التجربة التعليمية.
-          </p>
-        </div>
-      </div>
+<div class="card">
+<h3>
+2. إضافة المعلمين
+</h3>
+<p>
+إضافة المعلمين
+والصفوف.
+</p>
+</div>
 
+<div class="card">
+<h3>
+3. بدء التشغيل
+</h3>
+<p>
+بدء استخدام المنصة
+مباشرة.
+</p>
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>تنظيم العمل المدرسي</strong>
-          <p class="section-description">
-            إدارة العمليات التعليمية بوضوح.
-          </p>
-        </div>
-      </div>
+</div>
 
-
-      <div class="card">
-        <div class="card-body">
-          <strong>متابعة الطلاب</strong>
-          <p class="section-description">
-            رؤية واضحة لمستوى الطلاب.
-          </p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>اتخاذ القرار</strong>
-          <p class="section-description">
-            قرارات مبنية على بيانات واضحة.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
+</div>
 </section>
-<section class="section section-soft" id="school-scale">
-
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">التوسع</span>
-
-      <h2 class="section-title">
-        منصة تنمو مع<br>
-        نمو المدرسة
-      </h2>
-
-      <p class="section-description">
-        تبدأ المنصة من مدرسة واحدة ثم تتوسع تدريجياً 
-        حتى تشمل عدة مدارس ومؤسسات تعليمية.
-      </p>
-    </div>
-
-
-
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <strong>مدرسة واحدة</strong>
-          <p class="section-description">
-            بداية سهلة وبسيطة للمدرسة.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>عدة مدارس</strong>
-          <p class="section-description">
-            إدارة أكثر من مدرسة داخل النظام.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>مديريات تعليمية</strong>
-          <p class="section-description">
-            متابعة مركزية للمدارس.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>نطاق وطني</strong>
-          <p class="section-description">
-            التوسع إلى مستوى الدولة.
-          </p>
-        </div>
-      </div>
-
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<section class="section" id="school-types">
-
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">أنواع المدارس</span>
-
-      <h2 class="section-title">
-        مناسبة لجميع<br>
-        أنواع المدارس
-      </h2>
-
-      <p class="section-description">
-        تم تصميم Madaris AI لتناسب جميع أنواع المؤسسات التعليمية.
-      </p>
-    </div>
-
-
-
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <strong>المدارس الحكومية</strong>
-          <p class="section-description">
-            تنظيم العملية التعليمية داخل المدارس الحكومية.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>المدارس الخاصة</strong>
-          <p class="section-description">
-            إدارة متقدمة للمدارس الخاصة.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>المدارس الأهلية</strong>
-          <p class="section-description">
-            منصة موحدة لإدارة المدارس الأهلية.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>المراكز التعليمية</strong>
-          <p class="section-description">
-            مناسبة للمراكز التعليمية أيضاً.
-          </p>
-        </div>
-      </div>
-
-
-    </div>
-
-  </div>
-
-</section>
-<section class="section section-soft" id="implementation">
-
-  <div class="container">
-
-    <div class="section-header">
-      <span class="eyebrow">التنفيذ</span>
-
-      <h2 class="section-title">
-        بدء استخدام المنصة<br>
-        داخل المدرسة
-      </h2>
-
-      <p class="section-description">
-        يتم تنفيذ Madaris AI داخل المدرسة بطريقة منظمة 
-        وبسيطة دون تعقيد تقني.
-      </p>
-    </div>
-
-
-
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
-
-      <div class="card">
-        <div class="card-body">
-          <strong>تهيئة المدرسة</strong>
-          <p class="section-description">
-            إعداد حساب المدرسة داخل المنصة.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>إضافة البيانات</strong>
-          <p class="section-description">
-            إدخال بيانات الطلاب والمعلمين.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>بدء التشغيل</strong>
-          <p class="section-description">
-            تشغيل النظام داخل المدرسة.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>المتابعة</strong>
-          <p class="section-description">
-            متابعة الأداء التعليمي.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
+<section class="section">
+<div class="container">
+
+<div class="section-header">
+<div class="section-kicker">الفوائد</div>
+
+<h2 class="section-title">
+الفوائد التي تحصل عليها المدارس
+</h2>
+
+<p class="section-description">
+Madaris AI لا يقدم فقط أدوات، بل يحسن أداء المدرسة
+بشكل شامل.
+</p>
+
+</div>
+
+<div class="grid grid-3">
+
+<div class="card">
+<h3>
+تحسين جودة التعليم
+</h3>
+<p>
+تنظيم التعلم ومتابعة
+أداء الطلاب.
+</p>
+</div>
+
+<div class="card">
+<h3>
+توفير الوقت
+</h3>
+<p>
+تقليل العمل اليدوي
+للإدارة.
+</p>
+</div>
+
+<div class="card">
+<h3>
+تقليل الأخطاء
+</h3>
+<p>
+نظام واضح يقلل
+الأخطاء البشرية.
+</p>
+</div>
+
+<div class="card">
+<h3>
+زيادة الشفافية
+</h3>
+<p>
+وضوح الأداء
+داخل المدرسة.
+</p>
+</div>
+
+<div class="card">
+<h3>
+تحسين التواصل
+</h3>
+<p>
+تواصل أفضل
+بين الإدارة والمعلمين.
+</p>
+</div>
+
+<div class="card">
+<h3>
+إدارة متكاملة
+</h3>
+<p>
+نظام موحد
+لكل العمليات.
+</p>
+</div>
+
+</div>
+
+</div>
 </section>
 
 
 
-<section class="section" id="school-impact">
+<section class="section">
+<div class="container">
 
-  <div class="container">
+<div class="section-header">
 
-    <div class="section-header">
-      <span class="eyebrow">الأثر</span>
+<div class="section-kicker">
+قابلية التوسع
+</div>
 
-      <h2 class="section-title">
-        أثر المنصة على<br>
-        المدارس
-      </h2>
+<h2 class="section-title">
+ابدأ صغيراً وتوسع تدريجياً
+</h2>
 
-      <p class="section-description">
-        تساعد Madaris AI المدارس على تحسين الأداء 
-        وتنظيم العملية التعليمية.
-      </p>
-    </div>
+<p class="section-description">
+Madaris AI مصمم ليبدأ من مدرسة واحدة
+ثم يتوسع بسهولة.
+</p>
 
+</div>
 
+<div class="grid grid-4">
 
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+<div class="card">
+<h3>
+مدرسة واحدة
+</h3>
+<p>
+بدء الاستخدام
+بسهولة.
+</p>
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>تنظيم المدرسة</strong>
-          <p class="section-description">
-            تنظيم العمليات اليومية.
-          </p>
-        </div>
-      </div>
+<div class="card">
+<h3>
+عدة مدارس
+</h3>
+<p>
+إدارة شبكة مدارس.
+</p>
+</div>
 
+<div class="card">
+<h3>
+مديريات
+</h3>
+<p>
+إدارة مديريات تعليمية.
+</p>
+</div>
 
+<div class="card">
+<h3>
+نظام وطني
+</h3>
+<p>
+التوسع إلى مستوى
+وطني.
+</p>
+</div>
 
-      <div class="card">
-        <div class="card-body">
-          <strong>تحسين التعليم</strong>
-          <p class="section-description">
-            تحسين جودة التعليم.
-          </p>
-        </div>
-      </div>
+</div>
 
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>متابعة واضحة</strong>
-          <p class="section-description">
-            رؤية واضحة للطلاب.
-          </p>
-        </div>
-      </div>
-
-
-
-      <div class="card">
-        <div class="card-body">
-          <strong>تحليل البيانات</strong>
-          <p class="section-description">
-            قرارات تعليمية أفضل.
-          </p>
-        </div>
-      </div>
-
-
-    </div>
-
-  </div>
-
+</div>
 </section>
-<section class="section section-soft" id="final-cta">
-
-  <div class="container">
-
-    <div class="section-header" style="text-align:center;margin:auto;">
-
-      <span class="eyebrow">ابدأ الآن</span>
-
-      <h2 class="section-title">
-        ابدأ باستخدام<br>
-        Madaris AI في مدرستك
-      </h2>
-
-      <p class="section-description">
-        انضم إلى المدارس التي بدأت التحول إلى منصة تشغيل تعليمية 
-        حديثة وواضحة وقابلة للتوسع.
-      </p>
-
-    </div>
 
 
 
-    <div style="margin-top:40px;text-align:center;">
+<section class="section">
+<div class="container">
 
-      <a href="/contact.html" class="btn btn-primary">
-        اطلب عرضاً لمدرستك
-      </a>
+<div class="section-header">
 
-      <a href="/platform.html"
-         class="btn btn-secondary"
-         style="margin-right:12px;">
-        استكشف المنصة
-      </a>
+<div class="section-kicker">
+أنواع المدارس
+</div>
 
-    </div>
+<h2 class="section-title">
+يدعم جميع أنواع المدارس
+</h2>
 
-  </div>
+<p class="section-description">
+Madaris AI مصمم للعمل مع مختلف
+البيئات التعليمية.
+</p>
 
+</div>
+
+<div class="grid grid-3">
+
+<div class="card">
+<h3>
+مدارس خاصة
+</h3>
+<p>
+تنظيم وإدارة متكاملة.
+</p>
+</div>
+
+<div class="card">
+<h3>
+مدارس حكومية
+</h3>
+<p>
+نظام واضح
+لإدارة التعليم.
+</p>
+</div>
+
+<div class="card">
+<h3>
+مدارس أهلية
+</h3>
+<p>
+تشغيل مرن
+وقابل للتوسع.
+</p>
+</div>
+
+<div class="card">
+<h3>
+مراكز تعليم
+</h3>
+<p>
+إدارة الدورات
+والطلاب.
+</p>
+</div>
+
+<div class="card">
+<h3>
+تعليم خاص
+</h3>
+<p>
+إدارة البرامج
+التعليمية.
+</p>
+</div>
+
+<div class="card">
+<h3>
+شبكات مدارس
+</h3>
+<p>
+إدارة مركزية
+لعدة مدارس.
+</p>
+</div>
+
+</div>
+
+</div>
 </section>
+<section class="section">
+<div class="container">
+
+<div class="section-header">
+<div class="section-kicker">الأثر</div>
+
+<h2 class="section-title">
+الأثر المتوقع على المدارس
+</h2>
+
+<p class="section-description">
+عند استخدام Madaris AI تبدأ المدرسة بالتحول التدريجي
+نحو بيئة تعليمية أكثر وضوحاً وتنظيماً.
+</p>
+
+</div>
+
+<div class="grid grid-3">
+
+<div class="card">
+<h3>
+وضوح إداري
+</h3>
+<p>
+تنظيم العمليات
+الإدارية بشكل أفضل.
+</p>
+</div>
+
+<div class="card">
+<h3>
+تحسن أكاديمي
+</h3>
+<p>
+تحسين متابعة
+الطلاب.
+</p>
+</div>
+
+<div class="card">
+<h3>
+كفاءة تشغيلية
+</h3>
+<p>
+تقليل التعقيد
+الإداري.
+</p>
+</div>
+
+<div class="card">
+<h3>
+تحليل البيانات
+</h3>
+<p>
+فهم أعمق
+للعملية التعليمية.
+</p>
+</div>
+
+<div class="card">
+<h3>
+تواصل أفضل
+</h3>
+<p>
+تحسين التواصل
+داخل المدرسة.
+</p>
+</div>
+
+<div class="card">
+<h3>
+استقرار النظام
+</h3>
+<p>
+تشغيل مستقر
+وطويل المدى.
+</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+
+<section class="section">
+<div class="container">
+
+<div class="highlight-box">
+
+<div class="section-header">
+
+<h2 class="section-title">
+ابدأ الآن مع Madaris AI
+</h2>
+
+<p class="section-description">
+انضم إلى المدارس التي تبدأ التحول
+نحو مستقبل التعليم.
+</p>
+
+</div>
+
+<div class="hero-actions">
+
+<a class="btn btn-primary" href="/contact.html">
+ابدأ الآن
+</a>
+
+<a class="btn btn-secondary" href="/platform.html">
+استكشف المنصة
+</a>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
 
 </main>
 
 
 
-<footer class="section">
-  <div class="container">
+<footer class="footer">
 
-    <div class="grid"
-         style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;">
+<div class="container">
 
-      <div>
-        <h3 style="margin-bottom:14px;">Madaris AI</h3>
-        <p class="section-description">
-          منصة تشغيل تعليمية موحدة تهدف إلى تحسين التعليم 
-          عبر بنية تقنية قوية وقابلة للتوسع.
-        </p>
-      </div>
+<div class="grid grid-4">
 
+<div>
+<h3>Madaris AI</h3>
+<p class="section-description">
+منصة تشغيل تعليمية
+لبناء مستقبل التعليم.
+</p>
+</div>
 
+<div>
+<h3>المنتج</h3>
+<p><a href="/platform.html">المنصة</a></p>
+<p><a href="/technology.html">التقنية</a></p>
+<p><a href="/schools.html">للمدارس</a></p>
+</div>
 
-      <div>
-        <h4 style="margin-bottom:14px;">المنصة</h4>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <a href="/">الرئيسية</a>
-          <a href="/platform.html">المنصة</a>
-          <a href="/technology.html">التقنية</a>
-          <a href="/schools.html">للمدارس</a>
-        </div>
-      </div>
+<div>
+<h3>الشركة</h3>
+<p><a href="/about.html">من نحن</a></p>
+<p><a href="/vision.html">الرؤية</a></p>
+<p><a href="/contact.html">تواصل</a></p>
+</div>
 
+<div>
+<h3>القانوني</h3>
+<p><a href="/privacy.html">الخصوصية</a></p>
+<p><a href="/terms.html">الشروط</a></p>
+<p><a href="/security.html">الأمان</a></p>
+</div>
 
+</div>
 
-      <div>
-        <h4 style="margin-bottom:14px;">الشركة</h4>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <a href="/about.html">من نحن</a>
-          <a href="/partners.html">الشركاء</a>
-          <a href="/contact.html">تواصل</a>
-        </div>
-      </div>
+<div style="
+margin-top:40px;
+padding-top:20px;
+border-top:1px solid var(--border);
+text-align:center;
+color:var(--muted);
+">
 
+© <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
 
+</div>
 
-      <div>
-        <h4 style="margin-bottom:14px;">ابدأ</h4>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <a href="/app/login.html">دخول المنصة</a>
-          <a href="/contact.html">طلب عرض</a>
-        </div>
-      </div>
+</div>
 
-    </div>
-
-
-
-    <div style="
-      margin-top:40px;
-      padding-top:20px;
-      border-top:1px solid rgba(255,255,255,0.1);
-      text-align:center;
-      color:var(--muted);
-    ">
-
-      © <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
-
-    </div>
-
-  </div>
 </footer>
 
 
@@ -1494,23 +1303,19 @@
 <script>
 
 const year = document.getElementById("year");
+
 if(year){
 year.textContent = new Date().getFullYear();
 }
-
-
 
 const menuToggle = document.getElementById("menuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
 
 if(menuToggle){
-menuToggle.addEventListener("click", () => {
-menuToggle.classList.toggle("active");
+menuToggle.addEventListener("click",()=>{
 mobileMenu.classList.toggle("active");
 });
 }
-
-
 
 const observer = new IntersectionObserver((entries)=>{
 entries.forEach(entry=>{
@@ -1520,7 +1325,7 @@ entry.target.style.transform="translateY(0)";
 }
 });
 },{
-threshold:0.1
+threshold:.1
 });
 
 document.querySelectorAll(".card").forEach(el=>{
@@ -1533,4 +1338,4 @@ observer.observe(el);
 </script>
 
 </body>
-</html>    
+</html>
