@@ -1,15 +1,34 @@
 // app/login.js
 
 import { loginWithEmail } from "./core/auth.js";
-import { redirectByRole } from "./core/role-router.js";
 import { getSession } from "./core/session.js";
+
+function redirectByRole(role) {
+  switch (role) {
+    case "school":
+      window.location.href = "/app/school/index.html";
+      break;
+    case "teacher":
+      window.location.href = "/app/teacher/index.html";
+      break;
+    case "student":
+      window.location.href = "/app/student/index.html";
+      break;
+    case "admin":
+      window.location.href = "/app/admin/index.html";
+      break;
+    default:
+      window.location.href = "/app/dashboard.html";
+      break;
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
-  const submitBtn = document.getElementById("loginBtn");
-  const errorBox = document.getElementById("errorMessage");
+  const loginBtn = document.getElementById("loginBtn");
+  const statusBox = document.getElementById("statusBox");
 
   const existingSession = getSession();
   if (existingSession && existingSession.uid && existingSession.role) {
@@ -17,79 +36,76 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  if (!form) {
-    console.error("loginForm not found in login.html");
+  if (!form || !emailInput || !passwordInput || !loginBtn || !statusBox) {
+    console.error("Login page elements are missing.");
     return;
   }
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
+  function showError(message) {
+    statusBox.className = "status-box show error";
+    statusBox.innerText = message;
+  }
 
-    const email = emailInput?.value?.trim() || "";
-    const password = passwordInput?.value || "";
+  function showSuccess(message) {
+    statusBox.className = "status-box show success";
+    statusBox.innerText = message;
+  }
+
+  function clearStatus() {
+    statusBox.className = "status-box";
+    statusBox.innerText = "";
+  }
+
+  function setLoading(isLoading) {
+    loginBtn.disabled = isLoading;
+    loginBtn.innerText = isLoading ? "جارٍ تسجيل الدخول..." : "دخول المنصة";
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
 
     if (!email || !password) {
-      showError("الرجاء إدخال البريد الإلكتروني وكلمة المرور.");
+      showError("يرجى إدخال البريد وكلمة المرور");
       return;
     }
 
+    clearStatus();
     setLoading(true);
-    hideError();
 
     try {
       const session = await loginWithEmail(email, password);
 
-      if (!session.role) {
+      if (!session || !session.role) {
         throw new Error("USER_ROLE_MISSING");
       }
 
+      showSuccess("تم تسجيل الدخول بنجاح");
       redirectByRole(session.role);
     } catch (error) {
       console.error("Login error:", error);
 
       if (error.code === "auth/invalid-credential") {
-        showError("بيانات الدخول غير صحيحة.");
+        showError("بيانات الدخول غير صحيحة");
       } else if (error.code === "auth/user-not-found") {
-        showError("هذا المستخدم غير موجود.");
+        showError("هذا المستخدم غير موجود");
       } else if (error.code === "auth/wrong-password") {
-        showError("كلمة المرور غير صحيحة.");
+        showError("كلمة المرور غير صحيحة");
       } else if (error.code === "auth/invalid-email") {
-        showError("البريد الإلكتروني غير صالح.");
+        showError("البريد الإلكتروني غير صالح");
       } else if (error.code === "auth/too-many-requests") {
-        showError("تمت محاولات كثيرة. حاول لاحقًا.");
+        showError("محاولات كثيرة، حاول لاحقًا");
       } else if (error.message === "USER_PROFILE_NOT_FOUND") {
-        showError("تم تسجيل الدخول لكن ملف المستخدم غير موجود في قاعدة البيانات.");
+        showError("تم تسجيل الدخول لكن ملف المستخدم غير موجود داخل users");
       } else if (error.message === "USER_ROLE_MISSING") {
-        showError("ملف المستخدم موجود لكن الدور غير محدد.");
+        showError("ملف المستخدم موجود لكن role غير موجود");
       } else {
-        showError("حدث خطأ أثناء تسجيل الدخول. تحقق من الإعدادات والبيانات.");
+        showError("فشل تسجيل الدخول. تحقق من البيانات والإعدادات");
       }
     } finally {
       setLoading(false);
     }
   });
-
-  function setLoading(isLoading) {
-    if (!submitBtn) return;
-
-    submitBtn.disabled = isLoading;
-    submitBtn.textContent = isLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول";
-  }
-
-  function showError(message) {
-    if (!errorBox) {
-      alert(message);
-      return;
-    }
-
-    errorBox.style.display = "block";
-    errorBox.textContent = message;
-  }
-
-  function hideError() {
-    if (!errorBox) return;
-
-    errorBox.style.display = "none";
-    errorBox.textContent = "";
-  }
 });
