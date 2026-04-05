@@ -1,191 +1,922 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Madaris AI | إنشاء حساب</title>
 
+  <meta name="theme-color" content="#07111f" />
+  <meta
+    name="description"
+    content="إنشاء حساب جديد في منصة Madaris AI التعليمية"
+  />
+
   <style>
+    :root{
+      --bg:#07111f;
+      --bg-soft:#0b1728;
+      --panel:rgba(15,29,52,.88);
+      --panel-2:rgba(19,38,66,.92);
+      --border:rgba(255,255,255,.08);
+
+      --text:#ffffff;
+      --muted:#8ab3c7;
+
+      --primary:#85fdff;
+      --primary-strong:#67d8ff;
+      --danger:#ff6b6b;
+      --success:#55d38a;
+
+      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
+      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
+
+      --radius-xl:28px;
+      --radius-lg:20px;
+      --radius-md:14px;
+
+      --container:min(1180px,92%);
+    }
+
+    *,
+    *::before,
+    *::after{
+      box-sizing:border-box;
+    }
+
+    html,
     body{
       margin:0;
-      font-family:Arial,sans-serif;
-      background:#020617;
-      color:#fff;
-      display:flex;
-      justify-content:center;
-      align-items:center;
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden;
+    }
+
+    body{
+      font-family:
+        "Tajawal",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
+        radial-gradient(circle at left 20%, rgba(130,171,234,.06), transparent 18%),
+        linear-gradient(180deg, #07111f 0%, #081728 100%);
+      color:var(--text);
       min-height:100vh;
-    }
-
-    .box{
-      width:320px;
-      background:#0f172a;
-      padding:24px;
-      border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-    }
-
-    h2{
-      margin:0 0 18px;
-      font-size:32px;
-      text-align:center;
-    }
-
-    p{
-      margin:0 0 18px;
-      text-align:center;
-      opacity:.8;
-    }
-
-    input, select{
-      width:100%;
-      box-sizing:border-box;
-      margin-bottom:12px;
-      padding:12px;
-      border:none;
-      border-radius:10px;
-      font-size:16px;
-      background:#e5e7eb;
-      color:#111827;
-    }
-
-    button{
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:10px;
-      background:#2563eb;
-      color:#fff;
-      font-size:18px;
-      cursor:pointer;
-      margin-top:4px;
-    }
-
-    .link{
-      display:block;
-      text-align:center;
-      margin-top:14px;
-      color:#60a5fa;
-      text-decoration:none;
-      font-size:16px;
-    }
-
-    #msg{
-      margin-top:14px;
-      text-align:center;
       line-height:1.7;
-      font-size:15px;
-      color:#fbbf24;
-      word-break:break-word;
+      -webkit-text-size-adjust:100%;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input,
+    select{
+      font:inherit;
+    }
+
+    .page{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden;
+    }
+
+    .topbar{
+      border-bottom:1px solid var(--border);
+      background:rgba(7,17,31,.82);
+      backdrop-filter:blur(12px);
+    }
+
+    .topbar-inner{
+      width:var(--container);
+      margin:0 auto;
+      min-height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      flex:0 0 52px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 35%),
+        linear-gradient(135deg, #67d8ff 0%, #8b8cff 100%);
+      box-shadow:0 10px 24px rgba(103,216,255,.22);
+    }
+
+    .brand-copy{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .brand-title{
+      font-size:24px;
+      font-weight:900;
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .brand-subtitle{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .back-link{
+      color:var(--muted);
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .back-link:hover{
+      color:#fff;
+    }
+
+    .main{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 0;
+    }
+
+    .shell{
+      width:var(--container);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .hero-card,
+    .register-card{
+      border:1px solid var(--border);
+      border-radius:var(--radius-xl);
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 28%),
+        linear-gradient(180deg, rgba(10,24,48,.96) 0%, rgba(10,22,39,.96) 100%);
+      box-shadow:var(--shadow-xl);
+      overflow:hidden;
+    }
+
+    .hero-card{
+      padding:34px 30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:10px 18px;
+      border-radius:999px;
+      border:1px solid rgba(133,253,255,.16);
+      background:rgba(133,253,255,.05);
+      color:#eefcff;
+      font-size:14px;
+      font-weight:800;
+      margin-bottom:18px;
+      align-self:flex-start;
+    }
+
+    .hero-title{
+      margin:0 0 16px;
+      font-size:clamp(34px,4vw,58px);
+      line-height:1.05;
+      font-weight:950;
+      letter-spacing:-.03em;
+    }
+
+    .hero-title .accent{
+      color:var(--primary-strong);
+    }
+
+    .hero-desc{
+      margin:0 0 24px;
+      color:#d6e3ef;
+      font-size:20px;
+      max-width:620px;
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .hero-point{
+      min-height:78px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:#eef6ff;
+      font-weight:800;
+    }
+
+    .register-card{
+      padding:30px 24px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .register-head{
+      margin-bottom:22px;
+      text-align:center;
+    }
+
+    .register-title{
+      margin:0 0 8px;
+      font-size:34px;
+      font-weight:900;
+      line-height:1.1;
+    }
+
+    .register-subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:16px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .form-group{
+      display:grid;
+      gap:10px;
+      margin-bottom:16px;
+    }
+
+    .form-group label{
+      font-weight:800;
+      color:#eef6ff;
+    }
+
+    .field{
+      width:100%;
+      min-height:56px;
+      padding:14px 16px;
+      border-radius:var(--radius-md);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      outline:none;
+      transition:.2s ease;
+    }
+
+    .field:focus{
+      border-color:rgba(133,253,255,.45);
+      box-shadow:0 0 0 4px rgba(133,253,255,.08);
+    }
+
+    .field::placeholder{
+      color:#95aabd;
+    }
+
+    .helper{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:-4px;
+    }
+
+    .btn{
+      width:100%;
+      min-height:60px;
+      border:none;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:18px;
+      transition:.2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #85fdff, #67d8ff);
+      color:#07111f;
+      box-shadow:0 14px 30px rgba(103,216,255,.24);
+    }
+
+    .status-box{
+      display:none;
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      font-weight:800;
+      font-size:14px;
+    }
+
+    .status-box.show{
+      display:block;
+    }
+
+    .status-box.error{
+      background:rgba(255,107,107,.08);
+      color:#ffd4d4;
+      border-color:rgba(255,107,107,.22);
+    }
+
+    .status-box.success{
+      background:rgba(85,211,138,.08);
+      color:#d9ffe8;
+      border-color:rgba(85,211,138,.22);
+    }
+
+    .login-row{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .login-row a{
+      color:#fff;
+      font-weight:900;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    @media (max-width:1000px){
+      .shell{
+        grid-template-columns:1fr;
+      }
+
+      .hero-card{
+        order:2;
+      }
+
+      .register-card{
+        order:1;
+      }
+    }
+
+    @media (max-width:700px){
+      .grid-2,
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:560px){
+      .topbar-inner{
+        min-height:78px;
+      }
+
+      .brand-title{
+        font-size:20px;
+      }
+
+      .brand-subtitle{
+        font-size:13px;
+      }
+
+      .hero-card,
+      .register-card{
+        padding:24px 18px;
+      }
+
+      .hero-title{
+        font-size:38px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="box">
-    <h2>Madaris AI</h2>
-    <p>إنشاء حساب جديد</p>
+<div class="page">
 
-    <input type="text" id="name" placeholder="الاسم الكامل">
-    <input type="email" id="email" placeholder="البريد الإلكتروني">
-    <input type="password" id="password" placeholder="كلمة المرور">
-    <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور">
+  <header class="topbar">
+    <div class="topbar-inner">
 
-    <select id="role">
-      <option value="student">طالب</option>
-      <option value="teacher">معلم</option>
-      <option value="school">مدرسة</option>
-      <option value="admin">إدارة</option>
-    </select>
+      <div class="brand">
+        <div class="brand-mark"></div>
 
-    <button onclick="registerUser()">إنشاء حساب</button>
+        <div class="brand-copy">
+          <div class="brand-title">Madaris AI</div>
+          <div class="brand-subtitle">نظام تشغيل التعليم</div>
+        </div>
+      </div>
 
-    <a class="link" href="/app/login.html">لديك حساب؟ تسجيل الدخول</a>
+      <a href="/" class="back-link">العودة للرئيسية</a>
 
-    <div id="msg"></div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="shell">
+
+      <section class="hero-card">
+
+        <div class="eyebrow">إنشاء حساب جديد</div>
+
+        <h1 class="hero-title">
+          ابدأ داخل
+          <span class="accent">Madaris AI</span>
+        </h1>
+
+        <p class="hero-desc">
+          هذه الصفحة مربوطة على نفس Firebase الذي اشتغلناه سابقًا.
+          سننشئ الحساب في Firebase Auth، ثم نحفظ بيانات المستخدم داخل
+          Firestore ضمن المجموعات المناسبة مثل <strong>users</strong> و <strong>schools</strong>.
+        </p>
+
+        <div class="hero-points">
+          <div class="hero-point">Firebase Auth</div>
+          <div class="hero-point">Firestore Users</div>
+          <div class="hero-point">أدوار متعددة</div>
+          <div class="hero-point">جاهز للتوسع لاحقًا</div>
+        </div>
+
+      </section>
+
+      <section class="register-card">
+
+        <div class="register-head">
+          <h2 class="register-title">إنشاء حساب</h2>
+          <p class="register-subtitle">
+            مدرسة أو معلم أو طالب أو إدارة
+          </p>
+        </div>
+
+        <form id="registerForm">
+
+          <div class="grid-2">
+
+            <div class="form-group">
+              <label for="fullName">الاسم الكامل</label>
+              <input
+                id="fullName"
+                name="fullName"
+                class="field"
+                type="text"
+                placeholder="اكتب الاسم الكامل"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="role">نوع الحساب</label>
+              <select id="role" name="role" class="field" required>
+                <option value="">اختر نوع الحساب</option>
+                <option value="school">مدرسة</option>
+                <option value="teacher">معلم</option>
+                <option value="student">طالب</option>
+                <option value="admin">إدارة</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="grid-2">
+
+            <div class="form-group">
+              <label for="email">البريد الإلكتروني</label>
+              <input
+                id="email"
+                name="email"
+                class="field"
+                type="email"
+                placeholder="example@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">رقم الهاتف</label>
+              <input
+                id="phone"
+                name="phone"
+                class="field"
+                type="text"
+                placeholder="+967"
+              />
+            </div>
+
+          </div>
+
+          <div class="grid-2">
+
+            <div class="form-group">
+              <label for="password">كلمة المرور</label>
+              <input
+                id="password"
+                name="password"
+                class="field"
+                type="password"
+                placeholder="8 أحرف أو أكثر"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">تأكيد كلمة المرور</label>
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                class="field"
+                type="password"
+                placeholder="أعد كتابة كلمة المرور"
+                required
+              />
+            </div>
+
+          </div>
+
+          <div id="schoolFields" class="hidden">
+
+            <div class="grid-2">
+
+              <div class="form-group">
+                <label for="schoolName">اسم المدرسة</label>
+                <input
+                  id="schoolName"
+                  name="schoolName"
+                  class="field"
+                  type="text"
+                  placeholder="اسم المدرسة"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="schoolCode">رمز المدرسة</label>
+                <input
+                  id="schoolCode"
+                  name="schoolCode"
+                  class="field"
+                  type="text"
+                  placeholder="رمز مختصر للمدرسة"
+                />
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="schoolAddress">عنوان المدرسة</label>
+              <input
+                id="schoolAddress"
+                name="schoolAddress"
+                class="field"
+                type="text"
+                placeholder="المدينة / المنطقة / العنوان"
+              />
+            </div>
+
+          </div>
+
+          <div id="teacherFields" class="hidden">
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="teacherSubject">المادة</label>
+                <input
+                  id="teacherSubject"
+                  name="teacherSubject"
+                  class="field"
+                  type="text"
+                  placeholder="مثال: الرياضيات"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="teacherSchoolId">معرف المدرسة</label>
+                <input
+                  id="teacherSchoolId"
+                  name="teacherSchoolId"
+                  class="field"
+                  type="text"
+                  placeholder="schoolId"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div id="studentFields" class="hidden">
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="studentSchoolId">معرف المدرسة</label>
+                <input
+                  id="studentSchoolId"
+                  name="studentSchoolId"
+                  class="field"
+                  type="text"
+                  placeholder="schoolId"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="studentClassId">معرف الفصل</label>
+                <input
+                  id="studentClassId"
+                  name="studentClassId"
+                  class="field"
+                  type="text"
+                  placeholder="classId"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="accountNote">ملاحظات إضافية</label>
+            <input
+              id="accountNote"
+              name="accountNote"
+              class="field"
+              type="text"
+              placeholder="اختياري"
+            />
+            <div class="helper">
+              الجزء الثاني سيحتوي على ربط Firebase الحقيقي: Auth + Firestore.
+            </div>
+          </div>
+
+          <button type="submit" id="registerBtn" class="btn btn-primary">
+            إنشاء الحساب
+          </button>
+
+          <div id="statusBox" class="status-box"></div>
+
+          <div class="login-row">
+            لديك حساب بالفعل؟
+            <a href="/app/login.html">تسجيل الدخول</a>
+          </div>
+
+        </form>
+
+      </section>
+
+    </div>
+
+  </main>
   </div>
+  <!-- Firebase -->
+<script type="module">
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      updateProfile
-    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      setDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-      authDomain: "madaris-ai.firebaseapp.com",
-      projectId: "madaris-ai",
-      storageBucket: "madaris-ai.firebasestorage.app",
-      messagingSenderId: "915394447224",
-      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
-      measurementId: "G-SC7VE6F20S"
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* Firebase Config (نفس المشروع السابق) */
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX"
+};
+
+
+/* Initialize */
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+/* Elements */
+
+const form = document.getElementById("registerForm");
+const role = document.getElementById("role");
+
+const schoolFields = document.getElementById("schoolFields");
+const teacherFields = document.getElementById("teacherFields");
+const studentFields = document.getElementById("studentFields");
+
+const statusBox = document.getElementById("statusBox");
+const registerBtn = document.getElementById("registerBtn");
+
+
+/* Role Switch */
+
+role.addEventListener("change", () => {
+
+  schoolFields.classList.add("hidden");
+  teacherFields.classList.add("hidden");
+  studentFields.classList.add("hidden");
+
+  if(role.value === "school"){
+    schoolFields.classList.remove("hidden");
+  }
+
+  if(role.value === "teacher"){
+    teacherFields.classList.remove("hidden");
+  }
+
+  if(role.value === "student"){
+    studentFields.classList.remove("hidden");
+  }
+
+});
+
+
+/* Helper */
+
+function showError(msg){
+
+  statusBox.className = "status-box show error";
+  statusBox.textContent = msg;
+
+}
+
+function showSuccess(msg){
+
+  statusBox.className = "status-box show success";
+  statusBox.textContent = msg;
+
+}
+
+
+
+/* Register */
+
+form.addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  const fullName = document.getElementById("fullName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const phone = document.getElementById("phone").value.trim();
+  const roleValue = role.value;
+
+  if(password !== confirmPassword){
+    showError("كلمة المرور غير متطابقة");
+    return;
+  }
+
+  try{
+
+    registerBtn.disabled = true;
+    registerBtn.textContent = "جاري إنشاء الحساب...";
+
+
+    /* Firebase Auth */
+
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const user = userCredential.user;
+
+
+    /* Update Profile */
+
+    await updateProfile(user,{
+      displayName: fullName
+    });
+
+
+    /* Base User Data */
+
+    const userData = {
+      uid: user.uid,
+      name: fullName,
+      email: email,
+      phone: phone || null,
+      role: roleValue,
+      createdAt: serverTimestamp(),
+      status: "active"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    function showMessage(text){
-      document.getElementById("msg").textContent = text;
+    /* Role Specific */
+
+    if(roleValue === "school"){
+
+      userData.schoolName =
+        document.getElementById("schoolName").value || null;
+
+      userData.schoolCode =
+        document.getElementById("schoolCode").value || null;
+
+      userData.schoolAddress =
+        document.getElementById("schoolAddress").value || null;
     }
 
-    window.registerUser = async function () {
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-      const role = document.getElementById("role").value;
 
-      if(!name || !email || !password || !confirmPassword){
-        showMessage("يرجى تعبئة جميع الحقول.");
-        return;
-      }
+    if(roleValue === "teacher"){
 
-      if(password.length < 6){
-        showMessage("كلمة المرور يجب أن تكون 6 أحرف أو أكثر.");
-        return;
-      }
+      userData.subject =
+        document.getElementById("teacherSubject").value || null;
 
-      if(password !== confirmPassword){
-        showMessage("كلمتا المرور غير متطابقتين.");
-        return;
-      }
+      userData.schoolId =
+        document.getElementById("teacherSchoolId").value || null;
+    }
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
 
-        await updateProfile(user, {
-          displayName: name
-        });
+    if(roleValue === "student"){
 
-        await setDoc(doc(db, "users", user.uid), {
-          uid: user.uid,
-          name: name,
-          email: email,
-          role: role,
-          created: serverTimestamp()
-        });
+      userData.schoolId =
+        document.getElementById("studentSchoolId").value || null;
 
-        showMessage("تم إنشاء الحساب بنجاح. سيتم تحويلك إلى تسجيل الدخول.");
+      userData.classId =
+        document.getElementById("studentClassId").value || null;
+    }
 
-        setTimeout(() => {
-          window.location.href = "/app/login.html";
-        }, 1200);
 
-      } catch (error) {
-        showMessage("خطأ: " + error.message);
-      }
-    };
-  </script>
+    /* Firestore */
+
+    await setDoc(
+      doc(db,"users",user.uid),
+      userData
+    );
+
+
+    showSuccess("تم إنشاء الحساب بنجاح");
+
+
+
+    /* Redirect */
+
+    setTimeout(()=>{
+
+      window.location.href="/app/dashboard.html";
+
+    },1500);
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showError(error.message);
+
+  }
+
+  finally{
+
+    registerBtn.disabled = false;
+    registerBtn.textContent = "إنشاء الحساب";
+
+  }
+
+});
+
+</script>
 
 </body>
 </html>
