@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#07111f" />
   <meta
     name="description"
-    content="تسجيل الدخول الحقيقي إلى منصة Madaris AI عبر Firebase Authentication"
+    content="تسجيل الدخول إلى منصة Madaris AI"
   />
 
   <style>
@@ -24,8 +24,6 @@
 
       --primary:#85fdff;
       --primary-strong:#67d8ff;
-      --danger:#ff6b6b;
-      --success:#55d38a;
 
       --shadow-xl:0 24px 70px rgba(0,0,0,.38);
       --shadow-lg:0 18px 48px rgba(0,0,0,.28);
@@ -351,58 +349,6 @@
       box-shadow:0 14px 30px rgba(103,216,255,.24);
     }
 
-    .divider{
-      position:relative;
-      margin:22px 0 18px;
-      text-align:center;
-      color:var(--muted);
-      font-weight:800;
-      font-size:14px;
-    }
-
-    .divider::before{
-      content:"";
-      position:absolute;
-      top:50%;
-      right:0;
-      left:0;
-      height:1px;
-      background:var(--border);
-      z-index:0;
-    }
-
-    .divider span{
-      position:relative;
-      z-index:1;
-      background:rgba(10,22,39,.96);
-      padding:0 12px;
-    }
-
-    .role-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .role-link{
-      min-height:68px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:14px;
-      border-radius:18px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      color:#eef6ff;
-      font-weight:800;
-      transition:.2s ease;
-    }
-
-    .role-link:hover{
-      background:rgba(255,255,255,.06);
-    }
-
     .status-box{
       display:none;
       margin-top:16px;
@@ -430,7 +376,7 @@
     }
 
     .register-row{
-      margin-to٢p:18px;
+      margin-top:18px;
       text-align:center;
       color:var(--muted);
       font-size:14px;
@@ -464,10 +410,6 @@
 
     @media (max-width:700px){
       .hero-points{
-        grid-template-columns:1fr;
-      }
-
-      .role-grid{
         grid-template-columns:1fr;
       }
     }
@@ -532,16 +474,15 @@
         </h1>
 
         <p class="hero-desc">
-          هذه النسخة ستسجل الدخول فعليًا عبر Firebase Authentication،
-          ثم ستقرأ ملف المستخدم من Firestore لتعرف الدور الحقيقي
-          وتوجهه إلى الصفحة الصحيحة تلقائيًا.
+          هذه الصفحة تستعيد مسار الدخول القديم:
+          نموذج واضح + ملف login.js القديم المسؤول عن المصادقة والجلسة والتوجيه.
         </p>
 
         <div class="hero-points">
           <div class="hero-point">Firebase Auth</div>
           <div class="hero-point">Firestore Users</div>
+          <div class="hero-point">جلسة محفوظة</div>
           <div class="hero-point">توجيه حسب الدور</div>
-          <div class="hero-point">جلسة حقيقية</div>
         </div>
 
       </section>
@@ -550,7 +491,7 @@
 
         <div class="login-head">
           <h2 class="login-title">تسجيل الدخول</h2>
-          <p class="login-subtitle">الدخول الحقيقي إلى منصة Madaris AI</p>
+          <p class="login-subtitle">الدخول إلى منصة Madaris AI</p>
         </div>
 
         <form id="loginForm">
@@ -591,24 +532,13 @@
 
         </form>
 
-        <div class="divider">
-          <span>أو الدخول حسب الدور</span>
-        </div>
-
-        <div class="role-grid">
-          <a href="/app/login.html" class="role-link">تسجيل الدخول كطالب</a>
-          <a href="/app/login.html" class="role-link">تسجيل الدخول كمعلم</a>
-          <a href="/app/login.html" class="role-link">تسجيل الدخول كمدرسة</a>
-          <a href="/app/login.html" class="role-link">تسجيل الدخول كإدارة</a>
-        </div>
-
         <div class="register-row">
           ليس لديك حساب؟
           <a href="/app/register.html">إنشاء حساب جديد</a>
         </div>
 
         <div class="footer-note">
-          استخدم نفس Firebase Config الذي وضعته في register.html
+          النسخة الاسترجاعية المتوافقة مع login.js القديم
         </div>
 
       </section>
@@ -618,233 +548,8 @@
   </main>
 
 </div>
-<!-- Firebase SDK -->
-
-<script type="module">
-
-/* ============================= */
-/* Firebase Imports */
-/* ============================= */
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
- 
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
-};
-
-
-/* ============================= */
-/* Init Firebase */
-/* ============================= */
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
-
-/* ============================= */
-/* Elements */
-/* ============================= */
-
-const form = document.getElementById("loginForm");
-
-const emailInput = document.getElementById("email");
-
-const passwordInput = document.getElementById("password");
-
-const loginBtn = document.getElementById("loginBtn");
-
-const statusBox = document.getElementById("statusBox");
-
-
-/* ============================= */
-/* UI Helpers */
-/* ============================= */
-
-function showError(message){
-
-  statusBox.className = "status-box show error";
-
-  statusBox.innerText = message;
-
-}
-
-function showSuccess(message){
-
-  statusBox.className = "status-box show success";
-
-  statusBox.innerText = message;
-
-}
-
-
-/* ============================= */
-/* Login */
-/* ============================= */
-
-form.addEventListener("submit", async (e)=>{
-
-  e.preventDefault();
-
-  const email = emailInput.value.trim();
-
-  const password = passwordInput.value.trim();
-
-  if(!email || !password){
-
-    showError("يرجى إدخال البريد وكلمة المرور");
-
-    return;
-  }
-
-  try{
-
-    loginBtn.disabled = true;
-
-    loginBtn.innerText = "جارٍ تسجيل الدخول...";
-
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    const user = userCredential.user;
-
-    showSuccess("تم تسجيل الدخول بنجاح");
-
-    await loadUserRole(user.uid);
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    showError("فشل تسجيل الدخول. تحقق من البيانات");
-
-  }
-
-  finally{
-
-    loginBtn.disabled = false;
-
-    loginBtn.innerText = "دخول المنصة";
-
-  }
-
-});
-
-
-/* ============================= */
-/* Load User Role */
-/* ============================= */
-
-async function loadUserRole(uid){
-
-  try{
-
-    const userRef = doc(db, "users", uid);
-
-    const userSnap = await getDoc(userRef);
-
-    if(!userSnap.exists()){
-
-      showError("لا يوجد ملف للمستخدم");
-
-      return;
-
-    }
-
-    const data = userSnap.data();
-
-    const role = data.role;
-
-
-    redirectByRole(role);
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    showError("خطأ أثناء تحميل المستخدم");
-
-  }
-
-}
-
-
-/* ============================= */
-/* Redirect By Role */
-/* ============================= */
-
-function redirectByRole(role){
-
-  switch(role){
-
-    case "school":
-      window.location.href = "/app/school/dashboard.html";
-      break;
-
-    case "teacher":
-      window.location.href = "/app/teacher/dashboard.html";
-      break;
-
-    case "student":
-      window.location.href = "/app/student/dashboard.html";
-      break;
-
-    case "admin":
-      window.location.href = "/app/admin/dashboard.html";
-      break;
-
-    default:
-      window.location.href = "/app/dashboard.html";
-
-  }
-
-}
-
-
-/* ============================= */
-/* Auto Login */
-/* ============================= */
-
-onAuthStateChanged(auth, async (user)=>{
-
-  if(user){
-
-    await loadUserRole(user.uid);
-
-  }
-
-});
-
-</script>
 
 <script type="module" src="./login.js"></script>
-</body>
 
+</body>
 </html>
-  
