@@ -1,150 +1,486 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | تسجيل الدخول</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: Tahoma, Arial, sans-serif;
-      background: linear-gradient(180deg, #07142f 0%, #03122a 100%);
-      color: #fff;
-      min-height: 100vh;
-      padding: 16px;
-    }
-    .container { max-width: 720px; margin: 0 auto; }
-    .card {
-      background: linear-gradient(180deg, #214aa4 0%, #102e79 100%);
-      border-radius: 28px;
-      padding: 24px;
-      margin-bottom: 18px;
-      border: 1px solid rgba(255,255,255,.08);
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
-    }
-    .title {
-      text-align: center;
-      font-size: 34px;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .subtitle {
-      text-align: center;
-      color: #89e7ff;
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    .text {
-      text-align: center;
-      color: #dce7ff;
-      line-height: 1.95;
-      font-size: 17px;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 30px;
-      font-weight: 800;
-      margin-bottom: 18px;
-    }
-    .label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 17px;
-      font-weight: 700;
-    }
-    .input {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.08);
-      color: #fff;
-      border-radius: 20px;
-      padding: 18px;
-      font-size: 19px;
-      margin-bottom: 16px;
-      outline: none;
-    }
-    .input::placeholder { color: rgba(255,255,255,.55); }
-    .input:focus { border-color: #65d7f7; }
-    .btn {
-      width: 100%;
-      border: none;
-      border-radius: 999px;
-      padding: 18px;
-      font-size: 22px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-    .btn-login {
-      background: linear-gradient(180deg, #65d7f7 0%, #4fc4ea 100%);
-      color: #fff;
-    }
-    .btn-home {
-      background: linear-gradient(180deg, #ff6f93 0%, #f45377 100%);
-      color: #fff;
-      text-decoration: none;
-      display: block;
-      text-align: center;
-      margin-top: 14px;
-    }
-    .status-box {
-      margin-top: 16px;
-      background: rgba(255,255,255,.08);
-      border-radius: 18px;
-      padding: 16px;
-      text-align: center;
-      line-height: 1.9;
-      color: #dbe7ff;
-      font-size: 15px;
-    }
-    .hint {
-      text-align: center;
-      margin-top: 14px;
-      color: #c9d8ff;
-      line-height: 1.9;
-      font-size: 15px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Madaris AI | دخول المنصة</title>
+
+<meta name="description"
+content="تسجيل الدخول إلى منصة Madaris AI التعليمية">
+
+<meta name="theme-color" content="#07111f">
+
+<style>
+
+:root{
+--bg:#07111f;
+--bg-soft:#0b1728;
+--border:rgba(255,255,255,.08);
+
+--text:#ffffff;
+--muted:#8ab3c7;
+
+--primary:#85fdff;
+--primary-strong:#67d8ff;
+
+--shadow-xl:0 24px 70px rgba(0,0,0,.38);
+--shadow-lg:0 18px 48px rgba(0,0,0,.28);
+
+--container:min(1200px,92%);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:
+"Tajawal",
+system-ui,
+Arial,
+sans-serif;
+
+background:
+radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
+linear-gradient(180deg,#07111f 0%,#081728 100%);
+
+color:var(--text);
+min-height:100vh;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+padding:30px;
+}
+
+.login-wrapper{
+
+width:100%;
+max-width:500px;
+
+background:rgba(255,255,255,.03);
+border:1px solid var(--border);
+
+border-radius:20px;
+
+padding:40px;
+
+box-shadow:var(--shadow-xl);
+
+}
+
+.logo{
+
+font-size:26px;
+font-weight:900;
+text-align:center;
+
+margin-bottom:10px;
+
+}
+
+.subtitle{
+
+text-align:center;
+color:var(--muted);
+
+margin-bottom:30px;
+
+}
+
+.form-group{
+
+margin-bottom:20px;
+
+}
+
+label{
+
+display:block;
+margin-bottom:8px;
+
+font-weight:700;
+
+}
+
+input{
+
+width:100%;
+padding:14px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid var(--border);
+
+border-radius:10px;
+
+color:white;
+
+font-size:16px;
+
+}
+
+input:focus{
+
+outline:none;
+border-color:var(--primary);
+
+}
+
+.button{
+
+width:100%;
+
+padding:14px;
+
+border-radius:10px;
+
+border:none;
+
+background:linear-gradient(135deg,#85fdff,#67d8ff);
+
+color:#07111f;
+
+font-weight:800;
+
+cursor:pointer;
+
+margin-top:10px;
+
+}
+
+.button:hover{
+
+opacity:.9;
+
+}
+
+.login-footer{
+
+margin-top:20px;
+
+text-align:center;
+
+color:var(--muted);
+
+font-size:14px;
+
+}
+
+.back-link{
+
+display:block;
+
+margin-top:20px;
+
+text-align:center;
+
+color:var(--primary);
+
+text-decoration:none;
+
+font-weight:700;
+
+}
+
+</style>
+
 </head>
+
 <body>
-  <div class="container">
 
-    <div class="card">
-      <div class="title">Madaris AI</div>
-      <div class="subtitle">منصة المدرسة الذكية</div>
-      <div class="text">
-        تسجيل الدخول إلى المنصة بحسابك المعتمد.<br>
-        بعد نجاح الدخول سيتم حفظ الجلسة محليًا ثم تحويلك
-        تلقائيًا إلى صفحتك المناسبة.
-      </div>
-    </div>
+<div class="login-wrapper">
 
-    <div class="card">
-      <div class="section-title">تسجيل الدخول</div>
+<div class="logo">
+Madaris AI
+</div>
 
-      <label class="label" for="email">البريد الإلكتروني</label>
-      <input id="email" class="input" type="email" placeholder="مثال: info@madarisai.com" autocomplete="username">
+<div class="subtitle">
+تسجيل الدخول إلى المنصة
+</div>
 
-      <label class="label" for="password">كلمة المرور</label>
-      <input id="password" class="input" type="password" placeholder="أدخل كلمة المرور" autocomplete="current-password">
+<form>
 
-      <button id="loginBtn" class="btn btn-login" type="button">تسجيل الدخول</button>
+<div class="form-group">
+<label>البريد الإلكتروني</label>
+<input type="email" placeholder="example@email.com">
+</div>
 
-      <a class="btn btn-home" href="../index.html">رجوع إلى الرئيسية</a>
+<div class="form-group">
+<label>كلمة المرور</label>
+<input type="password" placeholder="********">
+</div>
+<button class="button">
+تسجيل الدخول
+</button>
 
-      <div id="loginStatus" class="status-box">
-        بانتظار إدخال البريد وكلمة المرور.
-      </div>
+<div class="login-footer">
+هل نسيت كلمة المرور؟
+</div>
 
-      <div class="hint">
-        هذه الصفحة لا تقوم بتحويلك تلقائيًا إلا إذا كانت هناك
-        جلسة صحيحة محفوظة بالفعل.
-      </div>
-    </div>
+<a class="back-link" href="/">
+العودة إلى الموقع
+</a>
 
-  </div>
+</form>
 
-  <script type="module" src="./login.js"></script>
+</div>
+
+
+<style>
+
+.login-options{
+margin-top:30px;
+border-top:1px solid var(--border);
+padding-top:25px;
+}
+
+.login-options-title{
+text-align:center;
+margin-bottom:20px;
+color:var(--muted);
+}
+
+.login-grid{
+display:grid;
+gap:12px;
+}
+
+.login-alt{
+
+padding:12px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid var(--border);
+
+text-align:center;
+
+cursor:pointer;
+
+font-weight:700;
+
+transition:.2s ease;
+
+}
+
+.login-alt:hover{
+background:rgba(255,255,255,.07);
+}
+
+</style>
+
+
+<div class="login-wrapper login-options">
+
+<div class="login-options-title">
+طرق تسجيل أخرى
+</div>
+
+<div class="login-grid">
+
+<div class="login-alt">
+تسجيل الدخول كطالب
+</div>
+
+<div class="login-alt">
+تسجيل الدخول كمعلم
+</div>
+
+<div class="login-alt">
+تسجيل الدخول كمدرسة
+</div>
+
+<div class="login-alt">
+تسجيل الدخول كإدارة
+</div>
+
+</div>
+
+</div>
+<style>
+
+.features-box{
+
+margin-top:30px;
+
+background:rgba(255,255,255,.02);
+
+border:1px solid var(--border);
+
+border-radius:20px;
+
+padding:25px;
+
+}
+
+.features-title{
+
+font-weight:900;
+
+margin-bottom:15px;
+
+text-align:center;
+
+}
+
+.features-grid{
+
+display:grid;
+
+gap:12px;
+
+}
+
+.feature-item{
+
+padding:12px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.03);
+
+border:1px solid var(--border);
+
+color:var(--muted);
+
+font-weight:600;
+
+}
+
+.footer-mini{
+
+margin-top:25px;
+
+text-align:center;
+
+font-size:13px;
+
+color:var(--muted);
+
+}
+
+</style>
+
+
+<div class="login-wrapper features-box">
+
+<div class="features-title">
+منصة Madaris AI
+</div>
+
+<div class="features-grid">
+
+<div class="feature-item">
+التعليم الذكي بدون إنترنت
+</div>
+
+<div class="feature-item">
+إدارة المدارس والطلاب
+</div>
+
+<div class="feature-item">
+منصة تعليمية موحدة
+</div>
+
+<div class="feature-item">
+نظام قابل للتوسع عالمياً
+</div>
+
+</div>
+
+<div class="footer-mini">
+Madaris AI Education Operating System
+</div>
+
+</div>
+<style>
+
+.bottom-links{
+
+margin-top:25px;
+
+display:flex;
+flex-direction:column;
+gap:10px;
+
+text-align:center;
+
+}
+
+.bottom-links a{
+
+color:var(--primary);
+text-decoration:none;
+font-weight:700;
+
+}
+
+.bottom-links a:hover{
+opacity:.8;
+}
+
+.brand-footer{
+
+margin-top:30px;
+
+text-align:center;
+
+font-size:12px;
+
+color:var(--muted);
+
+}
+
+</style>
+
+
+<div class="login-wrapper">
+
+<div class="bottom-links">
+
+<a href="/privacy.html">
+سياسة الخصوصية
+</a>
+
+<a href="/terms.html">
+الشروط والأحكام
+</a>
+
+<a href="/contact.html">
+تواصل معنا
+</a>
+
+</div>
+
+<div class="brand-footer">
+
+© <span id="year"></span> Madaris AI  
+Education Operating System
+
+</div>
+
+</div>
+
+
+<script>
+
+const year = document.getElementById("year");
+
+if(year){
+year.textContent = new Date().getFullYear();
+}
+
+</script>
+
+
 </body>
 </html>
