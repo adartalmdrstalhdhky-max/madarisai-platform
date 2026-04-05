@@ -2,485 +2,592 @@
 <html lang="ar" dir="rtl">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Madaris AI | دخول المنصة</title>
-
-<meta name="description"
-content="تسجيل الدخول إلى منصة Madaris AI التعليمية">
-
-<meta name="theme-color" content="#07111f">
-
-<style>
-
-:root{
---bg:#07111f;
---bg-soft:#0b1728;
---border:rgba(255,255,255,.08);
-
---text:#ffffff;
---muted:#8ab3c7;
-
---primary:#85fdff;
---primary-strong:#67d8ff;
-
---shadow-xl:0 24px 70px rgba(0,0,0,.38);
---shadow-lg:0 18px 48px rgba(0,0,0,.28);
-
---container:min(1200px,92%);
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-
-font-family:
-"Tajawal",
-system-ui,
-Arial,
-sans-serif;
-
-background:
-radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
-linear-gradient(180deg,#07111f 0%,#081728 100%);
-
-color:var(--text);
-min-height:100vh;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-padding:30px;
-}
-
-.login-wrapper{
-
-width:100%;
-max-width:500px;
-
-background:rgba(255,255,255,.03);
-border:1px solid var(--border);
-
-border-radius:20px;
-
-padding:40px;
-
-box-shadow:var(--shadow-xl);
-
-}
-
-.logo{
-
-font-size:26px;
-font-weight:900;
-text-align:center;
-
-margin-bottom:10px;
-
-}
-
-.subtitle{
-
-text-align:center;
-color:var(--muted);
-
-margin-bottom:30px;
-
-}
-
-.form-group{
-
-margin-bottom:20px;
-
-}
-
-label{
-
-display:block;
-margin-bottom:8px;
-
-font-weight:700;
-
-}
-
-input{
-
-width:100%;
-padding:14px;
-
-background:rgba(255,255,255,.05);
-
-border:1px solid var(--border);
-
-border-radius:10px;
-
-color:white;
-
-font-size:16px;
-
-}
-
-input:focus{
-
-outline:none;
-border-color:var(--primary);
-
-}
-
-.button{
-
-width:100%;
-
-padding:14px;
-
-border-radius:10px;
-
-border:none;
-
-background:linear-gradient(135deg,#85fdff,#67d8ff);
-
-color:#07111f;
-
-font-weight:800;
-
-cursor:pointer;
-
-margin-top:10px;
-
-}
-
-.button:hover{
-
-opacity:.9;
-
-}
-
-.login-footer{
-
-margin-top:20px;
-
-text-align:center;
-
-color:var(--muted);
-
-font-size:14px;
-
-}
-
-.back-link{
-
-display:block;
-
-margin-top:20px;
-
-text-align:center;
-
-color:var(--primary);
-
-text-decoration:none;
-
-font-weight:700;
-
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI | دخول المنصة</title>
+  <meta name="theme-color" content="#07111f" />
+  <meta
+    name="description"
+    content="تسجيل الدخول إلى منصة Madaris AI التعليمية"
+  />
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0b1728;
+      --panel: rgba(15, 29, 52, 0.88);
+      --panel-2: rgba(19, 38, 66, 0.92);
+      --border: rgba(255, 255, 255, 0.08);
+
+      --text: #ffffff;
+      --muted: #8ab3c7;
+
+      --primary: #85fdff;
+      --primary-strong: #67d8ff;
+
+      --shadow-xl: 0 24px 70px rgba(0, 0, 0, 0.38);
+      --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.28);
+
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+
+      --container: min(1100px, 92%);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family:
+        "Tajawal",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(133, 253, 255, 0.08), transparent 24%),
+        radial-gradient(circle at left 20%, rgba(130, 171, 234, 0.06), transparent 18%),
+        linear-gradient(180deg, #07111f 0%, #081728 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 17, 31, 0.82);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      width: var(--container);
+      margin: 0 auto;
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      flex: 0 0 52px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 35%),
+        linear-gradient(135deg, #67d8ff 0%, #8b8cff 100%);
+      box-shadow: 0 10px 24px rgba(103, 216, 255, 0.22);
+    }
+
+    .brand-copy {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .back-link:hover {
+      color: #fff;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 0;
+    }
+
+    .shell {
+      width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .login-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at top right, rgba(133, 253, 255, 0.08), transparent 28%),
+        linear-gradient(180deg, rgba(10, 24, 48, 0.96) 0%, rgba(10, 22, 39, 0.96) 100%);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+
+    .hero-card {
+      padding: 34px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(133, 253, 255, 0.16);
+      background: rgba(133, 253, 255, 0.05);
+      color: #eefcff;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      align-self: flex-start;
+    }
+
+    .hero-title {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4vw, 58px);
+      line-height: 1.05;
+      font-weight: 950;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-title .accent {
+      color: var(--primary-strong);
+    }
+
+    .hero-desc {
+      margin: 0 0 24px;
+      color: #d6e3ef;
+      font-size: 20px;
+      max-width: 620px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hero-point {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: #eef6ff;
+      font-weight: 800;
+    }
+
+    .login-card {
+      padding: 30px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-head {
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .login-title {
+      margin: 0 0 8px;
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .login-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      font-weight: 800;
+      color: #eef6ff;
+    }
+
+    .field {
+      width: 100%;
+      min-height: 56px;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    .field:focus {
+      border-color: rgba(133, 253, 255, 0.45);
+      box-shadow: 0 0 0 4px rgba(133, 253, 255, 0.08);
+    }
+
+    .field::placeholder {
+      color: #95aabd;
+    }
+
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .muted-link {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .muted-link:hover {
+      color: #fff;
+    }
+
+    .btn {
+      width: 100%;
+      min-height: 60px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 18px;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #85fdff, #67d8ff);
+      color: #07111f;
+      box-shadow: 0 14px 30px rgba(103, 216, 255, 0.24);
+    }
+
+    .divider {
+      position: relative;
+      margin: 22px 0 18px;
+      text-align: center;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: var(--border);
+      z-index: 0;
+    }
+
+    .divider span {
+      position: relative;
+      z-index: 1;
+      background: rgba(10, 22, 39, 0.96);
+      padding: 0 12px;
+    }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .role-link {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: #eef6ff;
+      font-weight: 800;
+      transition: 0.2s ease;
+    }
+
+    .role-link:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .footer-note {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1000px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        order: 2;
+      }
+
+      .login-card {
+        order: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="login-wrapper">
+<div class="page">
 
-<div class="logo">
-Madaris AI
+<header class="topbar">
+<div class="topbar-inner">
+
+<div class="brand">
+
+<div class="brand-mark"></div>
+
+<div class="brand-copy">
+<div class="brand-title">Madaris AI</div>
+<div class="brand-subtitle">نظام تشغيل التعليم</div>
 </div>
 
-<div class="subtitle">
-تسجيل الدخول إلى المنصة
 </div>
 
-<form>
-
-<div class="form-group">
-<label>البريد الإلكتروني</label>
-<input type="email" placeholder="example@email.com">
-</div>
-
-<div class="form-group">
-<label>كلمة المرور</label>
-<input type="password" placeholder="********">
-</div>
-<button class="button">
-تسجيل الدخول
-</button>
-
-<div class="login-footer">
-هل نسيت كلمة المرور؟
-</div>
-
-<a class="back-link" href="/">
-العودة إلى الموقع
+<a href="/" class="back-link">
+العودة للرئيسية
 </a>
 
-</form>
+</div>
+</header>
 
+
+<main class="main">
+
+<div class="shell">
+
+
+<section class="hero-card">
+
+<div class="eyebrow">
+منصة تعليمية تعمل بدون إنترنت
 </div>
 
+<h1 class="hero-title">
+نظام تشغيل التعليم
+<span class="accent">Madaris AI</span>
+</h1>
 
-<style>
+<p class="hero-desc">
+منصة تعليمية موحدة لإدارة المدارس
+والطلاب والمعلمين والعمل حتى بدون إنترنت
+</p>
 
-.login-options{
-margin-top:30px;
-border-top:1px solid var(--border);
-padding-top:25px;
-}
+<div class="hero-points">
 
-.login-options-title{
-text-align:center;
-margin-bottom:20px;
-color:var(--muted);
-}
-
-.login-grid{
-display:grid;
-gap:12px;
-}
-
-.login-alt{
-
-padding:12px;
-
-border-radius:10px;
-
-background:rgba(255,255,255,.04);
-
-border:1px solid var(--border);
-
-text-align:center;
-
-cursor:pointer;
-
-font-weight:700;
-
-transition:.2s ease;
-
-}
-
-.login-alt:hover{
-background:rgba(255,255,255,.07);
-}
-
-</style>
-
-
-<div class="login-wrapper login-options">
-
-<div class="login-options-title">
-طرق تسجيل أخرى
-</div>
-
-<div class="login-grid">
-
-<div class="login-alt">
-تسجيل الدخول كطالب
-</div>
-
-<div class="login-alt">
-تسجيل الدخول كمعلم
-</div>
-
-<div class="login-alt">
-تسجيل الدخول كمدرسة
-</div>
-
-<div class="login-alt">
-تسجيل الدخول كإدارة
-</div>
-
-</div>
-
-</div>
-<style>
-
-.features-box{
-
-margin-top:30px;
-
-background:rgba(255,255,255,.02);
-
-border:1px solid var(--border);
-
-border-radius:20px;
-
-padding:25px;
-
-}
-
-.features-title{
-
-font-weight:900;
-
-margin-bottom:15px;
-
-text-align:center;
-
-}
-
-.features-grid{
-
-display:grid;
-
-gap:12px;
-
-}
-
-.feature-item{
-
-padding:12px;
-
-border-radius:10px;
-
-background:rgba(255,255,255,.03);
-
-border:1px solid var(--border);
-
-color:var(--muted);
-
-font-weight:600;
-
-}
-
-.footer-mini{
-
-margin-top:25px;
-
-text-align:center;
-
-font-size:13px;
-
-color:var(--muted);
-
-}
-
-</style>
-
-
-<div class="login-wrapper features-box">
-
-<div class="features-title">
-منصة Madaris AI
-</div>
-
-<div class="features-grid">
-
-<div class="feature-item">
+<div class="hero-point">
 التعليم الذكي بدون إنترنت
 </div>
 
-<div class="feature-item">
+<div class="hero-point">
 إدارة المدارس والطلاب
 </div>
 
-<div class="feature-item">
+<div class="hero-point">
 منصة تعليمية موحدة
 </div>
 
-<div class="feature-item">
+<div class="hero-point">
 نظام قابل للتوسع عالمياً
 </div>
 
 </div>
 
-<div class="footer-mini">
-Madaris AI Education Operating System
-</div>
+</section>
+
+
+
+<section class="login-card">
+
+<div class="login-head">
+
+<h2 class="login-title">
+تسجيل الدخول
+</h2>
+
+<p class="login-subtitle">
+الدخول إلى منصة Madaris AI
+</p>
 
 </div>
-<style>
-
-.bottom-links{
-
-margin-top:25px;
-
-display:flex;
-flex-direction:column;
-gap:10px;
-
-text-align:center;
-
-}
-
-.bottom-links a{
-
-color:var(--primary);
-text-decoration:none;
-font-weight:700;
-
-}
-
-.bottom-links a:hover{
-opacity:.8;
-}
-
-.brand-footer{
-
-margin-top:30px;
-
-text-align:center;
-
-font-size:12px;
-
-color:var(--muted);
-
-}
-
-</style>
 
 
-<div class="login-wrapper">
+<form>
 
-<div class="bottom-links">
+<div class="form-group">
 
-<a href="/privacy.html">
-سياسة الخصوصية
-</a>
+<label>البريد الإلكتروني</label>
 
-<a href="/terms.html">
-الشروط والأحكام
-</a>
+<input 
+type="email" 
+class="field"
+placeholder="example@email.com"
+/>
 
-<a href="/contact.html">
-تواصل معنا
+</div>
+
+
+<div class="form-group">
+
+<label>كلمة المرور</label>
+
+<input 
+type="password"
+class="field"
+placeholder="••••••••"
+/>
+
+</div>
+
+
+<div class="row-between">
+
+<a href="#" class="muted-link">
+نسيت كلمة المرور؟
 </a>
 
 </div>
 
-<div class="brand-footer">
 
-© <span id="year"></span> Madaris AI  
-Education Operating System
+<button class="btn btn-primary">
+دخول المنصة
+</button>
+
+</form>
+
+
+<div class="divider">
+<span>أو الدخول حسب الدور</span>
+</div>
+
+
+<div class="role-grid">
+
+<a href="/app/dashboard.html" class="role-link">
+تسجيل الدخول كطالب
+</a>
+
+<a href="/app/dashboard.html" class="role-link">
+تسجيل الدخول كمعلم
+</a>
+
+<a href="/app/dashboard.html" class="role-link">
+تسجيل الدخول كمدرسة
+</a>
+
+<a href="/app/dashboard.html" class="role-link">
+تسجيل الدخول كإدارة
+</a>
 
 </div>
 
+
+<div class="footer-note">
+Madaris AI Education Operating System © 2026
 </div>
 
 
-<script>
+</section>
 
-const year = document.getElementById("year");
 
-if(year){
-year.textContent = new Date().getFullYear();
-}
+</div>
 
-</script>
+</main>
 
+
+</div>
 
 </body>
+
 </html>
