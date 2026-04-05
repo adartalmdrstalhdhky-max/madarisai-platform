@@ -2,826 +2,1081 @@
 <html lang="ar" dir="rtl">
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madaris AI | المشكلة</title>
 
-<title>المشكلة | Madaris AI</title>
+  <meta
+    name="description"
+    content="تعرف على المشكلة التي تعالجها Madaris AI: فوضى التشغيل التعليمي، تشتت الأدوات، ضعف المتابعة، والحاجة إلى نظام تشغيل تعليمي موحد يعمل من الواقع."
+  />
 
-<meta name="description" content="المشكلة التي يعالجها Madaris AI — لماذا تحتاج المدارس إلى نظام تشغيل تعليمي واضح بدل الأدوات المتفرقة والعمليات غير المنظمة">
+  <meta name="theme-color" content="#07111f" />
 
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-<style>
+  <style>
+    :root{
+      --bg:#07111f;
+      --bg-soft:#0b1728;
+      --panel:rgba(15,29,52,.82);
+      --panel-2:rgba(19,38,66,.92);
+      --border:rgba(255,255,255,.08);
+      --line-strong:rgba(255,255,255,.14);
 
-:root{
+      --text:#ffffff;
+      --muted:#8ab3c7;
+      --muted-2:#b7d3e4;
 
---bg:#07111f;
---bg-soft:#0b1728;
---text:#ffffff;
---muted:#a8b3c7;
---primary:#5fdcff;
---secondary:#7c67ff;
---card:rgba(255,255,255,0.04);
---border:rgba(255,255,255,0.08);
+      --primary:#85fdff;
+      --primary-strong:#67d8ff;
+      --secondary:#87d64f;
+      --accent:#82abea;
 
-}
+      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
+      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --radius-sm:12px;
 
-body{
-font-family:"Tajawal",sans-serif;
-background:var(--bg);
-color:var(--text);
-line-height:1.75;
-}
+      --container:min(1200px,92%);
+    }
 
-.container{
-width:90%;
-max-width:1200px;
-margin:auto;
-}
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-.section{
-padding:90px 0;
-}
+    html{
+      scroll-behavior:smooth;
+    }
 
-.section-soft{
-background:var(--bg-soft);
-}
+    body{
+      font-family:
+        "Tajawal",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
+        radial-gradient(circle at left 20%, rgba(130,171,234,.06), transparent 18%),
+        linear-gradient(180deg, #07111f 0%, #081728 100%);
+      color:var(--text);
+      line-height:1.9;
+      overflow-x:hidden;
+    }
 
-.section-title{
-font-size:38px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.3;
-}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.section-description{
-color:var(--muted);
-max-width:760px;
-}
+    img{
+      display:block;
+      max-width:100%;
+    }
 
-.grid{
-display:grid;
-gap:20px;
-}
+    .container{
+      width:var(--container);
+      margin:auto;
+    }
 
-.card{
-background:var(--card);
-border:1px solid var(--border);
-border-radius:18px;
-padding:25px;
-}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(7,17,31,.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:20px 0;
+    }
 
-.btn{
-display:inline-block;
-padding:14px 26px;
-border-radius:40px;
-font-weight:700;
-text-decoration:none;
-}
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
 
-.btn-primary{
-background:linear-gradient(135deg,#5fdcff,#7c67ff);
-color:white;
-}
+    .logo{
+      font-weight:900;
+      font-size:22px;
+      line-height:1.2;
+      letter-spacing:.2px;
+      flex-shrink:0;
+    }
 
-.btn-secondary{
-border:1px solid var(--border);
-color:white;
-}
+    .logo a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.topbar{
-padding:20px 0;
-border-bottom:1px solid var(--border);
-}
+    .nav-links{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
 
-.nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:20px;
-}
+    .nav-links a{
+      color:var(--muted);
+      text-decoration:none;
+      transition:.25s ease;
+      font-weight:700;
+      font-size:15px;
+    }
 
-.logo{
-font-weight:900;
-font-size:22px;
-}
+    .nav-links a:hover{
+      color:white;
+    }
 
-.nav-links{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-}
+    .menu-toggle{
+      display:none;
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      font-size:26px;
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
 
-.nav-links a{
-color:var(--muted);
-text-decoration:none;
-}
+    .mobile-menu{
+      display:none;
+      margin-top:16px;
+      border-top:1px solid var(--border);
+      padding-top:16px;
+    }
 
-.nav-links a:hover{
-color:white;
-}
+    .mobile-menu.active{
+      display:block;
+    }
 
-.hero{
-padding:80px 0;
-}
+    .mobile-menu-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px 18px;
+      width:100%;
+    }
 
-.hero h1{
-font-size:44px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.25;
-}
+    .mobile-menu-grid a{
+      display:block;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      color:#e8f1fb;
+      font-weight:700;
+      text-align:center;
+    }
 
-.hero p{
-color:var(--muted);
-margin-bottom:30px;
-max-width:760px;
-}
+    .hero{
+      position:relative;
+      padding:72px 0 42px;
+      overflow:hidden;
+    }
 
-.eyebrow{
-display:inline-block;
-padding:8px 14px;
-border-radius:999px;
-background:rgba(95,220,255,0.08);
-border:1px solid rgba(95,220,255,0.16);
-font-size:14px;
-font-weight:700;
-margin-bottom:20px;
-color:#d7f7ff;
-}
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:auto auto -120px -120px;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(133,253,255,.10), transparent 68%);
+      pointer-events:none;
+    }
 
-.footer{
-border-top:1px solid var(--border);
-padding:30px 0;
-margin-top:40px;
-color:var(--muted);
-text-align:center;
-}
+    .hero-shell{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.14), transparent 26%),
+        linear-gradient(180deg, rgba(10,24,48,.98) 0%, rgba(10,22,39,.98) 100%);
+      box-shadow:var(--shadow-xl);
+      padding:42px 30px 34px;
+    }
 
-@media(max-width:900px){
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
 
-.hero h1{
-font-size:32px;
-}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:52px;
+      border-radius:999px;
+      padding:10px 20px;
+      background:rgba(133,253,255,.06);
+      border:1px solid rgba(133,253,255,.16);
+      color:#e9fcff;
+      font-weight:800;
+      font-size:15px;
+      margin-bottom:22px;
+    }
 
-.section-title{
-font-size:28px;
-}
+    .hero-title{
+      font-size:clamp(40px,6vw,78px);
+      line-height:1.04;
+      font-weight:950;
+      letter-spacing:-.03em;
+      margin-bottom:18px;
+    }
 
-.nav{
-flex-direction:column;
-align-items:flex-start;
-}
+    .hero-title span{
+      color:var(--primary);
+    }
 
-.nav-links{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px 18px;
-width:100%;
-}
+    .hero-desc{
+      color:#d3dfec;
+      font-size:clamp(18px,2vw,22px);
+      max-width:780px;
+      margin-bottom:26px;
+    }
 
-}
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
 
-</style>
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px 24px;
+      border-radius:999px;
+      font-weight:800;
+      border:1px solid transparent;
+      transition:.22s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
 
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #85fdff, #67d8ff);
+      color:#07111f;
+      box-shadow:0 14px 30px rgba(103,216,255,.24);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
+      color:white;
+      border-color:var(--border);
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .point{
+      padding:14px 16px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      color:#dce8f5;
+      font-weight:700;
+      font-size:15px;
+    }
+
+    .hero-side{
+      display:grid;
+      gap:14px;
+    }
+
+    .hero-card{
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      padding:22px;
+      box-shadow:var(--shadow-lg);
+    }
+
+    .hero-card h3{
+      margin-bottom:8px;
+      font-size:20px;
+      line-height:1.3;
+    }
+
+    .hero-card p{
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .hero-stat{
+      font-size:42px;
+      font-weight:950;
+      line-height:1;
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+
+    .section{
+      padding:60px 0;
+    }
+
+    .section-header{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:24px;
+    }
+
+    .section-kicker{
+      color:var(--primary);
+      font-weight:900;
+      font-size:15px;
+    }
+
+    .section-title{
+      font-size:clamp(28px,4vw,48px);
+      line-height:1.15;
+      font-weight:950;
+      letter-spacing:-.03em;
+    }
+
+    .section-description{
+      color:var(--muted);
+      font-size:18px;
+      max-width:900px;
+    }
+
+    .grid{
+      display:grid;
+      gap:20px;
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .grid-4{
+      grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.025));
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:24px;
+      min-height:100%;
+      box-shadow:var(--shadow-lg);
+      opacity:1;
+      transform:none;
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      font-size:22px;
+      line-height:1.3;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:16px;
+    }
+
+    .highlight-box{
+      padding:26px;
+      border-radius:24px;
+      border:1px solid var(--border);
+      background:
+        radial-gradient(circle at top left, rgba(133,253,255,.08), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+
+    .footer{
+      border-top:1px solid var(--border);
+      padding:40px 0 30px;
+      margin-top:40px;
+      color:var(--muted);
+    }
+
+    @media(max-width:1100px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .grid-4{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .grid-3{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:900px){
+      .nav{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .nav-links{
+        display:none;
+      }
+
+      .menu-toggle{
+        display:inline-flex;
+      }
+
+      .hero{
+        padding:34px 0 20px;
+      }
+
+      .hero-shell{
+        padding:26px 18px 22px;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+
+      .mobile-menu-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .mobile-menu-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-title{
+        font-size:42px;
+      }
+
+      .section-title{
+        font-size:32px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
 <header class="topbar">
+  <div class="container nav">
+    <div class="logo">
+      <a href="/" style="color:inherit;text-decoration:none;">Madaris AI</a>
+    </div>
 
-<div class="container nav">
+    <div class="nav-links">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+    </div>
 
-<div class="logo">
-Madaris AI
-</div>
+    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+  </div>
 
-<div class="nav-links">
-<a href="/">الرئيسية</a>
-<a href="/platform.html">المنصة</a>
-<a href="/technology.html">التقنية</a>
-<a href="/schools.html">للمدارس</a>
-<a href="/partners.html">الشركاء</a>
-<a href="/about.html">من نحن</a>
-<a href="/contact.html">تواصل</a>
-</div>
-
-</div>
-
+  <div class="container mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-grid">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+      <a href="/app/login.html">دخول المنصة</a>
+    </div>
+  </div>
 </header>
 
-
+<main>
 
 <section class="hero">
+  <div class="container">
+    <div class="hero-shell">
 
-<div class="container">
+      <div class="eyebrow">المشكلة</div>
 
-<div class="eyebrow">
-المشكلة
-</div>
+      <div class="hero-grid">
 
-<h1>
-المشكلة ليست فقط في المحتوى<br>
-بل في طريقة تشغيل التعليم نفسه
-</h1>
+        <div>
+          <h1 class="hero-title">
+            المشكلة ليست في التعليم فقط،
+            <span>بل في طريقة تشغيله</span>
+          </h1>
 
-<p>
-في كثير من البيئات التعليمية، لا تعمل المدرسة كنظام واضح ومترابط،
-بل كأجزاء متفرقة: إدارة منفصلة، متابعة ضعيفة، بيانات غير منتظمة،
-وأدوات لا تتحدث مع بعضها. وهذا يجعل التعليم أضعف، والإدارة أثقل،
-والتوسع أصعب.
-</p>
+          <p class="hero-desc">
+            كثير من المدارس لا تعاني فقط من نقص الأدوات،
+            بل من غياب نظام واضح يربط التعلم، والإدارة،
+            والمتابعة، والسجلات، واتخاذ القرار داخل بيئة واحدة متماسكة.
+            وهنا تبدأ الفوضى اليومية التي تعيق جودة التعليم.
+          </p>
 
-<a href="/solution.html" class="btn btn-primary">
-استكشف الحل
-</a>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/solution.html">استكشف الحل</a>
+            <a class="btn btn-secondary" href="/platform.html">استكشف المنصة</a>
+          </div>
 
-</div>
+          <div class="hero-points">
+            <div class="point">تشتت الأدوات والأنظمة</div>
+            <div class="point">ضعف الرؤية داخل المدرسة</div>
+            <div class="point">متابعة غير مكتملة للطلاب</div>
+            <div class="point">تشغيل يومي غير منظم</div>
+          </div>
+        </div>
 
-</section>
-<section class="section section-soft">
+        <div class="hero-side">
+          <div class="hero-card">
+            <div class="hero-stat">01</div>
+            <h3>فوضى تشغيلية</h3>
+            <p>عمليات كثيرة تجري يوميًا دون نظام موحد يربطها بوضوح.</p>
+          </div>
 
-<div class="container">
+          <div class="hero-card">
+            <div class="hero-stat">02</div>
+            <h3>رؤية ناقصة</h3>
+            <p>الإدارة والمعلم لا يملكان صورة مكتملة عن واقع التعلم داخل المدرسة.</p>
+          </div>
 
-<h2 class="section-title">
-تحديات تواجه المدارس اليوم
-</h2>
+          <div class="hero-card">
+            <div class="hero-stat">03</div>
+            <h3>أثر ضعيف</h3>
+            <p>حين يغيب النظام الواضح، يصبح تحسين الجودة التعليمية أصعب بكثير.</p>
+          </div>
+        </div>
 
-<p class="section-description">
-تواجه المدارس تحديات متعددة تؤثر على جودة التعليم
-وكفاءة الإدارة واستمرارية العملية التعليمية.
-</p>
+      </div>
 
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>
-إدارة غير مترابطة
-</h3>
-
-<p class="section-description">
-تعتمد المدارس على أدوات منفصلة لا تتكامل
-مع بعضها البعض.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-متابعة محدودة
-</h3>
-
-<p class="section-description">
-صعوبة متابعة أداء الطلاب بشكل واضح
-ومستمر.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-بيانات غير منظمة
-</h3>
-
-<p class="section-description">
-البيانات التعليمية موزعة وغير مترابطة.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-ضغط إداري
-</h3>
-
-<p class="section-description">
-الأعمال الإدارية تستهلك وقت المعلمين.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-ضعف التواصل
-</h3>
-
-<p class="section-description">
-تواصل محدود بين المدرسة والطلاب.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-صعوبة التوسع
-</h3>
-
-<p class="section-description">
-من الصعب توسيع النظام التعليمي.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+    </div>
+  </div>
 </section>
 <section class="section">
-
-<div class="container">
-
-<h2 class="section-title">
-مشكلات تقنية تؤثر على التعليم
-</h2>
-
-<p class="section-description">
-إلى جانب التحديات الإدارية، تواجه المدارس مشكلات تقنية
-تجعل استخدام الأنظمة التعليمية أمراً صعباً أو غير مستدام.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>
-الاعتماد على الإنترنت
-</h3>
-
-<p class="section-description">
-معظم الأنظمة التعليمية تحتاج اتصال دائم بالإنترنت،
-وهو أمر غير متوفر دائماً.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-أنظمة معقدة
-</h3>
-
-<p class="section-description">
-بعض الأنظمة التعليمية معقدة وتحتاج تدريب طويل.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-أجهزة ضعيفة
-</h3>
-
-<p class="section-description">
-العديد من المدارس تستخدم أجهزة محدودة الإمكانيات.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-أنظمة غير مستقرة
-</h3>
-
-<p class="section-description">
-بعض الأنظمة لا تعمل بثبات داخل البيئة التعليمية.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-تكلفة عالية
-</h3>
-
-<p class="section-description">
-الأنظمة التعليمية غالباً مكلفة للمدارس.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-ضعف التكامل
-</h3>
-
-<p class="section-description">
-صعوبة ربط الأنظمة التعليمية ببعضها.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft">
-
-<div class="container">
-
-<h2 class="section-title">
-مشكلات تؤثر على المعلمين
-</h2>
-
-<p class="section-description">
-المعلمون هم أساس العملية التعليمية، لكنهم يواجهون
-تحديات تجعل التركيز على التعليم نفسه أمراً صعباً.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>
-عبء إداري كبير
-</h3>
-
-<p class="section-description">
-يقضي المعلم وقتاً كبيراً في الأعمال الإدارية.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-متابعة يدوية
-</h3>
-
-<p class="section-description">
-متابعة الطلاب تتم غالباً بشكل يدوي.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-ضعف الأدوات التعليمية
-</h3>
-
-<p class="section-description">
-الأدوات الحالية لا تساعد المعلم بشكل كافٍ.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-تنظيم صعب
-</h3>
-
-<p class="section-description">
-تنظيم الدروس والمتابعة يحتاج وقت كبير.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-ضعف التواصل
-</h3>
-
-<p class="section-description">
-التواصل مع الطلاب والإدارة غير منظم.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-ضغط يومي
-</h3>
-
-<p class="section-description">
-العمل اليومي للمعلم مليء بالتحديات.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">واقع التعليم</div>
+      <h2 class="section-title">
+        أين تكمن المشكلة الحقيقية
+      </h2>
+      <p class="section-description">
+        المشكلة ليست في نقص الحلول، بل في غياب نظام متكامل
+        يربط التعليم، والإدارة، والمتابعة، واتخاذ القرار.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="card">
+        <h3>أنظمة منفصلة</h3>
+        <p>
+          تستخدم المدارس أدوات متعددة غير مترابطة
+          مما يؤدي إلى تعقيد كبير في العمل اليومي.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>متابعة ضعيفة</h3>
+        <p>
+          لا توجد متابعة واضحة لمستوى الطلاب
+          بشكل مستمر ومنظم.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>قرارات غير دقيقة</h3>
+        <p>
+          غياب البيانات الواضحة يجعل اتخاذ القرار
+          أكثر صعوبة داخل المدرسة.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
+
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">المشكلات اليومية</div>
+      <h2 class="section-title">
+        ما الذي يحدث داخل المدارس
+      </h2>
+      <p class="section-description">
+        التحديات اليومية داخل المدارس تؤثر مباشرة
+        على جودة التعليم.
+      </p>
+    </div>
+
+    <div class="grid grid-4">
+
+      <div class="card">
+        <h3>غياب الوضوح</h3>
+        <p>
+          صعوبة معرفة مستوى الطلاب
+          بشكل دقيق.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>تشتيت العمل</h3>
+        <p>
+          توزيع المهام بدون
+          نظام واضح.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>ضعف التنظيم</h3>
+        <p>
+          عمليات متعددة بدون
+          ترابط واضح.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>صعوبة المتابعة</h3>
+        <p>
+          متابعة الطلاب تحتاج
+          وقتًا وجهدًا كبيرًا.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 
 <section class="section">
+  <div class="container">
 
-<div class="container">
+    <div class="section-header">
+      <div class="section-kicker">أثر المشكلة</div>
+      <h2 class="section-title">
+        كيف تؤثر هذه المشكلة
+      </h2>
+      <p class="section-description">
+        عندما لا يكون هناك نظام واضح،
+        يصبح تحسين التعليم أكثر صعوبة.
+      </p>
+    </div>
 
-<h2 class="section-title">
-مشكلات تؤثر على الطلاب
-</h2>
+    <div class="grid grid-2">
 
-<p class="section-description">
-يواجه الطلاب تحديات تؤثر على جودة التعلم
-وتجربة التعليم اليومية.
-</p>
+      <div class="highlight-box">
+        <h3>تراجع جودة التعليم</h3>
+        <p>
+          غياب النظام يؤثر على
+          مستوى التعليم.
+        </p>
+      </div>
 
+      <div class="highlight-box">
+        <h3>زيادة العبء الإداري</h3>
+        <p>
+          الإدارة تواجه صعوبة
+          في تنظيم العمل.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="highlight-box">
+        <h3>ضعف متابعة الطلاب</h3>
+        <p>
+          الطلاب لا يحصلون على
+          متابعة كافية.
+        </p>
+      </div>
 
+      <div class="highlight-box">
+        <h3>صعوبة التطوير</h3>
+        <p>
+          يصبح تطوير المدرسة
+          أكثر تعقيدًا.
+        </p>
+      </div>
 
-<div class="card">
-<h3>متابعة محدودة</h3>
-<p class="section-description">
-لا يحصل الطلاب على متابعة واضحة.
-</p>
-</div>
+    </div>
 
-
-<div class="card">
-<h3>محتوى غير منظم</h3>
-<p class="section-description">
-المحتوى التعليمي غير مرتب.
-</p>
-</div>
-
-
-<div class="card">
-<h3>ضعف التفاعل</h3>
-<p class="section-description">
-قلة التفاعل داخل العملية التعليمية.
-</p>
-</div>
-
-
-<div class="card">
-<h3>تجربة غير واضحة</h3>
-<p class="section-description">
-صعوبة فهم مسار التعلم.
-</p>
-</div>
-
-
-<div class="card">
-<h3>ضعف التحفيز</h3>
-<p class="section-description">
-الطلاب يحتاجون أدوات تحفيزية.
-</p>
-</div>
-
-
-<div class="card">
-<h3>عدم وضوح التقدم</h3>
-<p class="section-description">
-صعوبة معرفة مستوى التقدم.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
-<section class="section section-soft">
+<section class="section">
+  <div class="container">
 
-<div class="container">
+    <div class="section-header">
+      <div class="section-kicker">حجم المشكلة</div>
+      <h2 class="section-title">
+        المشكلة ليست في مدرسة واحدة
+      </h2>
+      <p class="section-description">
+        هذه التحديات تتكرر في عدد كبير من المدارس،
+        مما يجعل الحاجة إلى نظام واضح أكثر أهمية.
+      </p>
+    </div>
 
-<h2 class="section-title">
-مشكلات تؤثر على الإدارة المدرسية
-</h2>
+    <div class="grid grid-3">
 
-<p class="section-description">
-تعاني الإدارات المدرسية من صعوبة في تنظيم العمليات التعليمية
-بسبب غياب نظام موحد يدير المدرسة بشكل متكامل.
-</p>
+      <div class="card">
+        <h3>مدارس متعددة</h3>
+        <p>
+          التحديات تظهر في مدارس مختلفة
+          بمستويات متنوعة.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>بيئات مختلفة</h3>
+        <p>
+          المشكلة تظهر في بيئات
+          تعليمية متعددة.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>نفس النتيجة</h3>
+        <p>
+          رغم اختلاف الظروف،
+          تبقى المشكلة واحدة.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-<h3>بيانات غير واضحة</h3>
-<p class="section-description">
-صعوبة الوصول إلى بيانات دقيقة للطلاب.
-</p>
-</div>
-
-
-<div class="card">
-<h3>تقارير محدودة</h3>
-<p class="section-description">
-التقارير التعليمية غير واضحة أو غير متوفرة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>صعوبة اتخاذ القرار</h3>
-<p class="section-description">
-نقص البيانات يجعل القرار أصعب.
-</p>
-</div>
-
-
-<div class="card">
-<h3>متابعة غير مركزية</h3>
-<p class="section-description">
-المتابعة موزعة وغير منظمة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>تنظيم ضعيف</h3>
-<p class="section-description">
-تنظيم الجداول والعمليات التعليمية صعب.
-</p>
-</div>
-
-
-<div class="card">
-<h3>تحديات التوسع</h3>
-<p class="section-description">
-إدارة عدة مدارس أمر معقد.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
+
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">لماذا الآن</div>
+      <h2 class="section-title">
+        الحاجة إلى التغيير أصبحت واضحة
+      </h2>
+      <p class="section-description">
+        التعليم يتغير بسرعة،
+        والأنظمة التقليدية لم تعد كافية.
+      </p>
+    </div>
+
+    <div class="grid grid-4">
+
+      <div class="card">
+        <h3>تزايد التعقيد</h3>
+        <p>
+          العمليات التعليمية
+          أصبحت أكثر تعقيدًا.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>نمو البيانات</h3>
+        <p>
+          المدارس تحتاج
+          لإدارة بيانات أكثر.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>توقعات أعلى</h3>
+        <p>
+          المجتمع يتوقع
+          تعليمًا أفضل.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>توسع التعليم</h3>
+        <p>
+          المدارس تحتاج
+          إلى أنظمة قابلة للنمو.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 
 <section class="section">
+  <div class="container">
 
-<div class="container">
+    <div class="section-header">
+      <div class="section-kicker">النتيجة</div>
+      <h2 class="section-title">
+        بدون نظام واضح
+      </h2>
+      <p class="section-description">
+        تستمر التحديات في التأثير
+        على جودة التعليم.
+      </p>
+    </div>
 
-<h2 class="section-title">
-المشكلة الأساسية
-</h2>
+    <div class="grid grid-2">
 
-<p class="section-description">
-المشكلة ليست فقط في نقص الأدوات،
-بل في غياب نظام تشغيل تعليمي متكامل
-يربط كل عناصر المدرسة في بيئة واحدة.
-</p>
+      <div class="highlight-box">
+        <h3>تشتت العملية التعليمية</h3>
+        <p>
+          التعليم يصبح أقل وضوحًا
+          داخل المدرسة.
+        </p>
+      </div>
 
+      <div class="highlight-box">
+        <h3>بطء التطوير</h3>
+        <p>
+          تطوير التعليم
+          يصبح أكثر صعوبة.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="highlight-box">
+        <h3>ضعف النتائج</h3>
+        <p>
+          نتائج الطلاب
+          تتأثر سلبًا.
+        </p>
+      </div>
 
+      <div class="highlight-box">
+        <h3>غياب الرؤية</h3>
+        <p>
+          صعوبة تحديد
+          اتجاه التطوير.
+        </p>
+      </div>
 
-<div class="card">
-<h3>أدوات منفصلة</h3>
-<p class="section-description">
-كل نظام يعمل بشكل منفصل.
-</p>
-</div>
+    </div>
 
-
-<div class="card">
-<h3>غياب التكامل</h3>
-<p class="section-description">
-عدم وجود بيئة تعليمية موحدة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>إدارة معقدة</h3>
-<p class="section-description">
-الإدارة تحتاج حلول أبسط.
-</p>
-</div>
-
-
-<div class="card">
-<h3>تجربة تعليمية ضعيفة</h3>
-<p class="section-description">
-الطالب والمعلم يعانيان من النظام الحالي.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
-<section class="section section-soft">
+<section class="section">
+  <div class="container">
 
-<div class="container">
+    <div class="section-header">
+      <div class="section-kicker">الخلاصة</div>
+      <h2 class="section-title">
+        المشكلة ليست نقص أدوات… بل غياب نظام
+      </h2>
+      <p class="section-description">
+        المدارس اليوم لا تحتاج المزيد من الأدوات المنفصلة،
+        بل تحتاج إلى نظام تشغيل تعليمي موحد يربط كل شيء
+        داخل بيئة واحدة واضحة ومستقرة.
+      </p>
+    </div>
 
-<div style="text-align:center;max-width:760px;margin:auto;">
+    <div class="grid grid-3">
 
-<h2 class="section-title">
-هناك حاجة إلى نظام تعليمي جديد
-</h2>
+      <div class="card">
+        <h3>الوضوح</h3>
+        <p>
+          توفير رؤية واضحة للعملية التعليمية
+          داخل المدرسة.
+        </p>
+      </div>
 
-<p class="section-description" style="margin-top:20px;">
-كل هذه التحديات تشير إلى حاجة واضحة لنظام تعليمي متكامل
-يربط المدرسة، المعلم، والطالب في منصة واحدة.
-وهنا يأتي دور Madaris AI لبناء نظام تشغيل تعليمي
-واضح، منظم، وقابل للتوسع.
-</p>
+      <div class="card">
+        <h3>التكامل</h3>
+        <p>
+          ربط جميع عناصر التعليم
+          في نظام واحد.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>الاستمرارية</h3>
+        <p>
+          بناء نظام يعمل
+          على المدى الطويل.
+        </p>
+      </div>
 
-<div style="margin-top:40px;">
+    </div>
 
-
-<a href="/solution.html" class="btn btn-primary">
-اكتشف الحل
-</a>
-
-
-<a href="/platform.html"
-class="btn btn-secondary"
-style="margin-right:15px;">
-استكشف المنصة
-</a>
-
-
-</div>
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
+
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="highlight-box">
+
+      <div class="section-header">
+        <div class="section-kicker">الخطوة التالية</div>
+        <h2 class="section-title">
+          تعرف على الحل
+        </h2>
+        <p class="section-description">
+          Madaris AI تقدم نظام تشغيل تعليمي
+          يعالج هذه التحديات بشكل متكامل.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+
+        <a href="/solution.html" class="btn btn-primary">
+          استكشف الحل
+        </a>
+
+        <a href="/platform.html" class="btn btn-secondary">
+          استكشف المنصة
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 
 <footer class="footer">
 
-<div class="container">
+  <div class="container">
 
-<p>
-© <span id="year"></span> Madaris AI  
-جميع الحقوق محفوظة
-</p>
+    <div class="grid" style="
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:30px;
+      text-align:right;
+    ">
 
-</div>
+      <div>
+        <h3 style="margin-bottom:14px;">Madaris AI</h3>
+        <p class="section-description">
+          منصة تشغيل تعليمية موحدة تهدف إلى بناء مستقبل التعليم
+          عبر بنية تقنية قوية وقابلة للتوسع.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">المنتج</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/platform.html">المنصة</a>
+          <a href="/technology.html">التقنية</a>
+          <a href="/schools.html">للمدارس</a>
+          <a href="/use-cases.html">حالات الاستخدام</a>
+          <a href="/faq.html">الأسئلة الشائعة</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">الشركة</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/about.html">من نحن</a>
+          <a href="/vision.html">الرؤية</a>
+          <a href="/partners.html">الشركاء</a>
+          <a href="/problem.html">المشكلة</a>
+          <a href="/solution.html">الحل</a>
+          <a href="/contact.html">تواصل</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">القانوني</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/security.html">الأمان</a>
+          <a href="/privacy.html">الخصوصية</a>
+          <a href="/terms.html">الشروط والأحكام</a>
+          <a href="/app/login.html">دخول المنصة</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+      margin-top:40px;
+      padding-top:20px;
+      border-top:1px solid var(--border);
+      text-align:center;
+      color:var(--muted);
+    ">
+      © <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+    </div>
+
+  </div>
 
 </footer>
 
 
-
 <script>
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const year = document.getElementById("year");
+
+if(year){
+  year.textContent = new Date().getFullYear();
+}
+
+const toggle = document.getElementById("menuToggle");
+const mobile = document.getElementById("mobileMenu");
+
+if(toggle){
+  toggle.addEventListener("click",()=>{
+    mobile.classList.toggle("active");
+  });
+}
 
 </script>
 
-</body>
+</main>
 
-</html>  
+</body>
+</html>
