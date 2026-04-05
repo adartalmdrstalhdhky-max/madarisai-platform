@@ -4,9 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Madaris AI | إنشاء حساب</title>
-
   <meta name="theme-color" content="#07111f" />
   <meta
     name="description"
@@ -335,6 +333,12 @@
       transform:translateY(-1px);
     }
 
+    .btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+      transform:none;
+    }
+
     .btn-primary{
       background:linear-gradient(135deg, #85fdff, #67d8ff);
       color:#07111f;
@@ -456,7 +460,7 @@
 
       <section class="hero-card">
 
-        <div class="eyebrow">إنشاء حساب جديد</div>
+        <div class="eyebrow">استعادة إنشاء الحساب القديم</div>
 
         <h1 class="hero-title">
           ابدأ داخل
@@ -464,16 +468,16 @@
         </h1>
 
         <p class="hero-desc">
-          هذه الصفحة مربوطة على نفس Firebase الذي اشتغلناه سابقًا.
-          سننشئ الحساب في Firebase Auth، ثم نحفظ بيانات المستخدم داخل
-          Firestore ضمن المجموعات المناسبة مثل <strong>users</strong> و <strong>schools</strong>.
+          هذه الصفحة تستخدم نفس Firebase الحقيقي الموجود داخل
+          <strong>app/core/firebase-config.js</strong>
+          وتحفظ الحساب داخل <strong>users</strong>، ومع المدرسة أيضًا داخل <strong>schools</strong>.
         </p>
 
         <div class="hero-points">
-          <div class="hero-point">Firebase Auth</div>
+          <div class="hero-point">Firebase الحقيقي</div>
           <div class="hero-point">Firestore Users</div>
-          <div class="hero-point">أدوار متعددة</div>
-          <div class="hero-point">جاهز للتوسع لاحقًا</div>
+          <div class="hero-point">Schools عند الحاجة</div>
+          <div class="hero-point">متوافق مع login.js القديم</div>
         </div>
 
       </section>
@@ -674,7 +678,7 @@
               placeholder="اختياري"
             />
             <div class="helper">
-              الجزء الثاني سيحتوي على ربط Firebase الحقيقي: Auth + Firestore.
+              هذه النسخة تعتمد على Firebase Config الحقيقي الموجود أصلًا في المشروع.
             </div>
           </div>
 
@@ -696,226 +700,160 @@
     </div>
 
   </main>
-  </div>
-  <!-- Firebase -->
+
+</div>
+
 <script type="module">
+  import { app, auth, db } from "./core/firebase-config.js";
+  import {
+    createUserWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    doc,
+    setDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  const form = document.getElementById("registerForm");
+  const role = document.getElementById("role");
 
+  const schoolFields = document.getElementById("schoolFields");
+  const teacherFields = document.getElementById("teacherFields");
+  const studentFields = document.getElementById("studentFields");
 
-/* Firebase Config (نفس المشروع السابق) */
+  const statusBox = document.getElementById("statusBox");
+  const registerBtn = document.getElementById("registerBtn");
 
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
-};
-
-
-/* Initialize */
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-
-/* Elements */
-
-const form = document.getElementById("registerForm");
-const role = document.getElementById("role");
-
-const schoolFields = document.getElementById("schoolFields");
-const teacherFields = document.getElementById("teacherFields");
-const studentFields = document.getElementById("studentFields");
-
-const statusBox = document.getElementById("statusBox");
-const registerBtn = document.getElementById("registerBtn");
-
-
-/* Role Switch */
-
-role.addEventListener("change", () => {
-
-  schoolFields.classList.add("hidden");
-  teacherFields.classList.add("hidden");
-  studentFields.classList.add("hidden");
-
-  if(role.value === "school"){
-    schoolFields.classList.remove("hidden");
+  function showError(msg){
+    statusBox.className = "status-box show error";
+    statusBox.textContent = msg;
   }
 
-  if(role.value === "teacher"){
-    teacherFields.classList.remove("hidden");
+  function showSuccess(msg){
+    statusBox.className = "status-box show success";
+    statusBox.textContent = msg;
   }
 
-  if(role.value === "student"){
-    studentFields.classList.remove("hidden");
-  }
+  role.addEventListener("change", () => {
+    schoolFields.classList.add("hidden");
+    teacherFields.classList.add("hidden");
+    studentFields.classList.add("hidden");
 
-});
+    if(role.value === "school") schoolFields.classList.remove("hidden");
+    if(role.value === "teacher") teacherFields.classList.remove("hidden");
+    if(role.value === "student") studentFields.classList.remove("hidden");
+  });
 
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-/* Helper */
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const phone = document.getElementById("phone").value.trim();
+    const roleValue = role.value;
+    const accountNote = document.getElementById("accountNote").value.trim();
 
-function showError(msg){
-
-  statusBox.className = "status-box show error";
-  statusBox.textContent = msg;
-
-}
-
-function showSuccess(msg){
-
-  statusBox.className = "status-box show success";
-  statusBox.textContent = msg;
-
-}
-
-
-
-/* Register */
-
-form.addEventListener("submit", async (e) => {
-
-  e.preventDefault();
-
-  const fullName = document.getElementById("fullName").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
-  const phone = document.getElementById("phone").value.trim();
-  const roleValue = role.value;
-
-  if(password !== confirmPassword){
-    showError("كلمة المرور غير متطابقة");
-    return;
-  }
-
-  try{
-
-    registerBtn.disabled = true;
-    registerBtn.textContent = "جاري إنشاء الحساب...";
-
-
-    /* Firebase Auth */
-
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    const user = userCredential.user;
-
-
-    /* Update Profile */
-
-    await updateProfile(user,{
-      displayName: fullName
-    });
-
-
-    /* Base User Data */
-
-    const userData = {
-      uid: user.uid,
-      name: fullName,
-      email: email,
-      phone: phone || null,
-      role: roleValue,
-      createdAt: serverTimestamp(),
-      status: "active"
-    };
-
-
-    /* Role Specific */
-
-    if(roleValue === "school"){
-
-      userData.schoolName =
-        document.getElementById("schoolName").value || null;
-
-      userData.schoolCode =
-        document.getElementById("schoolCode").value || null;
-
-      userData.schoolAddress =
-        document.getElementById("schoolAddress").value || null;
+    if(password !== confirmPassword){
+      showError("كلمة المرور غير متطابقة");
+      return;
     }
 
-
-    if(roleValue === "teacher"){
-
-      userData.subject =
-        document.getElementById("teacherSubject").value || null;
-
-      userData.schoolId =
-        document.getElementById("teacherSchoolId").value || null;
+    if(password.length < 8){
+      showError("كلمة المرور يجب أن تكون 8 أحرف أو أكثر");
+      return;
     }
 
-
-    if(roleValue === "student"){
-
-      userData.schoolId =
-        document.getElementById("studentSchoolId").value || null;
-
-      userData.classId =
-        document.getElementById("studentClassId").value || null;
+    if(!roleValue){
+      showError("اختر نوع الحساب");
+      return;
     }
 
+    try{
+      registerBtn.disabled = true;
+      registerBtn.textContent = "جاري إنشاء الحساب...";
 
-    /* Firestore */
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const firebaseUser = userCredential.user;
 
-    await setDoc(
-      doc(db,"users",user.uid),
-      userData
-    );
+      await updateProfile(firebaseUser, {
+        displayName: fullName
+      });
 
+      const baseUserData = {
+        uid: firebaseUser.uid,
+        fullName,
+        name: fullName,
+        email,
+        phone: phone || "",
+        role: roleValue,
+        note: accountNote || "",
+        status: "active",
+        createdAt: serverTimestamp()
+      };
 
-    showSuccess("تم إنشاء الحساب بنجاح");
+      if(roleValue === "school"){
+        const schoolName = document.getElementById("schoolName").value.trim();
+        const schoolCode = document.getElementById("schoolCode").value.trim();
+        const schoolAddress = document.getElementById("schoolAddress").value.trim();
 
+        const schoolData = {
+          schoolId: firebaseUser.uid,
+          ownerUid: firebaseUser.uid,
+          schoolName: schoolName || fullName,
+          schoolCode: schoolCode || "",
+          schoolAddress: schoolAddress || "",
+          email,
+          phone: phone || "",
+          status: "active",
+          createdAt: serverTimestamp()
+        };
 
+        baseUserData.schoolId = firebaseUser.uid;
+        baseUserData.schoolName = schoolName || fullName;
 
-    /* Redirect */
+        await setDoc(doc(db, "schools", firebaseUser.uid), schoolData);
+      }
 
-    setTimeout(()=>{
+      if(roleValue === "teacher"){
+        baseUserData.subject = document.getElementById("teacherSubject").value.trim() || "";
+        baseUserData.schoolId = document.getElementById("teacherSchoolId").value.trim() || "";
+      }
 
-      window.location.href="/app/dashboard.html";
+      if(roleValue === "student"){
+        baseUserData.schoolId = document.getElementById("studentSchoolId").value.trim() || "";
+        baseUserData.classId = document.getElementById("studentClassId").value.trim() || "";
+      }
 
-    },1500);
+    
+      await setDoc(doc(db, "users", firebaseUser.uid), baseUserData);
 
+      showSuccess("تم إنشاء الحساب بنجاح");
 
-  }catch(error){
+      setTimeout(() => {
+        window.location.href = "/app/login.html";
+      }, 1400);
 
-    console.error(error);
+    } catch(error){
+      console.error("Register error:", error);
 
-    showError(error.message);
-
-  }
-
-  finally{
-
-    registerBtn.disabled = false;
-    registerBtn.textContent = "إنشاء الحساب";
-
-  }
-
-});
-
+      if(error.code === "auth/email-already-in-use"){
+        showError("هذا البريد مستخدم بالفعل");
+      } else if(error.code === "auth/invalid-email"){
+        showError("البريد الإلكتروني غير صالح");
+      } else if(error.code === "auth/weak-password"){
+        showError("كلمة المرور ضعيفة");
+      } else {
+        showError("فشل إنشاء الحساب. تحقق من البيانات والإعدادات");
+      }
+    } finally {
+      registerBtn.disabled = false;
+      registerBtn.textContent = "إنشاء الحساب";
+    }
+  });
 </script>
 
 </body>
