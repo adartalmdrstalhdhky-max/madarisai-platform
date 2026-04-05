@@ -2,814 +2,1070 @@
 <html lang="ar" dir="rtl">
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madaris AI | الرؤية</title>
 
-<title>الرؤية | Madaris AI</title>
+  <meta
+    name="description"
+    content="رؤية Madaris AI لبناء نظام تشغيل تعليم موحد يساعد المدارس والمؤسسات التعليمية على العمل بوضوح، واستمرارية، وقابلية توسع حقيقية."
+  />
 
-<meta name="description" content="رؤية Madaris AI — بناء نظام تشغيل للتعليم يساعد المدارس على العمل بوضوح، ويقود تحول التعليم من الفوضى إلى بنية تعليمية قوية وقابلة للتوسع">
+  <meta name="theme-color" content="#07111f" />
 
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-<style>
+  <style>
+    :root{
+      --bg:#07111f;
+      --bg-soft:#0b1728;
+      --panel:rgba(15,29,52,.82);
+      --panel-2:rgba(19,38,66,.92);
+      --border:rgba(255,255,255,.08);
+      --line-strong:rgba(255,255,255,.14);
 
-:root{
+      --text:#ffffff;
+      --muted:#8ab3c7;
+      --muted-2:#b7d3e4;
 
---bg:#07111f;
---bg-soft:#0b1728;
---text:#ffffff;
---muted:#a8b3c7;
---primary:#5fdcff;
---secondary:#7c67ff;
---card:rgba(255,255,255,0.04);
---border:rgba(255,255,255,0.08);
+      --primary:#85fdff;
+      --primary-strong:#67d8ff;
+      --secondary:#87d64f;
+      --accent:#82abea;
 
-}
+      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
+      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --radius-sm:12px;
 
-body{
-font-family:"Tajawal",sans-serif;
-background:var(--bg);
-color:var(--text);
-line-height:1.75;
-}
+      --container:min(1200px,92%);
+    }
 
-.container{
-width:90%;
-max-width:1200px;
-margin:auto;
-}
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-.section{
-padding:90px 0;
-}
+    html{
+      scroll-behavior:smooth;
+    }
 
-.section-soft{
-background:var(--bg-soft);
-}
+    body{
+      font-family:
+        "Tajawal",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
+        radial-gradient(circle at left 20%, rgba(130,171,234,.06), transparent 18%),
+        linear-gradient(180deg, #07111f 0%, #081728 100%);
+      color:var(--text);
+      line-height:1.9;
+      overflow-x:hidden;
+    }
 
-.section-title{
-font-size:38px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.3;
-}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.section-description{
-color:var(--muted);
-max-width:760px;
-}
+    img{
+      display:block;
+      max-width:100%;
+    }
 
-.grid{
-display:grid;
-gap:20px;
-}
+    .container{
+      width:var(--container);
+      margin:auto;
+    }
 
-.card{
-background:var(--card);
-border:1px solid var(--border);
-border-radius:18px;
-padding:25px;
-}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(7,17,31,.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:20px 0;
+    }
 
-.btn{
-display:inline-block;
-padding:14px 26px;
-border-radius:40px;
-font-weight:700;
-text-decoration:none;
-}
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
 
-.btn-primary{
-background:linear-gradient(135deg,#5fdcff,#7c67ff);
-color:white;
-}
+    .logo{
+      font-weight:900;
+      font-size:22px;
+      line-height:1.2;
+      letter-spacing:.2px;
+      flex-shrink:0;
+    }
 
-.btn-secondary{
-border:1px solid var(--border);
-color:white;
-}
+    .logo a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.topbar{
-padding:20px 0;
-border-bottom:1px solid var(--border);
-}
+    .nav-links{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
 
-.nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:20px;
-}
+    .nav-links a{
+      color:var(--muted);
+      text-decoration:none;
+      transition:.25s ease;
+      font-weight:700;
+      font-size:15px;
+    }
 
-.logo{
-font-weight:900;
-font-size:22px;
-}
+    .nav-links a:hover{
+      color:white;
+    }
 
-.nav-links{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-}
+    .menu-toggle{
+      display:none;
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      font-size:26px;
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
 
-.nav-links a{
-color:var(--muted);
-text-decoration:none;
-}
+    .mobile-menu{
+      display:none;
+      margin-top:16px;
+      border-top:1px solid var(--border);
+      padding-top:16px;
+    }
 
-.nav-links a:hover{
-color:white;
-}
+    .mobile-menu.active{
+      display:block;
+    }
 
-.hero{
-padding:80px 0;
-}
+    .mobile-menu-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px 18px;
+      width:100%;
+    }
 
-.hero h1{
-font-size:44px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.25;
-}
+    .mobile-menu-grid a{
+      display:block;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      color:#e8f1fb;
+      font-weight:700;
+      text-align:center;
+    }
 
-.hero p{
-color:var(--muted);
-margin-bottom:30px;
-max-width:760px;
-}
+    .hero{
+      position:relative;
+      padding:72px 0 42px;
+      overflow:hidden;
+    }
 
-.eyebrow{
-display:inline-block;
-padding:8px 14px;
-border-radius:999px;
-background:rgba(95,220,255,0.08);
-border:1px solid rgba(95,220,255,0.16);
-font-size:14px;
-font-weight:700;
-margin-bottom:20px;
-color:#d7f7ff;
-}
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:auto auto -120px -120px;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(133,253,255,.10), transparent 68%);
+      pointer-events:none;
+    }
 
-.footer{
-border-top:1px solid var(--border);
-padding:30px 0;
-margin-top:40px;
-color:var(--muted);
-text-align:center;
-}
+    .hero-shell{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.14), transparent 26%),
+        linear-gradient(180deg, rgba(10,24,48,.98) 0%, rgba(10,22,39,.98) 100%);
+      box-shadow:var(--shadow-xl);
+      padding:42px 30px 34px;
+    }
 
-@media(max-width:900px){
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
 
-.hero h1{
-font-size:32px;
-}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:52px;
+      border-radius:999px;
+      padding:10px 20px;
+      background:rgba(133,253,255,.06);
+      border:1px solid rgba(133,253,255,.16);
+      color:#e9fcff;
+      font-weight:800;
+      font-size:15px;
+      margin-bottom:22px;
+    }
 
-.section-title{
-font-size:28px;
-}
+    .hero-title{
+      font-size:clamp(40px,6vw,78px);
+      line-height:1.04;
+      font-weight:950;
+      letter-spacing:-.03em;
+      margin-bottom:18px;
+    }
 
-.nav{
-flex-direction:column;
-align-items:flex-start;
-}
+    .hero-title span{
+      color:var(--primary);
+    }
 
-.nav-links{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px 18px;
-width:100%;
-}
+    .hero-desc{
+      color:#d3dfec;
+      font-size:clamp(18px,2vw,22px);
+      max-width:780px;
+      margin-bottom:26px;
+    }
 
-}
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
 
-</style>
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px 24px;
+      border-radius:999px;
+      font-weight:800;
+      border:1px solid transparent;
+      transition:.22s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
 
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #85fdff, #67d8ff);
+      color:#07111f;
+      box-shadow:0 14px 30px rgba(103,216,255,.24);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
+      color:white;
+      border-color:var(--border);
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .point{
+      padding:14px 16px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      color:#dce8f5;
+      font-weight:700;
+      font-size:15px;
+    }
+
+    .hero-side{
+      display:grid;
+      gap:14px;
+    }
+
+    .hero-card{
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      padding:22px;
+      box-shadow:var(--shadow-lg);
+    }
+
+    .hero-card h3{
+      margin-bottom:8px;
+      font-size:20px;
+      line-height:1.3;
+    }
+
+    .hero-card p{
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .hero-stat{
+      font-size:42px;
+      font-weight:950;
+      line-height:1;
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+
+    .section{
+      padding:60px 0;
+    }
+
+    .section-header{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:24px;
+    }
+
+    .section-kicker{
+      color:var(--primary);
+      font-weight:900;
+      font-size:15px;
+    }
+
+    .section-title{
+      font-size:clamp(28px,4vw,48px);
+      line-height:1.15;
+      font-weight:950;
+      letter-spacing:-.03em;
+    }
+
+    .section-description{
+      color:var(--muted);
+      font-size:18px;
+      max-width:900px;
+    }
+
+    .grid{
+      display:grid;
+      gap:20px;
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .grid-4{
+      grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.025));
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:24px;
+      min-height:100%;
+      box-shadow:var(--shadow-lg);
+      opacity:1;
+      transform:none;
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      font-size:22px;
+      line-height:1.3;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:16px;
+    }
+
+    .highlight-box{
+      padding:26px;
+      border-radius:24px;
+      border:1px solid var(--border);
+      background:
+        radial-gradient(circle at top left, rgba(133,253,255,.08), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+
+    .footer{
+      border-top:1px solid var(--border);
+      padding:40px 0 30px;
+      margin-top:40px;
+      color:var(--muted);
+    }
+
+    @media(max-width:1100px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .grid-4{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .grid-3{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:900px){
+      .nav{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .nav-links{
+        display:none;
+      }
+
+      .menu-toggle{
+        display:inline-flex;
+      }
+
+      .hero{
+        padding:34px 0 20px;
+      }
+
+      .hero-shell{
+        padding:26px 18px 22px;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+
+      .mobile-menu-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .mobile-menu-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-title{
+        font-size:42px;
+      }
+
+      .section-title{
+        font-size:32px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
 <header class="topbar">
 
-<div class="container nav">
+  <div class="container nav">
 
-<div class="logo">
-Madaris AI
-</div>
+    <div class="logo">
+      <a href="/" style="color:inherit;text-decoration:none;">Madaris AI</a>
+    </div>
 
-<div class="nav-links">
-<a href="/">الرئيسية</a>
-<a href="/platform.html">المنصة</a>
-<a href="/technology.html">التقنية</a>
-<a href="/schools.html">للمدارس</a>
-<a href="/partners.html">الشركاء</a>
-<a href="/about.html">من نحن</a>
-<a href="/contact.html">تواصل</a>
-</div>
+    <div class="nav-links">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+    </div>
 
-</div>
+    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+
+  </div>
+
+  <div class="container mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-grid">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+      <a href="/app/login.html">دخول المنصة</a>
+    </div>
+  </div>
 
 </header>
 
-
+<main>
 
 <section class="hero">
+  <div class="container">
+    <div class="hero-shell">
+
+      <div class="eyebrow">الرؤية</div>
+
+      <div class="hero-grid">
+
+        <div>
+          <h1 class="hero-title">
+            رؤيتنا هي بناء
+            <span>نظام تشغيل للتعليم</span>
+          </h1>
+
+          <p class="hero-desc">
+            Madaris AI تنطلق من فكرة واضحة:
+            التعليم لا يحتاج فقط إلى محتوى أو تطبيقات منفصلة،
+            بل إلى بنية تشغيل موحدة تجعل المدرسة أوضح،
+            وتمنح الطلاب والمعلمين والإدارة بيئة تعليمية متكاملة وقابلة للنمو.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/platform.html">استكشف المنصة</a>
+            <a class="btn btn-secondary" href="/contact.html">تواصل معنا</a>
+          </div>
+
+          <div class="hero-points">
+            <div class="point">تعليم أوضح وأقل فوضى</div>
+            <div class="point">بنية تعليمية قابلة للتوسع</div>
+            <div class="point">تشغيل من الواقع لا من الافتراض</div>
+            <div class="point">رؤية طويلة المدى للتعليم</div>
+          </div>
+        </div>
+
+        <div class="hero-side">
+
+          <div class="hero-card">
+            <div class="hero-stat">01</div>
+            <h3>وضوح</h3>
+            <p>نجعل التعليم أكثر وضوحًا للمدرسة، والإدارة، والمعلم، والطالب.</p>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-stat">02</div>
+            <h3>استمرارية</h3>
+            <p>نبني نظامًا يعمل في البيئات الواقعية ولا يتوقف عند أول عائق.</p>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-stat">03</div>
+            <h3>توسع</h3>
+            <p>نصمم من البداية لبنية يمكن أن تبدأ صغيرة ثم تنمو بثبات.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  </section>
+ <section class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">لماذا هذه الرؤية</div>
+      <h2 class="section-title">
+        التعليم اليوم يحتاج إلى نظام تشغيل
+      </h2>
+      <p class="section-description">
+        معظم الحلول التعليمية الحالية تقدم أدوات منفصلة:
+        منصة تعليمية، نظام درجات، نظام حضور، محتوى رقمي،
+        لكن المدرسة تحتاج إلى نظام متكامل يعمل كوحدة واحدة.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="card">
+        <h3>الأنظمة المتفرقة</h3>
+        <p>
+          المدارس تستخدم أدوات متعددة غير مترابطة،
+          مما يسبب تعقيدًا كبيرًا في الإدارة اليومية.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>غياب الوضوح</h3>
+        <p>
+          لا يوجد نظام موحد يوضح للمدرسة ما يحدث
+          داخل العملية التعليمية بشكل كامل.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>ضعف الاستمرارية</h3>
+        <p>
+          العديد من الحلول تتوقف أو تصبح غير فعالة
+          عند مواجهة ظروف واقعية.
+        </p>
+      </div>
+
+    </div>
 
-<div class="container">
-
-<div class="eyebrow">
-الرؤية
-</div>
-
-<h1>
-رؤيتنا ليست بناء تطبيق تعليمي فقط<br>
-بل بناء نظام تشغيل للتعليم
-</h1>
-
-<p>
-Madaris AI تنطلق من رؤية واضحة: التعليم لا يحتاج فقط إلى محتوى أو أدوات منفصلة،
-بل يحتاج إلى بنية تشغيل تعليمية متكاملة تساعد المدارس على العمل بوضوح،
-وتمنح الطلاب والمعلمين والإدارة نظامًا واحدًا مترابطًا وقابلًا للتوسع.
-</p>
-
-<a href="/platform.html" class="btn btn-primary">
-استكشف المنصة
-</a>
-
-</div>
-
-</section>
-<section class="section section-soft" id="vision-problem">
-
-<div class="container">
-
-<h2 class="section-title">
-المشكلة التي نراها
-</h2>
-
-<p class="section-description">
-في العديد من المدارس، تعمل الأنظمة التعليمية بشكل متفرق وغير مترابط،
-مما يؤدي إلى صعوبة في الإدارة، وضعف في المتابعة، وغياب رؤية واضحة
-للعملية التعليمية بالكامل.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>أنظمة متفرقة</h3>
-
-<p class="section-description">
-المدارس تستخدم أدوات منفصلة وغير مترابطة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>صعوبة المتابعة</h3>
-
-<p class="section-description">
-عدم وجود رؤية واضحة لتقدم الطلاب.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>إدارة معقدة</h3>
-
-<p class="section-description">
-العمليات المدرسية تتم بشكل غير منظم.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>ضعف البيانات</h3>
-
-<p class="section-description">
-غياب التحليل التعليمي المبني على بيانات.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<section class="section" id="vision-solution">
-
-<div class="container">
-
-<h2 class="section-title">
-رؤيتنا للحل
-</h2>
-
-<p class="section-description">
-نرى أن الحل يكمن في بناء منصة تشغيل تعليمية موحدة،
-تجمع جميع العمليات التعليمية داخل نظام واحد.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>منصة موحدة</h3>
-
-<p class="section-description">
-جميع العمليات داخل نظام واحد.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>رؤية واضحة</h3>
-
-<p class="section-description">
-متابعة شاملة للعملية التعليمية.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>إدارة ذكية</h3>
-
-<p class="section-description">
-تنظيم العمليات التعليمية.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تحليل البيانات</h3>
-
-<p class="section-description">
-قرارات تعليمية أفضل.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft" id="vision-future">
-
-<div class="container">
-
-<h2 class="section-title">
-مستقبل التعليم الذي نطمح إليه
-</h2>
-
-<p class="section-description">
-نطمح إلى بناء بيئة تعليمية متكاملة تعمل فيها المدارس
-بوضوح وتنظيم، ويستفيد فيها الطلاب والمعلمون والإدارة
-من نظام تشغيل تعليمي موحد.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-<h3>مدارس منظمة</h3>
-<p class="section-description">
-بيئة تعليمية تعمل بوضوح وتنظيم.
-</p>
-</div>
-
-
-<div class="card">
-<h3>تعلم أفضل</h3>
-<p class="section-description">
-تحسين تجربة التعلم للطلاب.
-</p>
-</div>
-
-
-<div class="card">
-<h3>إدارة فعالة</h3>
-<p class="section-description">
-تحسين إدارة المدرسة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>بيانات تعليمية</h3>
-<p class="section-description">
-رؤية واضحة للتعليم.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
 
+<section class="section section-alt">
+  <div class="container">
 
-<section class="section" id="vision-impact">
+    <div class="section-header">
+      <div class="section-kicker">كيف نختلف</div>
+      <h2 class="section-title">
+        Madaris AI ليست منصة فقط
+      </h2>
+      <p class="section-description">
+        Madaris AI هي نظام تشغيل للتعليم يربط
+        جميع مكونات المدرسة في بيئة واحدة متكاملة.
+      </p>
+    </div>
 
-<div class="container">
+    <div class="grid grid-2">
 
-<h2 class="section-title">
-الأثر الذي نهدف إليه
-</h2>
+      <div class="highlight-box">
 
-<p class="section-description">
-نهدف إلى تحسين التعليم من خلال بناء بنية تعليمية قوية
-تساعد المدارس على النمو والتطور.
-</p>
+        <h3>تشغيل التعليم</h3>
+        <p>
+          نعمل على بناء نظام يساعد المدرسة على
+          تشغيل التعليم بشكل واضح ومنظم.
+        </p>
 
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="highlight-box">
 
+        <h3>تجربة موحدة</h3>
+        <p>
+          الطالب، المعلم، والإدارة يعملون
+          داخل نفس البيئة التعليمية.
+        </p>
 
-<div class="card">
-<h3>تحسين التعليم</h3>
-<p class="section-description">
-رفع جودة التعليم.
-</p>
-</div>
+      </div>
 
+      <div class="highlight-box">
 
-<div class="card">
-<h3>تنظيم المدارس</h3>
-<p class="section-description">
-تنظيم العمل المدرسي.
-</p>
-</div>
+        <h3>قابلية التوسع</h3>
+        <p>
+          يبدأ النظام من مدرسة واحدة
+          ثم يمكن أن يتوسع إلى شبكات تعليمية كاملة.
+        </p>
 
+      </div>
 
-<div class="card">
-<h3>توسع تعليمي</h3>
-<p class="section-description">
-نشر المنصة في مدارس متعددة.
-</p>
-</div>
+      <div class="highlight-box">
 
+        <h3>بنية طويلة المدى</h3>
+        <p>
+          نصمم النظام ليبقى قابلًا للتطوير
+          لسنوات طويلة.
+        </p>
 
-<div class="card">
-<h3>تأثير طويل المدى</h3>
-<p class="section-description">
-تحسين التعليم بشكل مستدام.
-</p>
-</div>
+      </div>
 
+    </div>
 
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft" id="vision-principles">
-
-<div class="container">
-
-<h2 class="section-title">
-المبادئ التي نبني عليها
-</h2>
-
-<p class="section-description">
-تعتمد رؤية Madaris AI على مجموعة من المبادئ الأساسية التي توجه
-بناء المنصة وتطورها.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>الوضوح</h3>
-
-<p class="section-description">
-نؤمن بأن التعليم يجب أن يكون واضحاً ومنظماً.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>البساطة</h3>
-
-<p class="section-description">
-منصة سهلة الاستخدام للمدارس والمعلمين.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>القابلية للتوسع</h3>
-
-<p class="section-description">
-بنية تقنية تنمو مع المدارس.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>الاستدامة</h3>
-
-<p class="section-description">
-تحسين التعليم على المدى الطويل.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
 
+<section class="section">
+  <div class="container">
 
-<section class="section" id="vision-goals">
+    <div class="section-header">
+      <div class="section-kicker">أهداف الرؤية</div>
+      <h2 class="section-title">
+        ما الذي نريد تحقيقه
+      </h2>
+      <p class="section-description">
+        رؤية Madaris AI تهدف إلى إعادة تنظيم
+        العملية التعليمية بشكل واضح وقابل للتطور.
+      </p>
+    </div>
 
-<div class="container">
+    <div class="grid grid-4">
 
-<h2 class="section-title">
-أهدافنا
-</h2>
+      <div class="card">
+        <h3>تعليم أوضح</h3>
+        <p>
+          تقليل الفوضى في إدارة التعليم
+          داخل المدارس.
+        </p>
+      </div>
 
-<p class="section-description">
-نسعى لتحقيق مجموعة من الأهداف التعليمية والتقنية.
-</p>
+      <div class="card">
+        <h3>إدارة أسهل</h3>
+        <p>
+          تمكين الإدارة من متابعة العملية التعليمية
+          بشكل مباشر.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>تعلم أفضل</h3>
+        <p>
+          تحسين تجربة التعلم للطلاب
+          داخل المدرسة.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>نمو مستمر</h3>
+        <p>
+          بناء نظام يمكن تطويره
+          وتوسيعه مع الوقت.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-
-<h3>تنظيم التعليم</h3>
-
-<p class="section-description">
-بناء منصة تعليمية منظمة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تطوير المدارس</h3>
-
-<p class="section-description">
-مساعدة المدارس على النمو.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تحسين التعلم</h3>
-
-<p class="section-description">
-رفع جودة التعليم.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>بناء مستقبل التعليم</h3>
-
-<p class="section-description">
-بناء بنية تعليمية حديثة.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
-<section class="section section-soft" id="vision-roadmap">
+<section class="section">
+  <div class="container">
 
-<div class="container">
+    <div class="section-header">
+      <div class="section-kicker">الرؤية طويلة المدى</div>
+      <h2 class="section-title">
+        رؤية Madaris AI للمستقبل
+      </h2>
+      <p class="section-description">
+        Madaris AI ليست مشروعًا قصير المدى، بل رؤية طويلة
+        لبناء بنية تعليمية عالمية تبدأ من الواقع وتنمو بثبات.
+      </p>
+    </div>
 
-<h2 class="section-title">
-خارطة الرؤية
-</h2>
+    <div class="grid grid-3">
 
-<p class="section-description">
-رؤية Madaris AI تبدأ من مدرسة واحدة ثم تتوسع تدريجياً
-حتى تصل إلى شبكة تعليمية واسعة.
-</p>
+      <div class="card">
+        <h3>المدرسة الذكية</h3>
+        <p>
+          تحويل المدرسة التقليدية إلى بيئة تعليمية
+          واضحة ومترابطة.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>الشبكات التعليمية</h3>
+        <p>
+          ربط المدارس ضمن شبكات تعليمية
+          تعمل بتنسيق كامل.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>نظام تعليمي موحد</h3>
+        <p>
+          بناء بنية تعليمية قابلة للتوسع
+          عبر مناطق متعددة.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-<h3>المرحلة الأولى</h3>
-<p class="section-description">
-تطبيق المنصة في مدرسة واحدة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>المرحلة الثانية</h3>
-<p class="section-description">
-التوسع إلى عدة مدارس.
-</p>
-</div>
-
-
-<div class="card">
-<h3>المرحلة الثالثة</h3>
-<p class="section-description">
-توسيع الشبكة التعليمية.
-</p>
-</div>
-
-
-<div class="card">
-<h3>المرحلة الرابعة</h3>
-<p class="section-description">
-منصة تعليمية واسعة النطاق.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
 
+<section class="section section-alt">
+  <div class="container">
 
-<section class="section" id="vision-longterm">
+    <div class="section-header">
+      <div class="section-kicker">مراحل الرؤية</div>
+      <h2 class="section-title">
+        كيف تبدأ الرؤية وتنمو
+      </h2>
+    </div>
 
-<div class="container">
+    <div class="grid grid-4">
 
-<h2 class="section-title">
-رؤية طويلة المدى
-</h2>
+      <div class="card">
+        <h3>المرحلة الأولى</h3>
+        <p>
+          بناء النظام الأساسي
+          وتشغيله في مدارس محددة.
+        </p>
+      </div>
 
-<p class="section-description">
-نطمح إلى بناء منصة تعليمية تساعد في تطوير التعليم
-بشكل مستمر وعلى نطاق واسع.
-</p>
+      <div class="card">
+        <h3>المرحلة الثانية</h3>
+        <p>
+          التوسع إلى مدارس إضافية
+          وبناء شبكة تعليمية.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>المرحلة الثالثة</h3>
+        <p>
+          بناء منصة تعليمية
+          قابلة للتوسع الإقليمي.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>المرحلة الرابعة</h3>
+        <p>
+          توسيع النظام إلى
+          نطاق عالمي.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-<h3>تحسين مستمر</h3>
-<p class="section-description">
-تطوير المنصة بشكل دائم.
-</p>
-</div>
-
-
-<div class="card">
-<h3>توسع تدريجي</h3>
-<p class="section-description">
-نمو تدريجي للمنصة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>تأثير تعليمي</h3>
-<p class="section-description">
-تحسين التعليم على نطاق واسع.
-</p>
-</div>
-
-
-<div class="card">
-<h3>بناء المستقبل</h3>
-<p class="section-description">
-بناء مستقبل التعليم.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft" id="vision-final">
-
-<div class="container">
-
-<div style="text-align:center;max-width:720px;margin:auto;">
-
-<h2 class="section-title">
-نحو مستقبل تعليمي أفضل
-</h2>
-
-<p class="section-description" style="margin-top:20px;">
-Madaris AI ليست مجرد منصة تعليمية، بل رؤية لبناء
-نظام تشغيل للتعليم يساعد المدارس على العمل بوضوح
-ويمنح الطلاب والمعلمين بيئة تعليمية متكاملة.
-</p>
-
-<div style="margin-top:35px;">
-
-<a href="/platform.html" class="btn btn-primary">
-استكشف المنصة
-</a>
-
-<a href="/contact.html"
-class="btn btn-secondary"
-style="margin-right:12px;">
-تواصل معنا
-</a>
-
-</div>
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
-</main>
 
+<section class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">فلسفة التصميم</div>
+      <h2 class="section-title">
+        كيف نبني Madaris AI
+      </h2>
+      <p class="section-description">
+        الرؤية لا تعتمد على التكنولوجيا فقط،
+        بل تعتمد على تصميم تجربة تعليمية واقعية.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="highlight-box">
+        <h3>البساطة</h3>
+        <p>
+          تصميم تجربة واضحة وسهلة الاستخدام
+          لجميع المستخدمين.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>المرونة</h3>
+        <p>
+          النظام يتكيف مع المدارس المختلفة
+          والبيئات المتنوعة.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>الاستقرار</h3>
+        <p>
+          بناء بنية تقنية قوية
+          تعمل بشكل مستمر.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>التوسع</h3>
+        <p>
+          تصميم النظام ليعمل
+          على نطاق واسع.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">لماذا Madaris AI</div>
+      <h2 class="section-title">
+        رؤية تبدأ من الواقع
+      </h2>
+      <p class="section-description">
+        Madaris AI تنطلق من احتياجات حقيقية داخل المدارس،
+        وتركز على بناء نظام يساعد المؤسسات التعليمية
+        على العمل بشكل أوضح وأكثر استقرارًا.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="card">
+        <h3>من الواقع</h3>
+        <p>
+          الرؤية مبنية على احتياجات المدارس
+          وليس على افتراضات نظرية.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>قابلة للتطبيق</h3>
+        <p>
+          نركز على بناء نظام يمكن تطبيقه
+          تدريجيًا داخل المدارس.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>قابلة للتوسع</h3>
+        <p>
+          تصميم يسمح بالنمو من مدرسة
+          إلى شبكة تعليمية واسعة.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="highlight-box">
+
+      <div class="section-header">
+        <div class="section-kicker">ابدأ الآن</div>
+        <h2 class="section-title">
+          انضم إلى رؤية Madaris AI
+        </h2>
+        <p class="section-description">
+          نعمل مع المدارس، المؤسسات التعليمية،
+          والشركاء لبناء مستقبل التعليم.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+
+        <a href="/platform.html" class="btn btn-primary">
+          استكشف المنصة
+        </a>
+
+        <a href="/partners.html" class="btn btn-secondary">
+          الشراكات
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 
 <footer class="footer">
 
-<div class="container">
+  <div class="container">
 
-© <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+    <div class="grid" style="
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:30px;
+      text-align:right;
+    ">
 
-</div>
+      <div>
+        <h3 style="margin-bottom:14px;">Madaris AI</h3>
+        <p class="section-description">
+          منصة تشغيل تعليمية موحدة تهدف إلى بناء مستقبل التعليم
+          عبر بنية تقنية قوية وقابلة للتوسع.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">المنتج</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/platform.html">المنصة</a>
+          <a href="/technology.html">التقنية</a>
+          <a href="/schools.html">للمدارس</a>
+          <a href="/use-cases.html">حالات الاستخدام</a>
+          <a href="/faq.html">الأسئلة الشائعة</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">الشركة</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/about.html">من نحن</a>
+          <a href="/vision.html">الرؤية</a>
+          <a href="/partners.html">الشركاء</a>
+          <a href="/problem.html">المشكلة</a>
+          <a href="/solution.html">الحل</a>
+          <a href="/contact.html">تواصل</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">القانوني</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/security.html">الأمان</a>
+          <a href="/privacy.html">الخصوصية</a>
+          <a href="/terms.html">الشروط والأحكام</a>
+          <a href="/app/login.html">دخول المنصة</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+      margin-top:40px;
+      padding-top:20px;
+      border-top:1px solid var(--border);
+      text-align:center;
+      color:var(--muted);
+    ">
+      © <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+    </div>
+
+  </div>
 
 </footer>
-
 
 
 <script>
@@ -817,11 +1073,21 @@ style="margin-right:12px;">
 const year = document.getElementById("year");
 
 if(year){
-year.textContent = new Date().getFullYear();
+  year.textContent = new Date().getFullYear();
+}
+
+const toggle = document.getElementById("menuToggle");
+const mobile = document.getElementById("mobileMenu");
+
+if(toggle){
+  toggle.addEventListener("click",()=>{
+    mobile.classList.toggle("active");
+  });
 }
 
 </script>
 
-</body>
+</main>
 
-</html>
+</body>
+</html>  
