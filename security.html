@@ -2,895 +2,1118 @@
 <html lang="ar" dir="rtl">
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madaris AI | الأمان</title>
 
-<title>الأمان | Madaris AI</title>
+  <meta
+    name="description"
+    content="تعرف على نهج الأمان في Madaris AI: حماية البيانات التعليمية، الصلاحيات، سلامة التشغيل، والموثوقية ضمن بنية تعليمية قابلة للتوسع."
+  />
 
-<meta name="description" content="أمان Madaris AI — نهجنا في حماية البيانات التعليمية، تأمين المنصة، إدارة الوصول، والموثوقية التشغيلية">
+  <meta name="theme-color" content="#07111f" />
 
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-<style>
+  <style>
+    :root{
+      --bg:#07111f;
+      --bg-soft:#0b1728;
+      --panel:rgba(15,29,52,.82);
+      --panel-2:rgba(19,38,66,.92);
+      --border:rgba(255,255,255,.08);
+      --line-strong:rgba(255,255,255,.14);
 
-:root{
+      --text:#ffffff;
+      --muted:#8ab3c7;
+      --muted-2:#b7d3e4;
 
---bg:#07111f;
---bg-soft:#0b1728;
---text:#ffffff;
---muted:#a8b3c7;
---primary:#5fdcff;
---secondary:#7c67ff;
---card:rgba(255,255,255,0.04);
---border:rgba(255,255,255,0.08);
+      --primary:#85fdff;
+      --primary-strong:#67d8ff;
+      --secondary:#87d64f;
+      --accent:#82abea;
 
-}
+      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
+      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --radius-sm:12px;
 
-body{
-font-family:"Tajawal",sans-serif;
-background:var(--bg);
-color:var(--text);
-line-height:1.75;
-}
+      --container:min(1200px,92%);
+    }
 
-.container{
-width:90%;
-max-width:1200px;
-margin:auto;
-}
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-.section{
-padding:90px 0;
-}
+    html{
+      scroll-behavior:smooth;
+    }
 
-.section-soft{
-background:var(--bg-soft);
-}
+    body{
+      font-family:
+        "Tajawal",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
+        radial-gradient(circle at left 20%, rgba(130,171,234,.06), transparent 18%),
+        linear-gradient(180deg, #07111f 0%, #081728 100%);
+      color:var(--text);
+      line-height:1.9;
+      overflow-x:hidden;
+    }
 
-.section-title{
-font-size:38px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.3;
-}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.section-description{
-color:var(--muted);
-max-width:760px;
-}
+    img{
+      display:block;
+      max-width:100%;
+    }
 
-.grid{
-display:grid;
-gap:20px;
-}
+    .container{
+      width:var(--container);
+      margin:auto;
+    }
 
-.card{
-background:var(--card);
-border:1px solid var(--border);
-border-radius:18px;
-padding:25px;
-}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(7,17,31,.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:20px 0;
+    }
 
-.btn{
-display:inline-block;
-padding:14px 26px;
-border-radius:40px;
-font-weight:700;
-text-decoration:none;
-}
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
 
-.btn-primary{
-background:linear-gradient(135deg,#5fdcff,#7c67ff);
-color:white;
-}
+    .logo{
+      font-weight:900;
+      font-size:22px;
+      line-height:1.2;
+      letter-spacing:.2px;
+      flex-shrink:0;
+    }
 
-.btn-secondary{
-border:1px solid var(--border);
-color:white;
-}
+    .logo a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.topbar{
-padding:20px 0;
-border-bottom:1px solid var(--border);
-}
+    .nav-links{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
 
-.nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:20px;
-}
+    .nav-links a{
+      color:var(--muted);
+      text-decoration:none;
+      transition:.25s ease;
+      font-weight:700;
+      font-size:15px;
+    }
 
-.logo{
-font-weight:900;
-font-size:22px;
-}
+    .nav-links a:hover{
+      color:white;
+    }
 
-.nav-links{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-}
+    .menu-toggle{
+      display:none;
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      font-size:26px;
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
 
-.nav-links a{
-color:var(--muted);
-text-decoration:none;
-}
+    .mobile-menu{
+      display:none;
+      margin-top:16px;
+      border-top:1px solid var(--border);
+      padding-top:16px;
+    }
 
-.nav-links a:hover{
-color:white;
-}
+    .mobile-menu.active{
+      display:block;
+    }
 
-.hero{
-padding:80px 0;
-}
+    .mobile-menu-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px 18px;
+      width:100%;
+    }
 
-.hero h1{
-font-size:44px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.25;
-}
+    .mobile-menu-grid a{
+      display:block;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      color:#e8f1fb;
+      font-weight:700;
+      text-align:center;
+    }
 
-.hero p{
-color:var(--muted);
-margin-bottom:30px;
-max-width:760px;
-}
+    .hero{
+      position:relative;
+      padding:72px 0 42px;
+      overflow:hidden;
+    }
 
-.eyebrow{
-display:inline-block;
-padding:8px 14px;
-border-radius:999px;
-background:rgba(95,220,255,0.08);
-border:1px solid rgba(95,220,255,0.16);
-font-size:14px;
-font-weight:700;
-margin-bottom:20px;
-color:#d7f7ff;
-}
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:auto auto -120px -120px;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(133,253,255,.10), transparent 68%);
+      pointer-events:none;
+    }
 
-.footer{
-border-top:1px solid var(--border);
-padding:30px 0;
-margin-top:40px;
-color:var(--muted);
-text-align:center;
-}
+    .hero-shell{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.14), transparent 26%),
+        linear-gradient(180deg, rgba(10,24,48,.98) 0%, rgba(10,22,39,.98) 100%);
+      box-shadow:var(--shadow-xl);
+      padding:42px 30px 34px;
+    }
 
-@media(max-width:900px){
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
 
-.hero h1{
-font-size:32px;
-}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:52px;
+      border-radius:999px;
+      padding:10px 20px;
+      background:rgba(133,253,255,.06);
+      border:1px solid rgba(133,253,255,.16);
+      color:#e9fcff;
+      font-weight:800;
+      font-size:15px;
+      margin-bottom:22px;
+    }
 
-.section-title{
-font-size:28px;
-}
+    .hero-title{
+      font-size:clamp(40px,6vw,78px);
+      line-height:1.04;
+      font-weight:950;
+      letter-spacing:-.03em;
+      margin-bottom:18px;
+    }
 
-.nav{
-flex-direction:column;
-align-items:flex-start;
-}
+    .hero-title span{
+      color:var(--primary);
+    }
 
-.nav-links{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px 18px;
-width:100%;
-}
+    .hero-desc{
+      color:#d3dfec;
+      font-size:clamp(18px,2vw,22px);
+      max-width:780px;
+      margin-bottom:26px;
+    }
 
-}
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
 
-</style>
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px 24px;
+      border-radius:999px;
+      font-weight:800;
+      border:1px solid transparent;
+      transition:.22s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
 
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #85fdff, #67d8ff);
+      color:#07111f;
+      box-shadow:0 14px 30px rgba(103,216,255,.24);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
+      color:white;
+      border-color:var(--border);
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .point{
+      padding:14px 16px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      color:#dce8f5;
+      font-weight:700;
+      font-size:15px;
+    }
+
+    .hero-side{
+      display:grid;
+      gap:14px;
+    }
+
+    .hero-card{
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      padding:22px;
+      box-shadow:var(--shadow-lg);
+    }
+
+    .hero-card h3{
+      margin-bottom:8px;
+      font-size:20px;
+      line-height:1.3;
+    }
+
+    .hero-card p{
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .hero-stat{
+      font-size:42px;
+      font-weight:950;
+      line-height:1;
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+
+    .section{
+      padding:60px 0;
+    }
+
+    .section-header{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:24px;
+    }
+
+    .section-kicker{
+      color:var(--primary);
+      font-weight:900;
+      font-size:15px;
+    }
+
+    .section-title{
+      font-size:clamp(28px,4vw,48px);
+      line-height:1.15;
+      font-weight:950;
+      letter-spacing:-.03em;
+    }
+
+    .section-description{
+      color:var(--muted);
+      font-size:18px;
+      max-width:900px;
+    }
+
+    .grid{
+      display:grid;
+      gap:20px;
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .grid-4{
+      grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.025));
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:24px;
+      min-height:100%;
+      box-shadow:var(--shadow-lg);
+      opacity:1;
+      transform:none;
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      font-size:22px;
+      line-height:1.3;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:16px;
+    }
+
+    .highlight-box{
+      padding:26px;
+      border-radius:24px;
+      border:1px solid var(--border);
+      background:
+        radial-gradient(circle at top left, rgba(133,253,255,.08), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+
+    .footer{
+      border-top:1px solid var(--border);
+      padding:40px 0 30px;
+      margin-top:40px;
+      color:var(--muted);
+    }
+
+    @media(max-width:1100px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .grid-4{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .grid-3{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:900px){
+      .nav{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .nav-links{
+        display:none;
+      }
+
+      .menu-toggle{
+        display:inline-flex;
+      }
+
+      .hero{
+        padding:34px 0 20px;
+      }
+
+      .hero-shell{
+        padding:26px 18px 22px;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+
+      .mobile-menu-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .mobile-menu-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-title{
+        font-size:42px;
+      }
+
+      .section-title{
+        font-size:32px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
 <header class="topbar">
+  <div class="container nav">
+    <div class="logo">
+      <a href="/" style="color:inherit;text-decoration:none;">Madaris AI</a>
+    </div>
 
-<div class="container nav">
+    <div class="nav-links">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+    </div>
 
-<div class="logo">
-Madaris AI
-</div>
+    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+  </div>
 
-<div class="nav-links">
-<a href="/">الرئيسية</a>
-<a href="/platform.html">المنصة</a>
-<a href="/technology.html">التقنية</a>
-<a href="/schools.html">للمدارس</a>
-<a href="/partners.html">الشركاء</a>
-<a href="/about.html">من نحن</a>
-<a href="/contact.html">تواصل</a>
-</div>
-
-</div>
-
+  <div class="container mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-grid">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+      <a href="/app/login.html">دخول المنصة</a>
+    </div>
+  </div>
 </header>
 
-
+<main>
 
 <section class="hero">
+  <div class="container">
+    <div class="hero-shell">
 
-<div class="container">
+      <div class="eyebrow">الأمان</div>
 
-<div class="eyebrow">
-الأمان
-</div>
+      <div class="hero-grid">
 
-<h1>
-الأمان ليس طبقة إضافية<br>
-بل جزء أساسي من بنية Madaris AI
-</h1>
+        <div>
+          <h1 class="hero-title">
+            الأمان في
+            <span>Madaris AI</span>
+          </h1>
 
-<p>
-تم تصميم Madaris AI مع اعتبار الأمان والموثوقية عناصر أساسية في بنية المنصة،
-خصوصًا لأنها تتعامل مع بيانات تعليمية وتشغيلية تحتاج إلى وضوح وحماية واستمرارية.
-نحن نركز على حماية الوصول، تأمين البيانات، وضمان أن تعمل المنصة بشكل موثوق
-في البيئات التعليمية الواقعية.
-</p>
+          <p class="hero-desc">
+            Madaris AI تنظر إلى الأمان باعتباره جزءًا أساسيًا من بنية النظام:
+            حماية البيانات التعليمية، ضبط الصلاحيات، وضمان الموثوقية التشغيلية
+            داخل بيئة تعليمية قابلة للنمو والتوسع. 1
+          </p>
 
-<a href="/contact.html" class="btn btn-primary">
-تواصل معنا
-</a>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/privacy.html">الخصوصية</a>
+            <a class="btn btn-secondary" href="/contact.html">تواصل معنا</a>
+          </div>
 
-</div>
+          <div class="hero-points">
+            <div class="point">حماية البيانات</div>
+            <div class="point">صلاحيات واضحة</div>
+            <div class="point">سلامة التشغيل</div>
+            <div class="point">موثوقية طويلة المدى</div>
+          </div>
+        </div>
 
+        <div class="hero-side">
+          <div class="hero-card">
+            <div class="hero-stat">01</div>
+            <h3>حماية</h3>
+            <p>التعامل مع البيانات التعليمية باعتبارها أصلًا حساسًا يجب صيانته.</p>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-stat">02</div>
+            <h3>تحكم</h3>
+            <p>تحديد من يصل إلى ماذا داخل النظام وفق دور واضح ومحدد.</p>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-stat">03</div>
+            <h3>استقرار</h3>
+            <p>تقليل المخاطر التشغيلية وبناء ثقة طويلة المدى في المنصة. 2</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 </section>
-<section class="section section-soft" id="security-principles">
-
-<div class="container">
-
-<h2 class="section-title">
-مبادئ الأمان في Madaris AI
-</h2>
-
-<p class="section-description">
-نحن نبني الأمان كجزء من تصميم المنصة نفسها، وليس كإضافة لاحقة.
-ولهذا نعتمد على مجموعة مبادئ واضحة تحكم طريقة حماية البيانات
-وتشغيل النظام.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>الحد الأدنى من الوصول</h3>
-
-<p class="section-description">
-يحصل كل مستخدم على الصلاحيات التي يحتاجها فقط،
-بما يقلل من المخاطر ويحافظ على وضوح الأدوار.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>حماية البيانات التعليمية</h3>
-
-<p class="section-description">
-نتعامل مع البيانات التعليمية باعتبارها جزءًا أساسيًا
-من المنظومة، وتحتاج إلى تنظيم وحماية ووضوح.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>الأمان من التصميم</h3>
-
-<p class="section-description">
-نعتمد على تصميم تقني يضع الأمان في البنية الأساسية
-للمنصة منذ البداية.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>الاستمرارية والموثوقية</h3>
-
-<p class="section-description">
-الأمان لا يتعلق فقط بالحماية، بل أيضًا بضمان أن تعمل
-المنصة بشكل مستقر ويمكن الاعتماد عليه.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<section class="section" id="security-data">
-
-<div class="container">
-
-<h2 class="section-title">
-كيف نحمي البيانات
-</h2>
-
-<p class="section-description">
-تتعامل Madaris AI مع بيانات تعليمية وتشغيلية،
-ولذلك نركز على بناء طبقات واضحة لحماية هذه البيانات
-أثناء التخزين والاستخدام والنقل.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>تخزين منظم</h3>
-
-<p class="section-description">
-يتم تنظيم البيانات داخل النظام بطريقة واضحة تساعد
-على تقليل الفوضى وتحسين التحكم.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>وصول مضبوط</h3>
-
-<p class="section-description">
-تقييد الوصول إلى البيانات بحسب نوع المستخدم وصلاحياته.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>حماية أثناء النقل</h3>
-
-<p class="section-description">
-يتم التعامل مع البيانات أثناء المزامنة والنقل بطريقة
-تركز على الأمان والاعتمادية.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>موثوقية السجلات</h3>
-
-<p class="section-description">
-نسعى لأن تكون السجلات التعليمية أكثر وضوحًا
-وقابلية للتتبع والتحقق.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft" id="security-access">
-
-<div class="container">
-
-<h2 class="section-title">
-إدارة الوصول والصلاحيات
-</h2>
-
-<p class="section-description">
-تعتمد Madaris AI على نظام واضح لإدارة الوصول والصلاحيات،
-بحيث يحصل كل مستخدم على مستوى الوصول المناسب لدوره داخل المدرسة.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>إدارة المدرسة</h3>
-
-<p class="section-description">
-صلاحيات كاملة لإدارة النظام ومتابعة العمليات التعليمية.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>المعلمون</h3>
-
-<p class="section-description">
-وصول إلى المواد الدراسية والطلاب المرتبطين بهم فقط.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>الطلاب</h3>
-
-<p class="section-description">
-وصول إلى المحتوى التعليمي والبيانات الخاصة بهم.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>أدوار متعددة</h3>
-
-<p class="section-description">
-إمكانية تحديد أدوار مختلفة داخل المدرسة.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+<section class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">بنية الأمان</div>
+      <h2 class="section-title">
+        بنية أمنية متعددة الطبقات
+      </h2>
+      <p class="section-description">
+        تعتمد Madaris AI على نموذج أمني متعدد الطبقات،
+        بحيث لا تعتمد الحماية على نقطة واحدة فقط.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="card">
+        <h3>طبقة الهوية</h3>
+        <p>
+          التحقق من المستخدمين
+          وتحديد الصلاحيات حسب الدور.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>طبقة الوصول</h3>
+        <p>
+          تحديد البيانات التي يمكن
+          لكل مستخدم الوصول إليها.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>طبقة البيانات</h3>
+        <p>
+          حماية البيانات التعليمية
+          أثناء التخزين والتشغيل.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>طبقة التشغيل</h3>
+        <p>
+          تقليل أثر الأعطال
+          على النظام بالكامل.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>طبقة المراقبة</h3>
+        <p>
+          مراقبة الأداء
+          واكتشاف المشكلات مبكرًا.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>طبقة الاستمرارية</h3>
+        <p>
+          ضمان استمرارية العمل
+          في مختلف الظروف.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
 
-
-<section class="section" id="security-reliability">
-
-<div class="container">
-
-<h2 class="section-title">
-الموثوقية التشغيلية
-</h2>
-
-<p class="section-description">
-نركز على أن تعمل المنصة بشكل مستقر وموثوق في البيئات التعليمية المختلفة.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>تشغيل مستقر</h3>
-
-<p class="section-description">
-تصميم المنصة لضمان التشغيل المستمر.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>استمرارية العمل</h3>
-
-<p class="section-description">
-المنصة مصممة للعمل حتى في البيئات المحدودة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>بنية قابلة للتوسع</h3>
-
-<p class="section-description">
-المنصة تنمو مع توسع المدارس.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تحسين مستمر</h3>
-
-<p class="section-description">
-تطوير الأمان والموثوقية بشكل مستمر.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft" id="security-architecture">
-
-<div class="container">
-
-<h2 class="section-title">
-بنية الأمان في المنصة
-</h2>
-
-<p class="section-description">
-تم تصميم بنية Madaris AI بطريقة تجعل الأمان جزءاً من هيكل النظام
-وليس مجرد طبقة إضافية.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>فصل المكونات</h3>
-
-<p class="section-description">
-تصميم النظام بطريقة تفصل بين المكونات المختلفة
-لتقليل المخاطر.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>إدارة الجلسات</h3>
-
-<p class="section-description">
-إدارة جلسات المستخدمين بطريقة واضحة وآمنة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تسجيل العمليات</h3>
-
-<p class="section-description">
-تسجيل العمليات المهمة داخل النظام.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>مراقبة الأداء</h3>
-
-<p class="section-description">
-متابعة تشغيل النظام وتحسينه باستمرار.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">إدارة الصلاحيات</div>
+      <h2 class="section-title">
+        نموذج صلاحيات واضح
+      </h2>
+      <p class="section-description">
+        تم تصميم Madaris AI بحيث يحصل كل مستخدم
+        على الصلاحيات المناسبة فقط لدوره.
+      </p>
+    </div>
+
+    <div class="grid grid-4">
+
+      <div class="card">
+        <h3>الإدارة</h3>
+        <p>
+          صلاحيات تشغيلية
+          لإدارة المدرسة أو النظام.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>المعلم</h3>
+        <p>
+          الوصول إلى الصفوف
+          والطلاب المرتبطين به.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>الطالب</h3>
+        <p>
+          تجربة تعليمية
+          خاصة بكل طالب.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>المشرف</h3>
+        <p>
+          صلاحيات أعلى
+          لمتابعة الأداء العام.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
 
+<section class="section">
+  <div class="container">
 
-<section class="section" id="security-compliance">
+    <div class="section-header">
+      <div class="section-kicker">موثوقية النظام</div>
+      <h2 class="section-title">
+        الاستقرار والأمان طويل المدى
+      </h2>
+      <p class="section-description">
+        Madaris AI مصممة لتكون منصة موثوقة
+        تعمل في بيئات تعليمية مختلفة.
+      </p>
+    </div>
 
-<div class="container">
+    <div class="grid grid-2">
 
-<h2 class="section-title">
-الالتزام والموثوقية
-</h2>
+      <div class="highlight-box">
+        <h3>العمل دون انقطاع</h3>
+        <p>
+          تصميم يقلل
+          من توقف النظام.
+        </p>
+      </div>
 
-<p class="section-description">
-نهدف إلى بناء منصة تعليمية موثوقة يمكن الاعتماد عليها
-من قبل المدارس والمؤسسات التعليمية.
-</p>
+      <div class="highlight-box">
+        <h3>مرونة التشغيل</h3>
+        <p>
+          القدرة على العمل
+          في بيئات مختلفة.
+        </p>
+      </div>
 
+      <div class="highlight-box">
+        <h3>قابلية التوسع</h3>
+        <p>
+          نمو النظام
+          دون فقدان الاستقرار.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="highlight-box">
+        <h3>ثقة طويلة المدى</h3>
+        <p>
+          بنية مصممة
+          للاستمرار سنوات طويلة.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-
-<h3>موثوقية النظام</h3>
-
-<p class="section-description">
-تشغيل مستقر وقابل للاعتماد.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تحسين مستمر</h3>
-
-<p class="section-description">
-تطوير مستمر للمنصة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>شفافية التشغيل</h3>
-
-<p class="section-description">
-وضوح في طريقة عمل النظام.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>بنية قوية</h3>
-
-<p class="section-description">
-منصة قابلة للتوسع.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
-<section class="section section-soft" id="security-offline">
+<section class="section section-alt">
+  <div class="container">
 
-<div class="container">
+    <div class="section-header">
+      <div class="section-kicker">حماية البيانات التعليمية</div>
+      <h2 class="section-title">
+        البيانات التعليمية أولاً
+      </h2>
+      <p class="section-description">
+        Madaris AI مصممة بحيث تعتبر البيانات التعليمية
+        أحد أهم أصول المنصة، ويتم التعامل معها وفق أعلى
+        معايير الموثوقية والاستقرار.
+      </p>
+    </div>
 
-<h2 class="section-title">
-الأمان في بيئة Offline-First
-</h2>
+    <div class="grid grid-3">
 
-<p class="section-description">
-تم تصميم Madaris AI للعمل في بيئات تعليمية قد تكون محدودة الاتصال،
-ولهذا تم بناء الأمان بحيث يعمل سواء بوجود الإنترنت أو بدونه.
-</p>
+      <div class="card">
+        <h3>عزل البيانات</h3>
+        <p>
+          يتم تنظيم البيانات التعليمية بطريقة تمنع
+          التداخل غير المقصود بين المدارس أو المستخدمين.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>سلامة البيانات</h3>
+        <p>
+          تصميم يضمن الحفاظ على البيانات
+          دون فقدان أو تلف.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>استمرارية البيانات</h3>
+        <p>
+          الحفاظ على البيانات
+          حتى في حالات الانقطاع.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-
-<h3>تشغيل محلي آمن</h3>
-
-<p class="section-description">
-تعمل البيانات داخل بيئة المدرسة بطريقة منظمة وآمنة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>مزامنة موثوقة</h3>
-
-<p class="section-description">
-مزامنة البيانات عند توفر الاتصال بطريقة آمنة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>استمرارية العمل</h3>
-
-<p class="section-description">
-لا يتوقف النظام عند انقطاع الإنترنت.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تقليل المخاطر</h3>
-
-<p class="section-description">
-تقليل الاعتماد الكامل على الاتصال الخارجي.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
 
+<section class="section">
+  <div class="container">
 
-<section class="section" id="security-commitment">
+    <div class="section-header">
+      <div class="section-kicker">مراقبة النظام</div>
+      <h2 class="section-title">
+        مراقبة مستمرة للنظام
+      </h2>
+      <p class="section-description">
+        يتم تصميم Madaris AI بحيث تكون هناك رؤية واضحة
+        لأداء النظام واستقراره.
+      </p>
+    </div>
 
-<div class="container">
+    <div class="grid grid-4">
 
-<h2 class="section-title">
-التزامنا بالأمان
-</h2>
+      <div class="card">
+        <h3>مراقبة الأداء</h3>
+        <p>
+          متابعة أداء النظام
+          بشكل مستمر.
+        </p>
+      </div>
 
-<p class="section-description">
-نلتزم ببناء منصة تعليمية آمنة وموثوقة تساعد المدارس
-على العمل بثقة ووضوح.
-</p>
+      <div class="card">
+        <h3>كشف الأعطال</h3>
+        <p>
+          اكتشاف المشكلات
+          مبكرًا قبل تأثيرها.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>تحليل الاستخدام</h3>
+        <p>
+          فهم كيفية استخدام
+          النظام لتحسين الأمان.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>تحسين مستمر</h3>
+        <p>
+          تطوير الأمان
+          بشكل دائم.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-
-<h3>تحسين مستمر</h3>
-
-<p class="section-description">
-نطور الأمان بشكل مستمر.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>بنية قوية</h3>
-
-<p class="section-description">
-تصميم تقني موثوق.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تشغيل مستقر</h3>
-
-<p class="section-description">
-منصة موثوقة للمدارس.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>رؤية طويلة المدى</h3>
-
-<p class="section-description">
-بناء منصة تعليمية مستدامة.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft" id="security-final">
-
-<div class="container">
-
-<div style="text-align:center;max-width:720px;margin:auto;">
-
-<h2 class="section-title">
-الأمان جزء من مستقبل التعليم
-</h2>
-
-<p class="section-description" style="margin-top:20px;">
-في Madaris AI نؤمن أن بناء مستقبل التعليم يبدأ
-ببناء منصة موثوقة وآمنة. ولهذا نضع الأمان
-كجزء أساسي من بنية النظام منذ البداية.
-</p>
-
-<div style="margin-top:35px;">
-
-<a href="/platform.html" class="btn btn-primary">
-استكشف المنصة
-</a>
-
-<a href="/contact.html"
-class="btn btn-secondary"
-style="margin-right:12px;">
-تواصل معنا
-</a>
-
-</div>
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
-</main>
 
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">التشغيل الآمن</div>
+      <h2 class="section-title">
+        بنية تشغيل آمنة
+      </h2>
+      <p class="section-description">
+        تم تصميم Madaris AI لتقليل المخاطر التشغيلية
+        وضمان الاستقرار على المدى الطويل.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="highlight-box">
+        <h3>تقليل المخاطر</h3>
+        <p>
+          تقليل الاعتماد
+          على نقطة واحدة للفشل.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>استقرار التشغيل</h3>
+        <p>
+          تصميم يحافظ
+          على استمرارية النظام.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>العمل في بيئات مختلفة</h3>
+        <p>
+          النظام مصمم
+          لبيئات تعليمية متعددة.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>تطوير مستمر</h3>
+        <p>
+          تحسين مستمر
+          في بنية الأمان.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">الامتثال والحوكمة</div>
+      <h2 class="section-title">
+        حوكمة أمنية واضحة
+      </h2>
+      <p class="section-description">
+        Madaris AI تعتمد على نموذج حوكمة واضح
+        لضمان إدارة الأمان بشكل منظم ومستمر.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="card">
+        <h3>سياسات أمنية واضحة</h3>
+        <p>
+          يتم تعريف السياسات الأمنية
+          ضمن إطار تشغيل واضح ومستمر.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>مراجعات دورية</h3>
+        <p>
+          مراجعة مستمرة
+          لضمان سلامة النظام.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>تحسين مستمر</h3>
+        <p>
+          تطوير الأمان
+          مع نمو المنصة.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">موثوقية المنصة</div>
+      <h2 class="section-title">
+        أمان مبني للمستقبل
+      </h2>
+      <p class="section-description">
+        Madaris AI تم تصميمها لتكون منصة تعليمية
+        آمنة وقابلة للتوسع على المدى الطويل.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="highlight-box">
+        <h3>بنية قابلة للتوسع</h3>
+        <p>
+          النمو دون التأثير
+          على مستوى الأمان.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>استقرار طويل المدى</h3>
+        <p>
+          منصة مصممة
+          للعمل لسنوات طويلة.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>ثقة المؤسسات</h3>
+        <p>
+          مناسبة للمدارس
+          والجهات التعليمية.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>جاهزية مستقبلية</h3>
+        <p>
+          بنية جاهزة
+          للتطور المستقبلي.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 
 <footer class="footer">
 
-<div class="container">
+  <div class="container">
 
-© <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;text-align:right;">
 
-</div>
+      <div>
+        <h3 style="margin-bottom:14px;">Madaris AI</h3>
+        <p class="section-description">
+          منصة تشغيل تعليمية موحدة تهدف إلى بناء مستقبل التعليم
+          عبر بنية تقنية قوية وقابلة للتوسع.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">المنتج</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/platform.html">المنصة</a>
+          <a href="/technology.html">التقنية</a>
+          <a href="/schools.html">للمدارس</a>
+          <a href="/use-cases.html">حالات الاستخدام</a>
+          <a href="/faq.html">الأسئلة الشائعة</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">الشركة</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/about.html">من نحن</a>
+          <a href="/vision.html">الرؤية</a>
+          <a href="/partners.html">الشركاء</a>
+          <a href="/problem.html">المشكلة</a>
+          <a href="/solution.html">الحل</a>
+          <a href="/contact.html">تواصل</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">القانوني</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/security.html">الأمان</a>
+          <a href="/privacy.html">الخصوصية</a>
+          <a href="/terms.html">الشروط</a>
+          <a href="/app/login.html">دخول المنصة</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+      margin-top:40px;
+      padding-top:20px;
+      border-top:1px solid var(--border);
+      text-align:center;
+      color:var(--muted);
+    ">
+      © <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+    </div>
+
+  </div>
 
 </footer>
 
+</main>
 
 
 <script>
-
 const year = document.getElementById("year");
-
 if(year){
 year.textContent = new Date().getFullYear();
 }
 
+const toggle = document.getElementById("menuToggle");
+const menu = document.getElementById("mobileMenu");
+
+if(toggle){
+toggle.addEventListener("click",()=>{
+menu.classList.toggle("active");
+});
+}
 </script>
 
-</body>
 
+</body>
 </html>
