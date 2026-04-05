@@ -430,7 +430,7 @@
     }
 
     .register-row{
-      margin-top:18px;
+      margin-to٢p:18px;
       text-align:center;
       color:var(--muted);
       font-size:14px;
@@ -640,11 +640,31 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-/* ============================= */
-/* Firebase Config */
-/* استخدم نفس القيم التي استخدمتها سابقاً */
-/* ============================= */
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+    authDomain: "madaris-ai.firebaseapp.com",
+    projectId: "madaris-ai",
+    storageBucket: "madaris-ai.firebasestorage.app",
+    messagingSenderId: "915394447224",
+    appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+    measurementId: "G-SC7VE6F20S"
+  };
+
+
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
