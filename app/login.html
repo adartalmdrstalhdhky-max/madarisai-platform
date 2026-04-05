@@ -4,52 +4,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | دخول المنصة</title>
+  <title>Madaris AI | تسجيل الدخول</title>
   <meta name="theme-color" content="#07111f" />
   <meta
     name="description"
-    content="تسجيل الدخول إلى منصة Madaris AI التعليمية"
+    content="تسجيل الدخول الحقيقي إلى منصة Madaris AI عبر Firebase Authentication"
   />
 
   <style>
-    :root {
-      --bg: #07111f;
-      --bg-soft: #0b1728;
-      --panel: rgba(15, 29, 52, 0.88);
-      --panel-2: rgba(19, 38, 66, 0.92);
-      --border: rgba(255, 255, 255, 0.08);
+    :root{
+      --bg:#07111f;
+      --bg-soft:#0b1728;
+      --panel:rgba(15,29,52,.88);
+      --panel-2:rgba(19,38,66,.92);
+      --border:rgba(255,255,255,.08);
 
-      --text: #ffffff;
-      --muted: #8ab3c7;
+      --text:#ffffff;
+      --muted:#8ab3c7;
 
-      --primary: #85fdff;
-      --primary-strong: #67d8ff;
+      --primary:#85fdff;
+      --primary-strong:#67d8ff;
+      --danger:#ff6b6b;
+      --success:#55d38a;
 
-      --shadow-xl: 0 24px 70px rgba(0, 0, 0, 0.38);
-      --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.28);
+      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
+      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
 
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --radius-md: 14px;
+      --radius-xl:28px;
+      --radius-lg:20px;
+      --radius-md:14px;
 
-      --container: min(1100px, 92%);
+      --container:min(1100px,92%);
     }
 
     *,
     *::before,
-    *::after {
-      box-sizing: border-box;
+    *::after{
+      box-sizing:border-box;
     }
 
     html,
-    body {
-      margin: 0;
-      width: 100%;
-      max-width: 100%;
-      overflow-x: hidden;
+    body{
+      margin:0;
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden;
     }
 
-    body {
+    body{
       font-family:
         "Tajawal",
         system-ui,
@@ -59,359 +61,437 @@
         Arial,
         sans-serif;
       background:
-        radial-gradient(circle at top right, rgba(133, 253, 255, 0.08), transparent 24%),
-        radial-gradient(circle at left 20%, rgba(130, 171, 234, 0.06), transparent 18%),
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
+        radial-gradient(circle at left 20%, rgba(130,171,234,.06), transparent 18%),
         linear-gradient(180deg, #07111f 0%, #081728 100%);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.7;
+      color:var(--text);
+      min-height:100vh;
+      line-height:1.7;
+      -webkit-text-size-adjust:100%;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    a{
+      color:inherit;
+      text-decoration:none;
     }
 
-    .page {
-      width: 100%;
-      max-width: 100%;
-      overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    button,
+    input{
+      font:inherit;
     }
 
-    .topbar {
-      border-bottom: 1px solid var(--border);
-      background: rgba(7, 17, 31, 0.82);
-      backdrop-filter: blur(12px);
+    .page{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden;
     }
 
-    .topbar-inner {
-      width: var(--container);
-      margin: 0 auto;
-      min-height: 84px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .topbar{
+      border-bottom:1px solid var(--border);
+      background:rgba(7,17,31,.82);
+      backdrop-filter:blur(12px);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
+    .topbar-inner{
+      width:var(--container);
+      margin:0 auto;
+      min-height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
     }
 
-    .brand-mark {
-      width: 52px;
-      height: 52px;
-      border-radius: 18px;
-      flex: 0 0 52px;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      flex:0 0 52px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 35%),
         linear-gradient(135deg, #67d8ff 0%, #8b8cff 100%);
-      box-shadow: 0 10px 24px rgba(103, 216, 255, 0.22);
+      box-shadow:0 10px 24px rgba(103,216,255,.22);
     }
 
-    .brand-copy {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+    .brand-copy{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
     }
 
-    .brand-title {
-      font-size: 24px;
-      font-weight: 900;
-      line-height: 1.1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .brand-title{
+      font-size:24px;
+      font-weight:900;
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
 
-    .brand-subtitle {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .brand-subtitle{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
 
-    .back-link {
-      color: var(--muted);
-      font-weight: 800;
-      white-space: nowrap;
+    .back-link{
+      color:var(--muted);
+      font-weight:800;
+      white-space:nowrap;
     }
 
-    .back-link:hover {
-      color: #fff;
+    .back-link:hover{
+      color:#fff;
     }
 
-    .main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 28px 0;
+    .main{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 0;
     }
 
-    .shell {
-      width: var(--container);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 24px;
-      align-items: stretch;
+    .shell{
+      width:var(--container);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      align-items:stretch;
     }
 
     .hero-card,
-    .login-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
+    .login-card{
+      border:1px solid var(--border);
+      border-radius:var(--radius-xl);
       background:
-        radial-gradient(circle at top right, rgba(133, 253, 255, 0.08), transparent 28%),
-        linear-gradient(180deg, rgba(10, 24, 48, 0.96) 0%, rgba(10, 22, 39, 0.96) 100%);
-      box-shadow: var(--shadow-xl);
-      overflow: hidden;
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 28%),
+        linear-gradient(180deg, rgba(10,24,48,.96) 0%, rgba(10,22,39,.96) 100%);
+      box-shadow:var(--shadow-xl);
+      overflow:hidden;
     }
 
-    .hero-card {
-      padding: 34px 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .hero-card{
+      padding:34px 30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(133, 253, 255, 0.16);
-      background: rgba(133, 253, 255, 0.05);
-      color: #eefcff;
-      font-size: 14px;
-      font-weight: 800;
-      margin-bottom: 18px;
-      align-self: flex-start;
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:10px 18px;
+      border-radius:999px;
+      border:1px solid rgba(133,253,255,.16);
+      background:rgba(133,253,255,.05);
+      color:#eefcff;
+      font-size:14px;
+      font-weight:800;
+      margin-bottom:18px;
+      align-self:flex-start;
     }
 
-    .hero-title {
-      margin: 0 0 16px;
-      font-size: clamp(34px, 4vw, 58px);
-      line-height: 1.05;
-      font-weight: 950;
-      letter-spacing: -0.03em;
+    .hero-title{
+      margin:0 0 16px;
+      font-size:clamp(34px,4vw,58px);
+      line-height:1.05;
+      font-weight:950;
+      letter-spacing:-.03em;
     }
 
-    .hero-title .accent {
-      color: var(--primary-strong);
+    .hero-title .accent{
+      color:var(--primary-strong);
     }
 
-    .hero-desc {
-      margin: 0 0 24px;
-      color: #d6e3ef;
-      font-size: 20px;
-      max-width: 620px;
+    .hero-desc{
+      margin:0 0 24px;
+      color:#d6e3ef;
+      font-size:20px;
+      max-width:620px;
     }
 
-    .hero-points {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
     }
 
-    .hero-point {
-      min-height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 14px 16px;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.03);
-      color: #eef6ff;
-      font-weight: 800;
+    .hero-point{
+      min-height:78px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:#eef6ff;
+      font-weight:800;
     }
 
-    .login-card {
-      padding: 30px 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .login-card{
+      padding:30px 24px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
     }
 
-    .login-head {
-      margin-bottom: 22px;
-      text-align: center;
+    .login-head{
+      margin-bottom:22px;
+      text-align:center;
     }
 
-    .login-title {
-      margin: 0 0 8px;
-      font-size: 34px;
-      font-weight: 900;
-      line-height: 1.1;
+    .login-title{
+      margin:0 0 8px;
+      font-size:34px;
+      font-weight:900;
+      line-height:1.1;
     }
 
-    .login-subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
+    .login-subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:16px;
     }
 
-    .form-group {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 16px;
+    .form-group{
+      display:grid;
+      gap:10px;
+      margin-bottom:16px;
     }
 
-    .form-group label {
-      font-weight: 800;
-      color: #eef6ff;
+    .form-group label{
+      font-weight:800;
+      color:#eef6ff;
     }
 
-    .field {
-      width: 100%;
-      min-height: 56px;
-      padding: 14px 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text);
-      outline: none;
-      transition: 0.2s ease;
+    .field{
+      width:100%;
+      min-height:56px;
+      padding:14px 16px;
+      border-radius:var(--radius-md);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      outline:none;
+      transition:.2s ease;
     }
 
-    .field:focus {
-      border-color: rgba(133, 253, 255, 0.45);
-      box-shadow: 0 0 0 4px rgba(133, 253, 255, 0.08);
+    .field:focus{
+      border-color:rgba(133,253,255,.45);
+      box-shadow:0 0 0 4px rgba(133,253,255,.08);
     }
 
-    .field::placeholder {
-      color: #95aabd;
+    .field::placeholder{
+      color:#95aabd;
     }
 
-    .row-between {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
+    .row-between{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
     }
 
-    .muted-link {
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 14px;
+    .muted-link{
+      color:var(--muted);
+      font-weight:800;
+      font-size:14px;
     }
 
-    .muted-link:hover {
-      color: #fff;
+    .muted-link:hover{
+      color:#fff;
     }
 
-    .btn {
-      width: 100%;
-      min-height: 60px;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 900;
-      font-size: 18px;
-      transition: 0.2s ease;
+    .btn{
+      width:100%;
+      min-height:60px;
+      border:none;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:18px;
+      transition:.2s ease;
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
+    .btn:hover{
+      transform:translateY(-1px);
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #85fdff, #67d8ff);
-      color: #07111f;
-      box-shadow: 0 14px 30px rgba(103, 216, 255, 0.24);
+    .btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+      transform:none;
     }
 
-    .divider {
-      position: relative;
-      margin: 22px 0 18px;
-      text-align: center;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 14px;
+    .btn-primary{
+      background:linear-gradient(135deg, #85fdff, #67d8ff);
+      color:#07111f;
+      box-shadow:0 14px 30px rgba(103,216,255,.24);
     }
 
-    .divider::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 0;
-      left: 0;
-      height: 1px;
-      background: var(--border);
-      z-index: 0;
+    .divider{
+      position:relative;
+      margin:22px 0 18px;
+      text-align:center;
+      color:var(--muted);
+      font-weight:800;
+      font-size:14px;
     }
 
-    .divider span {
-      position: relative;
-      z-index: 1;
-      background: rgba(10, 22, 39, 0.96);
-      padding: 0 12px;
+    .divider::before{
+      content:"";
+      position:absolute;
+      top:50%;
+      right:0;
+      left:0;
+      height:1px;
+      background:var(--border);
+      z-index:0;
     }
 
-    .role-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    .divider span{
+      position:relative;
+      z-index:1;
+      background:rgba(10,22,39,.96);
+      padding:0 12px;
     }
 
-    .role-link {
-      min-height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 14px;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.03);
-      color: #eef6ff;
-      font-weight: 800;
-      transition: 0.2s ease;
+    .role-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
     }
 
-    .role-link:hover {
-      background: rgba(255, 255, 255, 0.06);
-    }
-    .footer-note {
-      margin-top: 20px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
+    .role-link{
+      min-height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:#eef6ff;
+      font-weight:800;
+      transition:.2s ease;
     }
 
-    @media (max-width: 1000px) {
-      .shell {
-        grid-template-columns: 1fr;
+    .role-link:hover{
+      background:rgba(255,255,255,.06);
+    }
+
+    .status-box{
+      display:none;
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      font-weight:800;
+      font-size:14px;
+    }
+
+    .status-box.show{
+      display:block;
+    }
+
+    .status-box.error{
+      background:rgba(255,107,107,.08);
+      color:#ffd4d4;
+      border-color:rgba(255,107,107,.22);
+    }
+
+    .status-box.success{
+      background:rgba(85,211,138,.08);
+      color:#d9ffe8;
+      border-color:rgba(85,211,138,.22);
+    }
+
+    .register-row{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .register-row a{
+      color:#fff;
+      font-weight:900;
+    }
+
+    .footer-note{
+      margin-top:20px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (max-width:1000px){
+      .shell{
+        grid-template-columns:1fr;
       }
 
-      .hero-card {
-        order: 2;
+      .hero-card{
+        order:2;
       }
 
-      .login-card {
-        order: 1;
+      .login-card{
+        order:1;
       }
     }
 
-    @media (max-width: 600px) {
-      .hero-points {
-        grid-template-columns: 1fr;
+    @media (max-width:700px){
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+
+      .role-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:560px){
+      .topbar-inner{
+        min-height:78px;
+      }
+
+      .brand-title{
+        font-size:20px;
+      }
+
+      .brand-subtitle{
+        font-size:13px;
+      }
+
+      .hero-card,
+      .login-card{
+        padding:24px 18px;
+      }
+
+      .hero-title{
+        font-size:38px;
       }
     }
   </style>
@@ -421,173 +501,356 @@
 
 <div class="page">
 
-<header class="topbar">
-<div class="topbar-inner">
+  <header class="topbar">
+    <div class="topbar-inner">
 
-<div class="brand">
+      <div class="brand">
+        <div class="brand-mark"></div>
 
-<div class="brand-mark"></div>
+        <div class="brand-copy">
+          <div class="brand-title">Madaris AI</div>
+          <div class="brand-subtitle">نظام تشغيل التعليم</div>
+        </div>
+      </div>
 
-<div class="brand-copy">
-<div class="brand-title">Madaris AI</div>
-<div class="brand-subtitle">نظام تشغيل التعليم</div>
-</div>
+      <a href="/" class="back-link">العودة للرئيسية</a>
 
-</div>
+    </div>
+  </header>
 
-<a href="/" class="back-link">
-العودة للرئيسية
-</a>
+  <main class="main">
 
-</div>
-</header>
+    <div class="shell">
 
+      <section class="hero-card">
 
-<main class="main">
+        <div class="eyebrow">منصة تعليمية تعمل بدون إنترنت</div>
 
-<div class="shell">
+        <h1 class="hero-title">
+          تسجيل الدخول إلى
+          <span class="accent">Madaris AI</span>
+        </h1>
 
+        <p class="hero-desc">
+          هذه النسخة ستسجل الدخول فعليًا عبر Firebase Authentication،
+          ثم ستقرأ ملف المستخدم من Firestore لتعرف الدور الحقيقي
+          وتوجهه إلى الصفحة الصحيحة تلقائيًا.
+        </p>
 
-<section class="hero-card">
+        <div class="hero-points">
+          <div class="hero-point">Firebase Auth</div>
+          <div class="hero-point">Firestore Users</div>
+          <div class="hero-point">توجيه حسب الدور</div>
+          <div class="hero-point">جلسة حقيقية</div>
+        </div>
 
-<div class="eyebrow">
-منصة تعليمية تعمل بدون إنترنت
-</div>
+      </section>
 
-<h1 class="hero-title">
-نظام تشغيل التعليم
-<span class="accent">Madaris AI</span>
-</h1>
+      <section class="login-card">
 
-<p class="hero-desc">
-منصة تعليمية موحدة لإدارة المدارس
-والطلاب والمعلمين والعمل حتى بدون إنترنت
-</p>
+        <div class="login-head">
+          <h2 class="login-title">تسجيل الدخول</h2>
+          <p class="login-subtitle">الدخول الحقيقي إلى منصة Madaris AI</p>
+        </div>
 
-<div class="hero-points">
+        <form id="loginForm">
 
-<div class="hero-point">
-التعليم الذكي بدون إنترنت
-</div>
+          <div class="form-group">
+            <label for="email">البريد الإلكتروني</label>
+            <input
+              id="email"
+              name="email"
+              class="field"
+              type="email"
+              placeholder="example@email.com"
+              required
+            />
+          </div>
 
-<div class="hero-point">
-إدارة المدارس والطلاب
-</div>
+          <div class="form-group">
+            <label for="password">كلمة المرور</label>
+            <input
+              id="password"
+              name="password"
+              class="field"
+              type="password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
 
-<div class="hero-point">
-منصة تعليمية موحدة
-</div>
+          <div class="row-between">
+            <a href="#" class="muted-link">نسيت كلمة المرور؟</a>
+          </div>
 
-<div class="hero-point">
-نظام قابل للتوسع عالمياً
-</div>
+          <button type="submit" id="loginBtn" class="btn btn-primary">
+            دخول المنصة
+          </button>
 
-</div>
+          <div id="statusBox" class="status-box"></div>
 
-</section>
+        </form>
 
+        <div class="divider">
+          <span>أو الدخول حسب الدور</span>
+        </div>
 
+        <div class="role-grid">
+          <a href="/app/login.html" class="role-link">تسجيل الدخول كطالب</a>
+          <a href="/app/login.html" class="role-link">تسجيل الدخول كمعلم</a>
+          <a href="/app/login.html" class="role-link">تسجيل الدخول كمدرسة</a>
+          <a href="/app/login.html" class="role-link">تسجيل الدخول كإدارة</a>
+        </div>
 
-<section class="login-card">
+        <div class="register-row">
+          ليس لديك حساب؟
+          <a href="/app/register.html">إنشاء حساب جديد</a>
+        </div>
 
-<div class="login-head">
+        <div class="footer-note">
+          استخدم نفس Firebase Config الذي وضعته في register.html
+        </div>
 
-<h2 class="login-title">
-تسجيل الدخول
-</h2>
+      </section>
 
-<p class="login-subtitle">
-الدخول إلى منصة Madaris AI
-</p>
+    </div>
 
-</div>
-
-
-<form>
-
-<div class="form-group">
-
-<label>البريد الإلكتروني</label>
-
-<input 
-type="email" 
-class="field"
-placeholder="example@email.com"
-/>
-
-</div>
-
-
-<div class="form-group">
-
-<label>كلمة المرور</label>
-
-<input 
-type="password"
-class="field"
-placeholder="••••••••"
-/>
-
-</div>
-
-
-<div class="row-between">
-
-<a href="#" class="muted-link">
-نسيت كلمة المرور؟
-</a>
-
-</div>
-
-
-<button class="btn btn-primary">
-دخول المنصة
-</button>
-
-</form>
-
-
-<div class="divider">
-<span>أو الدخول حسب الدور</span>
-</div>
-
-
-<div class="role-grid">
-
-<a href="/app/dashboard.html" class="role-link">
-تسجيل الدخول كطالب
-</a>
-
-<a href="/app/dashboard.html" class="role-link">
-تسجيل الدخول كمعلم
-</a>
-
-<a href="/app/dashboard.html" class="role-link">
-تسجيل الدخول كمدرسة
-</a>
-
-<a href="/app/dashboard.html" class="role-link">
-تسجيل الدخول كإدارة
-</a>
+  </main>
 
 </div>
+<!-- Firebase SDK -->
+
+<script type="module">
+
+/* ============================= */
+/* Firebase Imports */
+/* ============================= */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-<div class="footer-note">
-Madaris AI Education Operating System © 2026
-</div>
+/* ============================= */
+/* Firebase Config */
+/* استخدم نفس القيم التي استخدمتها سابقاً */
+/* ============================= */
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX"
+};
 
 
-</section>
+/* ============================= */
+/* Init Firebase */
+/* ============================= */
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
 
 
-</div>
+/* ============================= */
+/* Elements */
+/* ============================= */
 
-</main>
+const form = document.getElementById("loginForm");
+
+const emailInput = document.getElementById("email");
+
+const passwordInput = document.getElementById("password");
+
+const loginBtn = document.getElementById("loginBtn");
+
+const statusBox = document.getElementById("statusBox");
 
 
-</div>
+/* ============================= */
+/* UI Helpers */
+/* ============================= */
+
+function showError(message){
+
+  statusBox.className = "status-box show error";
+
+  statusBox.innerText = message;
+
+}
+
+function showSuccess(message){
+
+  statusBox.className = "status-box show success";
+
+  statusBox.innerText = message;
+
+}
+
+
+/* ============================= */
+/* Login */
+/* ============================= */
+
+form.addEventListener("submit", async (e)=>{
+
+  e.preventDefault();
+
+  const email = emailInput.value.trim();
+
+  const password = passwordInput.value.trim();
+
+  if(!email || !password){
+
+    showError("يرجى إدخال البريد وكلمة المرور");
+
+    return;
+  }
+
+  try{
+
+    loginBtn.disabled = true;
+
+    loginBtn.innerText = "جارٍ تسجيل الدخول...";
+
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const user = userCredential.user;
+
+    showSuccess("تم تسجيل الدخول بنجاح");
+
+    await loadUserRole(user.uid);
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    showError("فشل تسجيل الدخول. تحقق من البيانات");
+
+  }
+
+  finally{
+
+    loginBtn.disabled = false;
+
+    loginBtn.innerText = "دخول المنصة";
+
+  }
+
+});
+
+
+/* ============================= */
+/* Load User Role */
+/* ============================= */
+
+async function loadUserRole(uid){
+
+  try{
+
+    const userRef = doc(db, "users", uid);
+
+    const userSnap = await getDoc(userRef);
+
+    if(!userSnap.exists()){
+
+      showError("لا يوجد ملف للمستخدم");
+
+      return;
+
+    }
+
+    const data = userSnap.data();
+
+    const role = data.role;
+
+
+    redirectByRole(role);
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    showError("خطأ أثناء تحميل المستخدم");
+
+  }
+
+}
+
+
+/* ============================= */
+/* Redirect By Role */
+/* ============================= */
+
+function redirectByRole(role){
+
+  switch(role){
+
+    case "school":
+      window.location.href = "/app/school/dashboard.html";
+      break;
+
+    case "teacher":
+      window.location.href = "/app/teacher/dashboard.html";
+      break;
+
+    case "student":
+      window.location.href = "/app/student/dashboard.html";
+      break;
+
+    case "admin":
+      window.location.href = "/app/admin/dashboard.html";
+      break;
+
+    default:
+      window.location.href = "/app/dashboard.html";
+
+  }
+
+}
+
+
+/* ============================= */
+/* Auto Login */
+/* ============================= */
+
+onAuthStateChanged(auth, async (user)=>{
+
+  if(user){
+
+    await loadUserRole(user.uid);
+
+  }
+
+});
+
+</script>
+
 
 </body>
 
 </html>
+  
