@@ -2,825 +2,1093 @@
 <html lang="ar" dir="rtl">
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madaris AI | الخصوصية</title>
 
-<title>الخصوصية | Madaris AI</title>
+  <meta
+    name="description"
+    content="سياسة الخصوصية في Madaris AI: كيف يتم جمع البيانات، استخدامها، حمايتها، وإدارتها ضمن منصة تشغيل تعليمية موحدة."
+  />
 
-<meta name="description" content="سياسة الخصوصية في Madaris AI — كيف نتعامل مع البيانات التعليمية والتشغيلية، وكيف نحمي المعلومات ونحترم الخصوصية">
+  <meta name="theme-color" content="#07111f" />
 
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-<style>
+  <style>
+    :root{
+      --bg:#07111f;
+      --bg-soft:#0b1728;
+      --panel:rgba(15,29,52,.82);
+      --panel-2:rgba(19,38,66,.92);
+      --border:rgba(255,255,255,.08);
+      --line-strong:rgba(255,255,255,.14);
 
-:root{
+      --text:#ffffff;
+      --muted:#8ab3c7;
+      --muted-2:#b7d3e4;
 
---bg:#07111f;
---bg-soft:#0b1728;
---text:#ffffff;
---muted:#a8b3c7;
---primary:#5fdcff;
---secondary:#7c67ff;
---card:rgba(255,255,255,0.04);
---border:rgba(255,255,255,0.08);
+      --primary:#85fdff;
+      --primary-strong:#67d8ff;
+      --secondary:#87d64f;
+      --accent:#82abea;
 
-}
+      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
+      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+      --radius-sm:12px;
 
-body{
-font-family:"Tajawal",sans-serif;
-background:var(--bg);
-color:var(--text);
-line-height:1.75;
-}
+      --container:min(1200px,92%);
+    }
 
-.container{
-width:90%;
-max-width:1200px;
-margin:auto;
-}
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-.section{
-padding:90px 0;
-}
+    html{
+      scroll-behavior:smooth;
+    }
 
-.section-soft{
-background:var(--bg-soft);
-}
+    body{
+      font-family:
+        "Tajawal",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
+        radial-gradient(circle at left 20%, rgba(130,171,234,.06), transparent 18%),
+        linear-gradient(180deg, #07111f 0%, #081728 100%);
+      color:var(--text);
+      line-height:1.9;
+      overflow-x:hidden;
+    }
 
-.section-title{
-font-size:38px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.3;
-}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.section-description{
-color:var(--muted);
-max-width:760px;
-}
+    .container{
+      width:var(--container);
+      margin:auto;
+    }
 
-.grid{
-display:grid;
-gap:20px;
-}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(7,17,31,.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:20px 0;
+    }
 
-.card{
-background:var(--card);
-border:1px solid var(--border);
-border-radius:18px;
-padding:25px;
-}
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
 
-.btn{
-display:inline-block;
-padding:14px 26px;
-border-radius:40px;
-font-weight:700;
-text-decoration:none;
-}
+    .logo{
+      font-weight:900;
+      font-size:22px;
+      line-height:1.2;
+      letter-spacing:.2px;
+      flex-shrink:0;
+    }
 
-.btn-primary{
-background:linear-gradient(135deg,#5fdcff,#7c67ff);
-color:white;
-}
+    .logo a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.btn-secondary{
-border:1px solid var(--border);
-color:white;
-}
+    .nav-links{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
 
-.topbar{
-padding:20px 0;
-border-bottom:1px solid var(--border);
-}
+    .nav-links a{
+      color:var(--muted);
+      transition:.25s ease;
+      font-weight:700;
+      font-size:15px;
+    }
 
-.nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:20px;
-}
+    .nav-links a:hover{
+      color:white;
+    }
 
-.logo{
-font-weight:900;
-font-size:22px;
-}
+    .menu-toggle{
+      display:none;
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      font-size:26px;
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
 
-.nav-links{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-}
+    .mobile-menu{
+      display:none;
+      margin-top:16px;
+      border-top:1px solid var(--border);
+      padding-top:16px;
+    }
 
-.nav-links a{
-color:var(--muted);
-text-decoration:none;
-}
+    .mobile-menu.active{
+      display:block;
+    }
 
-.nav-links a:hover{
-color:white;
-}
+    .mobile-menu-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px 18px;
+      width:100%;
+    }
 
-.hero{
-padding:80px 0;
-}
+    .mobile-menu-grid a{
+      display:block;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      color:#e8f1fb;
+      font-weight:700;
+      text-align:center;
+    }
 
-.hero h1{
-font-size:44px;
-font-weight:900;
-margin-bottom:20px;
-line-height:1.25;
-}
+    .hero{
+      position:relative;
+      padding:72px 0 42px;
+      overflow:hidden;
+    }
 
-.hero p{
-color:var(--muted);
-margin-bottom:30px;
-max-width:760px;
-}
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:auto auto -120px -120px;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(133,253,255,.10), transparent 68%);
+      pointer-events:none;
+    }
 
-.eyebrow{
-display:inline-block;
-padding:8px 14px;
-border-radius:999px;
-background:rgba(95,220,255,0.08);
-border:1px solid rgba(95,220,255,0.16);
-font-size:14px;
-font-weight:700;
-margin-bottom:20px;
-color:#d7f7ff;
-}
+    .hero-shell{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at top right, rgba(133,253,255,.14), transparent 26%),
+        linear-gradient(180deg, rgba(10,24,48,.98) 0%, rgba(10,22,39,.98) 100%);
+      box-shadow:var(--shadow-xl);
+      padding:42px 30px 34px;
+    }
 
-.footer{
-border-top:1px solid var(--border);
-padding:30px 0;
-margin-top:40px;
-color:var(--muted);
-text-align:center;
-}
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
 
-@media(max-width:900px){
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:52px;
+      border-radius:999px;
+      padding:10px 20px;
+      background:rgba(133,253,255,.06);
+      border:1px solid rgba(133,253,255,.16);
+      color:#e9fcff;
+      font-weight:800;
+      font-size:15px;
+      margin-bottom:22px;
+    }
 
-.hero h1{
-font-size:32px;
-}
+    .hero-title{
+      font-size:clamp(40px,6vw,78px);
+      line-height:1.04;
+      font-weight:950;
+      letter-spacing:-.03em;
+      margin-bottom:18px;
+    }
 
-.section-title{
-font-size:28px;
-}
+    .hero-title span{
+      color:var(--primary);
+    }
 
-.nav{
-flex-direction:column;
-align-items:flex-start;
-}
+    .hero-desc{
+      color:#d3dfec;
+      font-size:clamp(18px,2vw,22px);
+      max-width:780px;
+      margin-bottom:26px;
+    }
 
-.nav-links{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px 18px;
-width:100%;
-}
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
 
-}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px 24px;
+      border-radius:999px;
+      font-weight:800;
+      border:1px solid transparent;
+      transition:.22s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
 
-</style>
+    .btn:hover{
+      transform:translateY(-1px);
+    }
 
+    .btn-primary{
+      background:linear-gradient(135deg, #85fdff, #67d8ff);
+      color:#07111f;
+      box-shadow:0 14px 30px rgba(103,216,255,.24);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
+      color:white;
+      border-color:var(--border);
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .point{
+      padding:14px 16px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      color:#dce8f5;
+      font-weight:700;
+      font-size:15px;
+    }
+
+    .hero-side{
+      display:grid;
+      gap:14px;
+    }
+
+    .hero-card{
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      padding:22px;
+      box-shadow:var(--shadow-lg);
+    }
+
+    .hero-card h3{
+      margin-bottom:8px;
+      font-size:20px;
+      line-height:1.3;
+    }
+
+    .hero-card p{
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .hero-stat{
+      font-size:42px;
+      font-weight:950;
+      line-height:1;
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+
+    .section{
+      padding:60px 0;
+    }
+
+    .section-header{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:24px;
+    }
+
+    .section-kicker{
+      color:var(--primary);
+      font-weight:900;
+      font-size:15px;
+    }
+
+    .section-title{
+      font-size:clamp(28px,4vw,48px);
+      line-height:1.15;
+      font-weight:950;
+      letter-spacing:-.03em;
+    }
+
+    .section-description{
+      color:var(--muted);
+      font-size:18px;
+      max-width:900px;
+    }
+
+    .grid{
+      display:grid;
+      gap:20px;
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.025));
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:24px;
+      min-height:100%;
+      box-shadow:var(--shadow-lg);
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      font-size:22px;
+      line-height:1.3;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:16px;
+    }
+
+    .policy-list{
+      display:grid;
+      gap:18px;
+    }
+
+    .policy-item{
+      border:1px solid var(--border);
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.025));
+      box-shadow:var(--shadow-lg);
+      padding:24px;
+    }
+
+    .policy-item h3{
+      margin-bottom:10px;
+      font-size:22px;
+    }
+
+    .policy-item p{
+      color:var(--muted);
+      font-size:17px;
+    }
+
+    .footer{
+      border-top:1px solid var(--border);
+      padding:40px 0 30px;
+      margin-top:40px;
+      color:var(--muted);
+    }
+
+    @media(max-width:1100px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .grid-3{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:900px){
+      .nav{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .nav-links{
+        display:none;
+      }
+
+      .menu-toggle{
+        display:inline-flex;
+      }
+
+      .hero{
+        padding:34px 0 20px;
+      }
+
+      .hero-shell{
+        padding:26px 18px 22px;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .hero-points,
+      .grid-3,
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+
+      .mobile-menu-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:560px){
+      .mobile-menu-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-title{
+        font-size:42px;
+      }
+
+      .section-title{
+        font-size:32px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
 <header class="topbar">
+  <div class="container nav">
+    <div class="logo">
+      <a href="/" style="color:inherit;text-decoration:none;">Madaris AI</a>
+    </div>
 
-<div class="container nav">
+    <div class="nav-links">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+    </div>
 
-<div class="logo">
-Madaris AI
-</div>
+    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+  </div>
 
-<div class="nav-links">
-<a href="/">الرئيسية</a>
-<a href="/platform.html">المنصة</a>
-<a href="/technology.html">التقنية</a>
-<a href="/schools.html">للمدارس</a>
-<a href="/partners.html">الشركاء</a>
-<a href="/about.html">من نحن</a>
-<a href="/contact.html">تواصل</a>
-</div>
-
-</div>
-
+  <div class="container mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-grid">
+      <a href="/">الرئيسية</a>
+      <a href="/platform.html">المنصة</a>
+      <a href="/technology.html">التقنية</a>
+      <a href="/schools.html">للمدارس</a>
+      <a href="/partners.html">الشركاء</a>
+      <a href="/vision.html">الرؤية</a>
+      <a href="/problem.html">المشكلة</a>
+      <a href="/solution.html">الحل</a>
+      <a href="/use-cases.html">حالات الاستخدام</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/about.html">من نحن</a>
+      <a href="/contact.html">تواصل</a>
+      <a href="/app/login.html">دخول المنصة</a>
+    </div>
+  </div>
 </header>
 
-
+<main>
 
 <section class="hero">
+  <div class="container">
+    <div class="hero-shell">
 
-<div class="container">
+      <div class="eyebrow">الخصوصية</div>
 
-<div class="eyebrow">
-الخصوصية
-</div>
+      <div class="hero-grid">
 
-<h1>
-الخصوصية جزء أساسي من<br>
-طريقة بناء Madaris AI
-</h1>
+        <div>
+          <h1 class="hero-title">
+            الخصوصية في
+            <span>Madaris AI</span>
+          </h1>
 
-<p>
-في Madaris AI نتعامل مع البيانات التعليمية والتشغيلية باحترام وجدية.
-هذه الصفحة توضح بشكل عام كيف ننظر إلى الخصوصية، وكيف نسعى إلى
-تنظيم استخدام البيانات، وحماية المعلومات، وبناء منصة موثوقة
-للطلاب والمعلمين والمدارس.
-</p>
+          <p class="hero-desc">
+            توضح هذه الصفحة كيف تتعامل Madaris AI مع البيانات، وما الذي يتم جمعه،
+            وكيف يتم استخدامه، وكيف نحاول تقليل الوصول غير الضروري إلى المعلومات
+            داخل المنصة التعليمية. 1
+          </p>
 
-<a href="/contact.html" class="btn btn-primary">
-تواصل معنا
-</a>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/security.html">الأمان</a>
+            <a class="btn btn-secondary" href="/contact.html">تواصل معنا</a>
+          </div>
 
-</div>
+          <div class="hero-points">
+            <div class="point">شفافية في التعامل مع البيانات</div>
+            <div class="point">تقليل الوصول غير الضروري</div>
+            <div class="point">وضوح في الاستخدام</div>
+            <div class="point">إدارة مسؤولة للمعلومات</div>
+          </div>
+        </div>
 
+        <div class="hero-side">
+          <div class="hero-card">
+            <div class="hero-stat">01</div>
+            <h3>وضوح</h3>
+            <p>سياسة الخصوصية تهدف إلى شرح التعامل مع البيانات بلغة واضحة.</p>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-stat">02</div>
+            <h3>تقليل الجمع</h3>
+            <p>المنصة لا تحتاج إلى جمع أكثر من اللازم لتقديم الخدمة التعليمية.</p>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-stat">03</div>
+            <h3>إدارة مسؤولة</h3>
+            <p>البيانات المرتبطة بالتعليم يجب أن تُدار بمسؤولية وثقة طويلة المدى. 2</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 </section>
-<section class="section section-soft" id="privacy-principles">
-
-<div class="container">
-
-<h2 class="section-title">
-مبادئ الخصوصية في Madaris AI
-</h2>
-
-<p class="section-description">
-نعتمد على مجموعة من المبادئ الأساسية لضمان احترام الخصوصية
-وحماية البيانات التعليمية داخل المنصة.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>الحد الأدنى من البيانات</h3>
-
-<p class="section-description">
-نحاول جمع أقل قدر ممكن من البيانات الضرورية فقط.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>وضوح الاستخدام</h3>
-
-<p class="section-description">
-نوضح كيف يتم استخدام البيانات داخل المنصة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>حماية المعلومات</h3>
-
-<p class="section-description">
-نركز على حماية البيانات التعليمية والتشغيلية.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>التحكم في البيانات</h3>
-
-<p class="section-description">
-تحتفظ المدارس بالتحكم في بياناتها.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<section class="section" id="privacy-data">
-
-<div class="container">
-
-<h2 class="section-title">
-أنواع البيانات التي نتعامل معها
-</h2>
-
-<p class="section-description">
-قد تتعامل المنصة مع أنواع مختلفة من البيانات التعليمية
-والتشغيلية داخل المدارس.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>بيانات الطلاب</h3>
-
-<p class="section-description">
-مثل المعلومات التعليمية والتقدم الدراسي.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>بيانات المعلمين</h3>
-
-<p class="section-description">
-معلومات مرتبطة بالدور التعليمي.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>بيانات المدرسة</h3>
-
-<p class="section-description">
-معلومات تشغيلية للمدرسة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>بيانات النظام</h3>
-
-<p class="section-description">
-بيانات تشغيل المنصة وتحسين الأداء.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft" id="privacy-usage">
-
-<div class="container">
-
-<h2 class="section-title">
-كيف نستخدم البيانات
-</h2>
-
-<p class="section-description">
-يتم استخدام البيانات داخل Madaris AI بهدف تحسين العملية التعليمية
-وتوفير تجربة منظمة للمدارس والمعلمين والطلاب.
-</p>
-
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-
-<h3>تحسين التعليم</h3>
-
-<p class="section-description">
-استخدام البيانات لتحسين تجربة التعلم.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تشغيل المنصة</h3>
-
-<p class="section-description">
-إدارة العمليات التعليمية داخل المدارس.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>تحسين الأداء</h3>
-
-<p class="section-description">
-تحليل الأداء وتحسين النظام.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>دعم المستخدمين</h3>
-
-<p class="section-description">
-تقديم الدعم الفني والتعليمي.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
+<section class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">جمع البيانات</div>
+      <h2 class="section-title">
+        ما البيانات التي قد يتم جمعها
+      </h2>
+      <p class="section-description">
+        تقوم Madaris AI بجمع الحد الأدنى من البيانات اللازمة
+        لتقديم الخدمة التعليمية بطريقة فعالة وآمنة.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="card">
+        <h3>بيانات المستخدم</h3>
+        <p>
+          مثل الاسم أو معلومات الحساب
+          المرتبطة باستخدام المنصة.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>بيانات تعليمية</h3>
+        <p>
+          بيانات مرتبطة بالتعلم
+          مثل التقدم الدراسي أو الأنشطة.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>بيانات تشغيلية</h3>
+        <p>
+          بيانات تساعد على تحسين
+          أداء واستقرار النظام.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
 
+<section class="section section-alt">
+  <div class="container">
 
-<section class="section" id="privacy-access">
+    <div class="section-header">
+      <div class="section-kicker">استخدام البيانات</div>
+      <h2 class="section-title">
+        كيف يتم استخدام البيانات
+      </h2>
+      <p class="section-description">
+        يتم استخدام البيانات فقط ضمن إطار تشغيل المنصة
+        وتحسين التجربة التعليمية.
+      </p>
+    </div>
 
-<div class="container">
+    <div class="grid grid-2">
 
-<h2 class="section-title">
-الوصول إلى البيانات
-</h2>
+      <div class="card">
+        <h3>تحسين التعلم</h3>
+        <p>
+          تحليل التقدم التعليمي
+          لتحسين التجربة التعليمية.
+        </p>
+      </div>
 
-<p class="section-description">
-يتم تنظيم الوصول إلى البيانات داخل المنصة
-بناءً على أدوار المستخدمين وصلاحياتهم.
-</p>
+      <div class="card">
+        <h3>تحسين الأداء</h3>
+        <p>
+          استخدام البيانات
+          لتحسين استقرار المنصة.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>إدارة المستخدمين</h3>
+        <p>
+          إدارة الحسابات
+          والصلاحيات داخل النظام.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>تحسين الميزات</h3>
+        <p>
+          تطوير المنصة
+          بناءً على الاستخدام.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-
-<h3>إدارة المدرسة</h3>
-
-<p class="section-description">
-وصول إلى بيانات المدرسة.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>المعلمون</h3>
-
-<p class="section-description">
-وصول إلى بيانات الطلاب المرتبطين بهم.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>الطلاب</h3>
-
-<p class="section-description">
-وصول إلى بياناتهم التعليمية.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h3>إدارة النظام</h3>
-
-<p class="section-description">
-وصول محدود للصيانة والتحسين.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
- <section class="section section-soft" id="privacy-storage">
-
-<div class="container">
-
-<h2 class="section-title">
-تخزين البيانات وحمايتها
-</h2>
-
-<p class="section-description">
-نعتمد على ممارسات واضحة لتنظيم تخزين البيانات
-وحمايتها داخل Madaris AI لضمان استمرارية العمل
-وحماية المعلومات التعليمية.
-</p>
-
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
-
-
-<div class="card">
-<h3>تخزين منظم</h3>
-<p class="section-description">
-تنظيم البيانات بطريقة واضحة وآمنة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>حماية البيانات</h3>
-<p class="section-description">
-تقليل المخاطر المرتبطة بالبيانات.
-</p>
-</div>
-
-
-<div class="card">
-<h3>نسخ احتياطي</h3>
-<p class="section-description">
-الحفاظ على البيانات واستمرارية العمل.
-</p>
-</div>
-
-
-<div class="card">
-<h3>استمرارية النظام</h3>
-<p class="section-description">
-تصميم المنصة لتكون موثوقة ومستقرة.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
 
+<section class="section">
+  <div class="container">
 
-<section class="section" id="privacy-sharing">
+    <div class="section-header">
+      <div class="section-kicker">حماية الخصوصية</div>
+      <h2 class="section-title">
+        تقليل الوصول إلى البيانات
+      </h2>
+      <p class="section-description">
+        يتم تصميم Madaris AI بحيث يتم تقليل الوصول
+        إلى البيانات الحساسة قدر الإمكان.
+      </p>
+    </div>
 
-<div class="container">
+    <div class="grid grid-3">
 
-<h2 class="section-title">
-مشاركة البيانات
-</h2>
+      <div class="card">
+        <h3>تحديد الصلاحيات</h3>
+        <p>
+          كل مستخدم يحصل على
+          صلاحيات محددة فقط.
+        </p>
+      </div>
 
-<p class="section-description">
-نحن لا نشارك البيانات التعليمية إلا في حالات محددة
-ومرتبطة بتشغيل المنصة وتحسينها.
-</p>
+      <div class="card">
+        <h3>تقليل الوصول</h3>
+        <p>
+          منع الوصول غير الضروري
+          إلى المعلومات.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>إدارة البيانات</h3>
+        <p>
+          التعامل مع البيانات
+          وفق سياسات واضحة.
+        </p>
+      </div>
 
+    </div>
 
-<div class="card">
-<h3>عدم البيع</h3>
-<p class="section-description">
-لا نقوم ببيع البيانات.
-</p>
-</div>
-
-
-<div class="card">
-<h3>استخدام محدود</h3>
-<p class="section-description">
-يتم استخدام البيانات داخل المنصة فقط.
-</p>
-</div>
-
-
-<div class="card">
-<h3>حماية الخصوصية</h3>
-<p class="section-description">
-نركز على احترام خصوصية المستخدمين.
-</p>
-</div>
-
-
-<div class="card">
-<h3>تحسين المنصة</h3>
-<p class="section-description">
-استخدام البيانات لتحسين الأداء.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
-<section class="section section-soft" id="privacy-rights">
+<section class="section section-alt">
+  <div class="container">
 
-<div class="container">
+    <div class="section-header">
+      <div class="section-kicker">مشاركة البيانات</div>
+      <h2 class="section-title">
+        متى يتم مشاركة البيانات
+      </h2>
+      <p class="section-description">
+        Madaris AI لا تقوم ببيع البيانات أو مشاركتها خارج إطار
+        تشغيل المنصة التعليمية، ويتم التعامل مع البيانات وفق
+        حدود واضحة ومحددة.
+      </p>
+    </div>
 
-<h2 class="section-title">
-حقوق المستخدمين
-</h2>
+    <div class="grid grid-3">
 
-<p class="section-description">
-نؤمن أن للمستخدمين حقوقاً واضحة فيما يتعلق ببياناتهم،
-ولهذا نركز على تمكين المدارس والمستخدمين من التحكم
-في المعلومات داخل المنصة.
-</p>
+      <div class="card">
+        <h3>داخل المنصة</h3>
+        <p>
+          يتم مشاركة البيانات
+          بين المستخدمين المصرح لهم فقط.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="card">
+        <h3>متطلبات تشغيلية</h3>
+        <p>
+          مشاركة البيانات
+          عند الحاجة لتشغيل الخدمة.
+        </p>
+      </div>
 
+      <div class="card">
+        <h3>الالتزامات القانونية</h3>
+        <p>
+          مشاركة محدودة
+          عند وجود متطلبات قانونية.
+        </p>
+      </div>
 
-<div class="card">
-<h3>الوصول إلى البيانات</h3>
-<p class="section-description">
-إمكانية الوصول إلى البيانات التعليمية.
-</p>
-</div>
+    </div>
 
-
-<div class="card">
-<h3>تحديث البيانات</h3>
-<p class="section-description">
-تحديث البيانات عند الحاجة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>التحكم في البيانات</h3>
-<p class="section-description">
-إدارة البيانات من قبل المدرسة.
-</p>
-</div>
-
-
-<div class="card">
-<h3>طلب التعديل</h3>
-<p class="section-description">
-طلب تعديل المعلومات عند الحاجة.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
 
+<section class="section">
+  <div class="container">
 
-<section class="section" id="privacy-updates">
+    <div class="section-header">
+      <div class="section-kicker">الاحتفاظ بالبيانات</div>
+      <h2 class="section-title">
+        مدة الاحتفاظ بالبيانات
+      </h2>
+      <p class="section-description">
+        يتم الاحتفاظ بالبيانات التعليمية وفق الحاجة التشغيلية
+        وبما يدعم استمرارية العملية التعليمية.
+      </p>
+    </div>
 
-<div class="container">
+    <div class="grid grid-2">
 
-<h2 class="section-title">
-تحديث سياسة الخصوصية
-</h2>
+      <div class="highlight-box">
+        <h3>بيانات المستخدم</h3>
+        <p>
+          يتم الاحتفاظ بها
+          طالما الحساب نشط.
+        </p>
+      </div>
 
-<p class="section-description">
-قد يتم تحديث سياسة الخصوصية من وقت إلى آخر
-لتعكس تطوير المنصة وتحسينها.
-</p>
+      <div class="highlight-box">
+        <h3>البيانات التعليمية</h3>
+        <p>
+          الاحتفاظ بها
+          لدعم التقدم التعليمي.
+        </p>
+      </div>
 
-<div class="grid"
-style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:40px;">
+      <div class="highlight-box">
+        <h3>بيانات التشغيل</h3>
+        <p>
+          الاحتفاظ بها
+          لتحسين النظام.
+        </p>
+      </div>
 
+      <div class="highlight-box">
+        <h3>إزالة البيانات</h3>
+        <p>
+          يمكن إزالة البيانات
+          وفق سياسات النظام.
+        </p>
+      </div>
 
-<div class="card">
-<h3>تحسين مستمر</h3>
-<p class="section-description">
-تحديث السياسة مع تطوير المنصة.
-</p>
-</div>
+    </div>
 
-
-<div class="card">
-<h3>وضوح التغييرات</h3>
-<p class="section-description">
-توضيح أي تحديثات مستقبلية.
-</p>
-</div>
-
-
-<div class="card">
-<h3>شفافية الاستخدام</h3>
-<p class="section-description">
-الشفافية في التعامل مع البيانات.
-</p>
-</div>
-
-
-<div class="card">
-<h3>التزام طويل المدى</h3>
-<p class="section-description">
-بناء منصة موثوقة ومستقرة.
-</p>
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-<section class="section section-soft" id="privacy-final">
-
-<div class="container">
-
-<div style="text-align:center;max-width:720px;margin:auto;">
-
-<h2 class="section-title">
-الخصوصية أساس الثقة
-</h2>
-
-<p class="section-description" style="margin-top:20px;">
-في Madaris AI نؤمن أن حماية الخصوصية ليست خياراً،
-بل جزء أساسي من بناء منصة تعليمية موثوقة ومستدامة.
-نحن نعمل باستمرار على تحسين سياسات الخصوصية
-وتطوير آليات حماية البيانات.
-</p>
-
-<div style="margin-top:35px;">
-
-<a href="/security.html" class="btn btn-primary">
-سياسة الأمان
-</a>
-
-<a href="/contact.html"
-class="btn btn-secondary"
-style="margin-right:12px;">
-تواصل معنا
-</a>
-
-</div>
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
-</main>
 
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">حقوق المستخدم</div>
+      <h2 class="section-title">
+        حقوق المستخدمين
+      </h2>
+      <p class="section-description">
+        تحترم Madaris AI حقوق المستخدمين
+        في التعامل مع بياناتهم.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="card">
+        <h3>الوصول إلى البيانات</h3>
+        <p>
+          يمكن للمستخدم
+          الوصول إلى بياناته.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>تعديل البيانات</h3>
+        <p>
+          يمكن تعديل
+          البيانات المرتبطة بالحساب.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>طلب الحذف</h3>
+        <p>
+          يمكن طلب حذف البيانات
+          وفق سياسات النظام.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">أمان البيانات</div>
+      <h2 class="section-title">
+        حماية البيانات داخل Madaris AI
+      </h2>
+      <p class="section-description">
+        يتم التعامل مع البيانات داخل Madaris AI وفق نهج يهدف إلى
+        تقليل المخاطر والحفاظ على خصوصية المستخدمين.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+
+      <div class="card">
+        <h3>حماية الوصول</h3>
+        <p>
+          تحديد من يمكنه
+          الوصول إلى البيانات.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>تقليل البيانات</h3>
+        <p>
+          جمع الحد الأدنى
+          من البيانات فقط.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>إدارة آمنة</h3>
+        <p>
+          إدارة البيانات
+          ضمن بنية موثوقة.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section section-alt">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">تحديث السياسة</div>
+      <h2 class="section-title">
+        تحديثات سياسة الخصوصية
+      </h2>
+      <p class="section-description">
+        قد يتم تحديث سياسة الخصوصية مع تطور المنصة
+        وتحسين الخدمات.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="highlight-box">
+        <h3>تحديث دوري</h3>
+        <p>
+          مراجعة السياسة
+          بشكل مستمر.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h3>إشعار المستخدم</h3>
+        <p>
+          توضيح التحديثات
+          عند الحاجة.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <div class="section-kicker">التواصل</div>
+      <h2 class="section-title">
+        التواصل بخصوص الخصوصية
+      </h2>
+      <p class="section-description">
+        يمكن التواصل مع فريق Madaris AI
+        لأي استفسار متعلق بالخصوصية.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+
+      <div class="card">
+        <h3>الدعم</h3>
+        <p>
+          التواصل مع فريق الدعم
+          عبر صفحة التواصل.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>الاستفسارات</h3>
+        <p>
+          إرسال الاستفسارات
+          المتعلقة بالبيانات.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 
 <footer class="footer">
 
-<div class="container">
+  <div class="container">
 
-© <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;text-align:right;">
 
-</div>
+      <div>
+        <h3 style="margin-bottom:14px;">Madaris AI</h3>
+        <p class="section-description">
+          منصة تشغيل تعليمية موحدة تهدف إلى بناء مستقبل التعليم
+          عبر بنية تقنية قوية وقابلة للتوسع.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">المنتج</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/platform.html">المنصة</a>
+          <a href="/technology.html">التقنية</a>
+          <a href="/schools.html">للمدارس</a>
+          <a href="/use-cases.html">حالات الاستخدام</a>
+          <a href="/faq.html">الأسئلة الشائعة</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">الشركة</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/about.html">من نحن</a>
+          <a href="/vision.html">الرؤية</a>
+          <a href="/partners.html">الشركاء</a>
+          <a href="/problem.html">المشكلة</a>
+          <a href="/solution.html">الحل</a>
+          <a href="/contact.html">تواصل</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom:14px;">القانوني</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/security.html">الأمان</a>
+          <a href="/privacy.html">الخصوصية</a>
+          <a href="/terms.html">الشروط</a>
+          <a href="/app/login.html">دخول المنصة</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+      margin-top:40px;
+      padding-top:20px;
+      border-top:1px solid var(--border);
+      text-align:center;
+      color:var(--muted);
+    ">
+      © <span id="year"></span> Madaris AI — جميع الحقوق محفوظة
+    </div>
+
+  </div>
 
 </footer>
 
+</main>
 
 
 <script>
-
 const year = document.getElementById("year");
-
 if(year){
 year.textContent = new Date().getFullYear();
 }
 
+const toggle = document.getElementById("menuToggle");
+const menu = document.getElementById("mobileMenu");
+
+if(toggle){
+toggle.addEventListener("click",()=>{
+menu.classList.toggle("active");
+});
+}
 </script>
 
 </body>
-
-</html>  
+</html>
