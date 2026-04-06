@@ -1,6 +1,6 @@
 
-import { loginWithEmail } from "./core/auth.js";
-import { getSession } from "./core/session.js";
+import { loginWithEmail, getCurrentSession } from "./core/auth.js";
+import { repairOrClearSession } from "./core/session.js";
 
 function redirectByRole(role) {
   switch (role) {
@@ -29,13 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.getElementById("loginBtn");
   const statusBox = document.getElementById("statusBox");
 
-  const existingSession = null;
-
-// if (existingSession && existingSession.uid && existingSession.role) {
-//   redirectByRole(existingSession.role);
-//   return;
-// }
-
   if (!form || !emailInput || !passwordInput || !loginBtn || !statusBox) {
     console.error("Login page elements are missing.");
     return;
@@ -61,6 +54,18 @@ document.addEventListener("DOMContentLoaded", () => {
     loginBtn.innerText = isLoading ? "جارٍ تسجيل الدخول..." : "دخول المنصة";
   }
 
+  function tryAutoRedirect() {
+    const repaired = repairOrClearSession();
+    if (!repaired) return;
+
+    const current = getCurrentSession();
+    if (!current || !current.role) return;
+
+    redirectByRole(current.role);
+  }
+
+  tryAutoRedirect();
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -82,8 +87,15 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("USER_ROLE_MISSING");
       }
 
+      if (session.role === "school" && !session.schoolId) {
+        throw new Error("SCHOOL_ID_MISSING");
+      }
+
       showSuccess("تم تسجيل الدخول بنجاح");
-      redirectByRole(session.role);
+
+      setTimeout(() => {
+        redirectByRole(session.role);
+      }, 350);
     } catch (error) {
       console.error("Login error:", error);
 
@@ -101,6 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
         showError("تم تسجيل الدخول لكن ملف المستخدم غير موجود داخل users");
       } else if (error.message === "USER_ROLE_MISSING") {
         showError("ملف المستخدم موجود لكن role غير موجود");
+      } else if (error.message === "SCHOOL_ID_MISSING") {
+        showError("تم تسجيل الدخول لكن بيانات المدرسة ناقصة: schoolId غير موجود");
       } else {
         showError("فشل تسجيل الدخول. تحقق من البيانات والإعدادات");
       }
