@@ -345,12 +345,6 @@
       font-weight:700;
     }
 
-    .hint{
-      margin-top:14px;
-      color:var(--muted);
-      font-size:15px;
-    }
-
     @media (max-width:1100px){
       .stats-grid{
         grid-template-columns:repeat(2, minmax(0,1fr));
@@ -397,8 +391,7 @@
     <section class="hero">
       <h1>الجدول المدرسي</h1>
       <p>
-        هذه النسخة متوافقة مع البيانات القديمة كما هي داخل Firestore،
-        ولا تشترط وجود <strong>schoolId</strong> داخل وثائق الجدول.
+        هذه الصفحة متوافقة مع البيانات القديمة، وتقرأ الجلسة من نفس المصدر الموحد داخل صفحات المدرسة.
       </p>
     </section>
 
@@ -443,9 +436,7 @@
 
     <section class="panel">
       <h2>جدول المدرسة الحالي</h2>
-      <p>
-        يمكنك التصفية حسب اليوم أو الصف أو المادة أو المعلم.
-      </p>
+      <p>يمكنك التصفية حسب اليوم أو الصف أو المادة أو المعلم.</p>
 
       <div class="filters">
         <select id="dayFilter" class="field">
@@ -456,7 +447,6 @@
           <option value="tuesday">tuesday</option>
           <option value="wednesday">wednesday</option>
           <option value="thursday">thursday</option>
-
           <option value="السبت">السبت</option>
           <option value="الأحد">الأحد</option>
           <option value="الاثنين">الاثنين</option>
@@ -493,31 +483,22 @@
               <th>إلى</th>
               <th>classId</th>
               <th>subjectId</th>
-              <th>teacherId</th>
             </tr>
           </thead>
           <tbody id="scheduleBody">
             <tr>
-              <td colspan="12" class="loading">جارٍ قراءة البيانات...</td>
+              <td colspan="11" class="loading">جارٍ تحميل البيانات...</td>
             </tr>
           </tbody>
         </table>
       </div>
+    </section>
 
-      <div class="hint">
-        هذه الصفحة تحمل جميع وثائق <strong>schedules</strong> كما هي، ثم تربطها مع
-        <strong>classes</strong> و<strong>subjects</strong> و<strong>teachers</strong>
-        باستخدام المعرّفات القديمة الحالية.
-      </div>
-  </section>
-  <script src="./session-guard.js"></script>
+    <script src="./session-guard.js"></script>
 
     <script type="module">
       import { db } from "../core/firebase-config.js";
-      import {
-        collection,
-        getDocs
-      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
       const statusBox = document.getElementById("statusBox");
       const scheduleBody = document.getElementById("scheduleBody");
@@ -535,7 +516,6 @@
       const classFilter = document.getElementById("classFilter");
       const subjectFilter = document.getElementById("subjectFilter");
       const teacherFilter = document.getElementById("teacherFilter");
-
       const logoutLink = document.getElementById("logoutLink");
 
       let allRows = [];
@@ -562,7 +542,7 @@
       function setEmpty(message) {
         scheduleBody.innerHTML = `
           <tr>
-            <td colspan="12" class="empty-state">${message}</td>
+            <td colspan="11" class="empty-state">${message}</td>
           </tr>
         `;
       }
@@ -576,36 +556,17 @@
           .replaceAll("'", "&#39;");
       }
 
-      function fillSelect(selectEl, items, placeholder, getValue, getLabel) {
-        selectEl.innerHTML = `<option value="">${placeholder}</option>`;
-        items.forEach((item) => {
-          const option = document.createElement("option");
-          option.value = getValue(item);
-          option.textContent = getLabel(item);
-          selectEl.appendChild(option);
-        });
-      }
-
-      async function readAllCollection(name) {
-        const ref = collection(db, name);
-        const snap = await getDocs(ref);
-
-        return snap.docs.map((docSnap) => ({
-          id: docSnap.id,
-          ...docSnap.data()
-        }));
-      }
-
       function normalizeTeacherType(teacher) {
         const raw =
           teacher?.teacherType ||
           teacher?.type ||
           teacher?.kind ||
+          (teacher?.isAI === true ? "ai" : "") ||
           "";
 
         const value = String(raw).trim().toLowerCase();
 
-        if (value.includes("ai") || value.includes("smart") || value.includes("ذكي")) {
+        if (value.includes("ai") || value.includes("smart") || value.includes("ذكي") || value === "true") {
           return "ai";
         }
 
@@ -618,9 +579,71 @@
 
       function statusClass(value) {
         const normalized = String(value || "").trim().toLowerCase();
-        return normalized === "active" || normalized === "نشط"
-          ? "active"
-          : "inactive";
+        return normalized === "active" || normalized === "نشط" ? "active" : "inactive";
+      }
+
+      function fillSelect(selectEl, items, placeholder, getValue, getLabel) {
+        selectEl.innerHTML = `<option value="">${placeholder}</option>`;
+        items.forEach((item) => {
+          const option = document.createElement("option");
+          option.value = getValue(item);
+          option.textContent = getLabel(item);
+          selectEl.appendChild(option);
+        });
+      }
+
+      async function readAll(name) {
+        const snap = await getDocs(collection(db, name));
+        return snap.docs.map((docSnap) => ({
+          id: docSnap.id,
+          ...docSnap.data()
+        }));
+      }
+
+      async function readBySchoolIfPossible(name, schoolId) {
+        if (!schoolId) {
+          return readAll(name);
+        }
+
+        try {
+          const q = query(collection(db, name), where("schoolId", "==", schoolId));
+          const snap = await getDocs(q);
+
+          if (!snap.empty) {
+            return snap.docs.map((docSnap) => ({
+              id: docSnap.id,
+              ...docSnap.data()
+            }));
+          }
+        } catch (error) {
+          console.warn(`Fallback to all documents for ${name}:`, error);
+        }
+
+        return readAll(name);
+      }
+
+      function buildMaps(classes, subjects, teachers) {
+        classMap = new Map();
+        subjectMap = new Map();
+        teacherMap = new Map();
+        teacherBySubject = new Map();
+
+        classes.forEach((item) => {
+          classMap.set(item.id, item);
+          if (item.classId) classMap.set(item.classId, item);
+        });
+
+        subjects.forEach((item) => {
+          subjectMap.set(item.id, item);
+          if (item.subjectId) subjectMap.set(item.subjectId, item);
+        });
+
+        teachers.forEach((item) => {
+          teacherMap.set(item.id, item);
+          if (item.teacherId) teacherMap.set(item.teacherId, item);
+          if (item.uid) teacherMap.set(item.uid, item);
+          if (item.subjectId) teacherBySubject.set(item.subjectId, item);
+        });
       }
 
       function sortRows(rows) {
@@ -643,10 +666,11 @@
         scheduleBody.innerHTML = rows.map((row) => {
           const classItem = classMap.get(row.classId) || null;
           const subjectItem = subjectMap.get(row.subjectId) || null;
-        let teacherItem = teacherMap.get(row.teacherId);
-if (!teacherItem && row.subjectId) {
-  teacherItem = teacherBySubject.get(row.subjectId);
-}   || null;
+
+          let teacherItem = teacherMap.get(row.teacherId);
+          if (!teacherItem && row.subjectId) {
+            teacherItem = teacherBySubject.get(row.subjectId);
+          }
 
           const className =
             classItem?.name ||
@@ -666,6 +690,7 @@ if (!teacherItem && row.subjectId) {
             teacherItem?.name ||
             teacherItem?.fullName ||
             teacherItem?.teacherName ||
+            teacherItem?.title ||
             row.teacherName ||
             "-";
 
@@ -677,63 +702,17 @@ if (!teacherItem && row.subjectId) {
               <td>${escapeHtml(className)}</td>
               <td>${escapeHtml(subjectName)}</td>
               <td>${escapeHtml(teacherName)}</td>
-              <td>
-                <span class="badge ${teacherType}">
-                  ${escapeHtml(teacherTypeLabel(teacherType))}
-                </span>
-              </td>
-              <td>
-                <span class="badge ${statusClass(rowStatus)}">
-                  ${escapeHtml(rowStatus)}
-                </span>
-              </td>
+              <td><span class="badge ${teacherType}">${escapeHtml(teacherTypeLabel(teacherType))}</span></td>
+              <td><span class="badge ${statusClass(rowStatus)}">${escapeHtml(rowStatus)}</span></td>
               <td>${escapeHtml(row.day || "-")}</td>
               <td>${escapeHtml(row.period || row.lessonNumber || row.slot || "-")}</td>
               <td>${escapeHtml(row.from || row.startTime || "-")}</td>
               <td>${escapeHtml(row.to || row.endTime || "-")}</td>
               <td>${escapeHtml(row.classId || "-")}</td>
               <td>${escapeHtml(row.subjectId || "-")}</td>
-              <td>${escapeHtml(row.teacherId || "-")}</td>
             </tr>
           `;
         }).join("");
-      }
-
-      function buildMaps(classes, subjects, teachers) {
-        classMap = new Map(
-          classes.map((item) => [
-            item.id,
-            {
-              ...item,
-              name: item.name || item.className || item.title || "بدون اسم"
-            }
-          ])
-        );
-
-        
-        subjectMap = new Map(
-          subjects.map((item) => [
-            item.id,
-            {
-              ...item,
-              name: item.name || item.subjectName || item.title || "بدون اسم"
-            }
-          ])
-        );
-
-       teacherMap = new Map();
-teacherBySubject = new Map();
-
-teachers.forEach(t => {
-
-  teacherMap.set(t.id, t);
-
-  if (t.subjectId) {
-    teacherBySubject.set(t.subjectId, t);
-  }
-
-}); 
-        );
       }
 
       function applyFilters() {
@@ -743,17 +722,29 @@ teachers.forEach(t => {
         const teacherValue = teacherFilter.value;
 
         const filtered = allRows.filter((row) => {
+          let teacherItem = teacherMap.get(row.teacherId);
+          if (!teacherItem && row.subjectId) {
+            teacherItem = teacherBySubject.get(row.subjectId);
+          }
+
+          const teacherKey =
+            teacherItem?.id ||
+            teacherItem?.teacherId ||
+            teacherItem?.uid ||
+            "";
+
           if (dayValue && String(row.day || "") !== dayValue) return false;
           if (classValue && String(row.classId || "") !== classValue) return false;
           if (subjectValue && String(row.subjectId || "") !== subjectValue) return false;
-          if (teacherValue && String(row.teacherId || "") !== teacherValue) return false;
+          if (teacherValue && String(teacherKey || "") !== teacherValue) return false;
+
           return true;
         });
 
         renderRows(filtered);
       }
 
-      async function loadSchedulePage() {
+      async function loadPage() {
         clearStatus();
 
         const session = window.MadarisSession?.requireSchoolSession();
@@ -762,13 +753,12 @@ teachers.forEach(t => {
         schoolIdValue.textContent = session.schoolId || "...";
         schoolNameValue.textContent = session.schoolName || "مدرسة بدون اسم";
         schoolStatusValue.textContent = session.status || "active";
-
-        try {
+  try {
           const [schedules, classes, subjects, teachers] = await Promise.all([
-            readAllCollection("schedules"),
-            readAllCollection("classes"),
-            readAllCollection("subjects"),
-            readAllCollection("teachers")
+            readAll("schedules"),
+            readBySchoolIfPossible("classes", session.schoolId),
+            readBySchoolIfPossible("subjects", session.schoolId),
+            readBySchoolIfPossible("teachers", session.schoolId)
           ]);
 
           buildMaps(classes, subjects, teachers);
@@ -784,7 +774,7 @@ teachers.forEach(t => {
             classFilter,
             classes,
             "كل الصفوف",
-            (item) => item.id,
+            (item) => item.classId || item.id,
             (item) => item.name || item.className || item.title || item.id
           );
 
@@ -792,7 +782,7 @@ teachers.forEach(t => {
             subjectFilter,
             subjects,
             "كل المواد",
-            (item) => item.id,
+            (item) => item.subjectId || item.id,
             (item) => item.name || item.subjectName || item.title || item.id
           );
 
@@ -800,21 +790,16 @@ teachers.forEach(t => {
             teacherFilter,
             teachers,
             "كل المعلمين",
-            (item) => item.id,
-            (item) => item.name || item.fullName || item.teacherName || item.id
+            (item) => item.teacherId || item.id || item.uid,
+            (item) => item.name || item.fullName || item.teacherName || item.title || item.id
           );
 
           renderRows(allRows);
-
-          if (!allRows.length) {
-            setEmpty("لا توجد حصص محفوظة داخل مجموعة schedules.");
-          }
-
-          showSuccess("تم تحميل الجدول القديم بنجاح");
+          showSuccess("تم تحميل الجلسة والجدول بنجاح");
         } catch (error) {
-          console.error("Schedule page error:", error);
-          setEmpty("تعذر تحميل الجدول من Firestore.");
-          showError("فشل تحميل بيانات الجدول القديمة");
+          console.error(error);
+          setEmpty("فشل تحميل بيانات الجدول.");
+          showError("تعذر تحميل الجدول من Firestore");
         }
       }
 
@@ -828,9 +813,8 @@ teachers.forEach(t => {
         window.MadarisSession?.logoutToLogin();
       });
 
-      loadSchedulePage();
+      loadPage();
     </script>
-
   </div>
 </body>
 </html>
