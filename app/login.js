@@ -1,4 +1,3 @@
-// app/login.js
 
 import { loginWithEmail } from "./core/auth.js";
 import { getSession } from "./core/session.js";
@@ -30,11 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.getElementById("loginBtn");
   const statusBox = document.getElementById("statusBox");
 
-  const existingSession = getSession();
-  if (existingSession && existingSession.uid && existingSession.role) {
-    redirectByRole(existingSession.role);
-    return;
-  }
+  const existingSession = null;
+
+// if (existingSession && existingSession.uid && existingSession.role) {
+//   redirectByRole(existingSession.role);
+//   return;
+// }
 
   if (!form || !emailInput || !passwordInput || !loginBtn || !statusBox) {
     console.error("Login page elements are missing.");
