@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | جدول المدرسة</title>
+  <title>Madaris AI | عرض الجدول</title>
   <meta name="theme-color" content="#07111f" />
 
   <style>
@@ -17,8 +17,8 @@
       --muted:#8ab3c7;
       --primary:#85fdff;
       --success:#55d38a;
-      --warning:#ffc857;
       --danger:#ff6b6b;
+      --warning:#ffc857;
       --radius:18px;
       --shadow:0 18px 48px rgba(0,0,0,.28);
     }
@@ -277,7 +277,7 @@
 
     table{
       width:100%;
-      min-width:1100px;
+      min-width:1050px;
       border-collapse:collapse;
     }
 
@@ -382,7 +382,7 @@
         <div class="brand-mark"></div>
         <div>
           <div class="brand-title">Madaris AI</div>
-          <div class="brand-subtitle">جدول المدرسة</div>
+          <div class="brand-subtitle">عرض الجدول</div>
         </div>
       </div>
 
@@ -397,8 +397,8 @@
     <section class="hero">
       <h1>الجدول المدرسي</h1>
       <p>
-        هذه الصفحة تقرأ بيانات الجدول الحقيقية من Firestore حسب المدرسة الحالية،
-        وتربط الحصص بالصفوف والمواد والمعلمين مباشرة.
+        هذه النسخة متوافقة مع البيانات القديمة كما هي داخل Firestore،
+        ولا تشترط وجود <strong>schoolId</strong> داخل وثائق الجدول.
       </p>
     </section>
 
@@ -437,7 +437,7 @@
 
       <article class="stat-card">
         <div class="stat-number" id="teachersCount">0</div>
-        <div class="stat-label">المعلمون في الجدول</div>
+        <div class="stat-label">المعلمون المرتبطون</div>
       </article>
     </section>
 
@@ -450,6 +450,13 @@
       <div class="filters">
         <select id="dayFilter" class="field">
           <option value="">كل الأيام</option>
+          <option value="saturday">saturday</option>
+          <option value="sunday">sunday</option>
+          <option value="monday">monday</option>
+          <option value="tuesday">tuesday</option>
+          <option value="wednesday">wednesday</option>
+          <option value="thursday">thursday</option>
+
           <option value="السبت">السبت</option>
           <option value="الأحد">الأحد</option>
           <option value="الاثنين">الاثنين</option>
@@ -480,25 +487,27 @@
               <th>المعلم</th>
               <th>نوع المعلم</th>
               <th>الحالة</th>
-              <th>البريد</th>
-              <th>الهاتف</th>
               <th>اليوم</th>
               <th>الحصة</th>
               <th>من</th>
               <th>إلى</th>
-              <th>ملاحظة</th>
+              <th>classId</th>
+              <th>subjectId</th>
+              <th>teacherId</th>
             </tr>
           </thead>
           <tbody id="scheduleBody">
             <tr>
-              <td colspan="12" class="loading">جارٍ قراءة البيانات الحقيقية من قاعدة البيانات...</td>
+              <td colspan="12" class="loading">جارٍ قراءة البيانات...</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="hint">
-        لكي يظهر المعلم داخل الجدول، يجب أن تكون قيمة <strong>teacherId</strong> داخل وثيقة الجدول مساوية تمامًا لمعرف وثيقة المعلم داخل مجموعة <strong>teachers</strong>.
+        هذه الصفحة تحمل جميع وثائق <strong>schedules</strong> كما هي، ثم تربطها مع
+        <strong>classes</strong> و<strong>subjects</strong> و<strong>teachers</strong>
+        باستخدام المعرّفات القديمة الحالية.
       </div>
   </section>
   <script src="./session-guard.js"></script>
@@ -507,9 +516,7 @@
       import { db } from "../core/firebase-config.js";
       import {
         collection,
-        getDocs,
-        query,
-        where
+        getDocs
       } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
       const statusBox = document.getElementById("statusBox");
@@ -578,10 +585,9 @@
         });
       }
 
-      async function readCollectionBySchool(name, schoolId) {
+      async function readAllCollection(name) {
         const ref = collection(db, name);
-        const q = query(ref, where("schoolId", "==", schoolId));
-        const snap = await getDocs(q);
+        const snap = await getDocs(ref);
 
         return snap.docs.map((docSnap) => ({
           id: docSnap.id,
@@ -591,9 +597,9 @@
 
       function normalizeTeacherType(teacher) {
         const raw =
-          teacher.teacherType ||
-          teacher.type ||
-          teacher.kind ||
+          teacher?.teacherType ||
+          teacher?.type ||
+          teacher?.kind ||
           "";
 
         const value = String(raw).trim().toLowerCase();
@@ -616,6 +622,17 @@
           : "inactive";
       }
 
+      function sortRows(rows) {
+        return rows.slice().sort((a, b) => {
+          const dayA = String(a.day || "");
+          const dayB = String(b.day || "");
+          if (dayA !== dayB) return dayA.localeCompare(dayB, "en");
+          const periodA = Number(a.period || a.lessonNumber || a.slot || 0);
+          const periodB = Number(b.period || b.lessonNumber || b.slot || 0);
+          return periodA - periodB;
+        });
+      }
+
       function renderRows(rows) {
         if (!rows.length) {
           setEmpty("لا توجد حصص مطابقة للفلاتر الحالية.");
@@ -623,19 +640,32 @@
         }
 
         scheduleBody.innerHTML = rows.map((row) => {
-          const className = classMap.get(row.classId)?.name || row.className || "-";
-          const subjectName = subjectMap.get(row.subjectId)?.name || row.subjectName || "-";
+          const classItem = classMap.get(row.classId) || null;
+          const subjectItem = subjectMap.get(row.subjectId) || null;
+          const teacherItem = teacherMap.get(row.teacherId) || null;
 
-          const teacher = teacherMap.get(row.teacherId) || null;
+          const className =
+            classItem?.name ||
+            classItem?.className ||
+            classItem?.title ||
+            row.className ||
+            "-";
+
+          const subjectName =
+            subjectItem?.name ||
+            subjectItem?.subjectName ||
+            subjectItem?.title ||
+            row.subjectName ||
+            "-";
+
           const teacherName =
-            teacher?.name ||
-            teacher?.fullName ||
+            teacherItem?.name ||
+            teacherItem?.fullName ||
+            teacherItem?.teacherName ||
             row.teacherName ||
             "-";
 
-          const teacherEmail = teacher?.email || "-";
-          const teacherPhone = teacher?.phone || "-";
-          const teacherType = normalizeTeacherType(teacher || row);
+          const teacherType = normalizeTeacherType(teacherItem || row);
           const rowStatus = row.status || "active";
 
           return `
@@ -653,33 +683,16 @@
                   ${escapeHtml(rowStatus)}
                 </span>
               </td>
-              <td>${escapeHtml(teacherEmail)}</td>
-              <td>${escapeHtml(teacherPhone)}</td>
               <td>${escapeHtml(row.day || "-")}</td>
               <td>${escapeHtml(row.period || row.lessonNumber || row.slot || "-")}</td>
               <td>${escapeHtml(row.from || row.startTime || "-")}</td>
               <td>${escapeHtml(row.to || row.endTime || "-")}</td>
-              <td>${escapeHtml(row.note || row.notes || "-")}</td>
+              <td>${escapeHtml(row.classId || "-")}</td>
+              <td>${escapeHtml(row.subjectId || "-")}</td>
+              <td>${escapeHtml(row.teacherId || "-")}</td>
             </tr>
           `;
         }).join("");
-      }
-
-      function applyFilters() {
-        const dayValue = dayFilter.value;
-        const classValue = classFilter.value;
-        const subjectValue = subjectFilter.value;
-        const teacherValue = teacherFilter.value;
-
-        const filtered = allRows.filter((row) => {
-          if (dayValue && String(row.day || "") !== dayValue) return false;
-          if (classValue && String(row.classId || "") !== classValue) return false;
-          if (subjectValue && String(row.subjectId || "") !== subjectValue) return false;
-          if (teacherValue && String(row.teacherId || "") !== teacherValue) return false;
-          return true;
-        });
-
-        renderRows(filtered);
       }
 
       function buildMaps(classes, subjects, teachers) {
@@ -714,41 +727,44 @@
         );
       }
 
+      function applyFilters() {
+        const dayValue = dayFilter.value;
+        const classValue = classFilter.value;
+        const subjectValue = subjectFilter.value;
+        const teacherValue = teacherFilter.value;
+
+        const filtered = allRows.filter((row) => {
+          if (dayValue && String(row.day || "") !== dayValue) return false;
+          if (classValue && String(row.classId || "") !== classValue) return false;
+          if (subjectValue && String(row.subjectId || "") !== subjectValue) return false;
+          if (teacherValue && String(row.teacherId || "") !== teacherValue) return false;
+          return true;
+        });
+
+        renderRows(filtered);
+      }
+
       async function loadSchedulePage() {
         clearStatus();
 
         const session = window.MadarisSession?.requireSchoolSession();
-
-        if (!session) {
-          return;
-        }
+        if (!session) return;
 
         schoolIdValue.textContent = session.schoolId || "...";
         schoolNameValue.textContent = session.schoolName || "مدرسة بدون اسم";
         schoolStatusValue.textContent = session.status || "active";
 
-        const schoolId = session.schoolId;
-
         try {
           const [schedules, classes, subjects, teachers] = await Promise.all([
-            readCollectionBySchool("schedules", schoolId),
-            readCollectionBySchool("classes", schoolId),
-            readCollectionBySchool("subjects", schoolId),
-            readCollectionBySchool("teachers", schoolId)
+            readAllCollection("schedules"),
+            readAllCollection("classes"),
+            readAllCollection("subjects"),
+            readAllCollection("teachers")
           ]);
 
           buildMaps(classes, subjects, teachers);
 
-          allRows = schedules
-            .slice()
-            .sort((a, b) => {
-              const dayA = String(a.day || "");
-              const dayB = String(b.day || "");
-              if (dayA !== dayB) return dayA.localeCompare(dayB, "ar");
-              const periodA = Number(a.period || a.lessonNumber || a.slot || 0);
-              const periodB = Number(b.period || b.lessonNumber || b.slot || 0);
-              return periodA - periodB;
-            });
+          allRows = sortRows(schedules);
 
           scheduleRowsCount.textContent = String(allRows.length);
           classesCount.textContent = String(classes.length);
@@ -760,7 +776,7 @@
             classes,
             "كل الصفوف",
             (item) => item.id,
-            (item) => item.name || item.className || item.title || "بدون اسم"
+            (item) => item.name || item.className || item.title || item.id
           );
 
           fillSelect(
@@ -768,7 +784,7 @@
             subjects,
             "كل المواد",
             (item) => item.id,
-            (item) => item.name || item.subjectName || item.title || "بدون اسم"
+            (item) => item.name || item.subjectName || item.title || item.id
           );
 
           fillSelect(
@@ -776,20 +792,20 @@
             teachers,
             "كل المعلمين",
             (item) => item.id,
-            (item) => item.name || item.fullName || item.teacherName || "بدون اسم"
+            (item) => item.name || item.fullName || item.teacherName || item.id
           );
 
           renderRows(allRows);
 
           if (!allRows.length) {
-            setEmpty("لا توجد حصص محفوظة داخل المدرسة الحالية.");
+            setEmpty("لا توجد حصص محفوظة داخل مجموعة schedules.");
           }
 
-          showSuccess("تم تحميل الجدول الحقيقي بنجاح");
+          showSuccess("تم تحميل الجدول القديم بنجاح");
         } catch (error) {
           console.error("Schedule page error:", error);
           setEmpty("تعذر تحميل الجدول من Firestore.");
-          showError("فشل تحميل الجدول الحقيقي من قاعدة البيانات");
+          showError("فشل تحميل بيانات الجدول القديمة");
         }
       }
 
