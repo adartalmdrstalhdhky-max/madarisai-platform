@@ -643,7 +643,10 @@
         scheduleBody.innerHTML = rows.map((row) => {
           const classItem = classMap.get(row.classId) || null;
           const subjectItem = subjectMap.get(row.subjectId) || null;
-          const teacherItem = teacherMap.get(row.teacherId) || null;
+        let teacherItem = teacherMap.get(row.teacherId);
+if (!teacherItem && row.subjectId) {
+  teacherItem = teacherBySubject.get(row.subjectId);
+}   || null;
 
           const className =
             classItem?.name ||
@@ -707,6 +710,7 @@
           ])
         );
 
+        
         subjectMap = new Map(
           subjects.map((item) => [
             item.id,
@@ -717,14 +721,18 @@
           ])
         );
 
-        teacherMap = new Map(
-          teachers.map((item) => [
-            item.id,
-            {
-              ...item,
-              name: item.name || item.fullName || item.teacherName || "بدون اسم"
-            }
-          ])
+       teacherMap = new Map();
+teacherBySubject = new Map();
+
+teachers.forEach(t => {
+
+  teacherMap.set(t.id, t);
+
+  if (t.subjectId) {
+    teacherBySubject.set(t.subjectId, t);
+  }
+
+}); 
         );
       }
 
