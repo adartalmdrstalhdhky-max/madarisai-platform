@@ -1,71 +1,35 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | تسجيل الدخول</title>
-  <meta name="theme-color" content="#07111f" />
-  <meta
-    name="description"
-    content="تسجيل الدخول إلى منصة Madaris AI"
-  />
+  <title>تسجيل الدخول | Madaris AI</title>
 
   <style>
     :root{
-      --bg:#07111f;
-      --bg-soft:#0b1728;
-      --panel:rgba(15,29,52,.88);
-      --panel-2:rgba(19,38,66,.92);
-      --border:rgba(255,255,255,.08);
-
+      --bg:#06142b;
+      --bg2:#0a2144;
+      --card:#0d203f;
+      --line:rgba(255,255,255,.09);
       --text:#ffffff;
-      --muted:#8ab3c7;
-
-      --primary:#85fdff;
-      --primary-strong:#67d8ff;
-
-      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
-      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
-
-      --radius-xl:28px;
-      --radius-lg:20px;
-      --radius-md:14px;
-
-      --container:min(1100px,92%);
+      --muted:#b9c7dc;
+      --cyan:#76e4f7;
+      --cyan2:#69c8f1;
+      --pink:#ff5b95;
+      --danger:#ff6f7d;
+      --success:#24d17e;
+      --shadow:0 20px 60px rgba(0,0,0,.28);
     }
 
-    *,
-    *::before,
-    *::after{
-      box-sizing:border-box;
-    }
-
-    html,
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
     body{
-      margin:0;
-      width:100%;
-      max-width:100%;
-      overflow-x:hidden;
-    }
-
-    body{
-      font-family:
-        "Tajawal",
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
-        radial-gradient(circle at left 20%, rgba(130,171,234,.06), transparent 18%),
-        linear-gradient(180deg, #07111f 0%, #081728 100%);
-      color:var(--text);
       min-height:100vh;
-      line-height:1.7;
-      -webkit-text-size-adjust:100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(118,228,247,.18), transparent 18%),
+        linear-gradient(180deg, #04101f 0%, #061a34 45%, #071a31 100%);
     }
 
     a{
@@ -73,483 +37,714 @@
       text-decoration:none;
     }
 
-    button,
-    input{
-      font:inherit;
-    }
-
     .page{
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      width:100%;
-      max-width:100%;
-      overflow-x:hidden;
+      width:min(100%, 760px);
+      margin:0 auto;
+      padding:20px 16px 40px;
     }
 
     .topbar{
-      border-bottom:1px solid var(--border);
-      background:rgba(7,17,31,.82);
-      backdrop-filter:blur(12px);
-    }
-
-    .topbar-inner{
-      width:var(--container);
-      margin:0 auto;
-      min-height:84px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
+      gap:14px;
+      padding:10px 4px 24px;
     }
 
     .brand{
       display:flex;
       align-items:center;
       gap:14px;
-      min-width:0;
     }
 
     .brand-mark{
-      width:52px;
-      height:52px;
-      border-radius:18px;
-      flex:0 0 52px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 35%),
-        linear-gradient(135deg, #67d8ff 0%, #8b8cff 100%);
-      box-shadow:0 10px 24px rgba(103,216,255,.22);
+      width:74px;
+      height:74px;
+      border-radius:24px;
+      background:linear-gradient(135deg, #8ce7ff 0%, #8ab0ff 100%);
+      box-shadow:
+        0 0 30px rgba(118,228,247,.28),
+        inset 0 1px 8px rgba(255,255,255,.25);
+      flex-shrink:0;
     }
 
-    .brand-copy{
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-
-    .brand-title{
-      font-size:24px;
-      font-weight:900;
+    .brand-text h1{
+      margin:0;
+      font-size:26px;
       line-height:1.1;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      font-weight:800;
+      letter-spacing:.2px;
     }
 
-    .brand-subtitle{
+    .brand-text p{
+      margin:6px 0 0;
       color:var(--muted);
       font-size:14px;
-      line-height:1.2;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
     }
 
     .back-link{
-      color:var(--muted);
-      font-weight:800;
+      color:#dbe7fb;
+      font-size:15px;
+      opacity:.95;
       white-space:nowrap;
     }
 
-    .back-link:hover{
-      color:#fff;
-    }
-
-    .main{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:28px 0;
-    }
-
-    .shell{
-      width:var(--container);
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:24px;
-      align-items:stretch;
-    }
-
-    .hero-card,
-    .login-card{
-      border:1px solid var(--border);
-      border-radius:var(--radius-xl);
-      background:
-        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 28%),
-        linear-gradient(180deg, rgba(10,24,48,.96) 0%, rgba(10,22,39,.96) 100%);
-      box-shadow:var(--shadow-xl);
+    .card{
+      background:linear-gradient(180deg, rgba(11,31,63,.96), rgba(6,25,54,.96));
+      border:1px solid var(--line);
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:24px 18px;
       overflow:hidden;
     }
 
-    .hero-card{
-      padding:34px 30px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+    .hero{
+      margin-top:10px;
     }
 
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:48px;
-      padding:10px 18px;
-      border-radius:999px;
-      border:1px solid rgba(133,253,255,.16);
-      background:rgba(133,253,255,.05);
-      color:#eefcff;
-      font-size:14px;
-      font-weight:800;
-      margin-bottom:18px;
-      align-self:flex-start;
-    }
-
-    .hero-title{
-      margin:0 0 16px;
-      font-size:clamp(34px,4vw,58px);
-      line-height:1.05;
-      font-weight:950;
-      letter-spacing:-.03em;
-    }
-
-    .hero-title .accent{
-      color:var(--primary-strong);
-    }
-
-    .hero-desc{
-      margin:0 0 24px;
-      color:#d6e3ef;
-      font-size:20px;
-      max-width:620px;
-    }
-
-    .hero-points{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:14px;
-    }
-
-    .hero-point{
-      min-height:78px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:14px 16px;
-      border-radius:18px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      color:#eef6ff;
-      font-weight:800;
-    }
-
-    .login-card{
-      padding:30px 24px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-
-    .login-head{
-      margin-bottom:22px;
-      text-align:center;
-    }
-
-    .login-title{
-      margin:0 0 8px;
-      font-size:34px;
-      font-weight:900;
-      line-height:1.1;
-    }
-
-    .login-subtitle{
+    .hero h2{
       margin:0;
+      font-size:52px;
+      line-height:1.08;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .hero p{
+      margin:10px 0 0;
+      text-align:center;
       color:var(--muted);
-      font-size:16px;
+      font-size:18px;
     }
 
-    .form-group{
-      display:grid;
-      gap:10px;
-      margin-bottom:16px;
-    }
-
-    .form-group label{
-      font-weight:800;
-      color:#eef6ff;
+    .form-wrap{
+      margin-top:24px;
     }
 
     .field{
-      width:100%;
-      min-height:56px;
-      padding:14px 16px;
-      border-radius:var(--radius-md);
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
-      outline:none;
-      transition:.2s ease;
-    }
-
-    .field:focus{
-      border-color:rgba(133,253,255,.45);
-      box-shadow:0 0 0 4px rgba(133,253,255,.08);
-    }
-
-    .field::placeholder{
-      color:#95aabd;
-    }
-
-    .row-between{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
       margin-bottom:18px;
+    }
+
+    .label{
+      display:block;
+      margin-bottom:10px;
+      font-size:16px;
+      color:#eef5ff;
+      font-weight:700;
+    }
+
+    .input{
+      width:100%;
+      border:none;
+      outline:none;
+      color:#fff;
+      background:rgba(19,38,74,.88);
+      border:1px solid rgba(150,190,255,.14);
+      border-radius:22px;
+      padding:18px 18px;
+      font-size:20px;
+      min-height:68px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .input::placeholder{
+      color:#92a9c9;
+    }
+
+    .password-wrap{
+      position:relative;
+    }
+
+    .toggle-pass{
+      position:absolute;
+      top:50%;
+      left:14px;
+      transform:translateY(-50%);
+      background:transparent;
+      color:#d8e9ff;
+      border:none;
+      font-size:14px;
+      cursor:pointer;
+      padding:8px 10px;
+      border-radius:12px;
+    }
+
+    .helper-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin:10px 2px 0;
       flex-wrap:wrap;
     }
 
-    .muted-link{
-      color:var(--muted);
-      font-weight:800;
-      font-size:14px;
+    .helper-link{
+      color:#afc4e7;
+      font-size:15px;
     }
 
-    .muted-link:hover{
-      color:#fff;
-    }
-
-    .btn{
+    .submit-btn{
       width:100%;
-      min-height:60px;
       border:none;
-      border-radius:999px;
+      outline:none;
       cursor:pointer;
+      min-height:74px;
+      border-radius:999px;
+      margin-top:22px;
+      background:linear-gradient(90deg, var(--cyan) 0%, var(--cyan2) 100%);
+      color:#08152f;
+      font-size:22px;
       font-weight:900;
-      font-size:18px;
-      transition:.2s ease;
+      box-shadow:0 12px 34px rgba(118,228,247,.24);
     }
 
-    .btn:hover{
-      transform:translateY(-1px);
-    }
-
-    .btn:disabled{
-      opacity:.7;
-      cursor:not-allowed;
-      transform:none;
-    }
-
-    .btn-primary{
-      background:linear-gradient(135deg, #85fdff, #67d8ff);
-      color:#07111f;
-      box-shadow:0 14px 30px rgba(103,216,255,.24);
+    .secondary-note{
+      margin-top:20px;
+      text-align:center;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.8;
     }
 
     .status-box{
+      margin-top:20px;
       display:none;
-      margin-top:16px;
-      padding:14px 16px;
-      border-radius:16px;
-      border:1px solid var(--border);
-      font-weight:800;
-      font-size:14px;
+      border-radius:22px;
+      padding:16px 16px;
+      font-size:16px;
+      line-height:1.8;
+      border:1px solid transparent;
+      word-break:break-word;
     }
 
     .status-box.show{
       display:block;
     }
 
-    .status-box.error{
-      background:rgba(255,107,107,.08);
-      color:#ffd4d4;
-      border-color:rgba(255,107,107,.22);
+    .status-box.info{
+      background:rgba(59,130,246,.12);
+      border-color:rgba(96,165,250,.22);
+      color:#d7e8ff;
     }
 
     .status-box.success{
-      background:rgba(85,211,138,.08);
-      color:#d9ffe8;
-      border-color:rgba(85,211,138,.22);
+      background:rgba(36,209,126,.12);
+      border-color:rgba(36,209,126,.24);
+      color:#dffbed;
     }
 
-    .register-row{
-      margin-top:18px;
-      text-align:center;
+    .status-box.error{
+      background:rgba(255,111,125,.12);
+      border-color:rgba(255,111,125,.22);
+      color:#ffe2e6;
+    }
+
+    .mini-card{
+      margin-top:24px;
+      background:linear-gradient(180deg, rgba(10,31,61,.92), rgba(8,28,55,.92));
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:20px 18px;
+    }
+
+    .mini-card h3{
+      margin:0 0 10px;
+      font-size:28px;
+      line-height:1.3;
+    }
+
+    .mini-card p{
+      margin:0;
       color:var(--muted);
-      font-size:14px;
+      line-height:1.9;
+      font-size:17px;
     }
 
-    .register-row a{
-      color:#fff;
-      font-weight:900;
+    .loading{
+      opacity:.8;
+      pointer-events:none;
     }
 
-    .footer-note{
-      margin-top:20px;
-      text-align:center;
-      color:var(--muted);
-      font-size:13px;
+    .footer-space{
+      height:18px;
     }
 
-    @media (max-width:1000px){
-      .shell{
-        grid-template-columns:1fr;
+    @media (max-width: 640px){
+      .brand-mark{
+        width:66px;
+        height:66px;
+        border-radius:22px;
       }
 
-      .hero-card{
-        order:2;
+      .brand-text h1{
+        font-size:22px;
       }
 
-      .login-card{
-        order:1;
-      }
-    }
-
-    @media (max-width:700px){
-      .hero-points{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width:560px){
-      .topbar-inner{
-        min-height:78px;
+      .hero h2{
+        font-size:44px;
       }
 
-      .brand-title{
+      .hero p{
+        font-size:16px;
+      }
+
+      .input{
+        font-size:18px;
+        min-height:64px;
+      }
+
+      .submit-btn{
+        min-height:68px;
         font-size:20px;
-      }
-
-      .brand-subtitle{
-        font-size:13px;
-      }
-
-      .hero-card,
-      .login-card{
-        padding:24px 18px;
-      }
-
-      .hero-title{
-        font-size:38px;
       }
     }
   </style>
 </head>
-
 <body>
-
-<div class="page">
-
-  <header class="topbar">
-    <div class="topbar-inner">
+  <div class="page">
+    <div class="topbar">
+      <a class="back-link" href="/index.html">العودة للرئيسية</a>
 
       <div class="brand">
-        <div class="brand-mark"></div>
-
-        <div class="brand-copy">
-          <div class="brand-title">Madaris AI</div>
-          <div class="brand-subtitle">نظام تشغيل التعليم</div>
+        <div class="brand-text">
+          <h1>Madaris AI</h1>
+          <p>نظام تشغيل التعليم</p>
         </div>
+        <div class="brand-mark" aria-hidden="true"></div>
       </div>
-
-      <a href="/" class="back-link">العودة للرئيسية</a>
-
     </div>
-  </header>
 
-  <main class="main">
+    <section class="card hero">
+      <h2>تسجيل الدخول</h2>
+      <p>الدخول إلى منصة Madaris AI</p>
 
-    <div class="shell">
-
-      <section class="hero-card">
-
-        <div class="eyebrow">منصة تعليمية تعمل بدون إنترنت</div>
-
-        <h1 class="hero-title">
-          تسجيل الدخول إلى
-          <span class="accent">Madaris AI</span>
-        </h1>
-
-        <p class="hero-desc">
-          هذه الصفحة تستعيد مسار الدخول القديم:
-          نموذج واضح + ملف login.js القديم المسؤول عن المصادقة والجلسة والتوجيه.
-        </p>
-
-        <div class="hero-points">
-          <div class="hero-point">Firebase Auth</div>
-          <div class="hero-point">Firestore Users</div>
-          <div class="hero-point">جلسة محفوظة</div>
-          <div class="hero-point">توجيه حسب الدور</div>
-        </div>
-
-      </section>
-
-      <section class="login-card">
-
-        <div class="login-head">
-          <h2 class="login-title">تسجيل الدخول</h2>
-          <p class="login-subtitle">الدخول إلى منصة Madaris AI</p>
-        </div>
-
-        <form id="loginForm">
-
-          <div class="form-group">
-            <label for="email">البريد الإلكتروني</label>
+      <div class="form-wrap">
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label class="label" for="email">البريد الإلكتروني</label>
             <input
+              class="input"
               id="email"
               name="email"
-              class="field"
               type="email"
-              placeholder="example@email.com"
+              autocomplete="email"
+              placeholder="أدخل البريد الإلكتروني"
               required
             />
           </div>
 
-          <div class="form-group">
-            <label for="password">كلمة المرور</label>
-            <input
-              id="password"
-              name="password"
-              class="field"
-              type="password"
-              placeholder="••••••••"
-              required
-            />
+          <div class="field">
+            <label class="label" for="password">كلمة المرور</label>
+            <div class="password-wrap">
+              <input
+                class="input"
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="أدخل كلمة المرور"
+                required
+              />
+              <button type="button" class="toggle-pass" id="togglePassword">إظهار</button>
+            </div>
           </div>
 
-          <div class="row-between">
-            <a href="#" class="muted-link">نسيت كلمة المرور؟</a>
+          <div class="helper-row">
+            <a class="helper-link" href="#" id="forgotPasswordLink">نسيت كلمة المرور؟</a>
+            <a class="helper-link" href="#" id="createAccountLink">إنشاء حساب جديد</a>
           </div>
 
-          <button type="submit" id="loginBtn" class="btn btn-primary">
-            دخول المنصة
-          </button>
-
-          <div id="statusBox" class="status-box"></div>
-
+          <button type="submit" class="submit-btn" id="loginButton">دخول المنصة</button>
         </form>
 
-        <div class="register-row">
-          ليس لديك حساب؟
-          <a href="/app/register.html">إنشاء حساب جديد</a>
+        <div id="statusBox" class="status-box info"></div>
+
+        <div class="secondary-note">
+          هذا الإصدار يصلح ربط حساب المدرسة مع وثيقة المدرسة الحالية داخل Firestore.
         </div>
+      </div>
+    </section>
 
-        <div class="footer-note">
-          النسخة الاسترجاعية المتوافقة مع login.js القديم
-        </div>
+    <section class="mini-card">
+      <h3>جلسة موحدة ومضمونة</h3>
+      <p>
+        بعد نجاح تسجيل الدخول سيتم حفظ جلسة مدرسة موحدة في التخزين المحلي والجلسة الحالية،
+        ثم سيتم تحويلك مباشرة إلى لوحة المدرسة.
+      </p>
+    </section>
 
-      </section>
+    <div class="footer-space"></div>
+  </div>
 
-    </div>
+  <script type="module">
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import {
+      getAuth,
+      setPersistence,
+      browserLocalPersistence,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      collection,
+      query,
+      where,
+      getDocs,
+      limit
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-  </main>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      authDomain: "madaris-ai.firebaseapp.com",
+      projectId: "madaris-ai",
+      storageBucket: "madaris-ai.firebasestorage.app",
+      messagingSenderId: "915394447224",
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+      measurementId: "G-SC7VE6F20S"
+    };
 
-</div>
+    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-<script type="module" src="./login.js"></script>
+    const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginButton = document.getElementById("loginButton");
+    const statusBox = document.getElementById("statusBox");
+    const togglePassword = document.getElementById("togglePassword");
+    const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+    const createAccountLink = document.getElementById("createAccountLink");
 
+    function normalizeString(value) {
+      return typeof value === "string" ? value.trim() : "";
+    }
+
+    function normalizeEmail(value) {
+      return normalizeString(value).toLowerCase();
+    }
+
+    function showStatus(message, type = "info") {
+      statusBox.className = `status-box show ${type}`;
+      statusBox.textContent = message;
+    }
+
+    function setLoading(isLoading) {
+      if (isLoading) {
+        document.body.classList.add("loading");
+        loginButton.disabled = true;
+        loginButton.textContent = "جارٍ تسجيل الدخول...";
+      } else {
+        document.body.classList.remove("loading");
+        loginButton.disabled = false;
+        loginButton.textContent = "دخول المنصة";
+      }
+    }
+
+    async function firstDocFromQuery(q) {
+      const snap = await getDocs(q);
+      if (snap.empty) return null;
+      const first = snap.docs[0];
+      return { id: first.id, data: first.data() };
+    }
+
+    async function findUserDocByUidOrEmail(uid, email) {
+      if (uid) {
+        try {
+          const directRef = doc(db, "users", uid);
+          const directSnap = await getDoc(directRef);
+          if (directSnap.exists()) {
+            return { id: directSnap.id, data: directSnap.data() };
+          }
+        } catch (error) {
+          console.error("users direct uid lookup failed:", error);
+        }
+      }
+
+      const normalizedEmail = normalizeEmail(email);
+
+      if (normalizedEmail) {
+        const emailFields = ["email", "managerEmail", "ownerEmail"];
+        for (const fieldName of emailFields) {
+          try {
+            const found = await firstDocFromQuery(
+              query(collection(db, "users"), where(fieldName, "==", normalizedEmail), limit(1))
+            );
+            if (found) return found;
+          } catch (error) {
+            console.error(`users email lookup failed on ${fieldName}:`, error);
+          }
+        }
+      }
+
+      if (uid) {
+        try {
+          const found = await firstDocFromQuery(
+            query(collection(db, "users"), where("uid", "==", uid), limit(1))
+          );
+          if (found) return found;
+        } catch (error) {
+          console.error("users uid field lookup failed:", error);
+        }
+      }
+
+      return null;
+    }
+
+    async function findSchoolDocForUser(firebaseUser, userDoc) {
+      const userData = userDoc?.data || {};
+
+      const possibleSchoolIds = [
+        userData.schoolId,
+        userData.schoolID,
+        userData.school_id,
+        userData.school,
+        userData.schoolDocId,
+        userData.schoolDocID
+      ]
+      .map(value => normalizeString(String(value || "")))
+      .filter(Boolean);
+
+      for (const schoolId of possibleSchoolIds) {
+        try {
+          const schoolRef = doc(db, "schools", schoolId);
+          const schoolSnap = await getDoc(schoolRef);
+          if (schoolSnap.exists()) {
+            return { id: schoolSnap.id, data: schoolSnap.data() };
+          }
+        } catch (error) {
+          console.error("schools direct schoolId lookup failed:", error);
+        }
+      }
+
+      const firebaseUid = normalizeString(firebaseUser?.uid || "");
+      const firebaseEmail = normalizeEmail(firebaseUser?.email || "");
+      const userName = normalizeString(userData.name || firebaseUser?.displayName || "");
+
+      const lookups = [
+        ["managerUid", firebaseUid],
+        ["uid", firebaseUid],
+        ["managerEmail", firebaseEmail],
+        ["email", firebaseEmail],
+        ["ownerEmail", firebaseEmail],
+        ["managerName", userName]
+      ].filter(([, value]) => Boolean(value));
+      for (const [fieldName, value] of lookups) {
+        try {
+          const found = await firstDocFromQuery(
+            query(collection(db, "schools"), where(fieldName, "==", value), limit(1))
+          );
+          if (found) return found;
+        } catch (error) {
+          console.error(`schools lookup failed on ${fieldName}:`, error);
+        }
+      }
+
+      try {
+        const allSchoolsSnap = await getDocs(collection(db, "schools"));
+        if (allSchoolsSnap.size === 1) {
+          const onlyDoc = allSchoolsSnap.docs[0];
+          return { id: onlyDoc.id, data: onlyDoc.data() };
+        }
+      } catch (error) {
+        console.error("schools fallback single-doc lookup failed:", error);
+      }
+
+      return null;
+    }
+
+    function buildUnifiedSchoolSession(firebaseUser, userDoc, schoolDoc) {
+      const userData = userDoc?.data || {};
+      const schoolData = schoolDoc?.data || {};
+
+      const schoolId = String(schoolDoc?.id || userData.schoolId || "");
+      const schoolName = String(
+        schoolData.name ||
+        schoolData.schoolName ||
+        userData.schoolName ||
+        "مدرسة بدون اسم"
+      );
+
+      return {
+        source: "app/login.html",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+
+        uid: String(firebaseUser.uid || ""),
+        email: normalizeEmail(firebaseUser.email || userData.email || ""),
+        role: String(userData.role || "school"),
+
+        schoolId,
+        schoolName,
+        schoolStatus: String(schoolData.status || userData.status || "active"),
+        schoolDocId: String(schoolDoc?.id || ""),
+
+        userId: String(userDoc?.id || firebaseUser.uid || ""),
+        userName: String(userData.name || firebaseUser.displayName || "مستخدم المدرسة"),
+
+        school: {
+          id: String(schoolDoc?.id || ""),
+          name: schoolName,
+          status: String(schoolData.status || "active"),
+          city: String(schoolData.city || ""),
+          managerName: String(schoolData.managerName || ""),
+          managerEmail: String(schoolData.managerEmail || "")
+        },
+
+        user: {
+          id: String(userDoc?.id || firebaseUser.uid || ""),
+          uid: String(firebaseUser.uid || ""),
+          email: normalizeEmail(firebaseUser.email || userData.email || ""),
+          name: String(userData.name || firebaseUser.displayName || "مستخدم المدرسة"),
+          role: String(userData.role || "school")
+        }
+      };
+    }
+
+    function saveUnifiedSchoolSession(session) {
+      const payload = JSON.stringify(session);
+
+      localStorage.setItem("schoolSession", payload);
+      sessionStorage.setItem("schoolSession", payload);
+
+      localStorage.setItem("currentSchoolSession", payload);
+      sessionStorage.setItem("currentSchoolSession", payload);
+
+      localStorage.setItem("madarisSchoolSession", payload);
+      sessionStorage.setItem("madarisSchoolSession", payload);
+
+      localStorage.setItem("schoolId", session.schoolId || "");
+      sessionStorage.setItem("schoolId", session.schoolId || "");
+
+      localStorage.setItem("schoolName", session.schoolName || "");
+      sessionStorage.setItem("schoolName", session.schoolName || "");
+
+      localStorage.setItem("userRole", session.role || "school");
+      sessionStorage.setItem("userRole", session.role || "school");
+
+      localStorage.setItem("lastSchoolLoginEmail", session.email || "");
+      sessionStorage.setItem("lastSchoolLoginEmail", session.email || "");
+    }
+
+    async function handleLogin(event) {
+      event.preventDefault();
+
+      const email = normalizeEmail(emailInput.value);
+      const password = passwordInput.value || "";
+
+      if (!email) {
+        showStatus("أدخل البريد الإلكتروني أولاً.", "error");
+        return;
+      }
+
+      if (!password) {
+        showStatus("أدخل كلمة المرور أولاً.", "error");
+        return;
+      }
+
+      try {
+        setLoading(true);
+        showStatus("جارٍ التحقق من بيانات الدخول...", "info");
+
+        await setPersistence(auth, browserLocalPersistence);
+
+        const credential = await signInWithEmailAndPassword(auth, email, password);
+        const firebaseUser = credential.user;
+
+        showStatus("تم تسجيل الدخول. جارٍ جلب بيانات المدرسة...", "info");
+
+        const userDoc = await findUserDocByUidOrEmail(firebaseUser.uid, firebaseUser.email || email);
+
+        if (!userDoc) {
+          throw new Error("تم تسجيل الدخول، لكن لم أجد وثيقة المستخدم داخل users.");
+        }
+
+        const role = normalizeString(userDoc.data?.role || "school");
+        if (role && role !== "school") {
+          throw new Error("هذا الحساب ليس من نوع school، ولن يفتح لوحة المدرسة.");
+        }
+
+        const schoolDoc = await findSchoolDocForUser(firebaseUser, userDoc);
+
+        if (!schoolDoc) {
+          throw new Error("تم العثور على المستخدم، لكن لم أجد مدرسة مرتبطة به داخل schools.");
+        }
+
+        const session = buildUnifiedSchoolSession(firebaseUser, userDoc, schoolDoc);
+
+        if (!session.schoolId) {
+          throw new Error("تم العثور على المدرسة، لكن schoolId غير صالح.");
+        }
+
+        saveUnifiedSchoolSession(session);
+
+        showStatus("تم إنشاء جلسة المدرسة بنجاح. جارٍ فتح لوحة المدرسة...", "success");
+
+        setTimeout(() => {
+          window.location.href = "/app/school/index.html";
+        }, 700);
+      } catch (error) {
+        console.error("Login error:", error);
+
+        let message = "فشل تسجيل الدخول. تحقق من البيانات ثم حاول مرة أخرى.";
+
+        if (error?.code === "auth/invalid-credential") {
+          message = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+        } else if (error?.code === "auth/user-not-found") {
+          message = "هذا البريد غير موجود.";
+        } else if (error?.code === "auth/wrong-password") {
+          message = "كلمة المرور غير صحيحة.";
+        } else if (error?.code === "auth/invalid-email") {
+          message = "صيغة البريد الإلكتروني غير صحيحة.";
+        } else if (error?.code === "auth/too-many-requests") {
+          message = "تمت محاولات كثيرة. انتظر قليلاً ثم أعد المحاولة.";
+        } else if (error?.message) {
+          message = error.message;
+        }
+
+        showStatus(message, "error");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loginForm.addEventListener("submit", handleLogin);
+
+    togglePassword.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.textContent = isPassword ? "إخفاء" : "إظهار";
+    });
+
+    forgotPasswordLink.addEventListener("click", async (event) => {
+      event.preventDefault();
+      const email = normalizeEmail(emailInput.value);
+
+      if (!email) {
+        showStatus("اكتب البريد الإلكتروني أولاً ثم اضغط نسيت كلمة المرور.", "error");
+        return;
+      }
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showStatus("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.", "success");
+      } catch (error) {
+        console.error("Reset password error:", error);
+        showStatus("تعذر إرسال رابط إعادة التعيين حالياً. تحقق من البريد ثم حاول مرة أخرى.", "error");
+      }
+    });
+
+    createAccountLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      showStatus("إنشاء الحساب الجديد سيُربط لاحقاً بصفحة التسجيل المخصصة. حالياً استخدم حساباً موجوداً.", "info");
+    });
+
+    window.addEventListener("load", () => {
+      showStatus("جاهز لتسجيل الدخول وإنشاء جلسة مدرسة موحدة.", "info");
+    });
+  </script>
 </body>
 </html>
