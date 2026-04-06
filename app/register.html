@@ -1,50 +1,27 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Madaris AI | إنشاء حساب</title>
   <meta name="theme-color" content="#07111f" />
-  <meta
-    name="description"
-    content="إنشاء حساب جديد في منصة Madaris AI التعليمية"
-  />
 
   <style>
     :root{
       --bg:#07111f;
-      --bg-soft:#0b1728;
-      --panel:rgba(15,29,52,.88);
-      --panel-2:rgba(19,38,66,.92);
+      --panel:#0d1a2d;
       --border:rgba(255,255,255,.08);
-
       --text:#ffffff;
       --muted:#8ab3c7;
-
       --primary:#85fdff;
-      --primary-strong:#67d8ff;
-      --danger:#ff6b6b;
-      --success:#55d38a;
-
-      --shadow-xl:0 24px 70px rgba(0,0,0,.38);
-      --shadow-lg:0 18px 48px rgba(0,0,0,.28);
-
-      --radius-xl:28px;
-      --radius-lg:20px;
-      --radius-md:14px;
-
-      --container:min(1180px,92%);
+      --radius:22px;
     }
 
-    *,
-    *::before,
-    *::after{
+    *{
       box-sizing:border-box;
     }
 
-    html,
-    body{
+    html, body{
       margin:0;
       width:100%;
       max-width:100%;
@@ -52,6 +29,7 @@
     }
 
     body{
+      min-height:100vh;
       font-family:
         "Tajawal",
         system-ui,
@@ -62,799 +40,105 @@
         sans-serif;
       background:
         radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 24%),
-        radial-gradient(circle at left 20%, rgba(130,171,234,.06), transparent 18%),
         linear-gradient(180deg, #07111f 0%, #081728 100%);
       color:var(--text);
-      min-height:100vh;
-      line-height:1.7;
-      -webkit-text-size-adjust:100%;
-    }
-
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
-
-    button,
-    input,
-    select{
-      font:inherit;
-    }
-
-    .page{
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      width:100%;
-      max-width:100%;
-      overflow-x:hidden;
-    }
-
-    .topbar{
-      border-bottom:1px solid var(--border);
-      background:rgba(7,17,31,.82);
-      backdrop-filter:blur(12px);
-    }
-
-    .topbar-inner{
-      width:var(--container);
-      margin:0 auto;
-      min-height:84px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-    }
-
-    .brand-mark{
-      width:52px;
-      height:52px;
-      border-radius:18px;
-      flex:0 0 52px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 35%),
-        linear-gradient(135deg, #67d8ff 0%, #8b8cff 100%);
-      box-shadow:0 10px 24px rgba(103,216,255,.22);
-    }
-
-    .brand-copy{
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-
-    .brand-title{
-      font-size:24px;
-      font-weight:900;
-      line-height:1.1;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .brand-subtitle{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.2;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .back-link{
-      color:var(--muted);
-      font-weight:800;
-      white-space:nowrap;
-    }
-
-    .back-link:hover{
-      color:#fff;
-    }
-
-    .main{
-      flex:1;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:28px 0;
+      padding:20px;
+      line-height:1.9;
     }
 
-    .shell{
-      width:var(--container);
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:24px;
-      align-items:stretch;
-    }
-
-    .hero-card,
-    .register-card{
+    .card{
+      width:min(720px, 100%);
+      background:rgba(13,26,45,.92);
       border:1px solid var(--border);
-      border-radius:var(--radius-xl);
-      background:
-        radial-gradient(circle at top right, rgba(133,253,255,.08), transparent 28%),
-        linear-gradient(180deg, rgba(10,24,48,.96) 0%, rgba(10,22,39,.96) 100%);
-      box-shadow:var(--shadow-xl);
-      overflow:hidden;
-    }
-
-    .hero-card{
-      padding:34px 30px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:48px;
-      padding:10px 18px;
-      border-radius:999px;
-      border:1px solid rgba(133,253,255,.16);
-      background:rgba(133,253,255,.05);
-      color:#eefcff;
-      font-size:14px;
-      font-weight:800;
-      margin-bottom:18px;
-      align-self:flex-start;
-    }
-
-    .hero-title{
-      margin:0 0 16px;
-      font-size:clamp(34px,4vw,58px);
-      line-height:1.05;
-      font-weight:950;
-      letter-spacing:-.03em;
-    }
-
-    .hero-title .accent{
-      color:var(--primary-strong);
-    }
-
-    .hero-desc{
-      margin:0 0 24px;
-      color:#d6e3ef;
-      font-size:20px;
-      max-width:620px;
-    }
-
-    .hero-points{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:14px;
-    }
-
-    .hero-point{
-      min-height:78px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      border-radius:32px;
+      padding:32px 22px;
       text-align:center;
-      padding:14px 16px;
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+
+    h1{
+      margin:0 0 14px;
+      font-size:clamp(30px, 5vw, 52px);
+      line-height:1.1;
+      font-weight:900;
+    }
+
+    p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:18px;
+    }
+
+    .note{
+      margin-top:18px;
+      padding:16px;
       border-radius:18px;
-      border:1px solid var(--border);
+      border:1px solid rgba(255,255,255,.08);
       background:rgba(255,255,255,.03);
-      color:#eef6ff;
-      font-weight:800;
-    }
-
-    .register-card{
-      padding:30px 24px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-
-    .register-head{
-      margin-bottom:22px;
-      text-align:center;
-    }
-
-    .register-title{
-      margin:0 0 8px;
-      font-size:34px;
-      font-weight:900;
-      line-height:1.1;
-    }
-
-    .register-subtitle{
-      margin:0;
-      color:var(--muted);
+      color:#dfeaf4;
       font-size:16px;
     }
 
-    .grid-2{
+    .actions{
+      margin-top:24px;
       display:grid;
-      grid-template-columns:1fr 1fr;
       gap:14px;
     }
 
-    .form-group{
-      display:grid;
-      gap:10px;
-      margin-bottom:16px;
-    }
-
-    .form-group label{
-      font-weight:800;
-      color:#eef6ff;
-    }
-
-    .field{
-      width:100%;
-      min-height:56px;
-      padding:14px 16px;
-      border-radius:var(--radius-md);
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
-      outline:none;
-      transition:.2s ease;
-    }
-
-    .field:focus{
-      border-color:rgba(133,253,255,.45);
-      box-shadow:0 0 0 4px rgba(133,253,255,.08);
-    }
-
-    .field::placeholder{
-      color:#95aabd;
-    }
-
-    .helper{
-      color:var(--muted);
-      font-size:13px;
-      margin-top:-4px;
+    a{
+      text-decoration:none;
     }
 
     .btn{
-      width:100%;
-      min-height:60px;
-      border:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:64px;
       border-radius:999px;
-      cursor:pointer;
+      font-size:20px;
       font-weight:900;
-      font-size:18px;
       transition:.2s ease;
-    }
-
-    .btn:hover{
-      transform:translateY(-1px);
-    }
-
-    .btn:disabled{
-      opacity:.7;
-      cursor:not-allowed;
-      transform:none;
     }
 
     .btn-primary{
       background:linear-gradient(135deg, #85fdff, #67d8ff);
       color:#07111f;
-      box-shadow:0 14px 30px rgba(103,216,255,.24);
     }
 
-    .status-box{
-      display:none;
-      margin-top:16px;
-      padding:14px 16px;
-      border-radius:16px;
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
       border:1px solid var(--border);
-      font-weight:800;
-      font-size:14px;
-    }
-
-    .status-box.show{
-      display:block;
-    }
-
-    .status-box.error{
-      background:rgba(255,107,107,.08);
-      color:#ffd4d4;
-      border-color:rgba(255,107,107,.22);
-    }
-
-    .status-box.success{
-      background:rgba(85,211,138,.08);
-      color:#d9ffe8;
-      border-color:rgba(85,211,138,.22);
-    }
-
-    .login-row{
-      margin-top:18px;
-      text-align:center;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .login-row a{
       color:#fff;
-      font-weight:900;
     }
 
-    .hidden{
-      display:none !important;
-    }
-
-    @media (max-width:1000px){
-      .shell{
-        grid-template-columns:1fr;
-      }
-
-      .hero-card{
-        order:2;
-      }
-
-      .register-card{
-        order:1;
-      }
-    }
-
-    @media (max-width:700px){
-      .grid-2,
-      .hero-points{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width:560px){
-      .topbar-inner{
-        min-height:78px;
-      }
-
-      .brand-title{
-        font-size:20px;
-      }
-
-      .brand-subtitle{
-        font-size:13px;
-      }
-
-      .hero-card,
-      .register-card{
-        padding:24px 18px;
-      }
-
-      .hero-title{
-        font-size:38px;
-      }
+    .btn:hover{
+      transform:translateY(-1px);
     }
   </style>
 </head>
-
 <body>
 
-<div class="page">
+  <div class="card">
+    <h1>إنشاء الحساب متوقف مؤقتًا</h1>
 
-  <header class="topbar">
-    <div class="topbar-inner">
+    <p>
+      تم إيقاف صفحة التسجيل مؤقتًا حتى استعادة استقرار المنصة
+      وتفادي أي تعارض مع نظام الدخول الحالي.
+    </p>
 
-      <div class="brand">
-        <div class="brand-mark"></div>
-
-        <div class="brand-copy">
-          <div class="brand-title">Madaris AI</div>
-          <div class="brand-subtitle">نظام تشغيل التعليم</div>
-        </div>
-      </div>
-
-      <a href="/" class="back-link">العودة للرئيسية</a>
-
-    </div>
-  </header>
-
-  <main class="main">
-
-    <div class="shell">
-
-      <section class="hero-card">
-
-        <div class="eyebrow">استعادة إنشاء الحساب القديم</div>
-
-        <h1 class="hero-title">
-          ابدأ داخل
-          <span class="accent">Madaris AI</span>
-        </h1>
-
-        <p class="hero-desc">
-          هذه الصفحة تستخدم نفس Firebase الحقيقي الموجود داخل
-          <strong>app/core/firebase-config.js</strong>
-          وتحفظ الحساب داخل <strong>users</strong>، ومع المدرسة أيضًا داخل <strong>schools</strong>.
-        </p>
-
-        <div class="hero-points">
-          <div class="hero-point">Firebase الحقيقي</div>
-          <div class="hero-point">Firestore Users</div>
-          <div class="hero-point">Schools عند الحاجة</div>
-          <div class="hero-point">متوافق مع login.js القديم</div>
-        </div>
-
-      </section>
-
-      <section class="register-card">
-
-        <div class="register-head">
-          <h2 class="register-title">إنشاء حساب</h2>
-          <p class="register-subtitle">
-            مدرسة أو معلم أو طالب أو إدارة
-          </p>
-        </div>
-
-        <form id="registerForm">
-
-          <div class="grid-2">
-
-            <div class="form-group">
-              <label for="fullName">الاسم الكامل</label>
-              <input
-                id="fullName"
-                name="fullName"
-                class="field"
-                type="text"
-                placeholder="اكتب الاسم الكامل"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="role">نوع الحساب</label>
-              <select id="role" name="role" class="field" required>
-                <option value="">اختر نوع الحساب</option>
-                <option value="school">مدرسة</option>
-                <option value="teacher">معلم</option>
-                <option value="student">طالب</option>
-                <option value="admin">إدارة</option>
-              </select>
-            </div>
-
-          </div>
-
-          <div class="grid-2">
-
-            <div class="form-group">
-              <label for="email">البريد الإلكتروني</label>
-              <input
-                id="email"
-                name="email"
-                class="field"
-                type="email"
-                placeholder="example@email.com"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="phone">رقم الهاتف</label>
-              <input
-                id="phone"
-                name="phone"
-                class="field"
-                type="text"
-                placeholder="+967"
-              />
-            </div>
-
-          </div>
-
-          <div class="grid-2">
-
-            <div class="form-group">
-              <label for="password">كلمة المرور</label>
-              <input
-                id="password"
-                name="password"
-                class="field"
-                type="password"
-                placeholder="8 أحرف أو أكثر"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="confirmPassword">تأكيد كلمة المرور</label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                class="field"
-                type="password"
-                placeholder="أعد كتابة كلمة المرور"
-                required
-              />
-            </div>
-
-          </div>
-
-          <div id="schoolFields" class="hidden">
-
-            <div class="grid-2">
-
-              <div class="form-group">
-                <label for="schoolName">اسم المدرسة</label>
-                <input
-                  id="schoolName"
-                  name="schoolName"
-                  class="field"
-                  type="text"
-                  placeholder="اسم المدرسة"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="schoolCode">رمز المدرسة</label>
-                <input
-                  id="schoolCode"
-                  name="schoolCode"
-                  class="field"
-                  type="text"
-                  placeholder="رمز مختصر للمدرسة"
-                />
-              </div>
-
-            </div>
-
-            <div class="form-group">
-              <label for="schoolAddress">عنوان المدرسة</label>
-              <input
-                id="schoolAddress"
-                name="schoolAddress"
-                class="field"
-                type="text"
-                placeholder="المدينة / المنطقة / العنوان"
-              />
-            </div>
-
-          </div>
-
-          <div id="teacherFields" class="hidden">
-            <div class="grid-2">
-              <div class="form-group">
-                <label for="teacherSubject">المادة</label>
-                <input
-                  id="teacherSubject"
-                  name="teacherSubject"
-                  class="field"
-                  type="text"
-                  placeholder="مثال: الرياضيات"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="teacherSchoolId">معرف المدرسة</label>
-                <input
-                  id="teacherSchoolId"
-                  name="teacherSchoolId"
-                  class="field"
-                  type="text"
-                  placeholder="schoolId"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div id="studentFields" class="hidden">
-            <div class="grid-2">
-              <div class="form-group">
-                <label for="studentSchoolId">معرف المدرسة</label>
-                <input
-                  id="studentSchoolId"
-                  name="studentSchoolId"
-                  class="field"
-                  type="text"
-                  placeholder="schoolId"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="studentClassId">معرف الفصل</label>
-                <input
-                  id="studentClassId"
-                  name="studentClassId"
-                  class="field"
-                  type="text"
-                  placeholder="classId"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="accountNote">ملاحظات إضافية</label>
-            <input
-              id="accountNote"
-              name="accountNote"
-              class="field"
-              type="text"
-              placeholder="اختياري"
-            />
-            <div class="helper">
-              هذه النسخة تعتمد على Firebase Config الحقيقي الموجود أصلًا في المشروع.
-            </div>
-          </div>
-
-          <button type="submit" id="registerBtn" class="btn btn-primary">
-            إنشاء الحساب
-          </button>
-
-          <div id="statusBox" class="status-box"></div>
-
-          <div class="login-row">
-            لديك حساب بالفعل؟
-            <a href="/app/login.html">تسجيل الدخول</a>
-          </div>
-
-        </form>
-
-      </section>
-
+    <div class="note">
+      إذا كان لديك حساب سابق، استخدم صفحة تسجيل الدخول المعتادة.
+      أما إنشاء الحسابات الجديدة فسيُعاد تفعيله بعد تثبيت المنصة.
     </div>
 
-  </main>
-
-</div>
-
-<script type="module">
-  import { app, auth, db } from "./core/firebase-config.js";
-  import {
-    createUserWithEmailAndPassword,
-    updateProfile
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  import {
-    doc,
-    setDoc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const form = document.getElementById("registerForm");
-  const role = document.getElementById("role");
-
-  const schoolFields = document.getElementById("schoolFields");
-  const teacherFields = document.getElementById("teacherFields");
-  const studentFields = document.getElementById("studentFields");
-
-  const statusBox = document.getElementById("statusBox");
-  const registerBtn = document.getElementById("registerBtn");
-
-  function showError(msg){
-    statusBox.className = "status-box show error";
-    statusBox.textContent = msg;
-  }
-
-  function showSuccess(msg){
-    statusBox.className = "status-box show success";
-    statusBox.textContent = msg;
-  }
-
-  role.addEventListener("change", () => {
-    schoolFields.classList.add("hidden");
-    teacherFields.classList.add("hidden");
-    studentFields.classList.add("hidden");
-
-    if(role.value === "school") schoolFields.classList.remove("hidden");
-    if(role.value === "teacher") teacherFields.classList.remove("hidden");
-    if(role.value === "student") studentFields.classList.remove("hidden");
-  });
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const fullName = document.getElementById("fullName").value.trim();
-    const email = document.getElementById("email").value.trim().toLowerCase();
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    const phone = document.getElementById("phone").value.trim();
-    const roleValue = role.value;
-    const accountNote = document.getElementById("accountNote").value.trim();
-
-    if(password !== confirmPassword){
-      showError("كلمة المرور غير متطابقة");
-      return;
-    }
-
-    if(password.length < 8){
-      showError("كلمة المرور يجب أن تكون 8 أحرف أو أكثر");
-      return;
-    }
-
-    if(!roleValue){
-      showError("اختر نوع الحساب");
-      return;
-    }
-
-    try{
-      registerBtn.disabled = true;
-      registerBtn.textContent = "جاري إنشاء الحساب...";
-
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const firebaseUser = userCredential.user;
-
-      await updateProfile(firebaseUser, {
-        displayName: fullName
-      });
-
-      const baseUserData = {
-        uid: firebaseUser.uid,
-        fullName,
-        name: fullName,
-        email,
-        phone: phone || "",
-        role: roleValue,
-        note: accountNote || "",
-        status: "active",
-        createdAt: serverTimestamp()
-      };
-
-      if(roleValue === "school"){
-        const schoolName = document.getElementById("schoolName").value.trim();
-        const schoolCode = document.getElementById("schoolCode").value.trim();
-        const schoolAddress = document.getElementById("schoolAddress").value.trim();
-
-        const schoolData = {
-          schoolId: firebaseUser.uid,
-          ownerUid: firebaseUser.uid,
-          schoolName: schoolName || fullName,
-          schoolCode: schoolCode || "",
-          schoolAddress: schoolAddress || "",
-          email,
-          phone: phone || "",
-          status: "active",
-          createdAt: serverTimestamp()
-        };
-
-        baseUserData.schoolId = firebaseUser.uid;
-        baseUserData.schoolName = schoolName || fullName;
-
-        await setDoc(doc(db, "schools", firebaseUser.uid), schoolData);
-      }
-
-      if(roleValue === "teacher"){
-        baseUserData.subject = document.getElementById("teacherSubject").value.trim() || "";
-        baseUserData.schoolId = document.getElementById("teacherSchoolId").value.trim() || "";
-      }
-
-      if(roleValue === "student"){
-        baseUserData.schoolId = document.getElementById("studentSchoolId").value.trim() || "";
-        baseUserData.classId = document.getElementById("studentClassId").value.trim() || "";
-      }
-
-    
-      await setDoc(doc(db, "users", firebaseUser.uid), baseUserData);
-
-      showSuccess("تم إنشاء الحساب بنجاح");
-
-      setTimeout(() => {
-        window.location.href = "/app/login.html";
-      }, 1400);
-
-    } catch(error){
-      console.error("Register error:", error);
-
-      if(error.code === "auth/email-already-in-use"){
-        showError("هذا البريد مستخدم بالفعل");
-      } else if(error.code === "auth/invalid-email"){
-        showError("البريد الإلكتروني غير صالح");
-      } else if(error.code === "auth/weak-password"){
-        showError("كلمة المرور ضعيفة");
-      } else {
-        showError("فشل إنشاء الحساب. تحقق من البيانات والإعدادات");
-      }
-    } finally {
-      registerBtn.disabled = false;
-      registerBtn.textContent = "إنشاء الحساب";
-    }
-  });
-</script>
+    <div class="actions">
+      <a class="btn btn-primary" href="/app/login.html">العودة إلى تسجيل الدخول</a>
+      <a class="btn btn-secondary" href="/">العودة إلى الموقع الرئيسي</a>
+    </div>
+  </div>
 
 </body>
 </html>
