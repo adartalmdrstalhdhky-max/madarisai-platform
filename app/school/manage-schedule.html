@@ -780,339 +780,480 @@
 
   </div>
 
-
 <script type="module">
 
 import { initializeApp } from 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-query,
-where
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 const firebaseConfig = {
-apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-authDomain: "madaris-ai.firebaseapp.com",
-projectId: "madaris-ai",
-storageBucket: "madaris-ai.appspot.com",
-messagingSenderId: "915394447224",
-appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+  apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+  authDomain: "madaris-ai.firebaseapp.com",
+  projectId: "madaris-ai",
+  storageBucket: "madaris-ai.appspot.com",
+  messagingSenderId: "915394447224",
+  appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
 };
-
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 const session =
-JSON.parse(localStorage.getItem("madaris_session") || "{}");
+  JSON.parse(localStorage.getItem("madaris_session") || "{}");
 
 const schoolId =
-session.schoolId ||
-session.school_id ||
-"";
-
+  session.schoolId ||
+  session.school_id ||
+  "";
 
 document.getElementById("schoolId").textContent =
-schoolId || "-";
+  schoolId || "-";
 
 document.getElementById("schoolName").textContent =
-session.schoolName || "مدرسة";
+  session.schoolName ||
+  session.school_name ||
+  "مدرسة";
 
 document.getElementById("userEmail").textContent =
-session.email || "-";
+  session.email || "-";
 
 
-const classSelect =
-document.getElementById("classId");
+const classSelect = document.getElementById("classId");
+const subjectSelect = document.getElementById("subjectId");
+const teacherSelect = document.getElementById("teacherId");
 
-const subjectSelect =
-document.getElementById("subjectId");
+const scheduleBody = document.getElementById("scheduleBody");
+const emptyBox = document.getElementById("emptyBox");
 
-const teacherSelect =
-document.getElementById("teacherId");
-
-
-const scheduleBody =
-document.getElementById("scheduleBody");
-
-const emptyBox =
-document.getElementById("emptyBox");
+const scheduleForm = document.getElementById("scheduleForm");
+const resetBtn = document.getElementById("resetBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 
 
-async function loadClasses(){
+function cleanString(value){
+  return String(value || "").trim();
+}
 
-const q = query(
-collection(db,"classes"),
-where("schoolId","==",schoolId)
-);
+function normalizeArabicSpaces(value){
+  return cleanString(value).replace(/\s+/g, " ");
+}
 
-const snap = await getDocs(q);
+function pickFirst(obj, keys){
+  for(const key of keys){
+    const value = obj?.[key];
+    if(value !== undefined && value !== null && String(value).trim() !== ""){
+      return value;
+    }
+  }
+  return "";
+}
 
-classSelect.innerHTML =
-`<option value="">اختر الصف</option>`;
+function normalizeStatus(value){
+  const v = cleanString(value).toLowerCase();
 
-snap.forEach(doc=>{
+  if(
+    v === "inactive" ||
+    v === "غير نشط" ||
+    v === "غيرنشط" ||
+    v === "متوقف" ||
+    v === "موقوف"
+  ){
+    return "inactive";
+  }
 
-const d = doc.data();
+  return "active";
+}
 
-const opt = document.createElement("option");
+function normalizeDay(value){
+  const v = cleanString(value).toLowerCase();
 
-opt.value = doc.id;
-opt.textContent = d.name || d.className;
+  const map = {
+    "السبت":"السبت",
+    "saturday":"السبت",
+    "sat":"السبت",
 
-opt.dataset.name =
-d.name || d.className;
+    "الأحد":"الأحد",
+    "الاحد":"الأحد",
+    "sunday":"الأحد",
+    "sun":"الأحد",
 
-classSelect.appendChild(opt);
+    "الاثنين":"الاثنين",
+    "الأثنين":"الاثنين",
+    "monday":"الاثنين",
+    "mon":"الاثنين",
 
-});
+    "الثلاثاء":"الثلاثاء",
+    "الثلوث":"الثلاثاء",
+    "tuesday":"الثلاثاء",
+    "tue":"الثلاثاء",
+    "tues":"الثلاثاء",
 
-document.getElementById("classesCount")
-.textContent = snap.size;
+    "الأربعاء":"الأربعاء",
+    "الاربعاء":"الأربعاء",
+    "wednesday":"الأربعاء",
+    "wed":"الأربعاء",
 
+    "الخميس":"الخميس",
+    "thursday":"الخميس",
+    "thu":"الخميس",
+    "thur":"الخميس",
+    "thurs":"الخميس"
+  };
+
+  return map[v] || cleanString(value);
+}
+
+function classRank(name){
+  const n = normalizeArabicSpaces(name);
+
+  const order = [
+    "الصف الأول الأساسي",
+    "الصف الثاني الأساسي",
+    "الصف الثالث الأساسي",
+    "الصف الرابع الأساسي",
+    "الصف الخامس الأساسي",
+    "الصف السادس الأساسي",
+    "الصف السابع الأساسي",
+    "الصف الثامن الأساسي",
+    "الصف التاسع الأساسي",
+    "الصف الأول الثانوي",
+    "الصف الثاني الثانوي",
+    "الصف الثالث الثانوي"
+  ];
+
+  const index = order.indexOf(n);
+  return index === -1 ? 999 : index;
+}
+
+function sortClassesSmart(list){
+  return [...list].sort((a,b)=>{
+    const diff = classRank(a.name) - classRank(b.name);
+    if(diff !== 0) return diff;
+    return a.name.localeCompare(b.name, "ar");
+  });
+}
+
+function uniqueByName(items){
+  const map = new Map();
+
+  for(const item of items){
+    const normalized = normalizeArabicSpaces(item.name).toLowerCase();
+    if(!normalized) continue;
+
+    if(!map.has(normalized)){
+      map.set(normalized, item);
+    }
+  }
+
+  return [...map.values()];
+}
+
+function setCount(id, value){
+  const el = document.getElementById(id);
+  if(el) el.textContent = String(value ?? 0);
+}
+  async function loadClasses(){
+
+  const q = query(
+    collection(db, "classes"),
+    where("schoolId", "==", schoolId)
+  );
+
+  const snap = await getDocs(q);
+
+  const classes = snap.docs.map(doc => {
+    const d = doc.data();
+
+    return {
+      id: doc.id,
+      name: normalizeArabicSpaces(
+        pickFirst(d, [
+          "name",
+          "className",
+          "title",
+          "label",
+          "gradeName",
+          "class"
+        ])
+      )
+    };
+  }).filter(item => item.name);
+
+  const uniqueClasses = sortClassesSmart(uniqueByName(classes));
+
+  classSelect.innerHTML = `<option value="">اختر الصف</option>`;
+
+  uniqueClasses.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item.id;
+    opt.textContent = item.name;
+    opt.dataset.name = item.name;
+    classSelect.appendChild(opt);
+  });
+
+  setCount("classesCount", uniqueClasses.length);
 }
 
 
 async function loadSubjects(){
 
-const q = query(
-collection(db,"subjects"),
-where("schoolId","==",schoolId)
-);
+  const q = query(
+    collection(db, "subjects"),
+    where("schoolId", "==", schoolId)
+  );
 
-const snap = await getDocs(q);
+  const snap = await getDocs(q);
 
-subjectSelect.innerHTML =
-`<option value="">اختر المادة</option>`;
+  const subjects = snap.docs.map(doc => {
+    const d = doc.data();
 
-snap.forEach(doc=>{
+    return {
+      id: doc.id,
+      name: normalizeArabicSpaces(
+        pickFirst(d, [
+          "name",
+          "subjectName",
+          "title",
+          "label",
+          "displayName",
+          "subject"
+        ])
+      )
+    };
+  }).filter(item => item.name);
 
-const d = doc.data();
+  const uniqueSubjects = uniqueByName(subjects).sort((a,b)=>
+    a.name.localeCompare(b.name, "ar")
+  );
 
-const opt = document.createElement("option");
+  subjectSelect.innerHTML = `<option value="">اختر المادة</option>`;
 
-opt.value = doc.id;
-opt.textContent = d.name || d.subjectName;
+  uniqueSubjects.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item.id;
+    opt.textContent = item.name;
+    opt.dataset.name = item.name;
+    subjectSelect.appendChild(opt);
+  });
 
-opt.dataset.name =
-d.name || d.subjectName;
-
-subjectSelect.appendChild(opt);
-
-});
-
-document.getElementById("subjectsCount")
-.textContent = snap.size;
-
-}
-  async function loadTeachers(){
-
-const q = query(
-collection(db,"teachers"),
-where("schoolId","==",schoolId)
-);
-
-const snap = await getDocs(q);
-
-teacherSelect.innerHTML =
-`<option value="">اختر المعلم</option>`;
-
-snap.forEach(doc=>{
-
-const d = doc.data();
-
-const opt = document.createElement("option");
-
-opt.value = doc.id;
-opt.textContent = d.name || d.teacherName;
-
-opt.dataset.name =
-d.name || d.teacherName;
-
-teacherSelect.appendChild(opt);
-
-});
-
-document.getElementById("teachersCount")
-.textContent = snap.size;
-
+  setCount("subjectsCount", uniqueSubjects.length);
 }
 
+
+async function loadTeachers(){
+
+  const q = query(
+    collection(db, "teachers"),
+    where("schoolId", "==", schoolId)
+  );
+
+  const snap = await getDocs(q);
+
+  const teachers = snap.docs.map(doc => {
+    const d = doc.data();
+
+    const teacherName = normalizeArabicSpaces(
+      pickFirst(d, [
+        "name",
+        "teacherName",
+        "fullName",
+        "displayName",
+        "username",
+        "title"
+      ])
+    );
+
+    return {
+      id: doc.id,
+      name: teacherName
+    };
+  }).filter(item => item.name);
+
+  const uniqueTeachers = uniqueByName(teachers).sort((a,b)=>
+    a.name.localeCompare(b.name, "ar")
+  );
+
+  teacherSelect.innerHTML = `<option value="">اختر المعلم</option>`;
+
+  uniqueTeachers.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item.id;
+    opt.textContent = item.name;
+    opt.dataset.name = item.name;
+    teacherSelect.appendChild(opt);
+  });
+
+  setCount("teachersCount", uniqueTeachers.length);
+}
 
 
 async function loadSchedule(){
 
-const q = query(
-collection(db,"schedules"),
-where("schoolId","==",schoolId)
-);
+  const q = query(
+    collection(db, "schedules"),
+    where("schoolId", "==", schoolId)
+  );
 
-const snap = await getDocs(q);
+  const snap = await getDocs(q);
 
-document.getElementById("scheduleCount")
-.textContent = snap.size;
+  setCount("scheduleCount", snap.size);
+
+  if(!snap.size){
+    scheduleBody.innerHTML = `
+      <tr>
+        <td colspan="8">لا توجد بيانات</td>
+      </tr>
+    `;
+    emptyBox.style.display = "block";
+    return;
+  }
+
+  emptyBox.style.display = "none";
+
+  const rows = snap.docs.map(doc => {
+    const d = doc.data();
+
+    return {
+      className: normalizeArabicSpaces(
+        pickFirst(d, ["className", "class", "class_title"])
+      ) || "-",
+
+      subjectName: normalizeArabicSpaces(
+        pickFirst(d, ["subjectName", "subject", "subject_title"])
+      ) || "-",
+
+      teacherName: normalizeArabicSpaces(
+        pickFirst(d, ["teacherName", "teacher", "teacher_title", "fullName"])
+      ) || "-",
+
+      day: normalizeDay(
+        pickFirst(d, ["day", "dayName", "weekday"])
+      ) || "-",
+
+      period: cleanString(
+        pickFirst(d, ["period", "periodNumber", "lessonNumber", "slot"])
+      ) || "-",
+
+      from: cleanString(
+        pickFirst(d, ["from", "fromTime", "startTime", "start"])
+      ) || "-",
+
+      to: cleanString(
+        pickFirst(d, ["to", "toTime", "endTime", "end"])
+      ) || "-",
+
+      status: normalizeStatus(
+        pickFirst(d, ["status", "state"])
+      )
+    };
+  });
+
+  scheduleBody.innerHTML = rows.map(row => `
+    <tr>
+      <td>${row.className}</td>
+      <td>${row.subjectName}</td>
+      <td>${row.teacherName}</td>
+      <td>${row.day}</td>
+      <td>${row.period}</td>
+      <td>${row.from}</td>
+      <td>${row.to}</td>
+      <td>
+        <span class="status ${row.status === "inactive" ? "status-inactive" : "status-active"}">
+          ${row.status === "inactive" ? "غير نشط" : "نشط"}
+        </span>
+      </td>
+    </tr>
+  `).join("");
+}
+  scheduleForm.onsubmit = async (e) => {
+  e.preventDefault();
+
+  const classOption = classSelect.options[classSelect.selectedIndex];
+  const subjectOption = subjectSelect.options[subjectSelect.selectedIndex];
+  const teacherOption = teacherSelect.options[teacherSelect.selectedIndex];
+
+  if(!classSelect.value || !subjectSelect.value || !teacherSelect.value){
+    alert("يرجى اختيار الصف والمادة والمعلم.");
+    return;
+  }
+
+  const payload = {
+    schoolId: schoolId,
+
+    classId: classSelect.value,
+    className: normalizeArabicSpaces(classOption?.dataset?.name || classOption?.textContent || ""),
+
+    subjectId: subjectSelect.value,
+    subjectName: normalizeArabicSpaces(subjectOption?.dataset?.name || subjectOption?.textContent || ""),
+
+    teacherId: teacherSelect.value,
+    teacherName: normalizeArabicSpaces(teacherOption?.dataset?.name || teacherOption?.textContent || ""),
+
+    day: normalizeDay(document.getElementById("day").value),
+
+    period: cleanString(document.getElementById("period").value),
+
+    from: cleanString(document.getElementById("fromTime").value),
+    to: cleanString(document.getElementById("toTime").value),
+
+    status: normalizeStatus(document.getElementById("status").value),
+
+    note: normalizeArabicSpaces(document.getElementById("note").value),
+
+    createdAt: Date.now()
+  };
+
+  if(!payload.day){
+    alert("يرجى اختيار اليوم.");
+    return;
+  }
+
+  await addDoc(
+    collection(db, "schedules"),
+    payload
+  );
+
+  scheduleForm.reset();
+
+  await loadSchedule();
+
+  alert("تم حفظ الحصة بنجاح.");
+};
 
 
-if(!snap.size){
+resetBtn.onclick = () => {
+  scheduleForm.reset();
+};
 
-scheduleBody.innerHTML = `
-<tr>
-<td colspan="8">لا توجد بيانات</td>
-</tr>
-`;
 
-emptyBox.style.display = "block";
-return;
+logoutBtn.onclick = () => {
+  localStorage.removeItem("madaris_session");
+  window.location.href = "../login.html";
+};
 
+
+async function boot(){
+  try{
+    await loadClasses();
+    await loadSubjects();
+    await loadTeachers();
+    await loadSchedule();
+  }catch(error){
+    console.error("Boot Error", error);
+    alert("حدث خطأ أثناء تحميل البيانات. راجع اتصال Firebase أو الحقول المخزنة.");
+  }
 }
 
-emptyBox.style.display = "none";
-
-
-scheduleBody.innerHTML = snap.docs.map(doc=>{
-
-const d = doc.data();
-
-return `
-
-<tr>
-
-<td>${d.className || "-"}</td>
-
-<td>${d.subjectName || "-"}</td>
-
-<td>${d.teacherName || "-"}</td>
-
-<td>${d.day || "-"}</td>
-
-<td>${d.period || "-"}</td>
-
-<td>${d.from || "-"}</td>
-
-<td>${d.to || "-"}</td>
-
-<td>
-<span class="status ${
-d.status === "inactive"
-? "status-inactive"
-: "status-active"
-}">
-${d.status || "active"}
-</span>
-</td>
-
-</tr>
-
-`;
-
-}).join("");
-
-}
-
-
-
-document.getElementById("scheduleForm")
-.onsubmit = async (e)=>{
-
-e.preventDefault();
-
-
-const classOption =
-classSelect.options[classSelect.selectedIndex];
-
-const subjectOption =
-subjectSelect.options[subjectSelect.selectedIndex];
-
-const teacherOption =
-teacherSelect.options[teacherSelect.selectedIndex];
-
-
-const data = {
-
-schoolId,
-
-classId: classSelect.value,
-className: classOption.dataset.name,
-
-subjectId: subjectSelect.value,
-subjectName: subjectOption.dataset.name,
-
-teacherId: teacherSelect.value,
-teacherName: teacherOption.dataset.name,
-
-day:
-document.getElementById("day").value,
-
-period:
-document.getElementById("period").value,
-
-from:
-document.getElementById("fromTime").value,
-
-to:
-document.getElementById("toTime").value,
-
-status:
-document.getElementById("status").value,
-
-note:
-document.getElementById("note").value,
-
-createdAt: Date.now()
-
-};
-
-
-await addDoc(
-collection(db,"schedules"),
-data
-);
-
-
-document.getElementById("scheduleForm")
-.reset();
-
-
-loadSchedule();
-
-};
-
-
-
-document.getElementById("resetBtn")
-.onclick = ()=>{
-
-document.getElementById("scheduleForm")
-.reset();
-
-};
-
-
-
-document.getElementById("logoutBtn")
-.onclick = ()=>{
-
-localStorage.removeItem("madaris_session");
-
-window.location.href =
-"../login.html";
-
-};
-
-
-
-loadClasses();
-loadSubjects();
-loadTeachers();
-loadSchedule();
+boot();
 
 </script>
 
