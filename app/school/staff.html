@@ -1,411 +1,1223 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المعلمين | Madaris AI</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-<title>المعلمين | Madaris AI</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Cairo',sans-serif;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    :root{
+      --bg:#0b1220;
+      --panel:#111827;
+      --panel-2:#0f172a;
+      --line:rgba(255,255,255,.07);
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.68);
+      --primary:#2563eb;
+      --success:#10b981;
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --info:#3b82f6;
+      --radius:18px;
+      --shadow:0 20px 50px rgba(0,0,0,.28);
+    }
 
-<style>
+    body{
+      min-height:100vh;
+      background:linear-gradient(180deg,#09101c 0%,#0b1220 100%);
+      color:var(--text);
+    }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Cairo',sans-serif;
-}
+    .header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:18px 20px;
+      background:rgba(15,23,42,.92);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(8px);
+    }
 
-body{
-background:#0b1220;
-color:white;
-min-height:100vh;
-}
+    .header-side{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
 
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px;
-background:#0f172a;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
+    .brand{
+      font-size:22px;
+      font-weight:800;
+    }
 
-.back{
-background:#2563eb;
-padding:10px 20px;
-border-radius:10px;
-cursor:pointer;
-border:none;
-color:white;
-}
+    .school-badge{
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+    }
 
-.container{
-padding:25px;
-max-width:1300px;
-margin:auto;
-}
+    .btn{
+      border:none;
+      cursor:pointer;
+      color:#fff;
+      border-radius:12px;
+      padding:11px 16px;
+      font-size:14px;
+      font-weight:700;
+      transition:.18s ease;
+    }
 
-.top-bar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
-}
+    .btn:hover{
+      transform:translateY(-1px);
+    }
 
-.add-btn{
-background:#10b981;
-border:none;
-padding:12px 20px;
-border-radius:10px;
-cursor:pointer;
-color:white;
-}
+    .btn-back{ background:var(--primary); }
+    .btn-refresh{ background:#1d4ed8; }
+    .btn-save{ background:var(--success); }
+    .btn-reset{ background:#334155; }
+    .btn-delete{ background:var(--danger); }
+    .btn-view{ background:#475569; }
+    .btn-logout{ background:var(--danger); }
 
-.search{
-padding:12px;
-border-radius:10px;
-border:none;
-width:280px;
-background:#111827;
-color:white;
-}
+    .container{
+      max-width:1500px;
+      margin:0 auto;
+      padding:24px;
+    }
 
-.table{
-background:#111827;
-border-radius:16px;
-overflow:hidden;
-}
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:20px;
+      margin-bottom:24px;
+    }
 
-.row{
-display:grid;
-grid-template-columns:1fr 1fr 1fr 120px;
-padding:15px;
-border-bottom:1px solid rgba(255,255,255,.04);
-}
+    .panel{
+      background:linear-gradient(180deg,rgba(17,24,39,.98),rgba(15,23,42,.98));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
 
-.header-row{
-background:#0f172a;
-font-weight:600;
-}
+    .hero-main{
+      padding:22px;
+    }
 
-.action-btn{
-padding:6px 12px;
-border-radius:6px;
-border:none;
-cursor:pointer;
-}
+    .hero-title{
+      font-size:28px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
 
-.delete{
-background:#ef4444;
-color:white;
-}
+    .hero-subtitle{
+      color:var(--muted);
+      line-height:1.9;
+      font-size:15px;
+    }
 
-.modal{
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,.6);
-display:none;
-align-items:center;
-justify-content:center;
-}
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
 
-.modal-box{
-background:#0f172a;
-padding:25px;
-border-radius:16px;
-width:400px;
-}
+    .stat{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
 
-.input{
-width:100%;
-padding:12px;
-margin-bottom:15px;
-border-radius:8px;
-border:none;
-background:#111827;
-color:white;
-}
+    .stat-label{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
 
-.save{
-background:#2563eb;
-padding:12px;
-border:none;
-width:100%;
-border-radius:8px;
-color:white;
-cursor:pointer;
-}
+    .stat-value{
+      font-size:28px;
+      font-weight:800;
+    }
 
-</style>
+    .hero-side{
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:12px;
+    }
 
+    .hero-side h3{
+      font-size:18px;
+    }
+
+    .hero-side p{
+      color:var(--muted);
+      line-height:1.9;
+      font-size:14px;
+    }
+
+    .meta-list{
+      display:grid;
+      gap:10px;
+      margin-top:6px;
+    }
+
+    .meta-item{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:13px 14px;
+    }
+
+    .meta-item strong{
+      display:block;
+      margin-bottom:5px;
+      font-size:14px;
+    }
+
+    .message{
+      display:none;
+      padding:14px 16px;
+      border-radius:14px;
+      font-size:14px;
+      line-height:1.8;
+      margin-bottom:16px;
+      border:1px solid var(--line);
+    }
+
+    .message.show{
+      display:block;
+    }
+
+    .message.info{
+      background:rgba(59,130,246,.12);
+      color:#dbeafe;
+    }
+
+    .message.success{
+      background:rgba(16,185,129,.12);
+      color:#d1fae5;
+    }
+
+    .message.error{
+      background:rgba(239,68,68,.12);
+      color:#fecaca;
+    }
+
+    .workspace{
+      display:grid;
+      grid-template-columns:420px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    .card-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:18px 20px;
+      border-bottom:1px solid var(--line);
+      background:#0f172a;
+      border-top-right-radius:var(--radius);
+      border-top-left-radius:var(--radius);
+    }
+
+    .card-head h2{
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .card-body{
+      padding:20px;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field.double{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .field label{
+      font-size:14px;
+      color:#dbeafe;
+      font-weight:700;
+    }
+
+    .input,
+    .select,
+    .textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:#0f172a;
+      color:#fff;
+      border-radius:12px;
+      padding:12px 14px;
+      font-size:14px;
+      outline:none;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder{
+      color:rgba(255,255,255,.42);
+    }
+
+    .textarea{
+      min-height:92px;
+      resize:vertical;
+      line-height:1.8;
+    }
+
+    .helper{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .form-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
+    .toolbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:16px;
+      flex-wrap:wrap;
+    }
+
+    .toolbar-right,
+    .toolbar-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .search{
+      min-width:280px;
+    }
+
+    .filter{
+      min-width:190px;
+    }
+
+    .table-wrap{
+      overflow:hidden;
+    }
+
+    .table-scroll{
+      width:100%;
+      overflow:auto;
+    }
+
+    table{
+      width:100%;
+      min-width:1360px;
+      border-collapse:collapse;
+    }
+
+    thead th{
+      text-align:right;
+      padding:15px;
+      background:#0f172a;
+      color:#dbeafe;
+      border-bottom:1px solid var(--line);
+      font-size:14px;
+      white-space:nowrap;
+    }
+
+    tbody td{
+      padding:15px;
+      border-bottom:1px solid var(--line);
+      vertical-align:middle;
+      font-size:14px;
+    }
+
+    tbody tr:hover{
+      background:rgba(255,255,255,.025);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:88px;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      border:1px solid transparent;
+      white-space:nowrap;
+    }
+
+    .badge-blue{
+      background:rgba(37,99,235,.12);
+      color:#bfdbfe;
+      border-color:rgba(37,99,235,.22);
+    }
+
+    .badge-green{
+      background:rgba(16,185,129,.12);
+      color:#bbf7d0;
+      border-color:rgba(16,185,129,.22);
+    }
+
+    .badge-red{
+      background:rgba(239,68,68,.12);
+      color:#fecaca;
+      border-color:rgba(239,68,68,.22);
+    }
+
+    .badge-yellow{
+      background:rgba(245,158,11,.12);
+      color:#fde68a;
+      border-color:rgba(245,158,11,.22);
+    }
+
+    .badge-purple{
+      background:rgba(168,85,247,.12);
+      color:#e9d5ff;
+      border-color:rgba(168,85,247,.22);
+    }
+
+    .badge-empty{
+      background:rgba(148,163,184,.12);
+      color:#cbd5e1;
+      border-color:rgba(148,163,184,.2);
+    }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .btn-sm{
+      border:none;
+      cursor:pointer;
+      border-radius:10px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:700;
+      color:#fff;
+    }
+
+    .loading{
+      padding:34px 20px;
+      text-align:center;
+      color:var(--muted);
+      line-height:1.9;
+    }
+
+    .empty-state{
+      padding:32px 20px;
+      text-align:center;
+      color:var(--muted);
+      line-height:1.9;
+    }
+
+    @media (max-width:1200px){
+      .workspace{
+        grid-template-columns:1fr;
+      }
+
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width:700px){
+      .container{
+        padding:16px;
+      }
+
+      .header{
+        padding:14px 16px;
+      }
+
+      .hero-title{
+        font-size:23px;
+      }
+
+      .summary-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .field.double{
+        grid-template-columns:1fr;
+      }
+
+      .search,
+      .filter{
+        min-width:100%;
+      }
+
+      .toolbar-left,
+      .toolbar-right{
+        width:100%;
+      }
+
+      .toolbar-left .btn,
+      .toolbar-right .input,
+      .toolbar-right .select{
+        width:100%;
+      }
+
+      .form-actions .btn{
+        width:100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="header">
-
-<button class="back" onclick="goBack()">رجوع</button>
-
-<h2>المعلمين</h2>
-
-</div>
-
-<div class="container">
-
-<div class="top-bar">
-
-<input type="text" id="search" class="search" placeholder="بحث عن معلم">
-
-<button class="add-btn" onclick="openModal()">إضافة معلم</button>
-
-</div>
-
-<div class="table">
-
-<div class="row header-row">
-
-<div>اسم المعلم</div>
-<div>المادة</div>
-<div>رقم الهاتف</div>
-<div>إجراءات</div>
-
-</div>
-
-<div id="teachersList"></div>
-
-</div>
-
-</div>
-
-
-<div class="modal" id="modal">
-
-<div class="modal-box">
-
-<h3>إضافة معلم</h3>
-
-<input id="name" class="input" placeholder="اسم المعلم">
-<input id="subject" class="input" placeholder="المادة">
-<input id="phone" class="input" placeholder="رقم الهاتف">
-
-<button class="save" onclick="saveTeacher()">حفظ</button>
-
-</div>
-
-</div>
-
-
-<script src="session-guard.js"></script>
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-query,
-where,
-deleteDoc,
-doc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-
-const firebaseConfig = {
-apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-authDomain: "madaris-ai.firebaseapp.com",
-projectId: "madaris-ai",
-storageBucket: "madaris-ai.appspot.com",
-messagingSenderId: "915394447224",
-appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
-};
-
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-
-let schoolId = null;
-let teachers = [];
-
-
-function goBack(){
-window.location.href="index.html";
-}
-
-
-window.openModal = function(){
-document.getElementById("modal").style.display="flex";
-}
-
-
-window.closeModal = function(){
-document.getElementById("modal").style.display="none";
-}
-
-
-window.saveTeacher = async function(){
-
-const name = document.getElementById("name").value.trim();
-const subject = document.getElementById("subject").value.trim();
-const phone = document.getElementById("phone").value.trim();
-
-if(!name){
-alert("ادخل اسم المعلم");
-return;
-}
-
-await addDoc(collection(db,"teachers"),{
-
-name:name,
-subject:subject,
-phone:phone,
-schoolId:schoolId,
-createdAt:Date.now()
-
-});
-
-closeModal();
-
-loadTeachers();
-
-}
-
-
-async function loadTeachers(){
-
-const q = query(
-collection(db,"teachers"),
-where("schoolId","==",schoolId)
-);
-
-const snapshot = await getDocs(q);
-
-teachers = [];
-
-snapshot.forEach(doc=>{
-
-teachers.push({
-id:doc.id,
-...doc.data()
-});
-
-});
-
-render();
-
-}
-
-
-function render(){
-
-const container = document.getElementById("teachersList");
-
-container.innerHTML="";
-
-teachers.forEach(teacher=>{
-
-const row = document.createElement("div");
-
-row.className="row";
-
-row.innerHTML = `
-
-<div>${teacher.name || ""}</div>
-<div>${teacher.subject || ""}</div>
-<div>${teacher.phone || ""}</div>
-
-<div>
-<button class="action-btn delete"
-onclick="deleteTeacher('${teacher.id}')">
-حذف
-</button>
-</div>
-
-`;
-
-container.appendChild(row);
-
-});
-
-}
-
-
-window.deleteTeacher = async function(id){
-
-if(!confirm("حذف المعلم ؟")) return;
-
-await deleteDoc(doc(db,"teachers",id));
-
-loadTeachers();
-
-}
-
-
-document.getElementById("search")
-.addEventListener("input",function(){
-
-const value = this.value.toLowerCase();
-
-const filtered = teachers.filter(t=>
-(t.name || "").toLowerCase().includes(value)
-);
-
-const container = document.getElementById("teachersList");
-
-container.innerHTML="";
-
-filtered.forEach(teacher=>{
-
-const row = document.createElement("div");
-
-row.className="row";
-
-row.innerHTML = `
-
-<div>${teacher.name || ""}</div>
-<div>${teacher.subject || ""}</div>
-<div>${teacher.phone || ""}</div>
-
-<div>
-<button class="action-btn delete"
-onclick="deleteTeacher('${teacher.id}')">
-حذف
-</button>
-</div>
-
-`;
-
-container.appendChild(row);
-
-});
-
-});
-
-
-function init(){
-
-const session = MadarisSession.requireSchoolSession();
-
-if(!session) return;
-
-schoolId = session.schoolId;
-
-loadTeachers();
-
-}
-
-init();
-
-</script>
-
+  <header class="header">
+    <div class="header-side">
+      <button class="btn btn-back" onclick="goBack()">رجوع للوحة المدرسة</button>
+      <div class="brand">Madaris AI</div>
+    </div>
+
+    <div class="header-side">
+      <div class="school-badge" id="schoolBadge">المدرسة: ...</div>
+      <button class="btn btn-logout" id="logoutBtn">خروج</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="panel hero-main">
+        <h1 class="hero-title">إدارة المعلمين</h1>
+        <p class="hero-subtitle">
+          صفحة تشغيلية متقدمة لإضافة المعلمين وتعديلهم وحذفهم وربطهم بالمواد والمدرسة الحالية، مع دعم المعلمين العاديين ومعلم الذكاء الاصطناعي، وبحث وفلترة وقراءة مرنة للبيانات من Firebase.
+        </p>
+
+        <div class="summary-grid">
+          <div class="stat">
+            <div class="stat-label">إجمالي المعلمين</div>
+            <div class="stat-value" id="teachersCount">0</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">المعلمون النشطون</div>
+            <div class="stat-value" id="activeTeachersCount">0</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">معلمو الذكاء الاصطناعي</div>
+            <div class="stat-value" id="aiTeachersCount">0</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">المواد المرتبطة</div>
+            <div class="stat-value" id="linkedSubjectsCount">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel hero-side">
+        <h3>ملخص سريع</h3>
+        <p>
+          هذه الصفحة تحفظ بيانات المعلم مع ربطه بالمادة والمدرسة، وتدعم الاسم ورقم الهاتف والبريد والحالة والنوع والملاحظات، مع نموذج موحد وسهل للإدارة والتعديل.
+        </p>
+
+        <div class="meta-list">
+          <div class="meta-item">
+            <strong>ربط ثابت</strong>
+            <span>يتم حفظ teacher مع schoolId وsubjectId واسم المادة لتسريع القراءة في بقية صفحات المنصة.</span>
+          </div>
+
+          <div class="meta-item">
+            <strong>دعم AI Teacher</strong>
+            <span>يمكن تمييز المعلم كمعلم ذكاء اصطناعي أو معلم بشري عادي من نفس النموذج.</span>
+          </div>
+
+          <div class="meta-item">
+            <strong>فلترة دقيقة</strong>
+            <span>البحث يعمل على الاسم والهاتف والبريد والمادة ونوع المعلم.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="pageMessage" class="message info"></div>
+
+    <section class="workspace">
+      <section class="panel">
+        <div class="card-head">
+          <h2 id="formTitle">إضافة / تعديل معلم</h2>
+          <button class="btn btn-reset" type="button" id="resetFormBtn">تفريغ النموذج</button>
+        </div>
+
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label for="teacherNameInput">اسم المعلم</label>
+              <input id="teacherNameInput" class="input" type="text" placeholder="مثال: أحمد علي" />
+            </div>
+
+            <div class="field double">
+              <div class="field">
+                <label for="subjectIdInput">المادة</label>
+                <select id="subjectIdInput" class="select">
+                  <option value="">اختر المادة</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="teacherTypeInput">نوع المعلم</label>
+                <select id="teacherTypeInput" class="select">
+                  <option value="human">معلم بشري</option>
+                  <option value="ai">AI Teacher</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field double">
+              <div class="field">
+                <label for="phoneInput">رقم الهاتف</label>
+                <input id="phoneInput" class="input" type="text" placeholder="اختياري" />
+              </div>
+
+              <div class="field">
+                <label for="emailInput">البريد الإلكتروني</label>
+                <input id="emailInput" class="input" type="email" placeholder="اختياري" />
+              </div>
+            </div>
+
+            <div class="field double">
+              <div class="field">
+                <label for="statusInput">الحالة</label>
+                <select id="statusInput" class="select">
+                  <option value="active">نشط</option>
+                  <option value="inactive">غير نشط</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="employeeNumberInput">رقم وظيفي / كود</label>
+                <input id="employeeNumberInput" class="input" type="text" placeholder="اختياري" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="noteInput">ملاحظات</label>
+              <textarea id="noteInput" class="textarea" placeholder="اختياري"></textarea>
+            </div>
+
+            <div class="helper">
+              الحقول الأساسية: اسم المعلم والمادة. بقية الحقول اختيارية، لكن يفضل تعبئتها لتحسين الإدارة والتقارير.
+            </div>
+
+            <div id="formMessage" class="message info"></div>
+
+            <div class="form-actions">
+              <button class="btn btn-save" type="button" id="saveBtn">حفظ المعلم</button>
+              <button class="btn btn-reset" type="button" id="clearBtn">تفريغ النموذج</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="card-head">
+          <h2>سجلات المعلمين</h2>
+          <button class="btn btn-refresh" type="button" id="refreshBtn">تحديث</button>
+        </div>
+
+        <div class="card-body">
+          <div class="toolbar">
+            <div class="toolbar-right">
+              <input id="searchInput" class="input search" type="text" placeholder="ابحث باسم المعلم أو الهاتف أو البريد أو المادة" />
+
+              <select id="typeFilter" class="select filter">
+                <option value="">كل الأنواع</option>
+                <option value="human">معلمون بشريون</option>
+                <option value="ai">AI Teacher</option>
+              </select>
+
+              <select id="subjectFilter" class="select filter">
+                <option value="">كل المواد</option>
+              </select>
+            </div>
+
+            <div class="toolbar-left">
+              <div class="helper">ابدأ التعديل من زر "تعديل".</div>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>الاسم</th>
+                    <th>المادة</th>
+                    <th>النوع</th>
+                    <th>الحالة</th>
+                    <th>الهاتف</th>
+                    <th>البريد</th>
+                    <th>الرقم الوظيفي</th>
+                    <th>ملاحظات</th>
+                    <th>إجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody">
+                  <tr>
+                    <td colspan="9" class="loading">جارٍ تحميل بيانات المعلمين...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="session-guard.js"></script>
+  <script type="module">
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      query,
+      where,
+      getDocs,
+      addDoc,
+      updateDoc,
+      deleteDoc,
+      doc,
+      getDoc,
+      limit
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      authDomain: "madaris-ai.firebaseapp.com",
+      projectId: "madaris-ai",
+      storageBucket: "madaris-ai.appspot.com",
+      messagingSenderId: "915394447224",
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+    };
+
+    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let session = null;
+    let schoolId = "";
+    let schoolName = "";
+
+    let subjectsList = [];
+    let teachersList = [];
+    let subjectsMap = new Map();
+    let editingId = null;
+
+    const els = {
+      schoolBadge: document.getElementById("schoolBadge"),
+      logoutBtn: document.getElementById("logoutBtn"),
+      teachersCount: document.getElementById("teachersCount"),
+      activeTeachersCount: document.getElementById("activeTeachersCount"),
+      aiTeachersCount: document.getElementById("aiTeachersCount"),
+      linkedSubjectsCount: document.getElementById("linkedSubjectsCount"),
+      pageMessage: document.getElementById("pageMessage"),
+      formTitle: document.getElementById("formTitle"),
+      resetFormBtn: document.getElementById("resetFormBtn"),
+      teacherNameInput: document.getElementById("teacherNameInput"),
+      subjectIdInput: document.getElementById("subjectIdInput"),
+      teacherTypeInput: document.getElementById("teacherTypeInput"),
+      phoneInput: document.getElementById("phoneInput"),
+      emailInput: document.getElementById("emailInput"),
+      statusInput: document.getElementById("statusInput"),
+      employeeNumberInput: document.getElementById("employeeNumberInput"),
+      noteInput: document.getElementById("noteInput"),
+      formMessage: document.getElementById("formMessage"),
+      saveBtn: document.getElementById("saveBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      refreshBtn: document.getElementById("refreshBtn"),
+      searchInput: document.getElementById("searchInput"),
+      typeFilter: document.getElementById("typeFilter"),
+      subjectFilter: document.getElementById("subjectFilter"),
+      tableBody: document.getElementById("tableBody")
+    };
+
+    function text(value) {
+      if (value === null || value === undefined) return "";
+      return String(value).trim();
+    }
+
+    function lower(value) {
+      return text(value).toLowerCase();
+    }
+
+    function escapeHtml(value) {
+      return text(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function showPageMessage(message, type = "info") {
+      els.pageMessage.className = `message ${type} show`;
+      els.pageMessage.textContent = message;
+    }
+
+    function clearPageMessage() {
+      els.pageMessage.className = "message info";
+      els.pageMessage.textContent = "";
+    }
+
+    function showFormMessage(message, type = "info") {
+      els.formMessage.className = `message ${type} show`;
+      els.formMessage.textContent = message;
+    }
+
+    function clearFormMessage() {
+      els.formMessage.className = "message info";
+      els.formMessage.textContent = "";
+    }
+
+    function goBack() {
+      window.location.href = "index.html";
+    }
+
+    window.goBack = goBack;
+
+    function normalizeTeacherType(value) {
+      const v = lower(value);
+      if (["ai", "ai teacher", "robot", "bot", "smart", "smart teacher"].includes(v)) return "ai";
+      return "human";
+    }
+
+    function teacherTypeLabel(value) {
+      return normalizeTeacherType(value) === "ai" ? "AI Teacher" : "معلم بشري";
+    }
+
+    function isActiveStatus(value) {
+      const v = lower(value || "active");
+      return !v || v === "active" || v === "نشط";
+    }
+
+    function getSubjectNameById(id) {
+      const subject = subjectsMap.get(text(id));
+      return subject?.name || subject?.title || subject?.subject || "غير معروف";
+    }
+
+    function fillSelect(selectEl, list, placeholder, labelFn) {
+      selectEl.innerHTML = `<option value="">${placeholder}</option>`;
+      for (const item of list) {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = labelFn(item);
+        selectEl.appendChild(option);
+      }
+    }
+
+    async function loadSubjects() {
+      const q = query(collection(db, "subjects"), where("schoolId", "==", schoolId));
+      const snap = await getDocs(q);
+      subjectsList = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      subjectsMap = new Map(subjectsList.map((item) => [item.id, item]));
+      fillSelect(els.subjectIdInput, subjectsList, "اختر المادة", (item) => item.name || item.title || item.subject || item.id);
+      fillSelect(els.subjectFilter, subjectsList, "كل المواد", (item) => item.name || item.title || item.subject || item.id);
+    }
+
+    function buildNormalizedTeacher(row) {
+      const subjectId = text(row.subjectId || row.subjectID || row.subject_id);
+      const subjectName = text(row.subjectName || row.subject || getSubjectNameById(subjectId));
+      const name = text(row.name || row.fullName || row.teacherName);
+      const phone = text(row.phone || row.teacherPhone);
+      const email = text(row.email || row.teacherEmail);
+      const employeeNumber = text(row.employeeNumber || row.teacherCode || row.number || row.code);
+      const teacherType = normalizeTeacherType(row.teacherType || (row.isAI ? "ai" : "human"));
+      const status = text(row.status || "active") || "active";
+      const note = text(row.note || row.notes || "");
+
+      return {
+        id: row.id,
+        schoolId: text(row.schoolId),
+        name,
+        subjectId,
+        subjectName,
+        teacherType,
+        isAI: teacherType === "ai",
+        status,
+        phone,
+        email,
+        employeeNumber,
+        note,
+        createdAt: row.createdAt || null,
+        updatedAt: row.updatedAt || null
+      };
+    }
+
+    async function loadTeachers() {
+      const q = query(collection(db, "teachers"), where("schoolId", "==", schoolId));
+      const snap = await getDocs(q);
+      teachersList = snap.docs.map((d) => buildNormalizedTeacher({ id: d.id, ...d.data() }));
+    }
+
+    function updateSummary() {
+      els.teachersCount.textContent = teachersList.length;
+      els.activeTeachersCount.textContent = teachersList.filter((item) => isActiveStatus(item.status)).length;
+      els.aiTeachersCount.textContent = teachersList.filter((item) => item.teacherType === "ai").length;
+      els.linkedSubjectsCount.textContent = new Set(teachersList.map((item) => item.subjectId).filter(Boolean)).size;
+    }
+
+    function buildSearchText(item) {
+      return [
+        item.name,
+        item.subjectName,
+        teacherTypeLabel(item.teacherType),
+        item.status,
+        item.phone,
+        item.email,
+        item.employeeNumber,
+        item.note
+      ].map(lower).join(" ");
+    }
+
+    function getFilteredTeachers() {
+      const keyword = lower(els.searchInput.value);
+      const selectedType = lower(els.typeFilter.value);
+      const selectedSubjectId = text(els.subjectFilter.value);
+
+      return [...teachersList]
+        .filter((item) => {
+          const searchMatch = !keyword || buildSearchText(item).includes(keyword);
+          const typeMatch = !selectedType || item.teacherType === selectedType;
+          const subjectMatch = !selectedSubjectId || item.subjectId === selectedSubjectId;
+          return searchMatch && typeMatch && subjectMatch;
+        })
+        .sort((a, b) => a.name.localeCompare(b.name, "ar"));
+    }
+
+    function renderTable() {
+      const list = getFilteredTeachers();
+
+      if (!list.length) {
+        els.tableBody.innerHTML = `
+          <tr>
+            <td colspan="9">
+              <div class="empty-state">لا توجد سجلات معلمين مطابقة حالياً.</div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      els.tableBody.innerHTML = list.map((item) => `
+        <tr>
+          <td>${escapeHtml(item.name)}</td>
+          <td><span class="badge badge-blue">${escapeHtml(item.subjectName)}</span></td>
+          <td><span class="badge ${item.teacherType === "ai" ? "badge-purple" : "badge-yellow"}">${escapeHtml(teacherTypeLabel(item.teacherType))}</span></td>
+          <td><span class="badge ${isActiveStatus(item.status) ? "badge-green" : "badge-red"}">${isActiveStatus(item.status) ? "نشط" : "غير نشط"}</span></td>
+          <td>${item.phone ? escapeHtml(item.phone) : '<span class="badge badge-empty">—</span>'}</td>
+          <td>${item.email ? escapeHtml(item.email) : '<span class="badge badge-empty">—</span>'}</td>
+          <td>${item.employeeNumber ? escapeHtml(item.employeeNumber) : '<span class="badge badge-empty">—</span>'}</td>
+          <td>${item.note ? escapeHtml(item.note) : '<span class="badge badge-empty">لا يوجد</span>'}</td>
+          <td>
+            <div class="actions">
+              <button class="btn-sm btn-view" onclick="editTeacher('${item.id}')">تعديل</button>
+              <button class="btn-sm btn-delete" onclick="removeTeacher('${item.id}')">حذف</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderAll() {
+      updateSummary();
+      renderTable();
+    }
+
+    function resetForm() {
+      editingId = null;
+      els.formTitle.textContent = "إضافة / تعديل معلم";
+      els.teacherNameInput.value = "";
+      els.subjectIdInput.value = "";
+      els.teacherTypeInput.value = "human";
+      els.phoneInput.value = "";
+      els.emailInput.value = "";
+      els.statusInput.value = "active";
+      els.employeeNumberInput.value = "";
+      els.noteInput.value = "";
+      els.saveBtn.textContent = "حفظ المعلم";
+      clearFormMessage();
+    }
+
+    function setEditingForm(item) {
+      editingId = item.id;
+      els.formTitle.textContent = "تعديل معلم";
+      els.teacherNameInput.value = item.name || "";
+      els.subjectIdInput.value = item.subjectId || "";
+      els.teacherTypeInput.value = item.teacherType || "human";
+      els.phoneInput.value = item.phone || "";
+      els.emailInput.value = item.email || "";
+      els.statusInput.value = item.status || "active";
+      els.employeeNumberInput.value = item.employeeNumber || "";
+      els.noteInput.value = item.note || "";
+      els.saveBtn.textContent = "تحديث المعلم";
+      clearFormMessage();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function collectFormData() {
+      const subjectId = text(els.subjectIdInput.value);
+      const teacherType = normalizeTeacherType(els.teacherTypeInput.value);
+
+      return {
+        name: text(els.teacherNameInput.value),
+        subjectId,
+        subjectName: getSubjectNameById(subjectId),
+        teacherType,
+        isAI: teacherType === "ai",
+        phone: text(els.phoneInput.value),
+        email: text(els.emailInput.value).toLowerCase(),
+        status: text(els.statusInput.value || "active") || "active",
+        employeeNumber: text(els.employeeNumberInput.value),
+        note: text(els.noteInput.value)
+      };
+    }
+
+    function validateForm(data) {
+      if (!data.name) return "ادخل اسم المعلم.";
+      if (!data.subjectId) return "اختر المادة.";
+      return "";
+    }
+
+    async function hasEmailConflict(data) {
+      if (!data.email) return false;
+
+      const q = query(
+        collection(db, "teachers"),
+        where("schoolId", "==", schoolId),
+        where("email", "==", data.email),
+        limit(10)
+      );
+
+      const snap = await getDocs(q);
+      const conflicts = snap.docs
+        .map((d) => ({ id: d.id, ...d.data() }))
+        .filter((row) => row.id !== editingId);
+
+      return conflicts.length > 0;
+    }
+
+    async function hasEmployeeNumberConflict(data) {
+      if (!data.employeeNumber) return false;
+
+      const q = query(
+        collection(db, "teachers"),
+        where("schoolId", "==", schoolId),
+        where("employeeNumber", "==", data.employeeNumber),
+        limit(10)
+      );
+
+      const snap = await getDocs(q);
+      const conflicts = snap.docs
+        .map((d) => ({ id: d.id, ...d.data() }))
+        .filter((row) => row.id !== editingId);
+
+      return conflicts.length > 0;
+    }
+
+    async function saveTeacher() {
+      clearFormMessage();
+      const data = collectFormData();
+      const validationError = validateForm(data);
+
+      if (validationError) {
+        showFormMessage(validationError, "error");
+        return;
+      }
+
+      try {
+        els.saveBtn.disabled = true;
+        els.saveBtn.textContent = editingId ? "جارٍ التحديث..." : "جارٍ الحفظ...";
+
+        const emailConflict = await hasEmailConflict(data);
+        if (emailConflict) {
+          showFormMessage("البريد الإلكتروني مستخدم مسبقًا داخل هذه المدرسة.", "error");
+          return;
+        }
+
+        const employeeConflict = await hasEmployeeNumberConflict(data);
+        if (employeeConflict) {
+          showFormMessage("الرقم الوظيفي مستخدم مسبقًا داخل هذه المدرسة.", "error");
+          return;
+        }
+
+        const payload = {
+          schoolId,
+          name: data.name,
+          subjectId: data.subjectId,
+          subjectName: data.subjectName,
+          teacherType: data.teacherType,
+          isAI: data.isAI,
+          phone: data.phone,
+          email: data.email,
+          status: data.status,
+          employeeNumber: data.employeeNumber,
+          note: data.note,
+          updatedAt: Date.now()
+        };
+
+        if (editingId) {
+          await updateDoc(doc(db, "teachers", editingId), payload);
+          showPageMessage("تم تحديث بيانات المعلم بنجاح.", "success");
+        } else {
+          await addDoc(collection(db, "teachers"), {
+            ...payload,
+            createdAt: Date.now()
+          });
+          showPageMessage("تم حفظ المعلم بنجاح.", "success");
+        }
+
+        resetForm();
+        await loadTeachers();
+        renderAll();
+      } catch (error) {
+        console.error("saveTeacher error:", error);
+        showFormMessage("فشل حفظ بيانات المعلم.", "error");
+      } finally {
+        els.saveBtn.disabled = false;
+        els.saveBtn.textContent = editingId ? "تحديث المعلم" : "حفظ المعلم";
+        if (!editingId) els.saveBtn.textContent = "حفظ المعلم";
+      }
+    }
+
+    async function removeTeacher(id) {
+      const confirmed = window.confirm("هل تريد حذف هذا المعلم؟");
+      if (!confirmed) return;
+
+      try {
+        await deleteDoc(doc(db, "teachers", id));
+        if (editingId === id) resetForm();
+        showPageMessage("تم حذف المعلم بنجاح.", "success");
+        await loadTeachers();
+        renderAll();
+      } catch (error) {
+        console.error("removeTeacher error:", error);
+        showPageMessage("فشل حذف المعلم.", "error");
+      }
+    }
+
+    async function editTeacher(id) {
+      const cached = teachersList.find((item) => item.id === id);
+      if (cached) {
+        setEditingForm(cached);
+        return;
+      }
+
+      try {
+        const snap = await getDoc(doc(db, "teachers", id));
+        if (!snap.exists()) {
+          showPageMessage("المعلم المطلوب غير موجود.", "error");
+          return;
+        }
+
+        const item = buildNormalizedTeacher({ id: snap.id, ...snap.data() });
+        setEditingForm(item);
+      } catch (error) {
+        console.error("editTeacher error:", error);
+        showPageMessage("فشل فتح بيانات المعلم للتعديل.", "error");
+      }
+    }
+
+    window.editTeacher = editTeacher;
+    window.removeTeacher = removeTeacher;
+
+    function bindEvents() {
+      els.logoutBtn.addEventListener("click", () => {
+        if (window.MadarisSession && typeof window.MadarisSession.logoutToLogin === "function") {
+          window.MadarisSession.logoutToLogin();
+        } else {
+          window.location.href = "/app/login.html";
+        }
+      });
+
+      els.resetFormBtn.addEventListener("click", resetForm);
+      els.clearBtn.addEventListener("click", resetForm);
+      els.saveBtn.addEventListener("click", saveTeacher);
+      els.refreshBtn.addEventListener("click", async () => {
+        await loadSubjects();
+        await loadTeachers();
+        renderAll();
+      });
+
+      els.searchInput.addEventListener("input", renderTable);
+      els.typeFilter.addEventListener("change", renderTable);
+      els.subjectFilter.addEventListener("change", renderTable);
+    }
+
+    async function init() {
+      if (!window.MadarisSession || typeof window.MadarisSession.requireSchoolSession !== "function") {
+        window.location.replace("/app/login.html");
+        return;
+      }
+
+      session = window.MadarisSession.requireSchoolSession();
+      if (!session) return;
+
+      schoolId = text(session.schoolId);
+      schoolName = text(session.schoolName) || "المدرسة";
+      els.schoolBadge.textContent = `المدرسة: ${schoolName}`;
+
+      bindEvents();
+
+      try {
+        await loadSubjects();
+        await loadTeachers();
+        renderAll();
+      } catch (error) {
+        console.error("staff init error:", error);
+        showPageMessage("حدث خطأ أثناء تحميل صفحة المعلمين.", "error");
+      }
+    }
+
+    init();
+  </script>
 </body>
 </html>
