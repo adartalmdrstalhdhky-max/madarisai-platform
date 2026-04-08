@@ -2,1108 +2,763 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madaris AI | لوحة المدرسة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>لوحة المدرسة | Madaris AI</title>
+
+  <meta name="description" content="لوحة تحكم المدرسة في Madaris AI لإدارة الجداول والطلاب والفصول والمعلمين والتقارير." />
+  <meta name="theme-color" content="#07142b" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <script type="module" src="./session-guard.js"></script>
+
   <style>
-    :root {
-      --bg-1: #071425;
-      --bg-2: #0b1f3d;
-      --card: rgba(18, 35, 67, 0.92);
-      --card-2: rgba(26, 49, 90, 0.9);
-      --line: rgba(255, 255, 255, 0.08);
-      --text: #f4f7fb;
-      --muted: #a9bdd8;
-      --cyan: #76e3ff;
-      --cyan-2: #69d6f4;
-      --pink: #ff5f9e;
-      --pink-2: #ff7bb0;
-      --green: #1ec98f;
-      --amber: #ffca6b;
-      --danger: #ff6b7a;
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
+    :root{
+      --bg:#07142b;
+      --bg-deep:#04101f;
+      --surface:rgba(20,41,83,.92);
+      --surface-2:rgba(25,48,94,.96);
+      --surface-3:rgba(255,255,255,.04);
+      --border:rgba(148,184,255,.14);
+      --text:#f5f8ff;
+      --muted:#bfd0ef;
+      --muted-2:#8ea8d9;
+      --primary:#63d3ff;
+      --primary-2:#7ea4ff;
+      --success:#35d98b;
+      --warning:#ffd166;
+      --danger:#ff6b8b;
+      --shadow:0 20px 60px rgba(0,0,0,.28);
+      --radius-xl:32px;
+      --radius-lg:24px;
+      --radius-md:18px;
+      --radius-sm:12px;
+      --container:1220px;
+      --header-h:82px;
     }
 
-    * {
-      box-sizing: border-box;
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      font-family: "Tahoma", "Arial", sans-serif;
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:"Tajawal",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(circle at top left, rgba(118, 227, 255, 0.12), transparent 24%),
-        radial-gradient(circle at top right, rgba(255, 95, 158, 0.08), transparent 20%),
-        linear-gradient(180deg, var(--bg-2), var(--bg-1));
-      color: var(--text);
+        radial-gradient(circle at 85% 8%, rgba(99,211,255,.18), transparent 16%),
+        radial-gradient(circle at 12% 22%, rgba(127,140,255,.11), transparent 18%),
+        linear-gradient(180deg,#04101f 0%, #07142b 26%, #081832 58%, #061327 100%);
+      min-height:100vh;
+      overflow-x:hidden;
     }
 
-    body {
-      padding: 18px 14px 40px;
+    a{
+      color:inherit;
+      text-decoration:none;
     }
 
-    .page {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
+    button{
+      font:inherit;
     }
 
-    .hero,
-    .panel,
-    .card,
-    .notice,
-    .stat-card,
-    .section-box {
-      background: linear-gradient(180deg, rgba(27, 55, 102, 0.94), rgba(8, 24, 49, 0.94));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
+    .container{
+      width:min(var(--container), calc(100% - 24px));
+      margin:0 auto;
     }
 
-    .hero {
-      border-radius: var(--radius-xl);
-      padding: 22px 18px;
-      margin-bottom: 18px;
+    .page-shell{
+      position:relative;
+      isolation:isolate;
     }
 
-    .hero-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 18px;
+    .page-shell::before,
+    .page-shell::after{
+      content:"";
+      position:fixed;
+      z-index:-1;
+      pointer-events:none;
+      filter:blur(42px);
+      opacity:.76;
+      border-radius:50%;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
+    .page-shell::before{
+      top:120px;
+      right:-90px;
+      width:240px;
+      height:240px;
+      background:rgba(99,211,255,.14);
     }
 
-    .logo {
-      width: 84px;
-      height: 84px;
-      border-radius: 26px;
+    .page-shell::after{
+      top:50%;
+      left:-120px;
+      width:280px;
+      height:280px;
+      background:rgba(126,164,255,.14);
+    }
+
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(14px);
+      background:rgba(6,18,39,.78);
+      border-bottom:1px solid rgba(132,169,255,.1);
+    }
+
+    .header-inner{
+      min-height:var(--header-h);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      font-size:1.4rem;
+      font-weight:900;
+      letter-spacing:-.03em;
+    }
+
+    .brand-mark{
+      width:48px;
+      height:48px;
+      border-radius:16px;
       background:
-        linear-gradient(135deg, rgba(118, 227, 255, 0.95), rgba(176, 190, 255, 0.9));
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,.9), rgba(255,255,255,.18) 26%, transparent 27%),
+        radial-gradient(circle at 68% 66%, rgba(255,255,255,.22), transparent 30%),
+        linear-gradient(135deg, rgba(122,224,255,.95), rgba(147,152,255,.92));
       box-shadow:
-        0 0 28px rgba(118, 227, 255, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      flex: 0 0 auto;
+        0 16px 30px rgba(99,211,255,.2),
+        inset 0 1px 0 rgba(255,255,255,.28);
+      flex-shrink:0;
     }
 
-    .brand-text {
-      min-width: 0;
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
 
-    .brand-title {
-      margin: 0;
-      font-size: clamp(34px, 6vw, 52px);
-      line-height: 1.05;
-      font-weight: 800;
-      letter-spacing: 0.3px;
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:50px;
+      padding:12px 18px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:.96rem;
+      transition:transform .22s ease, box-shadow .22s ease, background .22s ease;
+      text-align:center;
     }
 
-    .brand-subtitle {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: clamp(18px, 3.5vw, 24px);
-      line-height: 1.5;
+    .btn:hover{
+      transform:translateY(-2px);
     }
 
-    .hero-desc {
-      margin: 10px 0 0;
-      color: #d8e5f5;
-      font-size: clamp(17px, 3.2vw, 22px);
-      line-height: 1.9;
+    .btn-primary{
+      color:#06142a;
+      background:linear-gradient(135deg,#6ad3ff 0%, #8ab8ff 100%);
+      box-shadow:0 14px 30px rgba(106,211,255,.24);
     }
 
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 22px;
+    .btn-secondary{
+      color:var(--text);
+      background:rgba(106,211,255,.08);
+      border:1px solid rgba(106,211,255,.18);
     }
 
-    .btn {
-      appearance: none;
-      border: 0;
-      cursor: pointer;
-      width: 100%;
-      min-height: 68px;
-      border-radius: 999px;
-      font-size: clamp(22px, 4.4vw, 30px);
-      font-weight: 800;
-      line-height: 1.2;
-      padding: 14px 20px;
-      transition: transform 0.15s ease, opacity 0.15s ease;
+    .btn-danger{
+      color:#fff;
+      background:rgba(255,107,139,.14);
+      border:1px solid rgba(255,107,139,.22);
     }
 
-    .btn:active {
-      transform: scale(0.99);
+    .page-main{
+      padding:24px 0 40px;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--cyan-2), var(--cyan));
-      color: #081728;
-      box-shadow: 0 14px 32px rgba(118, 227, 255, 0.22);
+    .glass{
+      position:relative;
+      background:linear-gradient(180deg, rgba(24,48,95,.92), rgba(13,31,67,.98));
+      border:1px solid var(--border);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+      overflow:hidden;
     }
 
-    .btn-secondary {
-      background: linear-gradient(180deg, rgba(20, 37, 69, 0.98), rgba(11, 26, 52, 0.98));
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .glass::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at top right, rgba(99,211,255,.08), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.025), transparent 28%);
+      pointer-events:none;
     }
 
-    .btn-danger {
-      background: linear-gradient(135deg, var(--pink), var(--pink-2));
-      color: #fff;
-      box-shadow: 0 14px 32px rgba(255, 95, 158, 0.2);
+    .hero{
+      padding:24px;
     }
 
-    .notice {
-      border-radius: var(--radius-lg);
-      padding: 18px 16px;
-      margin: 16px 0 0;
-      font-size: clamp(18px, 3.3vw, 24px);
-      line-height: 1.9;
-      color: #e9f6ff;
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+      align-items:stretch;
     }
 
-    .notice.success {
-      background: linear-gradient(180deg, rgba(18, 83, 87, 0.92), rgba(10, 46, 62, 0.95));
-      border-color: rgba(57, 222, 191, 0.22);
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+      padding:10px 16px;
+      border-radius:999px;
+      border:1px solid rgba(99,211,255,.25);
+      background:rgba(31,68,124,.34);
+      color:var(--primary);
+      font-size:.92rem;
+      font-weight:800;
     }
 
-    .notice.warning {
-      background: linear-gradient(180deg, rgba(87, 56, 18, 0.9), rgba(64, 40, 10, 0.95));
-      border-color: rgba(255, 202, 107, 0.22);
+    .hero-copy h1{
+      margin:16px 0 14px;
+      font-size:clamp(2rem,5vw,3.6rem);
+      line-height:1.12;
+      font-weight:900;
+      letter-spacing:-.03em;
     }
 
-    .notice.error {
-      background: linear-gradient(180deg, rgba(86, 23, 47, 0.92), rgba(58, 15, 31, 0.95));
-      border-color: rgba(255, 107, 122, 0.24);
+    .hero-copy p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:1.02rem;
+      line-height:1.9;
+      max-width:720px;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 18px;
+    .info-list{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
     }
 
-    .card,
-    .stat-card,
-    .section-box {
-      border-radius: var(--radius-lg);
-      padding: 18px 16px;
+    .info-item{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(154,184,255,.12);
+      border-radius:18px;
+      padding:16px 18px;
     }
 
-    .label {
-      display: block;
-      color: var(--muted);
-      font-size: clamp(16px, 3vw, 21px);
-      margin-bottom: 8px;
-      line-height: 1.6;
+    .info-item strong{
+      display:block;
+      font-size:.96rem;
+      margin-bottom:6px;
+      color:var(--text);
     }
 
-    .value {
-      font-size: clamp(26px, 4.8vw, 38px);
-      font-weight: 800;
-      line-height: 1.5;
-      word-break: break-word;
+    .info-item span{
+      color:var(--muted);
+      font-size:.96rem;
+      line-height:1.7;
+      word-break:break-word;
     }
 
-    .value.small {
-      font-size: clamp(22px, 4.1vw, 30px);
+    .summary-panel{
+      display:grid;
+      gap:16px;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
+    .panel-card{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(154,184,255,.12);
+      border-radius:22px;
+      padding:20px;
     }
 
-    .stat-card {
-      text-align: center;
-      min-height: 170px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .panel-card h3{
+      margin:0 0 12px;
+      font-size:1.15rem;
+      font-weight:900;
     }
 
-    .stat-number {
-      font-size: clamp(52px, 10vw, 84px);
-      line-height: 1;
-      margin: 0 0 10px;
-      color: var(--cyan);
-      font-weight: 900;
+    .panel-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
     }
 
-    .stat-label {
-      margin: 0;
-      color: #dbe7f8;
-      font-size: clamp(22px, 4vw, 28px);
-      line-height: 1.7;
-      font-weight: 700;
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin-top:16px;
     }
 
-    .section-title {
-      margin: 0 0 12px;
-      font-size: clamp(30px, 5.3vw, 44px);
-      line-height: 1.25;
-      font-weight: 900;
+    .quick-stat{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(154,184,255,.10);
+      border-radius:18px;
+      padding:16px;
     }
 
-    .section-desc {
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: clamp(17px, 3vw, 22px);
-      line-height: 1.9;
+    .quick-stat .value{
+      display:block;
+      font-size:2rem;
+      font-weight:900;
+      color:var(--primary);
+      line-height:1;
+      margin-bottom:8px;
     }
 
-    .list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 10px;
+    .quick-stat .label{
+      display:block;
+      color:var(--text);
+      font-weight:800;
+      margin-bottom:6px;
     }
 
-    .list li {
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-size: clamp(19px, 3.5vw, 24px);
-      line-height: 1.8;
+    .quick-stat .hint{
+      color:var(--muted-2);
+      font-size:.9rem;
+      line-height:1.6;
     }
 
-    .muted {
-      color: var(--muted);
+    .section{
+      margin-top:24px;
     }
 
-    .hidden {
-      display: none !important;
+    .section-box{
+      padding:24px;
     }
 
-    .footer-note {
-      margin-top: 18px;
-      color: var(--muted);
-      text-align: center;
-      font-size: clamp(16px, 2.9vw, 20px);
-      line-height: 1.9;
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
     }
 
-    @media (min-width: 760px) {
-      body {
-        padding: 24px 18px 48px;
+    .section-head h2{
+      margin:0 0 6px;
+      font-size:1.7rem;
+      font-weight:900;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .cards-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .nav-card{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(154,184,255,.12);
+      border-radius:24px;
+      padding:22px;
+      transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+
+    .nav-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(106,211,255,.24);
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    .nav-card .icon{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg, rgba(106,211,255,.22), rgba(138,184,255,.16));
+      border:1px solid rgba(106,211,255,.18);
+      color:var(--primary);
+      font-size:1.25rem;
+      font-weight:900;
+      margin-bottom:16px;
+    }
+
+    .nav-card h3{
+      margin:0 0 10px;
+      font-size:1.2rem;
+      font-weight:900;
+    }
+
+    .nav-card p{
+      margin:0 0 16px;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:.96rem;
+    }
+
+    .nav-card .go{
+      color:var(--primary);
+      font-weight:800;
+      font-size:.96rem;
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,
+      .cards-grid{
+        grid-template-columns:1fr;
       }
 
-      .actions {
-        grid-template-columns: repeat(3, 1fr);
+      .quick-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px){
+      :root{
+        --header-h:74px;
       }
 
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .container{
+        width:min(var(--container), calc(100% - 18px));
       }
 
-      .stats-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+      .hero,
+      .section-box{
+        padding:18px;
+      }
+
+      .quick-grid{
+        grid-template-columns:1fr;
+      }
+
+      .header-inner{
+        align-items:flex-start;
+        padding:12px 0;
+      }
+
+      .header-actions{
+        width:100%;
+      }
+
+      .header-actions .btn{
+        flex:1 1 auto;
+      }
+
+      .brand{
+        font-size:1.2rem;
+      }
+
+      .brand-mark{
+        width:42px;
+        height:42px;
       }
     }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <section class="hero">
-      <div class="hero-top">
+  <div class="page-shell">
+
+    <header class="site-header">
+      <div class="container header-inner">
         <div class="brand">
-          <div class="logo" aria-hidden="true"></div>
-          <div class="brand-text">
-            <h1 class="brand-title">Madaris AI | لوحة المدرسة</h1>
-            <p class="brand-subtitle">نظام تشغيل التعليم</p>
-          </div>
+          <div class="brand-mark"></div>
+          <span>Madaris AI</span>
+        </div>
+
+        <div class="header-actions">
+          <a href="./schedule.html" class="btn btn-secondary">عرض الجدول</a>
+          <a href="./manage-schedule.html" class="btn btn-primary">إدارة الجدول</a>
+          <button id="logoutBtn" class="btn btn-danger" type="button">تسجيل الخروج</button>
         </div>
       </div>
+    </header>
 
-      <p class="hero-desc">
-        هذه الصفحة لا تبقى في تحميل لا نهائي. تقرأ جلسة المدرسة الموحّدة، ثم تربط
-        بيانات المدرسة والصفوف والمواد والمعلمين والجدول من المسارات الصحيحة داخل Firestore.
-      </p>
+    <main class="page-main">
+      <div class="container">
 
-      <div class="actions">
-        <button id="goScheduleBtn" class="btn btn-primary" type="button">عرض الجدول</button>
-        <button id="goManageScheduleBtn" class="btn btn-secondary" type="button">إدارة الجدول</button>
-        <button id="logoutBtn" class="btn btn-danger" type="button">تسجيل الخروج</button>
+        <section class="glass hero">
+          <div class="hero-grid">
+
+            <div class="hero-copy">
+              <span class="badge">لوحة المدرسة</span>
+
+              <h1>
+                تشغيل المدرسة من
+                <span style="color:var(--primary)">مكان واحد</span>
+              </h1>
+
+              <p>
+                هذه الصفحة هي المدخل الرئيسي لمدرستك داخل المنصة. من هنا تستطيع
+                الوصول السريع إلى الجداول والطلاب والفصول والطاقم والتقارير،
+                مع عرض معلومات المدرسة والعدادات الأساسية بشكل واضح.
+              </p>
+
+              <div class="info-list">
+                <div class="info-item">
+                  <strong>اسم المدرسة</strong>
+                  <span id="schoolName">جارٍ التحميل...</span>
+                </div>
+
+                <div class="info-item">
+                  <strong>School ID</strong>
+                  <span id="schoolId">جارٍ التحميل...</span>
+                </div>
+
+                <div class="info-item">
+                  <strong>الحساب الحالي</strong>
+                  <span id="accountInfo">جارٍ التحميل...</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="summary-panel">
+              <div class="panel-card">
+                <h3>ملخص سريع</h3>
+                <p>
+                  تعرض هذه اللوحة مؤشرات سريعة عن المدرسة حتى تدخل مباشرة إلى
+                  الصفحة التي تحتاجها دون تضييع وقت.
+                </p>
+
+                <div class="quick-grid">
+                  <div class="quick-stat">
+                    <span class="value" id="classesCount">0</span>
+                    <span class="label">الفصول</span>
+                    <span class="hint">عدد الصفوف/الفصول الحالية</span>
+                  </div>
+
+                  <div class="quick-stat">
+                    <span class="value" id="subjectsCount">0</span>
+                    <span class="label">المواد</span>
+                    <span class="hint">المواد المربوطة بالمدرسة</span>
+                  </div>
+
+                  <div class="quick-stat">
+                    <span class="value" id="teachersCount">0</span>
+                    <span class="label">المعلمين</span>
+                    <span class="hint">عدد المعلمين الحالي</span>
+                  </div>
+
+                  <div class="quick-stat">
+                    <span class="value" id="scheduleDaysCount">0</span>
+                    <span class="label">أيام الجدول</span>
+                    <span class="hint">الأيام التي تحتوي حصصًا</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+                </section>
+                <section class="section glass section-box">
+
+          <div class="section-head">
+            <div>
+              <h2>إدارة المدرسة</h2>
+              <p>
+                الوصول السريع إلى جميع أقسام المدرسة: الجدول، الطلاب، الفصول، المعلمين والتقارير.
+              </p>
+            </div>
+          </div>
+
+          <div class="cards-grid">
+
+            <a href="./schedule.html" class="nav-card">
+              <div class="icon">📅</div>
+              <h3>عرض الجدول</h3>
+              <p>
+                عرض الجدول المدرسي الكامل لجميع الصفوف والحصص.
+              </p>
+              <span class="go">فتح الصفحة →</span>
+            </a>
+
+            <a href="./manage-schedule.html" class="nav-card">
+              <div class="icon">⚙️</div>
+              <h3>إدارة الجدول</h3>
+              <p>
+                إضافة الحصص وتعديلها وربط الصفوف والمعلمين والمواد.
+              </p>
+              <span class="go">فتح الصفحة →</span>
+            </a>
+
+            <a href="./classes.html" class="nav-card">
+              <div class="icon">🏫</div>
+              <h3>الفصول</h3>
+              <p>
+                إدارة الصفوف والفصول وربطها بالطلاب والمواد.
+              </p>
+              <span class="go">فتح الصفحة →</span>
+            </a>
+
+            <a href="./students.html" class="nav-card">
+              <div class="icon">👨‍🎓</div>
+              <h3>الطلاب</h3>
+              <p>
+                عرض الطلاب وإدارة بياناتهم ومتابعة مستواهم.
+              </p>
+              <span class="go">فتح الصفحة →</span>
+            </a>
+
+            <a href="./staff.html" class="nav-card">
+              <div class="icon">👩‍🏫</div>
+              <h3>المعلمين</h3>
+              <p>
+                عرض المعلمين وربطهم بالمواد والحصص.
+              </p>
+              <span class="go">فتح الصفحة →</span>
+            </a>
+
+            <a href="./reports.html" class="nav-card">
+              <div class="icon">📊</div>
+              <h3>التقارير</h3>
+              <p>
+                عرض تقارير المدرسة والإحصائيات العامة.
+              </p>
+              <span class="go">فتح الصفحة →</span>
+            </a>
+
+          </div>
+
+        </section>
+
       </div>
+    </main>
 
-      <div id="statusBox" class="notice success">جارِ تحميل جلسة المدرسة...</div>
-    </section>
-
-    <section class="grid">
-      <div class="card">
-        <span class="label">اسم المدرسة</span>
-        <div id="schoolNameValue" class="value">...</div>
-      </div>
-
-      <div class="card">
-        <span class="label">School ID</span>
-        <div id="schoolIdValue" class="value small">...</div>
-      </div>
-
-      <div class="card">
-        <span class="label">المستخدم</span>
-        <div id="userNameValue" class="value">...</div>
-      </div>
-
-      <div class="card">
-        <span class="label">البريد الإلكتروني</span>
-        <div id="emailValue" class="value small">...</div>
-      </div>
-
-      <div class="card">
-        <span class="label">الدور</span>
-        <div id="roleValue" class="value">...</div>
-      </div>
-
-      <div class="card">
-        <span class="label">الحالة</span>
-        <div id="stateValue" class="value">...</div>
-      </div>
-    </section>
-
-    <section class="stats-grid">
-      <div class="stat-card">
-        <div id="classesCount" class="stat-number">0</div>
-        <p class="stat-label">الصفوف</p>
-      </div>
-
-      <div class="stat-card">
-        <div id="subjectsCount" class="stat-number">0</div>
-        <p class="stat-label">المواد</p>
-      </div>
-
-      <div class="stat-card">
-        <div id="teachersCount" class="stat-number">0</div>
-        <p class="stat-label">المعلمين</p>
-      </div>
-
-      <div class="stat-card">
-        <div id="daysCount" class="stat-number">0</div>
-        <p class="stat-label">أيام الجدول</p>
-      </div>
-    </section>
-
-    <section class="section-box" style="margin-top: 18px;">
-      <h2 class="section-title">ملخص المدرسة الحالي</h2>
-      <p class="section-desc">
-        هذه البيانات مأخوذة من نفس الجلسة الموحّدة التي تستخدمها صفحة المدرسة وصفحة
-        الجدول وصفحة إدارة الجدول. لو كانت الجلسة صحيحة، ستظهر كل الأرقام دون الحاجة
-        لأي تعديل يدوي داخل الصفحة.
-      </p>
-
-      <ul id="summaryList" class="list">
-        <li>جارِ تجهيز الملخص...</li>
-      </ul>
-
-      <p class="footer-note">
-        إذا كان زر "عرض الجدول" أو "إدارة الجدول" لا يفتح الصفحة المطلوبة بعد نجاح الجلسة،
-        فالمشكلة تكون غالبًا من ملف الصفحة الهدف وليس من الجلسة نفسها.
-      </p>
-    </section>
   </div>
 
-  <script type="module">
-    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      doc,
-      getDoc,
-      getDocs,
-      query,
-      where,
-      limit
-    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-      authDomain: "madaris-ai.firebaseapp.com",
-      projectId: "madaris-ai",
-      storageBucket: "madaris-ai.firebasestorage.app",
-      messagingSenderId: "915394447224",
-      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
-      measurementId: "G-SC7VE6F20S"
-    };
-
-    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-
-    const el = {
-      statusBox: document.getElementById("statusBox"),
-      schoolNameValue: document.getElementById("schoolNameValue"),
-      schoolIdValue: document.getElementById("schoolIdValue"),
-      userNameValue: document.getElementById("userNameValue"),
-      emailValue: document.getElementById("emailValue"),
-      roleValue: document.getElementById("roleValue"),
-      stateValue: document.getElementById("stateValue"),
-      classesCount: document.getElementById("classesCount"),
-      subjectsCount: document.getElementById("subjectsCount"),
-      teachersCount: document.getElementById("teachersCount"),
-      daysCount: document.getElementById("daysCount"),
-      summaryList: document.getElementById("summaryList"),
-      goScheduleBtn: document.getElementById("goScheduleBtn"),
-      goManageScheduleBtn: document.getElementById("goManageScheduleBtn"),
-      logoutBtn: document.getElementById("logoutBtn")
-    };
-
-    const STORAGE_KEYS = [
-      "madaris_school_session",
-      "schoolSession",
-      "madaris_user_session",
-      "madaris_session",
-      "school_session",
-      "currentSchoolSession",
-      "schoolAuth",
-      "userSession"
-    ];
-
-    const DAY_MAP = {
-      saturday: "السبت",
-      sunday: "الأحد",
-      monday: "الاثنين",
-      tuesday: "الثلاثاء",
-      wednesday: "الأربعاء",
-      thursday: "الخميس",
-      friday: "الجمعة",
-      "السبت": "السبت",
-      "الأحد": "الأحد",
-      "الاحد": "الأحد",
-      "الاثنين": "الاثنين",
-      "الإثنين": "الاثنين",
-      "الثلاثاء": "الثلاثاء",
-      "الأربعاء": "الأربعاء",
-      "الاربعاء": "الأربعاء",
-      "الخميس": "الخميس",
-      "الجمعة": "الجمعة"
-    };
-
-    function setStatus(message, type = "success") {
-      el.statusBox.className = `notice ${type}`;
-      el.statusBox.textContent = message;
-    }
-
-    function safeJsonParse(value) {
-      try {
-        return JSON.parse(value);
-      } catch {
-        return null;
-      }
-    }
-
-    function readStorageValue(storage, key) {
-      try {
-        return storage.getItem(key);
-      } catch {
-        return null;
-      }
-    }
-
-    function writeStorageValue(storage, key, value) {
-      try {
-        storage.setItem(key, value);
-      } catch {
-        // ignore
-      }
-    }
-
-    function removeStorageValue(storage, key) {
-      try {
-        storage.removeItem(key);
-      } catch {
-        // ignore
-      }
-    }
-
-    function compactObject(obj) {
-      const out = {};
-      Object.entries(obj || {}).forEach(([key, value]) => {
-        if (
-          value !== undefined &&
-          value !== null &&
-          value !== "" &&
-          value !== "undefined" &&
-          value !== "null"
-        ) {
-          out[key] = value;
-        }
-      });
-      return out;
-    }
-
-    function normalizeSession(raw) {
-      if (!raw || typeof raw !== "object") return null;
-
-      const schoolId =
-        raw.schoolId ||
-        raw.schoolID ||
-        raw.school_id ||
-        raw.school?.id ||
-        raw.school?.schoolId ||
-        raw.schoolDocId ||
-        raw.profile?.schoolId ||
-        "";
-
-      const schoolName =
-        raw.schoolName ||
-        raw.school_name ||
-        raw.school?.name ||
-        raw.schoolTitle ||
-        raw.profile?.schoolName ||
-        "";
-
-      const userName =
-        raw.userName ||
-        raw.username ||
-        raw.name ||
-        raw.displayName ||
-        raw.user?.name ||
-        raw.profile?.name ||
-        "";
-
-      const email =
-        raw.email ||
-        raw.userEmail ||
-        raw.user?.email ||
-        raw.profile?.email ||
-        "";
-
-      const role =
-        raw.role ||
-        raw.userRole ||
-        raw.user?.role ||
-        raw.profile?.role ||
-        "school";
-
-      const status =
-        raw.status ||
-        raw.schoolStatus ||
-        raw.school?.status ||
-        raw.profile?.status ||
-        "active";
-
-      const uid =
-        raw.uid ||
-        raw.userId ||
-        raw.user?.uid ||
-        raw.profile?.uid ||
-        "";
-
-      if (!schoolId) return null;
-
-      return compactObject({
-        schoolId,
-        schoolName,
-        userName,
-        email,
-        role,
-        status,
-        uid
-      });
-    }
-
-    function readUnifiedSession() {
-      const allCandidates = [];
-
-      for (const storage of [localStorage, sessionStorage]) {
-        for (const key of STORAGE_KEYS) {
-          const rawValue = readStorageValue(storage, key);
-          if (!rawValue) continue;
-
-          const parsed = safeJsonParse(rawValue);
-          if (parsed) allCandidates.push(parsed);
-        }
-      }
-
-      const flattened = allCandidates
-        .map(normalizeSession)
-        .filter(Boolean);
-
-      if (!flattened.length) {
-        return null;
-      }
-
-      const merged = compactObject(
-        flattened.reduce((acc, item) => ({ ...acc, ...item }), {})
-      );
-
-      const serialized = JSON.stringify(merged);
-      for (const storage of [localStorage, sessionStorage]) {
-        for (const key of STORAGE_KEYS) {
-          writeStorageValue(storage, key, serialized);
-        }
-      }
-
-      return merged;
-    }
-
-    function clearUnifiedSession() {
-      for (const storage of [localStorage, sessionStorage]) {
-        for (const key of STORAGE_KEYS) {
-          removeStorageValue(storage, key);
-        }
-      }
-    }
-
-    function uniqueBy(items, selector) {
-      const seen = new Set();
-      const result = [];
-
-      for (const item of items) {
-        const key = selector(item);
-        if (!key || seen.has(key)) continue;
-        seen.add(key);
-        result.push(item);
-      }
-
-      return result;
-    }
-
-    function pickText(...values) {
-      for (const value of values) {
-        if (typeof value === "string" && value.trim()) {
-          return value.trim();
-        }
-      }
-      return "";
-    }
-
-    function normalizeClassName(data, docId = "") {
-      const gradeValue = data.grade ?? data.gradeNumber ?? data.level ?? null;
-      const grade = Number.isFinite(Number(gradeValue)) ? Number(gradeValue) : null;
-
-      const directName = pickText(
-        data.name,
-        data.title,
-        data.className,
-        data.label,
-        data.displayName
-      );
-
-      if (directName) return directName;
-
-      const stage =
-        pickText(data.stage, data.section, data.type).toLowerCase();
-
-      const basicMap = {
-        1: "الصف الأول الأساسي",
-        2: "الصف الثاني الأساسي",
-        3: "الصف الثالث الأساسي",
-        4: "الصف الرابع الأساسي",
-        5: "الصف الخامس الأساسي",
-        6: "الصف السادس الأساسي",
-        7: "الصف السابع الأساسي",
-        8: "الصف الثامن الأساسي",
-        9: "الصف التاسع الأساسي",
-        10: "الصف الأول الثانوي",
-        11: "الصف الثاني الثانوي",
-        12: "الصف الثالث الثانوي"
-      };
-
-      if (grade && basicMap[grade]) {
-        if (stage.includes("ثان")) {
-          return grade === 10
-            ? "الصف الأول الثانوي"
-            : grade === 11
-              ? "الصف الثاني الثانوي"
-              : grade === 12
-                ? "الصف الثالث الثانوي"
-                : basicMap[grade];
-        }
-        return basicMap[grade];
-      }
-
-      return docId ? `صف ${docId}` : "صف غير مسمى";
-    }
-
-    function normalizeSubjectName(data, docId = "") {
-      return (
-        pickText(data.name, data.title, data.subjectName, data.label, data.code) ||
-        (docId ? `مادة ${docId}` : "مادة غير مسماة")
-      );
-    }
-
-    function normalizeTeacherName(data, docId = "") {
-      return (
-        pickText(data.name, data.title, data.teacherName, data.fullName, data.displayName) ||
-        (docId ? `معلم ${docId}` : "معلم غير مسمى")
-      );
-    }
-
-    function normalizeDayValue(value) {
-      if (value === undefined || value === null) return "";
-      const raw = String(value).trim();
-      if (!raw) return "";
-      const key = raw.toLowerCase();
-      return DAY_MAP[key] || DAY_MAP[raw] || raw;
-    }
-
-    async function getDocIfExists(pathParts) {
-      const ref = doc(db, ...pathParts);
-      const snap = await getDoc(ref);
-      if (!snap.exists()) return null;
-      return { id: snap.id, ...snap.data() };
-    }
-
-    async function getCollectionDocs(pathParts) {
-      const snap = await getDocs(collection(db, ...pathParts));
-      return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    }
-
-    async function getTopLevelFilteredDocs(collectionName, field, value) {
-      const q = query(collection(db, collectionName), where(field, "==", value));
-      const snap = await getDocs(q);
-      return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    }
-    async function getTopLevelLimitedDocs(collectionName, count = 300) {
-      const q = query(collection(db, collectionName), limit(count));
-      const snap = await getDocs(q);
-      return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    }
-
-    async function loadSchoolDoc(session) {
-      const mainDoc = await getDocIfExists(["schools", session.schoolId]);
-      const infoDoc = await getDocIfExists(["schools", session.schoolId, "meta", "info"])
-        || await getDocIfExists(["schools", session.schoolId, "info", "profile"])
-        || await getDocIfExists(["schools", session.schoolId, "system", "info"]);
-
-      const schoolName = pickText(
-        mainDoc?.name,
-        mainDoc?.schoolName,
-        mainDoc?.title,
-        infoDoc?.name,
-        infoDoc?.schoolName,
-        infoDoc?.title,
-        session.schoolName
-      );
-
-      const status = pickText(
-        mainDoc?.status,
-        infoDoc?.status,
-        session.status,
-        "active"
-      );
-
-      return compactObject({
-        ...(mainDoc || {}),
-        ...(infoDoc || {}),
-        schoolId: session.schoolId,
-        name: schoolName || "مدرسة بدون اسم",
-        status
-      });
-    }
-
-    async function loadClasses(schoolId) {
-      const [topLevel, nested] = await Promise.all([
-        getTopLevelFilteredDocs("classes", "schoolId", schoolId).catch(() => []),
-        getCollectionDocs(["schools", schoolId, "classes"]).catch(() => [])
-      ]);
-
-      const merged = [...topLevel, ...nested].map((item) => ({
-        ...item,
-        normalizedName: normalizeClassName(item, item.id)
-      }));
-
-      return uniqueBy(
-        merged,
-        (item) => item.id || item.classId || item.normalizedName
-      ).sort((a, b) => {
-        const ga = Number(a.grade ?? a.gradeNumber ?? 999);
-        const gb = Number(b.grade ?? b.gradeNumber ?? 999);
-        if (ga !== gb) return ga - gb;
-        return a.normalizedName.localeCompare(b.normalizedName, "ar");
-      });
-    }
-
-    async function loadSubjects(schoolId) {
-      const [topLevelFiltered, nested, topLevelAll] = await Promise.all([
-        getTopLevelFilteredDocs("subjects", "schoolId", schoolId).catch(() => []),
-        getCollectionDocs(["schools", schoolId, "subjects"]).catch(() => []),
-        getTopLevelLimitedDocs("subjects", 500).catch(() => [])
-      ]);
-
-      const filteredAll = topLevelAll.filter((item) => {
-        if (!item) return false;
-        if (item.schoolId && item.schoolId !== schoolId) return false;
-        return String(item.status || "active").toLowerCase() !== "deleted";
-      });
-
-      const merged = [...topLevelFiltered, ...nested, ...filteredAll].map((item) => ({
-        ...item,
-        normalizedName: normalizeSubjectName(item, item.id)
-      }));
-
-      return uniqueBy(
-        merged,
-        (item) =>
-          item.id ||
-          item.subjectId ||
-          item.code ||
-          item.normalizedName
-      ).sort((a, b) => a.normalizedName.localeCompare(b.normalizedName, "ar"));
-    }
-
-    async function loadTeachers(schoolId) {
-      const [topLevel, nested] = await Promise.all([
-        getTopLevelFilteredDocs("teachers", "schoolId", schoolId).catch(() => []),
-        getCollectionDocs(["schools", schoolId, "teachers"]).catch(() => [])
-      ]);
-
-      const merged = [...topLevel, ...nested].map((item) => ({
-        ...item,
-        normalizedName: normalizeTeacherName(item, item.id)
-      }));
-
-      return uniqueBy(
-        merged,
-        (item) =>
-          item.id ||
-          item.teacherId ||
-          item.email ||
-          item.normalizedName
-      ).sort((a, b) => a.normalizedName.localeCompare(b.normalizedName, "ar"));
-    }
-
-    async function loadSchedules(schoolId, classIds) {
-      const topLevelBySchool = await getTopLevelFilteredDocs("schedules", "schoolId", schoolId).catch(() => []);
-
-      const topLevelAll = topLevelBySchool.length
-        ? topLevelBySchool
-        : await getTopLevelLimitedDocs("schedules", 800).catch(() => []);
-
-      const filteredTopLevel = topLevelAll.filter((item) => {
-        if (!item) return false;
-        if (item.schoolId === schoolId) return true;
-        if (item.classId && classIds.has(item.classId)) return true;
-        return false;
-      });
-
-      const nested = await getCollectionDocs(["schools", schoolId, "schedules"]).catch(() => []);
-
-      return uniqueBy(
-        [...filteredTopLevel, ...nested],
-        (item) => item.id || `${item.classId || ""}-${item.day || ""}-${item.period || ""}-${item.teacherId || ""}-${item.subjectId || ""}`
-      );
-    }
-
-    function summarizeTeachers(teachers) {
-      const named = teachers.map((t) => t.normalizedName).filter(Boolean);
-      if (!named.length) return "لا يوجد معلمون";
-      return named.slice(0, 6).join("، ") + (named.length > 6 ? " ..." : "");
-    }
-
-    function summarizeSubjects(subjects) {
-      const named = subjects.map((s) => s.normalizedName).filter(Boolean);
-      if (!named.length) return "لا توجد مواد";
-      return named.slice(0, 8).join("، ") + (named.length > 8 ? " ..." : "");
-    }
-
-    function summarizeClasses(classes) {
-      const named = classes.map((c) => c.normalizedName).filter(Boolean);
-      if (!named.length) return "لا توجد صفوف";
-      return named.join("، ");
-    }
-
-    function renderSummary({ school, classes, subjects, teachers, schedules, dayNames }) {
-      const items = [
-        `اسم المدرسة: ${school.name || "مدرسة بدون اسم"}`,
-        `عدد الصفوف المكتشفة: ${classes.length}`,
-        `عدد المواد المكتشفة: ${subjects.length}`,
-        `عدد المعلمين المكتشفين: ${teachers.length}`,
-        `عدد أسطر الجدول المكتشفة: ${schedules.length}`,
-        `أيام الجدول المكتشفة: ${dayNames.length ? dayNames.join("، ") : "لا توجد أيام بعد"}`,
-        `الصفوف: ${summarizeClasses(classes)}`,
-        `المواد: ${summarizeSubjects(subjects)}`,
-        `المعلمون: ${summarizeTeachers(teachers)}`
-      ];
-
-      el.summaryList.innerHTML = items
-        .map((item) => `<li>${escapeHtml(item)}</li>`)
-        .join("");
-    }
-
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
-
-    function updateTopCards(session, school) {
-      el.schoolNameValue.textContent = school.name || session.schoolName || "مدرسة بدون اسم";
-      el.schoolIdValue.textContent = school.schoolId || session.schoolId || "...";
-      el.userNameValue.textContent = session.userName || "غير معروف";
-      el.emailValue.textContent = session.email || "غير متوفر";
-      el.roleValue.textContent = session.role || "school";
-      el.stateValue.textContent = school.status || session.status || "active";
-    }
-
-    function setCounts({ classes, subjects, teachers, dayNames }) {
-      el.classesCount.textContent = String(classes.length);
-      el.subjectsCount.textContent = String(subjects.length);
-      el.teachersCount.textContent = String(teachers.length);
-      el.daysCount.textContent = String(dayNames.length);
-    }
-
-    function persistMergedSession(session, school) {
-      const merged = compactObject({
-        ...session,
-        schoolId: session.schoolId,
-        schoolName: school.name || session.schoolName || "مدرسة بدون اسم",
-        status: school.status || session.status || "active"
-      });
-
-      const serialized = JSON.stringify(merged);
-      for (const storage of [localStorage, sessionStorage]) {
-        for (const key of STORAGE_KEYS) {
-          writeStorageValue(storage, key, serialized);
-        }
-      }
-    }
-
-    function goTo(path) {
-      window.location.href = path;
-    }
-
-    async function handleLogout() {
-      try {
-        await signOut(auth);
-      } catch {
-        // ignore
-      }
-
-      clearUnifiedSession();
-      setStatus("تم تسجيل الخروج ومسح جلسة المدرسة.", "success");
-
-      setTimeout(() => {
-        window.location.href = "/app/login.html";
-      }, 500);
-    }
-
-    async function initPage() {
-      setStatus("جارِ قراءة جلسة المدرسة الموحّدة...", "success");
-
-      const session = readUnifiedSession();
-
-      if (!session || !session.schoolId) {
-        updateTopCards(
-          {
-            schoolId: "...",
-            userName: "غير معروف",
-            email: "غير متوفر",
-            role: "school",
-            status: "غير متوفر"
-          },
-          {
-            schoolId: "...",
-            name: "لا توجد جلسة مدرسة",
-            status: "غير متوفر"
-          }
-        );
-
-        setCounts({
-          classes: [],
-          subjects: [],
-          teachers: [],
-          dayNames: []
-        });
-
-        el.summaryList.innerHTML = `
-          <li>لا توجد جلسة مدرسة محفوظة.</li>
-          <li>اذهب إلى صفحة تسجيل الدخول، ثم ادخل بحساب المدرسة أولًا.</li>
-        `;
-
-        setStatus("لا توجد جلسة مدرسة محفوظة. سجل الدخول أولًا.", "error");
-        return;
-      }
-
-      try {
-        setStatus("تم العثور على الجلسة. جارِ تحميل بيانات المدرسة...", "success");
-
-        const school = await loadSchoolDoc(session);
-        persistMergedSession(session, school);
-        updateTopCards(session, school);
-
-        setStatus("جارِ تحميل الصفوف والمواد والمعلمين والجدول من Firestore...", "success");
-
-        const classes = await loadClasses(session.schoolId);
-        const classIds = new Set(classes.map((item) => item.id).filter(Boolean));
-
-        const [subjects, teachers, schedules] = await Promise.all([
-          loadSubjects(session.schoolId),
-          loadTeachers(session.schoolId),
-          loadSchedules(session.schoolId, classIds)
-        ]);
-
-        const dayNames = uniqueBy(
-          schedules
-            .map((row) => normalizeDayValue(row.day || row.dayName || row.weekDay))
-            .filter(Boolean)
-            .map((day) => ({ id: day, name: day })),
-          (item) => item.id
-        ).map((item) => item.name);
-
-        setCounts({ classes, subjects, teachers, dayNames });
-        renderSummary({ school, classes, subjects, teachers, schedules, dayNames });
-
-        const subjectsWarning = subjects.length <= 1
-          ? "تنبيه: عدد المواد قليل جدًا. هذا يعني أن موادك قد تكون موزعة في مسار آخر غير الذي تقرؤه هذه الصفحة."
-          : "";
-
-        const daysWarning = dayNames.length <= 1
-          ? "تنبيه: أيام الجدول المكتشفة قليلة جدًا. هذا يعني أن أسطر الجدول الحالية لا تغطي كل الأسبوع بعد."
-          : "";
-
-        const classesWarning = classes.some((item) => item.normalizedName.includes("الأول الثانوي"))
-          && !classes.some((item) => item.normalizedName.includes("الثاني الثانوي"))
-          ? "تنبيه: تم العثور على الأول الثانوي دون الثاني والثالث الثانوي. افحص مستندات الصفوف نفسها داخل Firestore."
-          : "";
-
-        const finalWarnings = [subjectsWarning, daysWarning, classesWarning].filter(Boolean);
-
-        if (finalWarnings.length) {
-          setStatus(`تم تحميل الجلسة بنجاح، لكن توجد ملاحظات: ${finalWarnings.join(" | ")}`, "warning");
-        } else {
-          setStatus("تم تحميل جلسة المدرسة وربط بيانات المدرسة والصفوف والمواد والمعلمين والجدول بنجاح.", "success");
-        }
-      } catch (error) {
-        console.error(error);
-        setStatus(`فشل تحميل لوحة المدرسة: ${error?.message || "خطأ غير معروف"}`, "error");
-      }
-    }
-
-    el.goScheduleBtn.addEventListener("click", () => {
-      goTo("/app/school/schedule.html");
-    });
-
-    el.goManageScheduleBtn.addEventListener("click", () => {
-      goTo("/app/school/manage-schedule.html");
-    });
-
-    el.logoutBtn.addEventListener("click", handleLogout);
-
-    initPage();
-  </script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+  authDomain: "madaris-ai.firebaseapp.com",
+  projectId: "madaris-ai",
+  storageBucket: "madaris-ai.appspot.com",
+  messagingSenderId: "915394447224",
+  appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const session = JSON.parse(localStorage.getItem("madaris_session") || "{}");
+
+const schoolId = session.schoolId || session.school_id || "";
+
+document.getElementById("schoolId").textContent = schoolId || "-";
+
+document.getElementById("schoolName").textContent =
+session.schoolName || session.school_name || "مدرسة";
+
+document.getElementById("accountInfo").textContent =
+(session.email || "-") + " • " + (session.role || "school");
+
+
+async function loadStats(){
+
+try{
+
+const classesQ = query(
+collection(db,"classes"),
+where("schoolId","==",schoolId)
+);
+
+const classesSnap = await getDocs(classesQ);
+document.getElementById("classesCount").textContent =
+classesSnap.size || 0;
+
+
+const subjectsQ = query(
+collection(db,"subjects"),
+where("schoolId","==",schoolId)
+);
+
+const subjectsSnap = await getDocs(subjectsQ);
+document.getElementById("subjectsCount").textContent =
+subjectsSnap.size || 0;
+
+
+const teachersQ = query(
+collection(db,"teachers"),
+where("schoolId","==",schoolId)
+);
+
+const teachersSnap = await getDocs(teachersQ);
+document.getElementById("teachersCount").textContent =
+teachersSnap.size || 0;
+
+
+const scheduleQ = query(
+collection(db,"schedules"),
+where("schoolId","==",schoolId)
+);
+
+const scheduleSnap = await getDocs(scheduleQ);
+
+const days = new Set();
+
+scheduleSnap.forEach(doc=>{
+const d = doc.data();
+if(d.day) days.add(d.day);
+});
+
+document.getElementById("scheduleDaysCount").textContent =
+days.size || 0;
+
+}catch(e){
+console.error("Stats Error",e);
+}
+
+}
+
+loadStats();
+
+
+document.getElementById("logoutBtn").onclick = () => {
+
+localStorage.removeItem("madaris_session");
+
+window.location.href = "../login.html";
+
+};
+
+</script>
+
 </body>
-</html>
+            </html>
