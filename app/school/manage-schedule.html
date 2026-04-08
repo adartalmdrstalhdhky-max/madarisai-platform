@@ -5,136 +5,244 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>إدارة الجدول المدرسي | Madaris AI</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    *{
+    :root{
+      --bg:#06152f;
+      --panel:#0c1d3f;
+      --panel-2:#10244d;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.12);
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --soft:rgba(255,255,255,.58);
+      --primary:#2f6bff;
+      --primary-2:#5f8fff;
+      --danger:#ef4444;
+      --danger-2:#dc2626;
+      --success:#10b981;
+      --warning:#f59e0b;
+      --shadow:0 18px 45px rgba(0,0,0,.30);
+      --radius:22px;
+      --radius-sm:16px;
+      --radius-xs:12px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html,body{
       margin:0;
       padding:0;
-      box-sizing:border-box;
-      font-family:'Cairo',sans-serif;
-    }
-
-    :root{
-      --bg:#0b1220;
-      --panel:#111827;
-      --panel-2:#0f172a;
-      --panel-3:#1f2937;
-      --line:rgba(255,255,255,.07);
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.68);
-      --primary:#2563eb;
-      --success:#10b981;
-      --danger:#ef4444;
-      --warning:#f59e0b;
-      --info:#3b82f6;
-      --radius:18px;
-      --shadow:0 20px 50px rgba(0,0,0,.28);
-    }
-
-    body{
-      min-height:100vh;
-      background:linear-gradient(180deg,#09101c 0%,#0b1220 100%);
+      background:
+        radial-gradient(circle at top right, rgba(47,107,255,.16), transparent 28%),
+        linear-gradient(180deg, #041126 0%, #06152f 38%, #051227 100%);
       color:var(--text);
+      font-family:"Cairo","Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+      min-height:100%;
     }
 
-    .header{
-      position:sticky;
-      top:0;
-      z-index:20;
+    a{ color:inherit; text-decoration:none; }
+
+    .container{
+      width:min(1180px, calc(100% - 28px));
+      margin:20px auto 48px;
+    }
+
+    .topbar{
       display:flex;
+      align-items:center;
       justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      padding:18px 20px;
-      background:rgba(15,23,42,.92);
-      border-bottom:1px solid var(--line);
-      backdrop-filter:blur(8px);
-    }
-
-    .header-side{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      gap:14px;
       flex-wrap:wrap;
+      background:rgba(8,20,46,.86);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+      position:sticky;
+      top:12px;
+      z-index:20;
     }
 
     .brand{
-      font-size:22px;
-      font-weight:800;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
     }
 
-    .school-badge{
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
+    .brand-mark{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      font-size:20px;
+      font-weight:800;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 12px 25px rgba(47,107,255,.28);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-text h1{
+      margin:0;
+      font-size:28px;
+      font-weight:800;
+      line-height:1.1;
+      letter-spacing:.2px;
+    }
+
+    .brand-text p{
+      margin:6px 0 0;
       color:var(--muted);
-      font-size:13px;
+      font-size:14px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
 
     .btn{
       border:none;
+      outline:none;
+      border-radius:16px;
+      padding:13px 18px;
+      font-size:15px;
+      font-weight:800;
       cursor:pointer;
-      color:#fff;
-      border-radius:12px;
-      padding:11px 16px;
-      font-size:14px;
-      font-weight:700;
       transition:.18s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:48px;
     }
 
-    .btn:hover{
-      transform:translateY(-1px);
+    .btn:hover{ transform:translateY(-1px); }
+    .btn:disabled{ opacity:.65; cursor:not-allowed; transform:none; }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 12px 28px rgba(47,107,255,.24);
     }
 
-    .btn-back{ background:var(--primary); }
-    .btn-view{ background:#475569; }
-    .btn-save{ background:var(--success); }
-    .btn-reset{ background:#334155; }
-    .btn-delete{ background:var(--danger); }
-    .btn-logout{ background:var(--danger); }
-    .btn-refresh{ background:#1d4ed8; }
+    .btn-secondary{
+      color:#fff;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line-2);
+    }
 
-    .container{
-      max-width:1500px;
-      margin:0 auto;
-      padding:24px;
+    .btn-danger{
+      color:#fff;
+      background:linear-gradient(135deg, var(--danger), var(--danger-2));
+      box-shadow:0 12px 28px rgba(239,68,68,.20);
     }
 
     .hero{
+      margin-top:18px;
       display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:20px;
-      margin-bottom:24px;
+      grid-template-columns:1.3fr .7fr;
+      gap:16px;
     }
 
     .panel{
-      background:linear-gradient(180deg,rgba(17,24,39,.98),rgba(15,23,42,.98));
+      background:linear-gradient(180deg, rgba(12,29,63,.95), rgba(8,21,47,.94));
       border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
+      overflow:hidden;
     }
 
-    .hero-main{
+    .panel-head{
+      padding:22px 22px 0;
+    }
+
+    .panel-body{
       padding:22px;
     }
 
-    .hero-title{
-      font-size:28px;
-      font-weight:800;
-      margin-bottom:8px;
+    .title-xl{
+      margin:0;
+      font-size:32px;
+      font-weight:900;
+      line-height:1.2;
+      letter-spacing:.2px;
     }
 
-    .hero-subtitle{
+    .subtitle{
+      margin:10px 0 0;
       color:var(--muted);
       line-height:1.9;
       font-size:15px;
     }
 
-    .summary-grid{
+    .school-box{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:8px;
+      height:100%;
+      min-height:184px;
+      padding:22px;
+      background:
+        radial-gradient(circle at top left, rgba(95,143,255,.16), transparent 36%),
+        linear-gradient(180deg, rgba(15,36,77,.92), rgba(10,24,52,.96));
+      border-right:1px solid var(--line);
+    }
+
+    .school-label{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .school-name{
+      font-size:30px;
+      font-weight:900;
+      line-height:1.35;
+    }
+
+    .school-meta{
+      color:var(--soft);
+      font-size:14px;
+    }
+
+    .message{
+      display:none;
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:16px;
+      font-size:15px;
+      line-height:1.9;
+      border:1px solid transparent;
+    }
+
+    .message.show{ display:block; }
+    .message.info{
+      background:rgba(47,107,255,.12);
+      border-color:rgba(47,107,255,.24);
+      color:#dce7ff;
+    }
+    .message.success{
+      background:rgba(16,185,129,.12);
+      border-color:rgba(16,185,129,.24);
+      color:#dcfff1;
+    }
+    .message.error{
+      background:rgba(239,68,68,.12);
+      border-color:rgba(239,68,68,.24);
+      color:#ffe2e2;
+    }
+
+    .stats{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:14px;
@@ -142,120 +250,107 @@
     }
 
     .stat{
-      background:rgba(255,255,255,.03);
+      background:linear-gradient(180deg, rgba(14,32,69,.96), rgba(10,23,49,.96));
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:16px;
+      border-radius:20px;
+      padding:18px;
+      min-height:132px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      box-shadow:var(--shadow);
     }
 
     .stat-label{
-      font-size:13px;
       color:var(--muted);
-      margin-bottom:8px;
+      font-size:15px;
+      font-weight:700;
     }
 
     .stat-value{
-      font-size:28px;
-      font-weight:800;
+      font-size:42px;
+      font-weight:900;
+      line-height:1;
+      letter-spacing:.5px;
     }
 
-    .hero-side{
-      padding:20px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:12px;
+    .stat-note{
+      color:var(--soft);
+      font-size:13px;
     }
 
-    .hero-side h3{
-      font-size:18px;
-    }
-
-    .hero-side p{
-      color:var(--muted);
-      line-height:1.9;
-      font-size:14px;
-    }
-
-    .meta-list{
+    .grid{
       display:grid;
-      gap:10px;
-      margin-top:6px;
-    }
-
-    .meta-item{
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:13px 14px;
-    }
-
-    .meta-item strong{
-      display:block;
-      margin-bottom:5px;
-      font-size:14px;
-    }
-
-    .message{
-      display:none;
-      padding:14px 16px;
-      border-radius:14px;
-      font-size:14px;
-      line-height:1.8;
-      margin-bottom:16px;
-      border:1px solid var(--line);
-    }
-
-    .message.show{
-      display:block;
-    }
-
-    .message.info{
-      background:rgba(59,130,246,.12);
-      color:#dbeafe;
-    }
-
-    .message.success{
-      background:rgba(16,185,129,.12);
-      color:#d1fae5;
-    }
-
-    .message.error{
-      background:rgba(239,68,68,.12);
-      color:#fecaca;
-    }
-
-    .workspace{
-      display:grid;
-      grid-template-columns:420px 1fr;
-      gap:20px;
+      grid-template-columns:1fr 1.08fr;
+      gap:16px;
+      margin-top:18px;
       align-items:start;
     }
 
-    .card-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding:18px 20px;
-      border-bottom:1px solid var(--line);
-      background:#0f172a;
-      border-top-right-radius:var(--radius);
-      border-top-left-radius:var(--radius);
+    .section-title{
+      margin:0;
+      font-size:23px;
+      font-weight:900;
+      line-height:1.2;
     }
 
-    .card-head h2{
+    .section-subtitle{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .quick-lists{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:14px;
+      margin-top:16px;
+    }
+
+    .mini-card{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .mini-card h3{
+      margin:0 0 12px;
       font-size:18px;
       font-weight:800;
     }
 
-    .card-body{
-      padding:20px;
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.07);
+      color:#fff;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .empty{
+      color:var(--soft);
+      font-size:14px;
+      line-height:1.9;
     }
 
     .form-grid{
       display:grid;
+      grid-template-columns:repeat(2,1fr);
       gap:14px;
+      margin-top:18px;
     }
 
     .field{
@@ -264,152 +359,144 @@
       gap:8px;
     }
 
-    .field.double{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
+    .field.field-full{
+      grid-column:1 / -1;
     }
 
-    .field label{
+    .label{
+      color:#fff;
       font-size:14px;
-      color:#dbeafe;
-      font-weight:700;
+      font-weight:800;
     }
 
-    .input,
-    .select,
+    .control,
     .textarea{
       width:100%;
-      border:1px solid var(--line);
-      background:#0f172a;
+      border-radius:15px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
       color:#fff;
-      border-radius:12px;
-      padding:12px 14px;
-      font-size:14px;
+      padding:14px 14px;
+      font-size:15px;
       outline:none;
+      transition:.18s ease;
+    }
+
+    .control:focus,
+    .textarea:focus{
+      border-color:rgba(95,143,255,.65);
+      box-shadow:0 0 0 3px rgba(95,143,255,.14);
+      background:rgba(255,255,255,.06);
+    }
+
+    .control option{
+      color:#111827;
     }
 
     .textarea{
-      min-height:90px;
+      min-height:112px;
       resize:vertical;
       line-height:1.8;
     }
 
-    .helper{
+    .hint{
+      color:var(--soft);
       font-size:12px;
-      color:var(--muted);
-      line-height:1.8;
+      line-height:1.7;
     }
 
     .form-actions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:6px;
+      margin-top:18px;
     }
 
     .toolbar{
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .toolbar-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .filter-row{
+      display:grid;
+      grid-template-columns:220px 220px 1fr;
       gap:12px;
       margin-bottom:16px;
-      flex-wrap:wrap;
-    }
-
-    .toolbar-right,
-    .toolbar-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    .search{
-      min-width:280px;
-    }
-
-    .filter{
-      min-width:180px;
     }
 
     .table-wrap{
-      overflow:hidden;
-    }
-
-    .table-scroll{
       width:100%;
       overflow:auto;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.02);
     }
 
     table{
       width:100%;
-      min-width:1280px;
+      min-width:1120px;
       border-collapse:collapse;
     }
 
-    thead th{
+    th,td{
+      padding:14px 12px;
       text-align:right;
-      padding:15px;
-      background:#0f172a;
-      color:#dbeafe;
-      border-bottom:1px solid var(--line);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      vertical-align:top;
       font-size:14px;
+      line-height:1.8;
+    }
+
+    th{
+      position:sticky;
+      top:0;
+      z-index:1;
+      background:#10244d;
+      color:#fff;
+      font-size:13px;
+      font-weight:900;
       white-space:nowrap;
     }
 
-    tbody td{
-      padding:15px;
-      border-bottom:1px solid var(--line);
-      vertical-align:middle;
-      font-size:14px;
+    td{
+      color:#f3f6ff;
     }
 
-    tbody tr:hover{
-      background:rgba(255,255,255,.025);
+    tr:hover td{
+      background:rgba(255,255,255,.02);
     }
 
     .badge{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:88px;
-      padding:8px 12px;
+      padding:6px 10px;
       border-radius:999px;
       font-size:12px;
-      font-weight:700;
-      border:1px solid transparent;
+      font-weight:900;
       white-space:nowrap;
     }
 
-    .badge-day{
-      background:rgba(37,99,235,.12);
-      color:#bfdbfe;
-      border-color:rgba(37,99,235,.22);
+    .badge-success{
+      background:rgba(16,185,129,.13);
+      color:#d9fff2;
+      border:1px solid rgba(16,185,129,.20);
     }
 
-    .badge-period{
-      background:rgba(245,158,11,.12);
-      color:#fde68a;
-      border-color:rgba(245,158,11,.22);
-    }
-
-    .badge-active{
-      background:rgba(16,185,129,.12);
-      color:#bbf7d0;
-      border-color:rgba(16,185,129,.22);
-    }
-
-    .badge-inactive{
-      background:rgba(239,68,68,.12);
-      color:#fecaca;
-      border-color:rgba(239,68,68,.22);
-    }
-
-    .badge-empty{
-      background:rgba(148,163,184,.12);
-      color:#cbd5e1;
-      border-color:rgba(148,163,184,.2);
+    .badge-muted{
+      background:rgba(255,255,255,.06);
+      color:#edf2ff;
+      border:1px solid rgba(255,255,255,.08);
     }
 
     .actions{
@@ -419,206 +506,339 @@
     }
 
     .btn-sm{
-      border:none;
-      cursor:pointer;
-      border-radius:10px;
-      padding:8px 12px;
-      font-size:12px;
-      font-weight:700;
-      color:#fff;
+      min-height:38px;
+      padding:9px 12px;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:900;
     }
 
-    .empty-state{
-      padding:32px 20px;
-      text-align:center;
+    .day-group{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .day-card{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      background:rgba(255,255,255,.03);
+      min-height:144px;
+    }
+
+    .day-card h3{
+      margin:0 0 10px;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .day-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .lesson-item{
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:14px;
+      padding:12px;
+      background:rgba(255,255,255,.03);
+    }
+
+    .lesson-item strong{
+      display:block;
+      font-size:15px;
+      margin-bottom:4px;
+    }
+
+    .lesson-item span{
+      display:block;
       color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    .footer-note{
+      margin-top:18px;
+      color:var(--soft);
+      font-size:13px;
       line-height:1.9;
     }
 
-    .loading{
-      padding:34px 20px;
-      text-align:center;
-      color:var(--muted);
-      line-height:1.9;
+    .loading-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(3,10,24,.52);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:100;
+      padding:18px;
     }
 
-    @media (max-width:1200px){
-      .workspace{
+    .loading-overlay.show{
+      display:flex;
+    }
+
+    .loading-box{
+      width:min(360px, 100%);
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(12,29,63,.98), rgba(8,21,47,.98));
+      box-shadow:var(--shadow);
+      padding:24px;
+      text-align:center;
+    }
+
+    .spinner{
+      width:52px;
+      height:52px;
+      margin:0 auto 14px;
+      border-radius:50%;
+      border:4px solid rgba(255,255,255,.14);
+      border-top-color:#7ea3ff;
+      animation:spin .9s linear infinite;
+    }
+
+    @keyframes spin{
+      to{ transform:rotate(360deg); }
+    }
+
+    @media (max-width: 1080px){
+      .hero,
+      .grid{
         grid-template-columns:1fr;
       }
 
-      .hero{
-        grid-template-columns:1fr;
-      }
-
-      .summary-grid{
+      .stats{
         grid-template-columns:repeat(2,1fr);
       }
-    }
 
-    @media (max-width:700px){
-      .container{
-        padding:16px;
-      }
-
-      .header{
-        padding:14px 16px;
-      }
-
-      .hero-title{
-        font-size:23px;
-      }
-
-      .summary-grid{
+      .filter-row{
         grid-template-columns:1fr 1fr;
       }
 
-      .field.double{
+      .filter-row .field.field-full-search{
+        grid-column:1 / -1;
+      }
+
+      .day-group{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 720px){
+      .container{
+        width:min(100% - 18px, 100%);
+        margin:12px auto 36px;
+      }
+
+      .topbar{
+        border-radius:22px;
+        padding:14px;
+      }
+
+      .brand-text h1{
+        font-size:22px;
+      }
+
+      .title-xl{
+        font-size:25px;
+      }
+
+      .school-name{
+        font-size:24px;
+      }
+
+      .stats{
         grid-template-columns:1fr;
       }
 
-      .search,
-      .filter{
-        min-width:100%;
+      .form-grid,
+      .filter-row{
+        grid-template-columns:1fr;
       }
 
-      .toolbar-left,
-      .toolbar-right{
+      .toolbar{
+        align-items:stretch;
+      }
+
+      .toolbar-actions,
+      .top-actions,
+      .form-actions{
         width:100%;
       }
 
-      .toolbar-left .btn,
-      .toolbar-right .input,
-      .toolbar-right .select{
-        width:100%;
-      }
-
+      .top-actions .btn,
+      .toolbar-actions .btn,
       .form-actions .btn{
-        width:100%;
+        flex:1 1 auto;
       }
     }
   </style>
 </head>
-
 <body>
-  <header class="header">
-    <div class="header-side">
-      <button class="btn btn-back" onclick="goBack()">رجوع للوحة المدرسة</button>
-      <button class="btn btn-view" onclick="goToSchedule()">عرض الجدول</button>
-      <div class="brand">Madaris AI</div>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <div id="loadingText">جارِ تحميل بيانات الجدول...</div>
     </div>
+  </div>
 
-    <div class="header-side">
-      <div class="school-badge" id="schoolBadge">المدرسة: ...</div>
-      <button class="btn btn-logout" id="logoutBtn">خروج</button>
-    </div>
-  </header>
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div class="brand-text">
+          <h1>Madaris AI</h1>
+          <p>إدارة الجدول المدرسي بشكل فعلي: مواد، معلمين، صفوف، حصص، تعديل، حذف.</p>
+        </div>
+      </div>
 
-  <main class="container">
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="/app/school/index.html">رجوع للوحة المدرسة</a>
+        <a class="btn btn-secondary" href="/app/school/schedule.html">عرض الجدول</a>
+        <button class="btn btn-danger" id="logoutBtn" type="button">خروج</button>
+      </div>
+    </header>
+
     <section class="hero">
-      <div class="panel hero-main">
-        <h1 class="hero-title">إدارة الجدول المدرسي</h1>
-        <p class="hero-subtitle">
-          صفحة تشغيل متقدمة لإضافة الحصص وتعديلها وحذفها بشكل منظم وموحد، مع حفظ اليوم بالعربية فقط وربط الصف والمادة والمعلم بالمعرّف والاسم معًا لتفادي أي تضارب لاحق.
-        </p>
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="title-xl">إدارة الجدول المدرسي</h2>
+          <p class="subtitle">
+            هذه الصفحة تقرأ من Firebase مباشرة، وتعرض المواد والمعلمين والصفوف والحصص الحالية،
+            وتسمح بإضافة حصة جديدة أو تعديل حصة موجودة أو حذفها، مع فحص التضارب قبل الحفظ.
+          </p>
+          <div id="pageMessage" class="message info"></div>
+        </div>
+        <div class="panel-body">
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-label">المواد</div>
+              <div class="stat-value" id="subjectsCount">0</div>
+              <div class="stat-note">إجمالي المواد المقروءة من قاعدة المدرسة</div>
+            </div>
 
-        <div class="summary-grid">
-          <div class="stat">
-            <div class="stat-label">المواد</div>
-            <div class="stat-value" id="subjectsCount">0</div>
-          </div>
+            <div class="stat">
+              <div class="stat-label">الصفوف</div>
+              <div class="stat-value" id="classesCount">0</div>
+              <div class="stat-note">الصفوف المتاحة للاختيار عند إنشاء الحصة</div>
+            </div>
 
-          <div class="stat">
-            <div class="stat-label">الصفوف</div>
-            <div class="stat-value" id="classesCount">0</div>
-          </div>
+            <div class="stat">
+              <div class="stat-label">الحصص الحالية</div>
+              <div class="stat-value" id="lessonsCount">0</div>
+              <div class="stat-note">إجمالي الحصص الموجودة في جدول المدرسة</div>
+            </div>
 
-          <div class="stat">
-            <div class="stat-label">الحصص الحالية</div>
-            <div class="stat-value" id="schedulesCount">0</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-label">المعلمين</div>
-            <div class="stat-value" id="teachersCount">0</div>
+            <div class="stat">
+              <div class="stat-label">المعلمين</div>
+              <div class="stat-value" id="teachersCount">0</div>
+              <div class="stat-note">المعلمون المتاح ربطهم بالحصص</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="panel hero-side">
-        <h3>ملخص سريع</h3>
-        <p>
-          هذه الصفحة تقرأ مباشرة من Firebase وتعرض كل الحصص الحالية، وتسمح بإضافة حصة جديدة أو تحديث حصة موجودة داخل نفس النموذج.
-        </p>
-
-        <div class="meta-list">
-          <div class="meta-item">
-            <strong>صيغة الأيام</strong>
-            <span>الحفظ يتم بالعربية فقط: السبت، الأحد، الاثنين، الثلاثاء، الأربعاء، الخميس.</span>
-          </div>
-
-          <div class="meta-item">
-            <strong>منع التضارب</strong>
-            <span>قبل الحفظ يتم فحص وجود حصة بنفس الصف واليوم ورقم الحصة.</span>
-          </div>
-
-          <div class="meta-item">
-            <strong>ربط موسع</strong>
-            <span>يتم حفظ المعرّفات والأسماء معًا للصف والمادة والمعلم لثبات القراءة لاحقًا.</span>
-          </div>
+      <aside class="panel">
+        <div class="school-box">
+          <div class="school-label">المدرسة الحالية</div>
+          <div class="school-name" id="schoolName">...</div>
+          <div class="school-meta" id="schoolMeta">جارِ تحميل بيانات الجلسة...</div>
         </div>
-      </div>
+      </aside>
     </section>
 
-    <div id="pageMessage" class="message info"></div>
-
-    <section class="workspace">
-      <section class="panel">
-        <div class="card-head">
-          <h2 id="formTitle">إضافة / تعديل حصة</h2>
-          <button class="btn btn-reset" type="button" id="resetFormBtn">تفريغ النموذج</button>
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="section-title">ملخص البيانات المرتبطة</h2>
+          <p class="section-subtitle">
+            هنا تظهر المواد والمعلمون والصفوف كما تم قراءتها من المدرسة الحالية، حتى تتأكد أن الربط موجود قبل إضافة أي حصة.
+          </p>
         </div>
 
-        <div class="card-body">
-          <div class="form-grid">
-            <div class="field">
-              <label for="classIdInput">الصف</label>
-              <select id="classIdInput" class="select">
-                <option value="">اختر الصف</option>
-              </select>
+        <div class="panel-body">
+          <div class="quick-lists">
+            <div class="mini-card">
+              <h3>المواد</h3>
+              <div class="chips" id="subjectsPreview"></div>
             </div>
 
-            <div class="field">
-              <label for="subjectIdInput">المادة</label>
-              <select id="subjectIdInput" class="select">
-                <option value="">اختر المادة</option>
-              </select>
+            <div class="mini-card">
+              <h3>المعلمون</h3>
+              <div class="chips" id="teachersPreview"></div>
             </div>
 
-            <div class="field">
-              <label for="teacherIdInput">المعلم</label>
-              <select id="teacherIdInput" class="select">
-                <option value="">اختر المعلم</option>
-              </select>
+            <div class="mini-card">
+              <h3>الصفوف</h3>
+              <div class="chips" id="classesPreview"></div>
             </div>
+          </div>
 
-            <div class="field">
-              <label for="dayInput">اليوم</label>
-              <select id="dayInput" class="select">
-                <option value="">اختر اليوم</option>
-                <option value="السبت">السبت</option>
-                <option value="الأحد">الأحد</option>
-                <option value="الاثنين">الاثنين</option>
-                <option value="الثلاثاء">الثلاثاء</option>
-                <option value="الأربعاء">الأربعاء</option>
-                <option value="الخميس">الخميس</option>
-              </select>
-            </div>
+          <div class="footer-note">
+            يتم حفظ كل حصة مع <strong>المعرّف والاسم معًا</strong> لكل من الصف والمادة والمعلم، لتفادي مشاكل القراءة لاحقًا حتى لو تغيّر الاسم في واجهة أخرى.
+          </div>
+        </div>
+      </div>
 
-            <div class="field double">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="section-title" id="formTitle">إضافة / تعديل حصة</h2>
+          <p class="section-subtitle">
+            أدخل بيانات الحصة بدقة. النظام سيفحص التضارب قبل الحفظ: لا يسمح بحصتين لنفس الصف في نفس اليوم ونفس رقم الحصة.
+          </p>
+        </div>
+
+        <div class="panel-body">
+          <form id="lessonForm">
+            <input type="hidden" id="editingId" />
+
+            <div class="form-grid">
               <div class="field">
-                <label for="periodInput">رقم الحصة</label>
-                <select id="periodInput" class="select">
+                <label class="label" for="classSelect">الصف</label>
+                <select class="control" id="classSelect" required>
+                  <option value="">اختر الصف</option>
+                </select>
+                <div class="hint">سيتم حفظ معرّف الصف واسمه معًا.</div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="subjectSelect">المادة</label>
+                <select class="control" id="subjectSelect" required>
+                  <option value="">اختر المادة</option>
+                </select>
+                <div class="hint">اختر مادة من المواد المسجلة في المدرسة.</div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="teacherSelect">المعلم</label>
+                <select class="control" id="teacherSelect" required>
+                  <option value="">اختر المعلم</option>
+                </select>
+                <div class="hint">اختر المعلم المسؤول عن الحصة.</div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="daySelect">اليوم</label>
+                <select class="control" id="daySelect" required>
+                  <option value="">اختر اليوم</option>
+                  <option value="السبت">السبت</option>
+                  <option value="الأحد">الأحد</option>
+                  <option value="الاثنين">الاثنين</option>
+                  <option value="الثلاثاء">الثلاثاء</option>
+                  <option value="الأربعاء">الأربعاء</option>
+                  <option value="الخميس">الخميس</option>
+                </select>
+                <div class="hint">الحفظ يتم بالعربية فقط.</div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="periodSelect">رقم الحصة</label>
+                <select class="control" id="periodSelect" required>
                   <option value="">اختر الحصة</option>
                   <option value="1">الحصة 1</option>
                   <option value="2">الحصة 2</option>
@@ -629,669 +849,902 @@
                   <option value="7">الحصة 7</option>
                   <option value="8">الحصة 8</option>
                 </select>
+                  <div class="hint">الترتيب يستخدم أيضًا في الفرز داخل الجدول.</div>
               </div>
 
               <div class="field">
-                <label for="statusInput">الحالة</label>
-                <select id="statusInput" class="select">
+                <label class="label" for="statusSelect">الحالة</label>
+                <select class="control" id="statusSelect">
                   <option value="active">نشط</option>
                   <option value="inactive">غير نشط</option>
                 </select>
-              </div>
-            </div>
-
-            <div class="field double">
-              <div class="field">
-                <label for="startTimeInput">من</label>
-                <input id="startTimeInput" class="input" type="time" />
+                <div class="hint">الحصة غير النشطة تبقى محفوظة لكن لا تعد نشطة.</div>
               </div>
 
               <div class="field">
-                <label for="endTimeInput">إلى</label>
-                <input id="endTimeInput" class="input" type="time" />
+                <label class="label" for="startTime">من</label>
+                <input class="control" id="startTime" type="time" />
+              </div>
+
+              <div class="field">
+                <label class="label" for="endTime">إلى</label>
+                <input class="control" id="endTime" type="time" />
+              </div>
+
+              <div class="field field-full">
+                <label class="label" for="notesInput">ملاحظة</label>
+                <textarea class="textarea" id="notesInput" placeholder="مثال: حصة مراجعة، حصة عملية، أو أي ملاحظة إضافية..."></textarea>
               </div>
             </div>
-
-            <div class="field">
-              <label for="noteInput">ملاحظة</label>
-              <textarea id="noteInput" class="textarea" placeholder="اختياري"></textarea>
-            </div>
-
-            <div class="helper">
-              عند الحفظ يتم توحيد اليوم بالعربية فقط، ويتم حفظ اسم الصف والمادة والمعلم بجانب المعرّف لتسريع القراءة في بقية الصفحات.
-            </div>
-
-            <div id="formMessage" class="message info"></div>
 
             <div class="form-actions">
-              <button class="btn btn-save" type="button" id="saveBtn">حفظ الحصة</button>
-              <button class="btn btn-reset" type="button" id="clearBtn">تفريغ النموذج</button>
+              <button class="btn btn-primary" id="saveBtn" type="submit">حفظ الحصة</button>
+              <button class="btn btn-secondary" id="resetBtn" type="button">تفريغ النموذج</button>
             </div>
-          </div>
+          </form>
         </div>
-      </section>
-
-      <section class="panel">
-        <div class="card-head">
-          <h2>الحصص الحالية</h2>
-          <button class="btn btn-refresh" type="button" id="refreshBtn">تحديث</button>
-        </div>
-
-        <div class="card-body">
-          <div class="toolbar">
-            <div class="toolbar-right">
-              <input id="searchInput" class="input search" type="text" placeholder="ابحث بالصف أو المادة أو المعلم أو اليوم" />
-              <select id="dayFilter" class="select filter">
-                <option value="">كل الأيام</option>
-                <option value="السبت">السبت</option>
-                <option value="الأحد">الأحد</option>
-                <option value="الاثنين">الاثنين</option>
-                <option value="الثلاثاء">الثلاثاء</option>
-                <option value="الأربعاء">الأربعاء</option>
-                <option value="الخميس">الخميس</option>
-              </select>
-            </div>
-
-            <div class="toolbar-left">
-              <div class="helper">تحرير أي صف يبدأ من زر "تعديل".</div>
-            </div>
-          </div>
-
-          <div class="table-wrap">
-            <div class="table-scroll">
-              <table>
-                <thead>
-                  <tr>
-                    <th>الصف</th>
-                    <th>المادة</th>
-                    <th>المعلم</th>
-                    <th>اليوم</th>
-                    <th>الحصة</th>
-                    <th>من</th>
-                    <th>إلى</th>
-                    <th>الحالة</th>
-                    <th>ملاحظة</th>
-                    <th>إجراءات</th>
-                  </tr>
-                </thead>
-                <tbody id="tableBody">
-                  <tr>
-                    <td colspan="10" class="loading">جارٍ تحميل البيانات...</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </section>
-  </main>
 
-  <script src="session-guard.js"></script>
+    <section class="panel" style="margin-top:18px;">
+      <div class="panel-head">
+        <div class="toolbar">
+          <div>
+            <h2 class="section-title">الحصص الحالية</h2>
+            <p class="section-subtitle">
+              يمكنك هنا مشاهدة كل الحصص الحالية، والبحث أو التصفية حسب اليوم أو الحالة، ثم التعديل أو الحذف مباشرة.
+            </p>
+          </div>
+
+          <div class="toolbar-actions">
+            <button class="btn btn-secondary" id="refreshBtn" type="button">تحديث</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="filter-row">
+          <div class="field">
+            <label class="label" for="dayFilter">تصفية حسب اليوم</label>
+            <select class="control" id="dayFilter">
+              <option value="all">كل الأيام</option>
+              <option value="السبت">السبت</option>
+              <option value="الأحد">الأحد</option>
+              <option value="الاثنين">الاثنين</option>
+              <option value="الثلاثاء">الثلاثاء</option>
+              <option value="الأربعاء">الأربعاء</option>
+              <option value="الخميس">الخميس</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="statusFilter">تصفية حسب الحالة</label>
+            <select class="control" id="statusFilter">
+              <option value="all">الكل</option>
+              <option value="active">نشط</option>
+              <option value="inactive">غير نشط</option>
+            </select>
+          </div>
+
+          <div class="field field-full-search">
+            <label class="label" for="searchInput">بحث</label>
+            <input
+              class="control"
+              id="searchInput"
+              type="text"
+              placeholder="ابحث باسم الصف أو المادة أو المعلم أو اليوم أو رقم الحصة..."
+            />
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الصف</th>
+                <th>المادة</th>
+                <th>المعلم</th>
+                <th>اليوم</th>
+                <th>الحصة</th>
+                <th>من</th>
+                <th>إلى</th>
+                <th>الحالة</th>
+                <th>ملاحظة</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="lessonsTableBody">
+              <tr>
+                <td colspan="10" class="empty">جارِ تحميل البيانات...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="footer-note">
+          عند الضغط على <strong>تعديل</strong> سيتم تحميل بيانات الحصة إلى النموذج العلوي.  
+          عند الضغط على <strong>حذف</strong> سيتم حذف الحصة نهائيًا من الجدول الحالي.
+        </div>
+
+        <div class="day-group" id="daySummary"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/app/school/session-guard.js"></script>
   <script type="module">
-    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
     import {
       getFirestore,
       collection,
       query,
       where,
       getDocs,
+      getDoc,
+      doc,
       addDoc,
       updateDoc,
       deleteDoc,
-      doc,
-      getDoc,
+      serverTimestamp,
+      orderBy,
       limit
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
       authDomain: "madaris-ai.firebaseapp.com",
       projectId: "madaris-ai",
-      storageBucket: "madaris-ai.appspot.com",
+      storageBucket: "madaris-ai.firebasestorage.app",
       messagingSenderId: "915394447224",
-      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+      measurementId: "G-SC7VE6F20S",
     };
 
     const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const ALLOWED_DAYS = ["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس"];
-    const DAY_ALIASES = {
-      saturday: "السبت",
-      sunday: "الأحد",
-      monday: "الاثنين",
-      tuesday: "الثلاثاء",
-      wednesday: "الأربعاء",
-      thursday: "الخميس",
-      الجمعة: "الجمعة",
-      friday: "الجمعة",
-      السبت: "السبت",
-      الأحد: "الأحد",
-      الاثنين: "الاثنين",
-      الثلاثاء: "الثلاثاء",
-      الأربعاء: "الأربعاء",
-      الخميس: "الخميس"
+    const DAYS = ["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس"];
+    const DAY_ORDER = Object.fromEntries(DAYS.map((day, index) => [day, index]));
+    const STATUS_LABELS = {
+      active: "نشط",
+      inactive: "غير نشط"
     };
 
-    let session = null;
-    let schoolId = "";
-    let schoolName = "";
+    const state = {
+      session: null,
+      schoolId: "",
+      schoolName: "",
+      subjects: [],
+      teachers: [],
+      classes: [],
+      lessons: [],
+      filteredLessons: []
+    };
 
-    let classesList = [];
-    let subjectsList = [];
-    let teachersList = [];
-    let schedulesList = [];
-
-    let classesMap = new Map();
-    let subjectsMap = new Map();
-    let teachersMap = new Map();
-
-    let editingId = null;
-
-    const els = {
-      schoolBadge: document.getElementById("schoolBadge"),
-      logoutBtn: document.getElementById("logoutBtn"),
+    const el = {
+      schoolName: document.getElementById("schoolName"),
+      schoolMeta: document.getElementById("schoolMeta"),
       subjectsCount: document.getElementById("subjectsCount"),
       classesCount: document.getElementById("classesCount"),
-      schedulesCount: document.getElementById("schedulesCount"),
+      lessonsCount: document.getElementById("lessonsCount"),
       teachersCount: document.getElementById("teachersCount"),
+      subjectsPreview: document.getElementById("subjectsPreview"),
+      teachersPreview: document.getElementById("teachersPreview"),
+      classesPreview: document.getElementById("classesPreview"),
       pageMessage: document.getElementById("pageMessage"),
+      loadingOverlay: document.getElementById("loadingOverlay"),
+      loadingText: document.getElementById("loadingText"),
       formTitle: document.getElementById("formTitle"),
-      resetFormBtn: document.getElementById("resetFormBtn"),
-      classIdInput: document.getElementById("classIdInput"),
-      subjectIdInput: document.getElementById("subjectIdInput"),
-      teacherIdInput: document.getElementById("teacherIdInput"),
-      dayInput: document.getElementById("dayInput"),
-      periodInput: document.getElementById("periodInput"),
-      startTimeInput: document.getElementById("startTimeInput"),
-      endTimeInput: document.getElementById("endTimeInput"),
-      statusInput: document.getElementById("statusInput"),
-      noteInput: document.getElementById("noteInput"),
-      formMessage: document.getElementById("formMessage"),
+      lessonForm: document.getElementById("lessonForm"),
+      editingId: document.getElementById("editingId"),
+      classSelect: document.getElementById("classSelect"),
+      subjectSelect: document.getElementById("subjectSelect"),
+      teacherSelect: document.getElementById("teacherSelect"),
+      daySelect: document.getElementById("daySelect"),
+      periodSelect: document.getElementById("periodSelect"),
+      statusSelect: document.getElementById("statusSelect"),
+      startTime: document.getElementById("startTime"),
+      endTime: document.getElementById("endTime"),
+      notesInput: document.getElementById("notesInput"),
       saveBtn: document.getElementById("saveBtn"),
-      clearBtn: document.getElementById("clearBtn"),
+      resetBtn: document.getElementById("resetBtn"),
       refreshBtn: document.getElementById("refreshBtn"),
-      searchInput: document.getElementById("searchInput"),
+      logoutBtn: document.getElementById("logoutBtn"),
       dayFilter: document.getElementById("dayFilter"),
-      tableBody: document.getElementById("tableBody")
+      statusFilter: document.getElementById("statusFilter"),
+      searchInput: document.getElementById("searchInput"),
+      lessonsTableBody: document.getElementById("lessonsTableBody"),
+      daySummary: document.getElementById("daySummary")
     };
 
-    function text(value) {
+    function normalize(value) {
       if (value === null || value === undefined) return "";
       return String(value).trim();
     }
 
-    function lower(value) {
-      return text(value).toLowerCase();
-    }
-
-    function num(value) {
-      const n = Number(value);
-      return Number.isFinite(n) ? n : 0;
+    function normalizeLower(value) {
+      return normalize(value).toLowerCase();
     }
 
     function escapeHtml(value) {
-      return text(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+      return normalize(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    function normalizeDay(value) {
-      const raw = text(value);
-      if (!raw) return "";
-      return DAY_ALIASES[raw] || DAY_ALIASES[lower(raw)] || raw;
+    function showMessage(message, type = "info") {
+      el.pageMessage.className = `message ${type} show`;
+      el.pageMessage.textContent = message;
     }
 
-    function showPageMessage(message, type = "info") {
-      els.pageMessage.className = `message ${type} show`;
-      els.pageMessage.textContent = message;
+    function hideMessage() {
+      el.pageMessage.className = "message info";
+      el.pageMessage.textContent = "";
+      el.pageMessage.classList.remove("show");
     }
 
-    function clearPageMessage() {
-      els.pageMessage.className = "message info";
-      els.pageMessage.textContent = "";
+    function setLoading(show, text = "جارِ تنفيذ الطلب...") {
+      el.loadingText.textContent = text;
+      el.loadingOverlay.classList.toggle("show", !!show);
     }
 
-    function showFormMessage(message, type = "info") {
-      els.formMessage.className = `message ${type} show`;
-      els.formMessage.textContent = message;
-    }
+    function getSession() {
+      if (window.MadarisSession && typeof window.MadarisSession.getSession === "function") {
+        return window.MadarisSession.getSession();
+      }
 
-    function clearFormMessage() {
-      els.formMessage.className = "message info";
-      els.formMessage.textContent = "";
-    }
+      try {
+        const raw =
+          localStorage.getItem("madarisai_session") ||
+          sessionStorage.getItem("madarisai_session") ||
+          localStorage.getItem("schoolSession") ||
+          sessionStorage.getItem("schoolSession");
 
-    function goBack() {
-      window.location.href = "index.html";
-    }
-
-    function goToSchedule() {
-      window.location.href = "schedule.html";
-    }
-
-    window.goBack = goBack;
-    window.goToSchedule = goToSchedule;
-
-    function getClassNameById(id) {
-      return classesMap.get(text(id))?.name || "غير معروف";
-    }
-
-    function getSubjectNameById(id) {
-      const item = subjectsMap.get(text(id));
-      return item?.name || item?.title || item?.subject || "غير معروف";
-    }
-
-    function getTeacherNameById(id) {
-      const item = teachersMap.get(text(id));
-      return item?.name || item?.fullName || "غير معروف";
-    }
-
-    function fillSelect(selectEl, list, placeholder, labelFn) {
-      selectEl.innerHTML = `<option value="">${placeholder}</option>`;
-      for (const item of list) {
-        const option = document.createElement("option");
-        option.value = item.id;
-        option.textContent = labelFn(item);
-        selectEl.appendChild(option);
+        return raw ? JSON.parse(raw) : null;
+      } catch (_error) {
+        return null;
       }
     }
 
-    async function loadReferenceCollection(collectionName) {
-      const q = query(collection(db, collectionName), where("schoolId", "==", schoolId));
-      const snap = await getDocs(q);
-      return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    function resolveSchoolId(session) {
+      return normalize(
+        session?.schoolId ||
+        session?.schoolID ||
+        session?.school_id ||
+        session?.school?.id ||
+        session?.school?.schoolId
+      );
     }
 
-    function buildNormalizedSchedule(docItem) {
-      const row = { id: docItem.id, ...docItem.data() };
+    function resolveSchoolName(session) {
+      return normalize(
+        session?.schoolName ||
+        session?.school_name ||
+        session?.school?.name ||
+        session?.school?.schoolName ||
+        "مدرسة غير معروفة"
+      );
+    }
 
-      const classId = text(row.classId || row.classID || row.class_id);
-      const subjectId = text(row.subjectId || row.subjectID || row.subject_id);
-      const teacherId = text(row.teacherId || row.teacherID || row.teacher_id);
-      const day = normalizeDay(row.day);
-      const period = String(num(row.period) || "");
-      const startTime = text(row.startTime || row.from || "");
-      const endTime = text(row.endTime || row.to || "");
-      const status = text(row.status || "active") || "active";
-      const note = text(row.note || row.notes || "");
+    function goToLogin() {
+      window.location.replace("/app/login.html");
+    }
 
-      const className = text(row.className || getClassNameById(classId));
-      const subjectName = text(row.subjectName || getSubjectNameById(subjectId));
-      const teacherName = text(row.teacherName || getTeacherNameById(teacherId));
+    async function logout() {
+      try {
+        if (window.MadarisSession && typeof window.MadarisSession.logoutToLogin === "function") {
+          window.MadarisSession.logoutToLogin();
+          return;
+        }
+
+        try { await signOut(auth); } catch (_error) {}
+
+        const keys = [
+          "madarisai_session","schoolSession","school_session","madaris_user_session","madaris_session",
+          "session","userSession","schoolId","schoolName","userRole","userName","email"
+        ];
+        keys.forEach((key) => {
+          try { localStorage.removeItem(key); } catch (_error) {}
+          try { sessionStorage.removeItem(key); } catch (_error) {}
+        });
+
+        goToLogin();
+      } catch (_error) {
+        goToLogin();
+      }
+    }
+
+    function sortByArabicDayAndPeriod(items) {
+      return [...items].sort((a, b) => {
+        const dayA = DAY_ORDER[normalize(a.day)] ?? 999;
+        const dayB = DAY_ORDER[normalize(b.day)] ?? 999;
+        if (dayA !== dayB) return dayA - dayB;
+
+        const periodA = Number(a.periodNumber || 0);
+        const periodB = Number(b.periodNumber || 0);
+        if (periodA !== periodB) return periodA - periodB;
+
+        return normalize(a.className).localeCompare(normalize(b.className), "ar");
+      });
+    }
+
+    function makePreview(container, items, emptyText) {
+      container.innerHTML = "";
+      if (!items.length) {
+        container.innerHTML = `<div class="empty">${escapeHtml(emptyText)}</div>`;
+        return;
+      }
+
+      items.slice(0, 18).forEach((item) => {
+        const span = document.createElement("span");
+        span.className = "chip";
+        span.textContent = item.name || item.title || item.label || "...";
+        container.appendChild(span);
+      });
+    }
+
+    function fillSelect(selectEl, items, emptyLabel) {
+      const current = selectEl.value;
+      selectEl.innerHTML = `<option value="">${emptyLabel}</option>`;
+
+      items.forEach((item) => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.name;
+        option.dataset.name = item.name;
+        selectEl.appendChild(option);
+      });
+
+      if ([...selectEl.options].some(opt => opt.value === current)) {
+        selectEl.value = current;
+      }
+    }
+
+    function updateCounters() {
+      el.subjectsCount.textContent = String(state.subjects.length);
+      el.classesCount.textContent = String(state.classes.length);
+      el.lessonsCount.textContent = String(state.lessons.length);
+      el.teachersCount.textContent = String(state.teachers.length);
+    }
+
+    function updatePreviews() {
+      makePreview(el.subjectsPreview, state.subjects, "لا توجد مواد مرتبطة بهذه المدرسة حتى الآن.");
+      makePreview(el.teachersPreview, state.teachers, "لا يوجد معلمون مرتبطون بهذه المدرسة حتى الآن.");
+      makePreview(el.classesPreview, state.classes, "لا توجد صفوف مرتبطة بهذه المدرسة حتى الآن.");
+    }
+
+    async function tryGetDoc(collectionName, id) {
+      const cleanId = normalize(id);
+      if (!cleanId) return null;
+
+      try {
+        const ref = doc(db, collectionName, cleanId);
+        const snap = await getDoc(ref);
+        if (!snap.exists()) return null;
+        return { id: snap.id, ...snap.data() };
+      } catch (_error) {
+        return null;
+      }
+    }
+
+    async function tryQuery(collectionName, field, value, max = 200) {
+      const cleanValue = normalize(value);
+      if (!cleanValue) return [];
+
+      try {
+        const q = query(collection(db, collectionName), where(field, "==", value), limit(max));
+        const res = await getDocs(q);
+        return res.docs.map((item) => ({ id: item.id, ...item.data() }));
+      } catch (_error) {
+        return [];
+      }
+    }
+
+    async function getSchoolScopedCollection(collectionNames, schoolId, extraFields = []) {
+      const schoolFields = ["schoolId", "schoolID", "school_id", ...extraFields];
+
+      for (const collectionName of collectionNames) {
+        for (const field of schoolFields) {
+          const rows = await tryQuery(collectionName, field, schoolId, 500);
+          if (rows.length) {
+            return { collectionName, rows };
+          }
+        }
+      }
+
+      for (const collectionName of collectionNames) {
+        try {
+          const allRows = await getDocs(query(collection(db, collectionName), limit(500)));
+          const items = allRows.docs.map((item) => ({ id: item.id, ...item.data() }));
+          const filtered = items.filter((item) => {
+            const candidateSchoolId = normalize(
+              item.schoolId || item.schoolID || item.school_id || item.school?.id || item.school?.schoolId
+            );
+            return candidateSchoolId === schoolId;
+          });
+
+          if (filtered.length) {
+            return { collectionName, rows: filtered };
+          }
+        } catch (_error) {}
+      }
+
+      return { collectionName: collectionNames[0], rows: [] };
+    }
+
+    function normalizeEntity(item, type) {
+      const id = normalize(item.id || item.docId || item.uid);
+      let name = "";
+
+      if (type === "subject") {
+        name = normalize(item.name || item.subjectName || item.title || item.label || item.materialName);
+      } else if (type === "teacher") {
+        name = normalize(item.name || item.teacherName || item.fullName || item.userName || item.displayName);
+      } else if (type === "class") {
+        name = normalize(item.name || item.className || item.title || item.gradeName || item.sectionName);
+      }
 
       return {
-        id: row.id,
-        schoolId: text(row.schoolId),
-        classId,
-        className,
-        subjectId,
-        subjectName,
-        teacherId,
-        teacherName,
-        day,
-        period,
-        startTime,
-        endTime,
-        status,
-        note,
-        createdAt: row.createdAt || null,
-        updatedAt: row.updatedAt || null
+        id,
+        name: name || `عنصر ${id || "غير معروف"}`,
+        raw: item
       };
+    }
+
+    async function loadLinkedData() {
+      const [subjectsPack, teachersPack, classesPack] = await Promise.all([
+        getSchoolScopedCollection(["subjects", "materials"], state.schoolId),
+        getSchoolScopedCollection(["teachers", "staff"], state.schoolId),
+        getSchoolScopedCollection(["classes", "grades", "sections"], state.schoolId)
+      ]);
+
+      state.subjects = subjectsPack.rows.map((item) => normalizeEntity(item, "subject")).filter((item) => item.id);
+      state.teachers = teachersPack.rows
+        .map((item) => normalizeEntity(item, "teacher"))
+        .filter((item) => item.id)
+        .filter((item) => normalize(item.name));
+
+      state.classes = classesPack.rows.map((item) => normalizeEntity(item, "class")).filter((item) => item.id);
+
+      fillSelect(el.subjectSelect, state.subjects, "اختر المادة");
+      fillSelect(el.teacherSelect, state.teachers, "اختر المعلم");
+      fillSelect(el.classSelect, state.classes, "اختر الصف");
+
+      updateCounters();
+      updatePreviews();
+    }
+
+    function normalizeLesson(item) {
+      const classId = normalize(item.classId || item.classID || item.class_id);
+      const subjectId = normalize(item.subjectId || item.subjectID || item.subject_id);
+      const teacherId = normalize(item.teacherId || item.teacherID || item.teacher_id);
+
+      const normalized = {
+        id: normalize(item.id),
+        schoolId: normalize(item.schoolId || item.schoolID || item.school_id),
+        schoolName: normalize(item.schoolName || item.school_name),
+        classId,
+        className: normalize(item.className || item.class_name || item.classTitle),
+        subjectId,
+        subjectName: normalize(item.subjectName || item.subject_name || item.materialName),
+        teacherId,
+        teacherName: normalize(item.teacherName || item.teacher_name || item.teacherFullName),
+        day: normalize(item.day || item.dayName || item.day_label),
+        periodNumber: Number(item.periodNumber || item.period || item.lessonNumber || item.slot || 0),
+        startTime: normalize(item.startTime || item.from || item.start || ""),
+        endTime: normalize(item.endTime || item.to || item.end || ""),
+        status: normalizeLower(item.status || "active") || "active",
+        notes: normalize(item.notes || item.note || item.description || ""),
+        createdAt: item.createdAt || null,
+        updatedAt: item.updatedAt || null
+      };
+
+      if (!normalized.className && classId) {
+        const foundClass = state.classes.find((entry) => entry.id === classId);
+        if (foundClass) normalized.className = foundClass.name;
+      }
+
+      if (!normalized.subjectName && subjectId) {
+        const foundSubject = state.subjects.find((entry) => entry.id === subjectId);
+        if (foundSubject) normalized.subjectName = foundSubject.name;
+      }
+
+      if (!normalized.teacherName && teacherId) {
+        const foundTeacher = state.teachers.find((entry) => entry.id === teacherId);
+        if (foundTeacher) normalized.teacherName = foundTeacher.name;
+      }
+
+      return normalized;
+    }
+
+    async function loadLessons() {
+      const candidates = ["schedules", "scheduleEntries", "lessons"];
+      let rows = [];
+
+      for (const collectionName of candidates) {
+        for (const field of ["schoolId", "schoolID", "school_id"]) {
+          try {
+            const q = query(collection(db, collectionName), where(field, "==", state.schoolId));
+            const res = await getDocs(q);
+            if (!res.empty) {
+              rows = res.docs.map((item) => ({ id: item.id, ...item.data() }));
+              break;
+            }
+          } catch (_error) {}
+        }
+        if (rows.length) break;
+      }
+
+      if (!rows.length) {
+        state.lessons = [];
+      } else {
+        state.lessons = sortByArabicDayAndPeriod(rows.map(normalizeLesson));
+      }
+
+      updateCounters();
+      applyFiltersAndRender();
+    }
+    function getSelectedOptionName(selectEl) {
+      const option = selectEl.options[selectEl.selectedIndex];
+      return normalize(option?.dataset?.name || option?.textContent);
+    }
+
+    function buildLessonPayload() {
+      const editingId = normalize(el.editingId.value);
+      const classId = normalize(el.classSelect.value);
+      const subjectId = normalize(el.subjectSelect.value);
+      const teacherId = normalize(el.teacherSelect.value);
+      const day = normalize(el.daySelect.value);
+      const periodNumber = Number(el.periodSelect.value || 0);
+      const status = normalizeLower(el.statusSelect.value || "active") || "active";
+      const startTime = normalize(el.startTime.value);
+      const endTime = normalize(el.endTime.value);
+      const notes = normalize(el.notesInput.value);
+
+      const className = getSelectedOptionName(el.classSelect);
+      const subjectName = getSelectedOptionName(el.subjectSelect);
+      const teacherName = getSelectedOptionName(el.teacherSelect);
+
+      if (!classId) throw new Error("اختر الصف");
+      if (!subjectId) throw new Error("اختر المادة");
+      if (!teacherId) throw new Error("اختر المعلم");
+      if (!day) throw new Error("اختر اليوم");
+      if (!periodNumber) throw new Error("اختر رقم الحصة");
+
+      if (startTime && endTime && startTime >= endTime) {
+        throw new Error("وقت البداية يجب أن يكون قبل وقت النهاية");
+      }
+
+      return {
+        editingId,
+        payload: {
+          schoolId: state.schoolId,
+          schoolName: state.schoolName,
+          classId,
+          className,
+          subjectId,
+          subjectName,
+          teacherId,
+          teacherName,
+          day,
+          periodNumber,
+          startTime,
+          endTime,
+          status,
+          notes
+        }
+      };
+    }
+
+    function detectConflict(payload, editingId = "") {
+      return state.lessons.find((lesson) => {
+        if (editingId && lesson.id === editingId) return false;
+
+        return (
+          normalize(lesson.schoolId) === normalize(payload.schoolId) &&
+          normalize(lesson.classId) === normalize(payload.classId) &&
+          normalize(lesson.day) === normalize(payload.day) &&
+          Number(lesson.periodNumber) === Number(payload.periodNumber)
+        );
+      });
     }
 
     function resetForm() {
-      editingId = null;
-      els.formTitle.textContent = "إضافة / تعديل حصة";
-      els.classIdInput.value = "";
-      els.subjectIdInput.value = "";
-      els.teacherIdInput.value = "";
-      els.dayInput.value = "";
-      els.periodInput.value = "";
-      els.startTimeInput.value = "";
-      els.endTimeInput.value = "";
-      els.statusInput.value = "active";
-      els.noteInput.value = "";
-      els.saveBtn.textContent = "حفظ الحصة";
-      clearFormMessage();
+      el.lessonForm.reset();
+      el.editingId.value = "";
+      el.statusSelect.value = "active";
+      el.formTitle.textContent = "إضافة / تعديل حصة";
+      el.saveBtn.textContent = "حفظ الحصة";
+      hideMessage();
     }
 
-    function setEditingForm(item) {
-      editingId = item.id;
-      els.formTitle.textContent = "تعديل حصة";
-      els.classIdInput.value = item.classId || "";
-      els.subjectIdInput.value = item.subjectId || "";
-      els.teacherIdInput.value = item.teacherId || "";
-      els.dayInput.value = normalizeDay(item.day);
-      els.periodInput.value = item.period || "";
-      els.startTimeInput.value = item.startTime || "";
-      els.endTimeInput.value = item.endTime || "";
-      els.statusInput.value = item.status || "active";
-      els.noteInput.value = item.note || "";
-      els.saveBtn.textContent = "تحديث الحصة";
-      clearFormMessage();
+    function fillFormForEdit(lessonId) {
+      const lesson = state.lessons.find((item) => item.id === lessonId);
+      if (!lesson) {
+        showMessage("تعذر العثور على الحصة المطلوبة للتعديل", "error");
+        return;
+      }
+
+      el.editingId.value = lesson.id;
+      el.classSelect.value = lesson.classId;
+      el.subjectSelect.value = lesson.subjectId;
+      el.teacherSelect.value = lesson.teacherId;
+      el.daySelect.value = lesson.day;
+      el.periodSelect.value = String(lesson.periodNumber || "");
+      el.statusSelect.value = lesson.status || "active";
+      el.startTime.value = lesson.startTime || "";
+      el.endTime.value = lesson.endTime || "";
+      el.notesInput.value = lesson.notes || "";
+      el.formTitle.textContent = `تعديل حصة: ${lesson.className} - ${lesson.subjectName}`;
+      el.saveBtn.textContent = "حفظ التعديلات";
+
       window.scrollTo({ top: 0, behavior: "smooth" });
+      showMessage("تم تحميل الحصة إلى النموذج. عدّل البيانات ثم اضغط حفظ التعديلات.", "info");
     }
 
-    function buildSearchText(item) {
-      return [
-        item.className,
-        item.subjectName,
-        item.teacherName,
-        item.day,
-        item.period,
-        item.note,
-        item.startTime,
-        item.endTime
-      ].map(lower).join(" ");
-    }
-
-    function getFilteredList() {
-      const keyword = lower(els.searchInput.value);
-      const selectedDay = text(els.dayFilter.value);
-
-      return schedulesList
-        .filter((item) => {
-          const dayMatch = !selectedDay || item.day === selectedDay;
-          const searchMatch = !keyword || buildSearchText(item).includes(keyword);
-          return dayMatch && searchMatch;
-        })
-        .sort((a, b) => {
-          const dayA = ALLOWED_DAYS.indexOf(a.day);
-          const dayB = ALLOWED_DAYS.indexOf(b.day);
-          if (dayA !== dayB) return dayA - dayB;
-          return num(a.period) - num(b.period);
-        });
-    }
-
-    function renderTable() {
-      const list = getFilteredList();
-
-      if (!list.length) {
-        els.tableBody.innerHTML = `
-          <tr>
-            <td colspan="10">
-              <div class="empty-state">لا توجد حصص حالياً</div>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      els.tableBody.innerHTML = list.map((item) => `
-        <tr>
-          <td>${escapeHtml(item.className)}</td>
-          <td>${escapeHtml(item.subjectName)}</td>
-          <td>${escapeHtml(item.teacherName)}</td>
-          <td><span class="badge badge-day">${escapeHtml(item.day)}</span></td>
-          <td><span class="badge badge-period">الحصة ${escapeHtml(item.period)}</span></td>
-          <td>${item.startTime ? escapeHtml(item.startTime) : '<span class="badge badge-empty">—</span>'}</td>
-          <td>${item.endTime ? escapeHtml(item.endTime) : '<span class="badge badge-empty">—</span>'}</td>
-          <td>
-            <span class="badge ${item.status === "active" ? "badge-active" : "badge-inactive"}">
-              ${item.status === "active" ? "نشط" : "غير نشط"}
-            </span>
-          </td>
-          <td>${item.note ? escapeHtml(item.note) : '<span class="badge badge-empty">لا يوجد</span>'}</td>
-          <td>
-            <div class="actions">
-              <button class="btn-sm btn-view" onclick="editSchedule('${item.id}')">تعديل</button>
-              <button class="btn-sm btn-delete" onclick="removeSchedule('${item.id}')">حذف</button>
-            </div>
-          </td>
-        </tr>
-      `).join("");
-    }
-
-    function updateSummary() {
-      els.subjectsCount.textContent = subjectsList.length;
-      els.classesCount.textContent = classesList.length;
-      els.schedulesCount.textContent = schedulesList.length;
-      els.teachersCount.textContent = teachersList.length;
-    }
-
-    async function loadAll() {
-      clearPageMessage();
-      els.tableBody.innerHTML = `
-        <tr>
-          <td colspan="10" class="loading">جارٍ تحميل البيانات...</td>
-        </tr>
-      `;
+    async function saveLesson(event) {
+      event.preventDefault();
 
       try {
-        const [classes, subjects, teachers, schedulesSnap] = await Promise.all([
-          loadReferenceCollection("classes"),
-          loadReferenceCollection("subjects"),
-          loadReferenceCollection("teachers"),
-          getDocs(query(collection(db, "schedules"), where("schoolId", "==", schoolId)))
-        ]);
+        hideMessage();
+        setLoading(true, "جارِ حفظ الحصة...");
 
-        classesList = classes;
-        subjectsList = subjects;
-        teachersList = teachers;
-
-        classesMap = new Map(classes.map((item) => [item.id, item]));
-        subjectsMap = new Map(subjects.map((item) => [item.id, item]));
-        teachersMap = new Map(teachers.map((item) => [item.id, item]));
-
-        schedulesList = schedulesSnap.docs.map(buildNormalizedSchedule);
-
-        fillSelect(els.classIdInput, classesList, "اختر الصف", (item) => item.name || item.id);
-        fillSelect(els.subjectIdInput, subjectsList, "اختر المادة", (item) => item.name || item.title || item.subject || item.id);
-        fillSelect(els.teacherIdInput, teachersList, "اختر المعلم", (item) => item.name || item.fullName || item.id);
-
-        updateSummary();
-        renderTable();
-      } catch (error) {
-        console.error("loadAll error:", error);
-        showPageMessage("حدث خطأ أثناء تحميل بيانات إدارة الجدول.", "error");
-        els.tableBody.innerHTML = `
-          <tr>
-            <td colspan="10">
-              <div class="empty-state">تعذر تحميل البيانات حالياً.</div>
-            </td>
-          </tr>
-        `;
-      }
-    }
-
-    function collectFormData() {
-      const classId = text(els.classIdInput.value);
-      const subjectId = text(els.subjectIdInput.value);
-      const teacherId = text(els.teacherIdInput.value);
-      const day = normalizeDay(els.dayInput.value);
-      const period = String(num(els.periodInput.value) || "");
-      const startTime = text(els.startTimeInput.value);
-      const endTime = text(els.endTimeInput.value);
-      const status = text(els.statusInput.value || "active") || "active";
-      const note = text(els.noteInput.value);
-
-      return {
-        classId,
-        className: getClassNameById(classId),
-        subjectId,
-        subjectName: getSubjectNameById(subjectId),
-        teacherId,
-        teacherName: getTeacherNameById(teacherId),
-        day,
-        period,
-        startTime,
-        endTime,
-        status,
-        note
-      };
-    }
-
-    function validateForm(data) {
-      if (!data.classId) return "اختر الصف.";
-      if (!data.subjectId) return "اختر المادة.";
-      if (!data.teacherId) return "اختر المعلم.";
-      if (!data.day) return "اختر اليوم.";
-      if (!ALLOWED_DAYS.includes(data.day)) return "اليوم غير صالح.";
-      if (!data.period) return "اختر رقم الحصة.";
-      if (data.startTime && data.endTime && data.startTime >= data.endTime) {
-        return "وقت البداية يجب أن يكون قبل وقت النهاية.";
-      }
-      return "";
-    }
-
-    async function hasConflict(data) {
-      const q = query(
-        collection(db, "schedules"),
-        where("schoolId", "==", schoolId),
-        where("classId", "==", data.classId),
-        where("day", "==", data.day),
-        where("period", "==", Number(data.period)),
-        limit(10)
-      );
-
-      const snap = await getDocs(q);
-      const docs = snap.docs
-        .map((d) => ({ id: d.id, ...d.data() }))
-        .filter((row) => row.id !== editingId);
-
-      return docs.length > 0;
-    }
-
-    async function saveSchedule() {
-      clearFormMessage();
-      const data = collectFormData();
-      const validationError = validateForm(data);
-
-      if (validationError) {
-        showFormMessage(validationError, "error");
-        return;
-      }
-
-      try {
-        els.saveBtn.disabled = true;
-        els.saveBtn.textContent = editingId ? "جارٍ التحديث..." : "جارٍ الحفظ...";
-
-        const conflict = await hasConflict(data);
+        const { editingId, payload } = buildLessonPayload();
+        const conflict = detectConflict(payload, editingId);
         if (conflict) {
-          showFormMessage("يوجد تعارض: هذه الحصة موجودة مسبقًا لنفس الصف واليوم ورقم الحصة.", "error");
-          return;
+          throw new Error(`يوجد تضارب: الصف ${conflict.className} لديه بالفعل ${conflict.day} - الحصة ${conflict.periodNumber}`);
         }
 
-        const payload = {
-          schoolId,
-          classId: data.classId,
-          className: data.className,
-          subjectId: data.subjectId,
-          subjectName: data.subjectName,
-          teacherId: data.teacherId,
-          teacherName: data.teacherName,
-          day: data.day,
-          period: Number(data.period),
-          startTime: data.startTime,
-          endTime: data.endTime,
-          status: data.status,
-          note: data.note,
-          updatedAt: Date.now()
-        };
+        const targetCollection = "schedules";
 
         if (editingId) {
-          await updateDoc(doc(db, "schedules", editingId), payload);
-          showPageMessage("تم تحديث الحصة بنجاح.", "success");
-        } else {
-          await addDoc(collection(db, "schedules"), {
+          await updateDoc(doc(db, targetCollection, editingId), {
             ...payload,
-            createdAt: Date.now()
+            updatedAt: serverTimestamp()
           });
-          showPageMessage("تم حفظ الحصة بنجاح.", "success");
+          showMessage("تم تحديث الحصة بنجاح", "success");
+        } else {
+          await addDoc(collection(db, targetCollection), {
+            ...payload,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+          showMessage("تمت إضافة الحصة بنجاح", "success");
         }
 
         resetForm();
-        await loadAll();
+        await loadLessons();
       } catch (error) {
-        console.error("saveSchedule error:", error);
-        showFormMessage("فشل حفظ الحصة.", "error");
+        console.error("saveLesson error:", error);
+        showMessage(error?.message || "فشل حفظ الحصة", "error");
       } finally {
-        els.saveBtn.disabled = false;
-        els.saveBtn.textContent = editingId ? "تحديث الحصة" : "حفظ الحصة";
-        if (!editingId) els.saveBtn.textContent = "حفظ الحصة";
+        setLoading(false);
       }
     }
 
-    async function removeSchedule(id) {
-      const confirmed = window.confirm("هل تريد حذف هذه الحصة من الجدول؟");
-      if (!confirmed) return;
-
-      try {
-        await deleteDoc(doc(db, "schedules", id));
-        if (editingId === id) resetForm();
-        showPageMessage("تم حذف الحصة بنجاح.", "success");
-        await loadAll();
-      } catch (error) {
-        console.error("removeSchedule error:", error);
-        showPageMessage("فشل حذف الحصة.", "error");
-      }
-    }
-
-    async function editSchedule(id) {
-      const cached = schedulesList.find((item) => item.id === id);
-      if (cached) {
-        setEditingForm(cached);
+    async function deleteLesson(lessonId) {
+      const lesson = state.lessons.find((item) => item.id === lessonId);
+      if (!lesson) {
+        showMessage("الحصة غير موجودة", "error");
         return;
       }
 
+      const ok = window.confirm(
+        `هل تريد حذف هذه الحصة نهائيًا؟\n\nالصف: ${lesson.className}\nالمادة: ${lesson.subjectName}\nالمعلم: ${lesson.teacherName}\nاليوم: ${lesson.day}\nالحصة: ${lesson.periodNumber}`
+      );
+
+      if (!ok) return;
+
       try {
-        const snap = await getDoc(doc(db, "schedules", id));
-        if (!snap.exists()) {
-          showPageMessage("الحصة المطلوبة غير موجودة.", "error");
-          return;
+        setLoading(true, "جارِ حذف الحصة...");
+        await deleteDoc(doc(db, "schedules", lessonId));
+        showMessage("تم حذف الحصة بنجاح", "success");
+
+        if (normalize(el.editingId.value) === lessonId) {
+          resetForm();
         }
-        const item = buildNormalizedSchedule({ id: snap.id, data: () => snap.data() });
-        setEditingForm(item);
+
+        await loadLessons();
       } catch (error) {
-        console.error("editSchedule error:", error);
-        showPageMessage("فشل فتح بيانات الحصة للتعديل.", "error");
+        console.error("deleteLesson error:", error);
+        showMessage("فشل حذف الحصة", "error");
+      } finally {
+        setLoading(false);
       }
     }
 
-    window.editSchedule = editSchedule;
-    window.removeSchedule = removeSchedule;
+    function getFilteredLessons() {
+      const dayFilter = normalize(el.dayFilter.value);
+      const statusFilter = normalizeLower(el.statusFilter.value);
+      const search = normalizeLower(el.searchInput.value);
+
+      return state.lessons.filter((lesson) => {
+        const matchesDay = dayFilter === "all" ? true : normalize(lesson.day) === dayFilter;
+        const matchesStatus = statusFilter === "all" ? true : normalizeLower(lesson.status) === statusFilter;
+
+        const blob = normalizeLower([
+          lesson.className,
+          lesson.subjectName,
+          lesson.teacherName,
+          lesson.day,
+          `الحصة ${lesson.periodNumber}`,
+          lesson.notes,
+          lesson.startTime,
+          lesson.endTime
+        ].join(" "));
+
+        const matchesSearch = !search ? true : blob.includes(search);
+
+        return matchesDay && matchesStatus && matchesSearch;
+      });
+    }
+
+    function renderLessonsTable(items) {
+      if (!items.length) {
+        el.lessonsTableBody.innerHTML = `
+          <tr>
+            <td colspan="10" class="empty">لا توجد حصص مطابقة للتصفية الحالية.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      el.lessonsTableBody.innerHTML = items.map((lesson) => {
+        const statusClass = lesson.status === "active" ? "badge-success" : "badge-muted";
+        const statusLabel = STATUS_LABELS[lesson.status] || "غير محدد";
+
+        return `
+          <tr>
+            <td>${escapeHtml(lesson.className || "-")}</td>
+            <td>${escapeHtml(lesson.subjectName || "-")}</td>
+            <td>${escapeHtml(lesson.teacherName || "-")}</td>
+            <td>${escapeHtml(lesson.day || "-")}</td>
+            <td>الحصة ${escapeHtml(String(lesson.periodNumber || "-"))}</td>
+            <td>${escapeHtml(lesson.startTime || "-")}</td>
+            <td>${escapeHtml(lesson.endTime || "-")}</td>
+            <td><span class="badge ${statusClass}">${escapeHtml(statusLabel)}</span></td>
+            <td>${escapeHtml(lesson.notes || "-")}</td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-secondary btn-sm" type="button" data-action="edit" data-id="${escapeHtml(lesson.id)}">تعديل</button>
+                <button class="btn btn-danger btn-sm" type="button" data-action="delete" data-id="${escapeHtml(lesson.id)}">حذف</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderDaySummary(items) {
+      el.daySummary.innerHTML = "";
+
+      DAYS.forEach((day) => {
+        const dayItems = items
+          .filter((lesson) => normalize(lesson.day) === day)
+          .sort((a, b) => Number(a.periodNumber || 0) - Number(b.periodNumber || 0));
+
+        const card = document.createElement("div");
+        card.className = "day-card";
+
+        if (!dayItems.length) {
+          card.innerHTML = `
+            <h3>${escapeHtml(day)}</h3>
+            <div class="empty">لا توجد حصص لهذا اليوم.</div>
+          `;
+        } else {
+          const inner = dayItems.map((lesson) => `
+            <div class="lesson-item">
+              <strong>الحصة ${escapeHtml(String(lesson.periodNumber))} - ${escapeHtml(lesson.subjectName || "-")}</strong>
+              <span>الصف: ${escapeHtml(lesson.className || "-")}</span>
+              <span>المعلم: ${escapeHtml(lesson.teacherName || "-")}</span>
+              <span>الوقت: ${escapeHtml(lesson.startTime || "-")} → ${escapeHtml(lesson.endTime || "-")}</span>
+            </div>
+          `).join("");
+
+          card.innerHTML = `
+            <h3>${escapeHtml(day)} (${dayItems.length})</h3>
+            <div class="day-list">${inner}</div>
+          `;
+        }
+
+        el.daySummary.appendChild(card);
+      });
+    }
+
+    function applyFiltersAndRender() {
+      state.filteredLessons = getFilteredLessons();
+      renderLessonsTable(state.filteredLessons);
+      renderDaySummary(state.filteredLessons);
+    }
+
+    async function refreshAll() {
+      try {
+        hideMessage();
+        setLoading(true, "جارِ تحميل البيانات المرتبطة بالمدرسة...");
+
+        await loadLinkedData();
+        await loadLessons();
+
+        if (!state.subjects.length || !state.teachers.length || !state.classes.length) {
+          showMessage(
+            "تم تحميل الصفحة، لكن بعض البيانات الأساسية ناقصة. إذا أردت إضافة حصص بشكل كامل، تأكد أن المدرسة تحتوي على مواد ومعلمين وصفوف داخل Firebase.",
+            "info"
+          );
+        }
+      } catch (error) {
+        console.error("refreshAll error:", error);
+        showMessage("حدث خطأ أثناء تحميل بيانات الجدول", "error");
+      } finally {
+        setLoading(false);
+      }
+    }
 
     function bindEvents() {
-      els.logoutBtn.addEventListener("click", () => {
-        if (window.MadarisSession && typeof window.MadarisSession.logoutToLogin === "function") {
-          window.MadarisSession.logoutToLogin();
-        } else {
-          window.location.href = "/app/login.html";
+      el.lessonForm.addEventListener("submit", saveLesson);
+      el.resetBtn.addEventListener("click", resetForm);
+      el.refreshBtn.addEventListener("click", refreshAll);
+      el.logoutBtn.addEventListener("click", logout);
+
+      el.dayFilter.addEventListener("change", applyFiltersAndRender);
+      el.statusFilter.addEventListener("change", applyFiltersAndRender);
+      el.searchInput.addEventListener("input", applyFiltersAndRender);
+
+      el.lessonsTableBody.addEventListener("click", (event) => {
+        const target = event.target.closest("button[data-action]");
+        if (!target) return;
+
+        const action = target.dataset.action;
+        const id = normalize(target.dataset.id);
+
+        if (action === "edit") {
+          fillFormForEdit(id);
+        } else if (action === "delete") {
+          deleteLesson(id);
         }
       });
-
-      els.resetFormBtn.addEventListener("click", resetForm);
-      els.clearBtn.addEventListener("click", resetForm);
-      els.saveBtn.addEventListener("click", saveSchedule);
-      els.refreshBtn.addEventListener("click", loadAll);
-      els.searchInput.addEventListener("input", renderTable);
-      els.dayFilter.addEventListener("change", renderTable);
     }
 
     async function init() {
-      if (!window.MadarisSession || typeof window.MadarisSession.requireSchoolSession !== "function") {
-        window.location.replace("/app/login.html");
+      state.session = getSession();
+
+      if (!state.session) {
+        showMessage("انتهت الجلسة أو لم يتم العثور عليها. سيتم تحويلك إلى صفحة الدخول.", "error");
+        setTimeout(goToLogin, 900);
         return;
       }
 
-      session = window.MadarisSession.requireSchoolSession();
-      if (!session) return;
+      state.schoolId = resolveSchoolId(state.session);
+      state.schoolName = resolveSchoolName(state.session);
 
-      schoolId = text(session.schoolId);
-      schoolName = text(session.schoolName) || "المدرسة";
-      els.schoolBadge.textContent = `المدرسة: ${schoolName}`;
+      if (!state.schoolId) {
+        showMessage("تعذر تحديد المدرسة الحالية من الجلسة. سيتم تحويلك إلى صفحة الدخول.", "error");
+        setTimeout(goToLogin, 900);
+        return;
+      }
+
+      el.schoolName.textContent = state.schoolName;
+      el.schoolMeta.textContent = `معرّف المدرسة: ${state.schoolId}`;
 
       bindEvents();
-      resetForm();
-      await loadAll();
+      await refreshAll();
+
+      window.ManageSchedulePage = {
+        state,
+        refreshAll,
+        loadLessons,
+        loadLinkedData,
+        fillFormForEdit,
+        resetForm
+      };
     }
 
     init();
   </script>
 </body>
-  </html>
+</html>
+    
