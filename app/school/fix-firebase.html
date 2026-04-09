@@ -497,702 +497,745 @@ schedules</textarea>
   </div>
 
   <!-- Firebase SDKs -->
-  <script type="module">
-    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      getDocs,
-      query,
-      where,
-      limit
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-    import {
-      getAuth,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+<script type="module">
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import {
+    getFirestore as getModularFirestore,
+    collection as modularCollection,
+    getDocs as modularGetDocs,
+    query as modularQuery,
+    where as modularWhere,
+    limit as modularLimit
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  import {
+    getAuth as getModularAuth,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-    const els = {
-      schoolIdInput: document.getElementById("schoolIdInput"),
-      collectionsInput: document.getElementById("collectionsInput"),
-      sampleLimitInput: document.getElementById("sampleLimitInput"),
-      strictSchoolFilter: document.getElementById("strictSchoolFilter"),
-      runAuditBtn: document.getElementById("runAuditBtn"),
-      clearBtn: document.getElementById("clearBtn"),
-      copyReportBtn: document.getElementById("copyReportBtn"),
-      downloadReportBtn: document.getElementById("downloadReportBtn"),
+  const els = {
+    schoolIdInput: document.getElementById("schoolIdInput"),
+    collectionsInput: document.getElementById("collectionsInput"),
+    sampleLimitInput: document.getElementById("sampleLimitInput"),
+    strictSchoolFilter: document.getElementById("strictSchoolFilter"),
+    runAuditBtn: document.getElementById("runAuditBtn"),
+    clearBtn: document.getElementById("clearBtn"),
+    copyReportBtn: document.getElementById("copyReportBtn"),
+    downloadReportBtn: document.getElementById("downloadReportBtn"),
 
-      kpiSchool: document.getElementById("kpiSchool"),
-      kpiCollections: document.getElementById("kpiCollections"),
-      kpiDocs: document.getElementById("kpiDocs"),
-      kpiWarnings: document.getElementById("kpiWarnings"),
-      kpiErrors: document.getElementById("kpiErrors"),
+    kpiSchool: document.getElementById("kpiSchool"),
+    kpiCollections: document.getElementById("kpiCollections"),
+    kpiDocs: document.getElementById("kpiDocs"),
+    kpiWarnings: document.getElementById("kpiWarnings"),
+    kpiErrors: document.getElementById("kpiErrors"),
 
-      firebaseStatus: document.getElementById("firebaseStatus"),
-      authStatus: document.getElementById("authStatus"),
-      dbStatus: document.getElementById("dbStatus"),
-      topMessage: document.getElementById("topMessage"),
-      summaryIssues: document.getElementById("summaryIssues"),
-      collectionsResults: document.getElementById("collectionsResults"),
-      rawReport: document.getElementById("rawReport"),
-    };
+    firebaseStatus: document.getElementById("firebaseStatus"),
+    authStatus: document.getElementById("authStatus"),
+    dbStatus: document.getElementById("dbStatus"),
+    topMessage: document.getElementById("topMessage"),
+    summaryIssues: document.getElementById("summaryIssues"),
+    collectionsResults: document.getElementById("collectionsResults"),
+    rawReport: document.getElementById("rawReport"),
+  };
 
-    const REQUIRED_FIELDS = {
-      schools: ["id", "name", "managerName", "managerEmail", "status"],
-      users: ["id", "name", "email", "role", "schoolId", "status"],
-      teachers: ["id", "name", "schoolId"],
-      students: ["id", "name", "schoolId"],
-      classes: ["id", "name", "schoolId"],
-      subjects: ["id", "name", "schoolId"],
-      classSubjects: ["id", "schoolId"],
-      schedules: ["id", "schoolId"]
-    };
+  const REQUIRED_FIELDS = {
+    schools: ["id", "name", "managerName", "managerEmail", "status"],
+    users: ["id", "name", "email", "role", "schoolId", "status"],
+    teachers: ["id", "name", "schoolId"],
+    students: ["id", "name", "schoolId"],
+    classes: ["id", "name", "schoolId"],
+    subjects: ["id", "name", "schoolId"],
+    classSubjects: ["id", "schoolId"],
+    schedules: ["id", "schoolId"]
+  };
 
-    const INTEREST_FIELDS = [
-      "day",
-      "status",
-      "teacherType",
-      "isAI",
-      "gender",
-      "role",
-      "schoolId",
-      "classId",
-      "subjectId",
-      "teacherId",
-      "userId"
-    ];
+  const INTEREST_FIELDS = [
+    "day","status","teacherType","isAI","gender","role",
+    "schoolId","classId","subjectId","teacherId","userId","period"
+  ];
 
-    const POSSIBLE_FIREBASE_CONFIGS = [
-      window.__firebaseConfig,
-      window.firebaseConfig,
-      window.FIREBASE_CONFIG,
-      window.appFirebaseConfig
-    ].filter(Boolean);
+  let app = null;
+  let db = null;
+  let auth = null;
+  let dbMode = null; // modular | compat
+  let currentAuditReport = null;
 
-    let app = null;
-    let db = null;
-    let auth = null;
-    let currentAuditReport = null;
+  function setStatus(el, type, text){
+    el.className = `status ${type}`;
+    el.textContent = text;
+  }
 
-    function setStatus(el, type, text){
-      el.className = `status ${type}`;
-      el.textContent = text;
-    }
+  function setTopMessage(type, html){
+    elSafe("topMessage").className = type === "error" ? "danger-box" : "success-box";
+    elSafe("topMessage").innerHTML = html;
+  }
 
-    function setTopMessage(type, html){
-      els.topMessage.className = type === "error" ? "danger-box" : "success-box";
-      els.topMessage.innerHTML = html;
-    }
+  function elSafe(key){
+    return els[key];
+  }
 
-    function normalizeValue(value){
-      if (value === undefined) return "undefined";
-      if (value === null) return "null";
-      if (typeof value === "string") return value.trim() || "(empty string)";
-      if (typeof value === "boolean") return String(value);
-      if (typeof value === "number") return String(value);
-      if (Array.isArray(value)) return `array(${value.length})`;
-      if (typeof value === "object") return "object";
-      return String(value);
-    }
+  function normalizeValue(value){
+    if (value === undefined) return "undefined";
+    if (value === null) return "null";
+    if (typeof value === "string") return value.trim() || "(empty string)";
+    if (typeof value === "boolean") return String(value);
+    if (typeof value === "number") return String(value);
+    if (Array.isArray(value)) return `array(${value.length})`;
+    if (typeof value === "object") return "object";
+    return String(value);
+  }
 
-    function escapeHtml(value){
-      return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
+  function escapeHtml(value){
+    return String(value)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
 
-    function safePreview(data){
-      try{
-        return JSON.stringify(data, null, 2);
-      }catch{
-        return String(data);
-      }
-    }
+  function safePreview(data){
+    try { return JSON.stringify(data, null, 2); }
+    catch { return String(data); }
+  }
 
-    function uniqueSorted(arr){
-      return Array.from(new Set(arr)).sort((a,b)=>String(a).localeCompare(String(b), "ar"));
-    }
+  function uniqueSorted(arr){
+    return Array.from(new Set(arr)).sort((a,b)=>String(a).localeCompare(String(b), "ar"));
+  }
 
-    function getMissingRequiredFields(collectionName, data){
-      const required = REQUIRED_FIELDS[collectionName] || [];
-      return required.filter(field => {
-        const value = data[field];
-        return value === undefined || value === null || (typeof value === "string" && !value.trim());
+  function getMissingRequiredFields(collectionName, data){
+    const required = REQUIRED_FIELDS[collectionName] || [];
+    return required.filter(field => {
+      const value = data[field];
+      return value === undefined || value === null || (typeof value === "string" && !value.trim());
+    });
+  }
+
+  function pickInterestingValues(docs){
+    const map = {};
+    for (const field of INTEREST_FIELDS) map[field] = [];
+
+    docs.forEach(({data}) => {
+      INTEREST_FIELDS.forEach(field => {
+        if (field in data) map[field].push(normalizeValue(data[field]));
       });
-    }
+    });
 
-    function pickInterestingValues(docs){
-      const map = {};
-      for (const field of INTEREST_FIELDS) {
-        map[field] = [];
-      }
+    Object.keys(map).forEach(key => {
+      map[key] = uniqueSorted(map[key]).slice(0, 30);
+    });
 
-      docs.forEach(({data}) => {
-        INTEREST_FIELDS.forEach(field => {
-          if (field in data) {
-            map[field].push(normalizeValue(data[field]));
-          }
+    return map;
+  }
+
+  function detectTeacherInconsistency(docs){
+    const issues = [];
+    docs.forEach(({id, data}) => {
+      const hasTeacherType = Object.prototype.hasOwnProperty.call(data, "teacherType");
+      const hasIsAI = Object.prototype.hasOwnProperty.call(data, "isAI");
+
+      if (hasTeacherType && hasIsAI) {
+        issues.push({
+          severity: "warn",
+          code: "TEACHER_DUPLICATE_SEMANTICS",
+          message: `المعلم ${id} يحتوي teacherType و isAI معًا`,
+          docId: id
         });
-      });
+      }
 
-      Object.keys(map).forEach(key => {
-        map[key] = uniqueSorted(map[key]).slice(0, 30);
-      });
-
-      return map;
-    }
-
-    function detectTeacherInconsistency(docs){
-      const issues = [];
-      docs.forEach(({id, data}) => {
-        const hasTeacherType = Object.prototype.hasOwnProperty.call(data, "teacherType");
-        const hasIsAI = Object.prototype.hasOwnProperty.call(data, "isAI");
-
-        if (hasTeacherType && hasIsAI) {
+      if (hasTeacherType) {
+        const tt = String(data.teacherType).trim().toLowerCase();
+        if (!["human", "ai", "assistant", "teacher"].includes(tt)) {
           issues.push({
             severity: "warn",
-            code: "TEACHER_DUPLICATE_SEMANTICS",
-            message: `المعلم ${id} يحتوي teacherType و isAI معًا`,
+            code: "TEACHER_TYPE_UNUSUAL",
+            message: `قيمة teacherType غير معتادة في المعلم ${id}: ${data.teacherType}`,
             docId: id
           });
         }
+      }
+    });
+    return issues;
+  }
 
-        if (hasTeacherType) {
-          const tt = String(data.teacherType).trim().toLowerCase();
-          if (!["human", "ai", "assistant", "teacher"].includes(tt)) {
-            issues.push({
-              severity: "warn",
-              code: "TEACHER_TYPE_UNUSUAL",
-              message: `قيمة teacherType غير معتادة في المعلم ${id}: ${data.teacherType}`,
-              docId: id
-            });
-          }
-        }
-      });
-      return issues;
+  function detectDuplicateByKeys(docs, keys, label){
+    const map = new Map();
+    const issues = [];
+
+    docs.forEach(({id, data}) => {
+      const composite = keys.map(k => normalizeValue(data[k])).join(" | ");
+      if (!map.has(composite)) map.set(composite, []);
+      map.get(composite).push(id);
+    });
+
+    for (const [value, ids] of map.entries()) {
+      if (value.includes("undefined") || value.includes("null")) continue;
+      if (ids.length > 1) {
+        issues.push({
+          severity: "warn",
+          code: `DUPLICATE_${label}`,
+          message: `تكرار محتمل في ${label}: ${value}`,
+          docIds: ids
+        });
+      }
     }
 
-    function detectDuplicateByKeys(docs, keys, label){
-      const map = new Map();
-      const issues = [];
+    return issues;
+  }
 
-      docs.forEach(({id, data}) => {
-        const composite = keys.map(k => normalizeValue(data[k])).join(" | ");
-        if (!map.has(composite)) map.set(composite, []);
-        map.get(composite).push(id);
-      });
-
-      for (const [value, ids] of map.entries()) {
-        if (value.includes("undefined") || value.includes("null")) continue;
-        if (ids.length > 1) {
-          issues.push({
-            severity: "warn",
-            code: `DUPLICATE_${label}`,
-            message: `تكرار محتمل في ${label}: ${value}`,
-            docIds: ids
-          });
-        }
-      }
-
-      return issues;
+  function collectionKnownDuplicateChecks(collectionName, docs){
+    if (collectionName === "users") {
+      return detectDuplicateByKeys(docs, ["email", "schoolId"], "USERS_EMAIL_SCHOOL");
     }
-
-    function collectionKnownDuplicateChecks(collectionName, docs){
-      if (collectionName === "users") {
-        return detectDuplicateByKeys(docs, ["email", "schoolId"], "USERS_EMAIL_SCHOOL");
-      }
-      if (collectionName === "teachers") {
-        return [
-          ...detectDuplicateByKeys(docs, ["name", "schoolId"], "TEACHERS_NAME_SCHOOL"),
-          ...detectTeacherInconsistency(docs),
-        ];
-      }
-      if (collectionName === "classSubjects") {
-        return detectDuplicateByKeys(docs, ["classId", "subjectId", "schoolId"], "CLASS_SUBJECTS");
-      }
-      if (collectionName === "schedules") {
-        return detectDuplicateByKeys(docs, ["schoolId", "classId", "day", "period"], "SCHEDULES_SLOT");
-      }
-      return [];
+    if (collectionName === "teachers") {
+      return [
+        ...detectDuplicateByKeys(docs, ["name", "schoolId"], "TEACHERS_NAME_SCHOOL"),
+        ...detectTeacherInconsistency(docs),
+      ];
     }
+    if (collectionName === "classSubjects") {
+      return detectDuplicateByKeys(docs, ["classId", "subjectId", "schoolId"], "CLASS_SUBJECTS");
+    }
+    if (collectionName === "schedules") {
+      return detectDuplicateByKeys(docs, ["schoolId", "classId", "day", "period"], "SCHEDULES_SLOT");
+    }
+    return [];
+  }
 
-    function buildCollectionCardHtml(result){
-      const issuesHtml = result.issues.length
-        ? result.issues.map(issue => `
-          <div class="issue ${issue.severity}">
-            <strong>[${escapeHtml(issue.severity.toUpperCase())}] ${escapeHtml(issue.code)}</strong>
-            <div>${escapeHtml(issue.message)}</div>
-            ${
-              issue.docId
-                ? `<div class="small muted mono">docId: ${escapeHtml(issue.docId)}</div>`
-                : ""
-            }
-            ${
-              issue.docIds
-                ? `<div class="small muted mono">docIds: ${escapeHtml(issue.docIds.join(", "))}</div>`
-                : ""
-            }
-          </div>
-        `).join("")
-        : `<div class="issue good"><strong>OK</strong><div>لا توجد مشاكل واضحة في هذه المجموعة.</div></div>`;
+  function buildCollectionCardHtml(result){
+    const issuesHtml = result.issues.length
+      ? result.issues.map(issue => `
+        <div class="issue ${issue.severity}">
+          <strong>[${escapeHtml(issue.severity.toUpperCase())}] ${escapeHtml(issue.code)}</strong>
+          <div>${escapeHtml(issue.message)}</div>
+          ${issue.docId ? `<div class="small muted mono">docId: ${escapeHtml(issue.docId)}</div>` : ""}
+          ${issue.docIds ? `<div class="small muted mono">docIds: ${escapeHtml(issue.docIds.join(", "))}</div>` : ""}
+        </div>
+      `).join("")
+      : `<div class="issue good"><strong>OK</strong><div>لا توجد مشاكل واضحة في هذه المجموعة.</div></div>`;
 
-      const fieldsChips = result.fields.length
-        ? result.fields.map(f => `<span class="chip mono">${escapeHtml(f)}</span>`).join("")
-        : `<span class="chip">لا توجد حقول</span>`;
+    const fieldsChips = result.fields.length
+      ? result.fields.map(f => `<span class="chip mono">${escapeHtml(f)}</span>`).join("")
+      : `<span class="chip">لا توجد حقول</span>`;
 
-      const valuesHtml = Object.entries(result.interestingValues).map(([key, values]) => `
-        <div class="item">
-          <div class="item-head">
-            <div class="item-title mono">${escapeHtml(key)}</div>
-            <div class="small muted">Distinct Values</div>
-          </div>
-          <div class="chips">
-            ${
-              values.length
-                ? values.map(v => `<span class="chip">${escapeHtml(v)}</span>`).join("")
-                : `<span class="chip muted">—</span>`
-            }
+    const valuesHtml = Object.entries(result.interestingValues).map(([key, values]) => `
+      <div class="item">
+        <div class="item-head">
+          <div class="item-title mono">${escapeHtml(key)}</div>
+          <div class="small muted">Distinct Values</div>
+        </div>
+        <div class="chips">
+          ${values.length ? values.map(v => `<span class="chip">${escapeHtml(v)}</span>`).join("") : `<span class="chip muted">—</span>`}
+        </div>
+      </div>
+    `).join("");
+
+    const sampleRows = result.sampleDocs.map(doc => `
+      <tr>
+        <td class="mono">${escapeHtml(doc.id)}</td>
+        <td>${escapeHtml(doc.missingRequired.join(", ") || "—")}</td>
+        <td><div class="code">${escapeHtml(safePreview(doc.data))}</div></td>
+      </tr>
+    `).join("");
+
+    return `
+      <div class="item">
+        <div class="item-head">
+          <div class="item-title mono">${escapeHtml(result.collection)}</div>
+          <div>
+            ${result.error
+              ? `<span class="status bad">خطأ</span>`
+              : result.issues.length
+                ? `<span class="status warn">${result.issues.length} issue(s)</span>`
+                : `<span class="status good">سليم ظاهريًا</span>`}
           </div>
         </div>
-      `).join("");
 
-      const sampleRows = result.sampleDocs.map(doc => `
-        <tr>
-          <td class="mono">${escapeHtml(doc.id)}</td>
-          <td>${escapeHtml(doc.missingRequired.join(", ") || "—")}</td>
-          <td><div class="code">${escapeHtml(safePreview(doc.data))}</div></td>
-        </tr>
-      `).join("");
-
-      return `
-        <div class="item">
-          <div class="item-head">
-            <div class="item-title mono">${escapeHtml(result.collection)}</div>
-            <div>
-              ${
-                result.error
-                  ? `<span class="status bad">خطأ</span>`
-                  : result.issues.length
-                    ? `<span class="status warn">${result.issues.length} issue(s)</span>`
-                    : `<span class="status good">سليم ظاهريًا</span>`
-              }
-            </div>
+        <div class="row" style="margin-bottom:12px;">
+          <div class="item">
+            <div class="small muted">Docs</div>
+            <div style="font-size:24px;font-weight:800">${result.docsCount}</div>
           </div>
-
-          <div class="row" style="margin-bottom:12px;">
-            <div class="item">
-              <div class="small muted">Docs</div>
-              <div style="font-size:24px;font-weight:800">${result.docsCount}</div>
-            </div>
-            <div class="item">
-              <div class="small muted">Missing Required Rows</div>
-              <div style="font-size:24px;font-weight:800">${result.missingRequiredRows}</div>
-            </div>
+          <div class="item">
+            <div class="small muted">Missing Required Rows</div>
+            <div style="font-size:24px;font-weight:800">${result.missingRequiredRows}</div>
           </div>
+        </div>
 
-          ${result.error ? `
-            <div class="issue bad">
-              <strong>READ_ERROR</strong>
-              <div>${escapeHtml(result.error)}</div>
-            </div>
-          ` : ""}
-
-          <div class="section">
-            <h3>Fields</h3>
-            <div class="chips">${fieldsChips}</div>
+        ${result.error ? `
+          <div class="issue bad">
+            <strong>READ_ERROR</strong>
+            <div>${escapeHtml(result.error)}</div>
           </div>
+        ` : ""}
 
-          <div class="section">
-            <h3>Issues</h3>
-            ${issuesHtml}
-          </div>
+        <div class="section">
+          <h3>Fields</h3>
+          <div class="chips">${fieldsChips}</div>
+        </div>
 
-          <div class="section">
-            <h3>Interesting Values</h3>
-            <div class="list">${valuesHtml}</div>
-          </div>
+        <div class="section">
+          <h3>Issues</h3>
+          ${issuesHtml}
+        </div>
 
-          <div class="section">
-            <h3>Sample Docs</h3>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Doc ID</th>
-                    <th>Missing Required</th>
-                    <th>Data</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${sampleRows || `<tr><td colspan="3">لا توجد سجلات</td></tr>`}
-                </tbody>
-              </table>
-            </div>
+        <div class="section">
+          <h3>Interesting Values</h3>
+          <div class="list">${valuesHtml}</div>
+        </div>
+
+        <div class="section">
+          <h3>Sample Docs</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Doc ID</th>
+                  <th>Missing Required</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sampleRows || `<tr><td colspan="3">لا توجد سجلات</td></tr>`}
+              </tbody>
+            </table>
           </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderSummary(report){
+    els.kpiSchool.textContent = report.schoolId || "—";
+    els.kpiCollections.textContent = report.collectionsChecked;
+    els.kpiDocs.textContent = report.totalDocuments;
+    els.kpiWarnings.textContent = report.warnings;
+    els.kpiErrors.textContent = report.errors;
+
+    if (!report.summaryIssues.length) {
+      els.summaryIssues.innerHTML = `
+        <div class="issue good">
+          <strong>نتيجة عامة جيدة</strong>
+          <div>لم يتم العثور على مشاكل حرجة واضحة ضمن الفحص الحالي.</div>
         </div>
       `;
+    } else {
+      els.summaryIssues.innerHTML = report.summaryIssues.map((item, index) => `
+        <div class="issue ${item.severity}">
+          <strong>${index + 1}. [${escapeHtml(item.severity.toUpperCase())}] ${escapeHtml(item.scope)}</strong>
+          <div>${escapeHtml(item.message)}</div>
+        </div>
+      `).join("");
     }
 
-    function renderSummary(report){
-      els.kpiSchool.textContent = report.schoolId || "—";
-      els.kpiCollections.textContent = report.collectionsChecked;
-      els.kpiDocs.textContent = report.totalDocuments;
-      els.kpiWarnings.textContent = report.warnings;
-      els.kpiErrors.textContent = report.errors;
+    els.collectionsResults.innerHTML = report.collections.map(buildCollectionCardHtml).join("");
+    els.rawReport.textContent = JSON.stringify(report, null, 2);
+  }
 
-      if (!report.summaryIssues.length) {
-        els.summaryIssues.innerHTML = `
-          <div class="issue good">
-            <strong>نتيجة عامة جيدة</strong>
-            <div>لم يتم العثور على مشاكل حرجة واضحة ضمن الفحص الحالي.</div>
-          </div>
-        `;
-      } else {
-        els.summaryIssues.innerHTML = report.summaryIssues.map((item, index) => `
-          <div class="issue ${item.severity}">
-            <strong>${index + 1}. [${escapeHtml(item.severity.toUpperCase())}] ${escapeHtml(item.scope)}</strong>
-            <div>${escapeHtml(item.message)}</div>
-          </div>
-        `).join("");
-      }
-
-      els.collectionsResults.innerHTML = report.collections.map(buildCollectionCardHtml).join("");
-      els.rawReport.textContent = JSON.stringify(report, null, 2);
+  function findCompatFirebase(){
+    if (window.firebase && typeof window.firebase.firestore === "function") {
+      return window.firebase;
     }
+    return null;
+  }
 
-    async function tryInitFirebase(){
-      try{
-        if (getApps().length) {
-          app = getApp();
-        } else if (POSSIBLE_FIREBASE_CONFIGS.length) {
-          app = initializeApp(POSSIBLE_FIREBASE_CONFIGS[0]);
+  function findConfig(){
+    return (
+      window.__firebaseConfig ||
+      window.firebaseConfig ||
+      window.FIREBASE_CONFIG ||
+      window.appFirebaseConfig ||
+      null
+    );
+  }
+
+  async function tryInitFirebase(){
+    try {
+      const compatFirebase = findCompatFirebase();
+
+      if (compatFirebase) {
+        db = compatFirebase.firestore();
+        auth = typeof compatFirebase.auth === "function" ? compatFirebase.auth() : null;
+        dbMode = "compat";
+
+        setStatus(els.firebaseStatus, "good", "Firebase: جاهز (compat)");
+        setStatus(els.dbStatus, "good", "Firestore: جاهز (compat)");
+
+        if (auth && typeof auth.onAuthStateChanged === "function") {
+          auth.onAuthStateChanged((user) => {
+            if (user) {
+              setStatus(els.authStatus, "good", `Auth: ${user.email || user.uid}`);
+            } else {
+              setStatus(els.authStatus, "warn", "Auth: لا يوجد مستخدم مسجّل");
+            }
+          });
         } else {
-          throw new Error("لم يتم العثور على Firebase config داخل window.__firebaseConfig أو window.firebaseConfig.");
+          setStatus(els.authStatus, "warn", "Auth: غير متاح");
         }
-
-        db = getFirestore(app);
-        auth = getAuth(app);
-
-        setStatus(els.firebaseStatus, "good", "Firebase: جاهز");
-        setStatus(els.dbStatus, "good", "Firestore: جاهز");
-
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            setStatus(els.authStatus, "good", `Auth: ${user.email || user.uid}`);
-          } else {
-            setStatus(els.authStatus, "warn", "Auth: لا يوجد مستخدم مسجّل");
-          }
-        });
 
         return true;
-      } catch (error) {
-        console.error(error);
-        setStatus(els.firebaseStatus, "bad", "Firebase: فشل التهيئة");
-        setStatus(els.dbStatus, "bad", "Firestore: غير متاح");
-        setTopMessage("error", `
-          <strong>فشل تهيئة Firebase.</strong><br>
-          السبب: ${escapeHtml(error.message || String(error))}<br><br>
-          هذا يعني أن الصفحة لا ترى إعدادات Firebase الحالية.
-          إذا ظهر لك هذا الخطأ، أرسل لي ملف الربط الحالي لـ Firebase من المشروع وسأربطها لك فورًا.
-        `);
-        return false;
-      }
-    }
-
-    async function readCollectionDocs(collectionName, schoolId, sampleLimit, strictSchoolFilter){
-      const colRef = collection(db, collectionName);
-
-      let docs = [];
-      let usedFilter = false;
-
-      try{
-        if (strictSchoolFilter === "yes" && schoolId && collectionName !== "schools") {
-          const q = query(colRef, where("schoolId", "==", schoolId), limit(500));
-          const snap = await getDocs(q);
-          docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
-          usedFilter = true;
-        } else {
-          const snap = await getDocs(query(colRef, limit(500)));
-          docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
-        }
-      } catch (e) {
-        if (strictSchoolFilter === "yes" && schoolId) {
-          try{
-            const snap = await getDocs(query(colRef, limit(500)));
-            docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
-            usedFilter = false;
-          } catch (err2) {
-            throw err2;
-          }
-        } else {
-          throw e;
-        }
       }
 
-      let filteredDocs = docs;
-      if (!usedFilter && schoolId && collectionName !== "schools" && strictSchoolFilter === "yes") {
-        filteredDocs = docs.filter(doc => {
-          const data = doc.data || {};
-          return data.schoolId === schoolId;
-        });
+      const cfg = findConfig();
+      if (!cfg) {
+        throw new Error("لم يتم العثور على Firebase config أو firebase compat داخل المشروع.");
       }
 
-      const fields = uniqueSorted(
-        filteredDocs.flatMap(({data}) => Object.keys(data || {}))
-      );
-
-      const sampleDocs = filteredDocs.slice(0, sampleLimit).map(doc => ({
-        id: doc.id,
-        data: doc.data,
-        missingRequired: getMissingRequiredFields(collectionName, doc.data)
-      }));
-
-      const missingRequiredRows = filteredDocs.filter(doc => (
-        getMissingRequiredFields(collectionName, doc.data).length > 0
-      )).length;
-
-      const issues = [];
-
-      filteredDocs.forEach(doc => {
-        const missing = getMissingRequiredFields(collectionName, doc.data);
-        if (missing.length) {
-          issues.push({
-            severity: "warn",
-            code: "MISSING_REQUIRED_FIELDS",
-            message: `الوثيقة ${doc.id} ناقص فيها: ${missing.join(", ")}`,
-            docId: doc.id
-          });
-        }
-      });
-
-      if (schoolId && collectionName !== "schools") {
-        const withoutSchool = filteredDocs.filter(doc => !doc.data?.schoolId);
-        withoutSchool.forEach(doc => {
-          issues.push({
-            severity: "warn",
-            code: "MISSING_SCHOOL_ID",
-            message: `الوثيقة ${doc.id} لا تحتوي schoolId`,
-            docId: doc.id
-          });
-        });
-      }
-
-      ["classId", "subjectId", "teacherId"].forEach(refField => {
-        filteredDocs.forEach(doc => {
-          if (
-            ["classSubjects", "schedules"].includes(collectionName) &&
-            !(refField in (doc.data || {}))
-          ) {
-            issues.push({
-              severity: "warn",
-              code: `MISSING_${refField.toUpperCase()}`,
-              message: `الوثيقة ${doc.id} لا تحتوي ${refField}`,
-              docId: doc.id
-            });
-          }
-        });
-      });
-
-      issues.push(...collectionKnownDuplicateChecks(collectionName, filteredDocs));
-
-      return {
-        collection: collectionName,
-        docsCount: filteredDocs.length,
-        missingRequiredRows,
-        fields,
-        interestingValues: pickInterestingValues(filteredDocs),
-        sampleDocs,
-        issues,
-        error: null
-      };
-    }
-   async function runAudit(){
-      const schoolId = els.schoolIdInput.value.trim();
-      const collections = els.collectionsInput.value
-        .split(/\n|,/)
-        .map(v => v.trim())
-        .filter(Boolean);
-
-      const sampleLimit = Math.max(1, Math.min(50, Number(els.sampleLimitInput.value || 10)));
-      const strictSchoolFilter = els.strictSchoolFilter.value;
-
-      if (!collections.length) {
-        setTopMessage("error", "أدخل Collection واحدة على الأقل.");
-        return;
-      }
-
-      setTopMessage("ok", "جارٍ فحص Firebase... انتظر قليلًا.");
-      els.summaryIssues.innerHTML = "";
-      els.collectionsResults.innerHTML = "";
-      els.rawReport.textContent = "{}";
-
-      const report = {
-        generatedAt: new Date().toISOString(),
-        schoolId,
-        collectionsChecked: 0,
-        totalDocuments: 0,
-        warnings: 0,
-        errors: 0,
-        summaryIssues: [],
-        collections: []
-      };
-
-      for (const collectionName of collections) {
-        try{
-          const result = await readCollectionDocs(collectionName, schoolId, sampleLimit, strictSchoolFilter);
-          report.collections.push(result);
-          report.collectionsChecked += 1;
-          report.totalDocuments += result.docsCount;
-
-          const warns = result.issues.filter(i => i.severity === "warn").length;
-          const errs = result.issues.filter(i => i.severity === "bad").length;
-          report.warnings += warns;
-          report.errors += errs;
-
-          if (result.missingRequiredRows > 0) {
-            report.summaryIssues.push({
-              severity: "warn",
-              scope: collectionName,
-              message: `يوجد ${result.missingRequiredRows} سجل ناقص الحقول الأساسية في ${collectionName}`
-            });
-          }
-
-          const teacherSemanticDup = result.issues.find(i => i.code === "TEACHER_DUPLICATE_SEMANTICS");
-          if (teacherSemanticDup) {
-            report.summaryIssues.push({
-              severity: "warn",
-              scope: collectionName,
-              message: `يوجد ازدواج محتمل بين teacherType و isAI داخل ${collectionName}`
-            });
-          }
-
-          const dupIssue = result.issues.find(i => i.code.startsWith("DUPLICATE_"));
-          if (dupIssue) {
-            report.summaryIssues.push({
-              severity: "warn",
-              scope: collectionName,
-              message: `يوجد تكرار محتمل في بعض سجلات ${collectionName}`
-            });
-          }
-        } catch (error) {
-          console.error(`Error reading ${collectionName}:`, error);
-
-          report.collections.push({
-            collection: collectionName,
-            docsCount: 0,
-            missingRequiredRows: 0,
-            fields: [],
-            interestingValues: {},
-            sampleDocs: [],
-            issues: [],
-            error: error.message || String(error)
-          });
-
-          report.collectionsChecked += 1;
-          report.errors += 1;
-          report.summaryIssues.push({
-            severity: "bad",
-            scope: collectionName,
-            message: `فشل قراءة ${collectionName}: ${error.message || String(error)}`
-          });
-        }
-      }
-
-      currentAuditReport = report;
-      renderSummary(report);
-
-      if (report.errors > 0) {
-        setTopMessage("error", `
-          <strong>اكتمل الفحص مع وجود أخطاء أو قيود قراءة.</strong><br>
-          راجع تفاصيل كل Collection في الأسفل.
-        `);
-      } else if (report.warnings > 0) {
-        setTopMessage("ok", `
-          <strong>اكتمل الفحص.</strong><br>
-          تم العثور على ملاحظات تحتاج توحيد أو تنظيف بيانات، لكنها ليست فشلًا تقنيًا بحد ذاتها.
-        `);
+      if (getApps().length) {
+        app = getApp();
       } else {
-        setTopMessage("ok", `
-          <strong>اكتمل الفحص بنجاح.</strong><br>
-          لا توجد مشاكل ظاهرة ضمن النطاق الحالي.
-        `);
+        app = initializeApp(cfg);
+      }
+
+      db = getModularFirestore(app);
+      auth = getModularAuth(app);
+      dbMode = "modular";
+
+      setStatus(els.firebaseStatus, "good", "Firebase: جاهز (modular)");
+      setStatus(els.dbStatus, "good", "Firestore: جاهز (modular)");
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setStatus(els.authStatus, "good", `Auth: ${user.email || user.uid}`);
+        } else {
+          setStatus(els.authStatus, "warn", "Auth: لا يوجد مستخدم مسجّل");
+        }
+      });
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      setStatus(els.firebaseStatus, "bad", "Firebase: فشل التهيئة");
+      setStatus(els.dbStatus, "bad", "Firestore: غير متاح");
+      setStatus(els.authStatus, "warn", "Auth: غير معروف");
+      setTopMessage("error", `
+        <strong>فشل تهيئة Firebase.</strong><br>
+        السبب: ${escapeHtml(error.message || String(error))}
+      `);
+      return false;
+    }
+  }
+
+  async function readDocsCompat(collectionName, schoolId, sampleLimit, strictSchoolFilter){
+    let ref = db.collection(collectionName);
+    let snap;
+
+    if (strictSchoolFilter === "yes" && schoolId && collectionName !== "schools") {
+      try {
+        snap = await ref.where("schoolId", "==", schoolId).limit(500).get();
+      } catch {
+        snap = await ref.limit(500).get();
+      }
+    } else {
+      snap = await ref.limit(500).get();
+    }
+
+    let docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+
+    if (strictSchoolFilter === "yes" && schoolId && collectionName !== "schools") {
+      docs = docs.filter(doc => (doc.data?.schoolId === schoolId));
+    }
+
+    return docs;
+  }
+
+  async function readDocsModular(collectionName, schoolId, strictSchoolFilter){
+    const colRef = modularCollection(db, collectionName);
+
+    let docs = [];
+    let usedFilter = false;
+
+    try {
+      if (strictSchoolFilter === "yes" && schoolId && collectionName !== "schools") {
+        const q = modularQuery(colRef, modularWhere("schoolId", "==", schoolId), modularLimit(500));
+        const snap = await modularGetDocs(q);
+        docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+        usedFilter = true;
+      } else {
+        const snap = await modularGetDocs(modularQuery(colRef, modularLimit(500)));
+        docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+      }
+    } catch (e) {
+      if (strictSchoolFilter === "yes" && schoolId) {
+        const snap = await modularGetDocs(modularQuery(colRef, modularLimit(500)));
+        docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+        usedFilter = false;
+      } else {
+        throw e;
       }
     }
 
-    function clearResults(){
-      currentAuditReport = null;
-      els.kpiSchool.textContent = "—";
-      els.kpiCollections.textContent = "0";
-      els.kpiDocs.textContent = "0";
-      els.kpiWarnings.textContent = "0";
-      els.kpiErrors.textContent = "0";
-      els.summaryIssues.innerHTML = "";
-      els.collectionsResults.innerHTML = "";
-      els.rawReport.textContent = "{}";
-      setTopMessage("ok", "تم مسح النتائج. الصفحة جاهزة لفحص جديد.");
+    if (!usedFilter && strictSchoolFilter === "yes" && schoolId && collectionName !== "schools") {
+      docs = docs.filter(doc => doc.data?.schoolId === schoolId);
     }
 
-    async function copyReport(){
-      if (!currentAuditReport) {
-        alert("لا يوجد تقرير لنسخه بعد.");
-        return;
+    return docs;
+  }
+
+  async function readCollectionDocs(collectionName, schoolId, sampleLimit, strictSchoolFilter){
+    let filteredDocs = [];
+
+    if (dbMode === "compat") {
+      filteredDocs = await readDocsCompat(collectionName, schoolId, sampleLimit, strictSchoolFilter);
+    } else if (dbMode === "modular") {
+      filteredDocs = await readDocsModular(collectionName, schoolId, strictSchoolFilter);
+    } else {
+      throw new Error("Firestore غير مهيأ بشكل صحيح.");
+    }
+
+    const fields = uniqueSorted(filteredDocs.flatMap(({data}) => Object.keys(data || {})));
+
+    const sampleDocs = filteredDocs.slice(0, sampleLimit).map(doc => ({
+      id: doc.id,
+      data: doc.data,
+      missingRequired: getMissingRequiredFields(collectionName, doc.data)
+    }));
+
+    const missingRequiredRows = filteredDocs.filter(doc => (
+      getMissingRequiredFields(collectionName, doc.data).length > 0
+    )).length;
+
+    const issues = [];
+
+    filteredDocs.forEach(doc => {
+      const missing = getMissingRequiredFields(collectionName, doc.data);
+      if (missing.length) {
+        issues.push({
+          severity: "warn",
+          code: "MISSING_REQUIRED_FIELDS",
+          message: `الوثيقة ${doc.id} ناقص فيها: ${missing.join(", ")}`,
+          docId: doc.id
+        });
       }
+    });
 
-      const text = JSON.stringify(currentAuditReport, null, 2);
-      try{
-        await navigator.clipboard.writeText(text);
-        alert("تم نسخ التقرير.");
-      }catch{
-        alert("فشل النسخ التلقائي. انسخ التقرير من مربع التقرير الخام.");
+    if (schoolId && collectionName !== "schools") {
+      filteredDocs.filter(doc => !doc.data?.schoolId).forEach(doc => {
+        issues.push({
+          severity: "warn",
+          code: "MISSING_SCHOOL_ID",
+          message: `الوثيقة ${doc.id} لا تحتوي schoolId`,
+          docId: doc.id
+        });
+      });
+    }
+
+    ["classId", "subjectId", "teacherId"].forEach(refField => {
+      filteredDocs.forEach(doc => {
+        if (
+          ["classSubjects", "schedules"].includes(collectionName) &&
+          !(refField in (doc.data || {}))
+        ) {
+          issues.push({
+            severity: "warn",
+            code: `MISSING_${refField.toUpperCase()}`,
+            message: `الوثيقة ${doc.id} لا تحتوي ${refField}`,
+            docId: doc.id
+          });
+        }
+      });
+    });
+
+    issues.push(...collectionKnownDuplicateChecks(collectionName, filteredDocs));
+
+    return {
+      collection: collectionName,
+      docsCount: filteredDocs.length,
+      missingRequiredRows,
+      fields,
+      interestingValues: pickInterestingValues(filteredDocs),
+      sampleDocs,
+      issues,
+      error: null
+    };
+  }
+
+  async function runAudit(){
+    const schoolId = els.schoolIdInput.value.trim();
+    const collections = els.collectionsInput.value
+      .split(/\n|,/)
+      .map(v => v.trim())
+      .filter(Boolean);
+
+    const sampleLimit = Math.max(1, Math.min(50, Number(els.sampleLimitInput.value || 10)));
+    const strictSchoolFilter = els.strictSchoolFilter.value;
+
+    if (!collections.length) {
+      setTopMessage("error", "أدخل Collection واحدة على الأقل.");
+      return;
+    }
+
+    if (!db) {
+      const ok = await tryInitFirebase();
+      if (!ok) return;
+    }
+
+    setTopMessage("ok", "جارٍ فحص Firebase... انتظر قليلًا.");
+    els.summaryIssues.innerHTML = "";
+    els.collectionsResults.innerHTML = "";
+    els.rawReport.textContent = "{}";
+
+    const report = {
+      generatedAt: new Date().toISOString(),
+      schoolId,
+      collectionsChecked: 0,
+      totalDocuments: 0,
+      warnings: 0,
+      errors: 0,
+      summaryIssues: [],
+      collections: []
+    };
+
+    for (const collectionName of collections) {
+      try {
+        const result = await readCollectionDocs(collectionName, schoolId, sampleLimit, strictSchoolFilter);
+        report.collections.push(result);
+        report.collectionsChecked += 1;
+        report.totalDocuments += result.docsCount;
+
+        const warns = result.issues.filter(i => i.severity === "warn").length;
+        const errs = result.issues.filter(i => i.severity === "bad").length;
+        report.warnings += warns;
+        report.errors += errs;
+
+        if (result.missingRequiredRows > 0) {
+          report.summaryIssues.push({
+            severity: "warn",
+            scope: collectionName,
+            message: `يوجد ${result.missingRequiredRows} سجل ناقص الحقول الأساسية في ${collectionName}`
+          });
+        }
+
+        const teacherSemanticDup = result.issues.find(i => i.code === "TEACHER_DUPLICATE_SEMANTICS");
+        if (teacherSemanticDup) {
+          report.summaryIssues.push({
+            severity: "warn",
+            scope: collectionName,
+            message: `يوجد ازدواج محتمل بين teacherType و isAI داخل ${collectionName}`
+          });
+        }
+
+        const dupIssue = result.issues.find(i => i.code.startsWith("DUPLICATE_"));
+        if (dupIssue) {
+          report.summaryIssues.push({
+            severity: "warn",
+            scope: collectionName,
+            message: `يوجد تكرار محتمل في بعض سجلات ${collectionName}`
+          });
+        }
+      } catch (error) {
+        console.error(`Error reading ${collectionName}:`, error);
+
+        report.collections.push({
+          collection: collectionName,
+          docsCount: 0,
+          missingRequiredRows: 0,
+          fields: [],
+          interestingValues: {},
+          sampleDocs: [],
+          issues: [],
+          error: error.message || String(error)
+        });
+
+        report.collectionsChecked += 1;
+        report.errors += 1;
+        report.summaryIssues.push({
+          severity: "bad",
+          scope: collectionName,
+          message: `فشل قراءة ${collectionName}: ${error.message || String(error)}`
+        });
       }
     }
 
-    function downloadReport(){
-      if (!currentAuditReport) {
-        alert("لا يوجد تقرير لتنزيله بعد.");
-        return;
-      }
+    currentAuditReport = report;
+    renderSummary(report);
 
-      const blob = new Blob(
-        [JSON.stringify(currentAuditReport, null, 2)],
-        { type: "application/json;charset=utf-8" }
-      );
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      const schoolPart = currentAuditReport.schoolId || "all";
-      a.href = url;
-      a.download = `firebase-audit-${schoolPart}.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+    if (report.errors > 0) {
+      setTopMessage("error", `
+        <strong>اكتمل الفحص مع وجود أخطاء أو قيود قراءة.</strong><br>
+        راجع تفاصيل كل Collection في الأسفل.
+      `);
+    } else if (report.warnings > 0) {
+      setTopMessage("ok", `
+        <strong>اكتمل الفحص.</strong><br>
+        تم العثور على ملاحظات تحتاج توحيد أو تنظيف بيانات.
+      `);
+    } else {
+      setTopMessage("ok", `
+        <strong>اكتمل الفحص بنجاح.</strong><br>
+        لا توجد مشاكل ظاهرة ضمن النطاق الحالي.
+      `);
+    }
+  }
+
+  function clearResults(){
+    currentAuditReport = null;
+    els.kpiSchool.textContent = "—";
+    els.kpiCollections.textContent = "0";
+    els.kpiDocs.textContent = "0";
+    els.kpiWarnings.textContent = "0";
+    els.kpiErrors.textContent = "0";
+    els.summaryIssues.innerHTML = "";
+    els.collectionsResults.innerHTML = "";
+    els.rawReport.textContent = "{}";
+    setTopMessage("ok", "تم مسح النتائج. الصفحة جاهزة لفحص جديد.");
+  }
+
+  async function copyReport(){
+    if (!currentAuditReport) {
+      alert("لا يوجد تقرير لنسخه بعد.");
+      return;
+    }
+    const text = JSON.stringify(currentAuditReport, null, 2);
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("تم نسخ التقرير.");
+    } catch {
+      alert("فشل النسخ التلقائي. انسخ التقرير من مربع التقرير الخام.");
+    }
+  }
+
+  function downloadReport(){
+    if (!currentAuditReport) {
+      alert("لا يوجد تقرير لتنزيله بعد.");
+      return;
     }
 
-    function tryReadSchoolIdFromUrl(){
-      const params = new URLSearchParams(location.search);
-      const schoolId = params.get("schoolId") || params.get("sid") || "";
-      if (schoolId) {
-        els.schoolIdInput.value = schoolId;
-      }
-    }
+    const blob = new Blob([JSON.stringify(currentAuditReport, null, 2)], {
+      type: "application/json;charset=utf-8"
+    });
 
-    function attachEvents(){
-      els.runAuditBtn.addEventListener("click", runAudit);
-      els.clearBtn.addEventListener("click", clearResults);
-      els.copyReportBtn.addEventListener("click", copyReport);
-      els.downloadReportBtn.addEventListener("click", downloadReport);
-    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const schoolPart = currentAuditReport.schoolId || "all";
+    a.href = url;
+    a.download = `firebase-audit-${schoolPart}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
 
-    async function boot(){
-      tryReadSchoolIdFromUrl();
-      attachEvents();
-      await tryInitFirebase();
-    }
+  function tryReadSchoolIdFromUrl(){
+    const params = new URLSearchParams(location.search);
+    const schoolId = params.get("schoolId") || params.get("sid") || "";
+    if (schoolId) els.schoolIdInput.value = schoolId;
+  }
 
-    boot();
-  </script>
+  function attachEvents(){
+    els.runAuditBtn.addEventListener("click", runAudit);
+    els.clearBtn.addEventListener("click", clearResults);
+    els.copyReportBtn.addEventListener("click", copyReport);
+    els.downloadReportBtn.addEventListener("click", downloadReport);
+  }
+
+  async function boot(){
+    tryReadSchoolIdFromUrl();
+    attachEvents();
+    await tryInitFirebase();
+  }
+
+  boot();
+</script>
+  
 </body>
 </html> 
