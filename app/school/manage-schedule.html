@@ -1368,7 +1368,14 @@ function normalizeTeacherTypeValue(value) {
         periodNumber: Number(item.periodNumber || item.period || item.lessonNumber || item.slot || 0),
         startTime: normalize(item.startTime || item.from || item.start || ""),
         endTime: normalize(item.endTime || item.to || item.end || ""),
-        status: normalizeLower(item.status || "active") || "active",
+        status: normalizeStatusValue(item.status || "active"),
+teacherType: normalizeTeacherTypeValue(
+  item.teacherType ||
+  item.teacher_type ||
+  item.teacherRoleLevel ||
+  ""
+),
+        
         notes: normalize(item.notes || item.note || item.description || ""),
         createdAt: item.createdAt || null,
         updatedAt: item.updatedAt || null
