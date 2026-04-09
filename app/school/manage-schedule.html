@@ -1430,7 +1430,26 @@ teacherType: normalizeTeacherTypeValue(
       const option = selectEl.options[selectEl.selectedIndex];
       return normalize(option?.dataset?.name || option?.textContent);
     }
+function getTeacherMetaById(teacherId) {
+  const found = state.teachers.find((entry) => normalize(entry.id) === normalize(teacherId));
+  const raw = found?.raw || {};
 
+  return {
+    teacherType: normalizeTeacherTypeValue(
+      raw.teacherType ||
+      raw.teacher_type ||
+      raw.type ||
+      raw.teacherRoleLevel ||
+      ""
+    ),
+    teacherRoleLevel: normalize(
+      raw.roleLevel ||
+      raw.teacherRoleLevel ||
+      raw.role ||
+      "teacher"
+    )
+  };
+}
     function buildLessonPayload() {
       const editingId = normalize(el.editingId.value);
       const classId = normalize(el.classSelect.value);
