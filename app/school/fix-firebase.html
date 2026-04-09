@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI - Firebase Fix & Audit</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#111a2e;
+      --panel-2:#16223c;
+      --line:#243556;
+      --text:#eef4ff;
+      --muted:#9fb0d1;
+      --good:#19c37d;
+      --warn:#f5b942;
+      --bad:#ff5d73;
+      --info:#5aa9ff;
+      --chip:#1b2a49;
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      background:linear-gradient(180deg,#09101d 0%, #0b1220 100%);
+      color:var(--text);
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    }
+
+    a{color:var(--info);text-decoration:none}
+    button,input,select,textarea{
+      font:inherit;
+    }
+
+    .wrap{
+      width:min(1400px,96%);
+      margin:20px auto 60px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg,#13213d 0%, #0f1a2f 50%, #17274a 100%);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      margin:0 0 8px;
+      font-size:28px;
+      line-height:1.4;
+    }
+
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:15px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:380px 1fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    @media (max-width: 980px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .card{
+      background:linear-gradient(180deg,var(--panel) 0%, var(--panel-2) 100%);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+
+    .card h2{
+      margin:0 0 12px;
+      font-size:18px;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .small{
+      font-size:13px;
+    }
+
+    .field{
+      margin-bottom:12px;
+    }
+
+    .field label{
+      display:block;
+      margin-bottom:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .field input,
+    .field textarea,
+    .field select{
+      width:100%;
+      border:1px solid var(--line);
+      background:#0d1628;
+      color:var(--text);
+      padding:11px 12px;
+      border-radius:12px;
+      outline:none;
+    }
+
+    .field textarea{
+      min-height:100px;
+      resize:vertical;
+      line-height:1.7;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    @media (max-width: 640px){
+      .row{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:12px;
+      padding:11px 14px;
+      cursor:pointer;
+      color:white;
+      font-weight:700;
+      box-shadow:var(--shadow);
+    }
+
+    .btn.primary{background:#1d4ed8}
+    .btn.good{background:#099268}
+    .btn.warn{background:#b7791f}
+    .btn.bad{background:#c92a2a}
+    .btn.gray{background:#334155}
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .kpis{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    @media (max-width: 1100px){
+      .kpis{grid-template-columns:repeat(3,1fr)}
+    }
+
+    @media (max-width: 700px){
+      .kpis{grid-template-columns:repeat(2,1fr)}
+    }
+
+    .kpi{
+      background:#0e1830;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .kpi .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:6px;
+    }
+
+    .kpi .num{
+      font-size:28px;
+      font-weight:800;
+      line-height:1.1;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      background:var(--chip);
+      border:1px solid var(--line);
+    }
+
+    .status.good{color:#b8ffdc;border-color:rgba(25,195,125,.35)}
+    .status.warn{color:#ffe1a6;border-color:rgba(245,185,66,.35)}
+    .status.bad{color:#ffc2cb;border-color:rgba(255,93,115,.35)}
+    .status.info{color:#c7e0ff;border-color:rgba(90,169,255,.35)}
+
+    .section{
+      margin-bottom:18px;
+    }
+
+    .section h3{
+      margin:0 0 12px;
+      font-size:17px;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 11px;
+      border-radius:999px;
+      background:var(--chip);
+      border:1px solid var(--line);
+      font-size:12px;
+      color:var(--text);
+      max-width:100%;
+      word-break:break-word;
+    }
+
+    .list{
+      display:grid;
+      gap:10px;
+    }
+
+    .item{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#0c162a;
+      padding:12px;
+    }
+
+    .item-head{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      margin-bottom:8px;
+      flex-wrap:wrap;
+    }
+
+    .item-title{
+      font-weight:800;
+    }
+
+    .issue{
+      border-right:4px solid var(--warn);
+      padding:12px;
+      border-radius:12px;
+      background:#0d1628;
+      margin-bottom:10px;
+    }
+
+    .issue.bad{border-color:var(--bad)}
+    .issue.warn{border-color:var(--warn)}
+    .issue.good{border-color:var(--good)}
+    .issue.info{border-color:var(--info)}
+
+    .issue strong{
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:14px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:780px;
+      background:#0d1628;
+    }
+
+    th,td{
+      padding:11px 12px;
+      border-bottom:1px solid var(--line);
+      text-align:right;
+      vertical-align:top;
+      font-size:13px;
+    }
+
+    th{
+      background:#13213d;
+      color:#dce8ff;
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+
+    .code{
+      background:#09111f;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      overflow:auto;
+      white-space:pre-wrap;
+      word-break:break-word;
+      line-height:1.8;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:12px;
+    }
+
+    .hidden{display:none !important}
+
+    .footer-note{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.8;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:16px 0;
+    }
+
+    .danger-box{
+      border:1px solid rgba(255,93,115,.35);
+      background:rgba(255,93,115,.08);
+      border-radius:14px;
+      padding:12px;
+      color:#ffd4da;
+      line-height:1.8;
+      font-size:13px;
+    }
+
+    .success-box{
+      border:1px solid rgba(25,195,125,.35);
+      background:rgba(25,195,125,.08);
+      border-radius:14px;
+      padding:12px;
+      color:#d8ffeb;
+      line-height:1.8;
+      font-size:13px;
+    }
+
+    .mono{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <section class="hero">
+      <h1>Firebase Fix & Audit Center</h1>
+      <p>
+        هذه الصفحة مخصّصة لتشخيص بيانات Firestore داخل منصة مدارس AI بشكل عملي وآمن.
+        تقوم بقراءة الـ collections الأساسية، ثم تعرض:
+        عدد السجلات، الحقول الفعلية، السجلات الناقصة، التكرارات المحتملة، والقيم الشاذة،
+        مع تقرير نهائي يمكن نسخه أو تنزيله بصيغة JSON.
+      </p>
+    </section>
+
+    <div class="grid">
+      <aside class="card">
+        <h2>الإعدادات</h2>
+
+        <div class="field">
+          <label for="schoolIdInput">School ID</label>
+          <input id="schoolIdInput" type="text" placeholder="مثال: 6kQchuZCyFHEkMgQxHoV" />
+        </div>
+
+        <div class="field">
+          <label for="collectionsInput">Collections المطلوب فحصها</label>
+          <textarea id="collectionsInput">schools
+users
+teachers
+students
+classes
+subjects
+classSubjects
+schedules</textarea>
+        </div>
+
+        <div class="field">
+          <label for="sampleLimitInput">عدد السجلات المعروضة من كل Collection</label>
+          <input id="sampleLimitInput" type="number" min="1" max="50" value="10" />
+        </div>
+
+        <div class="field">
+          <label for="strictSchoolFilter">تفعيل فلترة schoolId عند الإمكان</label>
+          <select id="strictSchoolFilter">
+            <option value="yes" selected>نعم</option>
+            <option value="no">لا</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" id="runAuditBtn">تشغيل الفحص</button>
+          <button class="btn gray" id="clearBtn">مسح النتائج</button>
+          <button class="btn good" id="copyReportBtn">نسخ التقرير</button>
+          <button class="btn warn" id="downloadReportBtn">تنزيل JSON</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>مهم قبل التشغيل</h2>
+        <div class="danger-box">
+          هذه الصفحة <strong>لا تصلح البيانات تلقائيًا</strong> ولا تكتب على Firebase.
+          هي صفحة تشخيص وقراءة فقط.
+          وهذا أفضل وأأمن في هذه المرحلة حتى لا نفسد بيانات حقيقية داخل المدرسة.
+        </div>
+
+        <div class="footer-note">
+          إذا لم تعمل الصفحة مباشرة، فالمشكلة غالبًا أن إعدادات Firebase غير متاحة داخل هذا الملف.
+          في هذه الحالة سيظهر لك تنبيه واضح، وسأعطيك بعدها تعديلًا سريعًا لربطها بملف الإعدادات الموجود عندك.
+        </div>
+      </aside>
+
+      <main>
+        <section class="kpis">
+          <div class="kpi">
+            <div class="label">School ID</div>
+            <div class="num mono" id="kpiSchool">—</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Collections Checked</div>
+            <div class="num" id="kpiCollections">0</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Total Documents</div>
+            <div class="num" id="kpiDocs">0</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Warnings</div>
+            <div class="num" id="kpiWarnings">0</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Errors</div>
+            <div class="num" id="kpiErrors">0</div>
+          </div>
+        </section>
+
+        <section class="card section">
+          <div class="toolbar">
+            <span class="status info" id="firebaseStatus">Firebase: لم يتم الفحص بعد</span>
+            <span class="status info" id="authStatus">Auth: غير معروف</span>
+            <span class="status info" id="dbStatus">Firestore: غير معروف</span>
+          </div>
+
+          <div id="topMessage" class="success-box">
+            الصفحة جاهزة. اضغط <strong>تشغيل الفحص</strong>.
+          </div>
+        </section>
+
+        <section class="card section">
+          <h3>النتيجة العامة</h3>
+          <div id="summaryIssues"></div>
+        </section>
+
+        <section class="card section">
+          <h3>تفاصيل الـ Collections</h3>
+          <div id="collectionsResults" class="list"></div>
+        </section>
+
+        <section class="card section">
+          <h3>التقرير الخام</h3>
+          <div id="rawReport" class="code">{}</div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      query,
+      where,
+      limit
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import {
+      getAuth,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    const els = {
+      schoolIdInput: document.getElementById("schoolIdInput"),
+      collectionsInput: document.getElementById("collectionsInput"),
+      sampleLimitInput: document.getElementById("sampleLimitInput"),
+      strictSchoolFilter: document.getElementById("strictSchoolFilter"),
+      runAuditBtn: document.getElementById("runAuditBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      copyReportBtn: document.getElementById("copyReportBtn"),
+      downloadReportBtn: document.getElementById("downloadReportBtn"),
+
+      kpiSchool: document.getElementById("kpiSchool"),
+      kpiCollections: document.getElementById("kpiCollections"),
+      kpiDocs: document.getElementById("kpiDocs"),
+      kpiWarnings: document.getElementById("kpiWarnings"),
+      kpiErrors: document.getElementById("kpiErrors"),
+
+      firebaseStatus: document.getElementById("firebaseStatus"),
+      authStatus: document.getElementById("authStatus"),
+      dbStatus: document.getElementById("dbStatus"),
+      topMessage: document.getElementById("topMessage"),
+      summaryIssues: document.getElementById("summaryIssues"),
+      collectionsResults: document.getElementById("collectionsResults"),
+      rawReport: document.getElementById("rawReport"),
+    };
+
+    const REQUIRED_FIELDS = {
+      schools: ["id", "name", "managerName", "managerEmail", "status"],
+      users: ["id", "name", "email", "role", "schoolId", "status"],
+      teachers: ["id", "name", "schoolId"],
+      students: ["id", "name", "schoolId"],
+      classes: ["id", "name", "schoolId"],
+      subjects: ["id", "name", "schoolId"],
+      classSubjects: ["id", "schoolId"],
+      schedules: ["id", "schoolId"]
+    };
+
+    const INTEREST_FIELDS = [
+      "day",
+      "status",
+      "teacherType",
+      "isAI",
+      "gender",
+      "role",
+      "schoolId",
+      "classId",
+      "subjectId",
+      "teacherId",
+      "userId"
+    ];
+
+    const POSSIBLE_FIREBASE_CONFIGS = [
+      window.__firebaseConfig,
+      window.firebaseConfig,
+      window.FIREBASE_CONFIG,
+      window.appFirebaseConfig
+    ].filter(Boolean);
+
+    let app = null;
+    let db = null;
+    let auth = null;
+    let currentAuditReport = null;
+
+    function setStatus(el, type, text){
+      el.className = `status ${type}`;
+      el.textContent = text;
+    }
+
+    function setTopMessage(type, html){
+      els.topMessage.className = type === "error" ? "danger-box" : "success-box";
+      els.topMessage.innerHTML = html;
+    }
+
+    function normalizeValue(value){
+      if (value === undefined) return "undefined";
+      if (value === null) return "null";
+      if (typeof value === "string") return value.trim() || "(empty string)";
+      if (typeof value === "boolean") return String(value);
+      if (typeof value === "number") return String(value);
+      if (Array.isArray(value)) return `array(${value.length})`;
+      if (typeof value === "object") return "object";
+      return String(value);
+    }
+
+    function escapeHtml(value){
+      return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function safePreview(data){
+      try{
+        return JSON.stringify(data, null, 2);
+      }catch{
+        return String(data);
+      }
+    }
+
+    function uniqueSorted(arr){
+      return Array.from(new Set(arr)).sort((a,b)=>String(a).localeCompare(String(b), "ar"));
+    }
+
+    function getMissingRequiredFields(collectionName, data){
+      const required = REQUIRED_FIELDS[collectionName] || [];
+      return required.filter(field => {
+        const value = data[field];
+        return value === undefined || value === null || (typeof value === "string" && !value.trim());
+      });
+    }
+
+    function pickInterestingValues(docs){
+      const map = {};
+      for (const field of INTEREST_FIELDS) {
+        map[field] = [];
+      }
+
+      docs.forEach(({data}) => {
+        INTEREST_FIELDS.forEach(field => {
+          if (field in data) {
+            map[field].push(normalizeValue(data[field]));
+          }
+        });
+      });
+
+      Object.keys(map).forEach(key => {
+        map[key] = uniqueSorted(map[key]).slice(0, 30);
+      });
+
+      return map;
+    }
+
+    function detectTeacherInconsistency(docs){
+      const issues = [];
+      docs.forEach(({id, data}) => {
+        const hasTeacherType = Object.prototype.hasOwnProperty.call(data, "teacherType");
+        const hasIsAI = Object.prototype.hasOwnProperty.call(data, "isAI");
+
+        if (hasTeacherType && hasIsAI) {
+          issues.push({
+            severity: "warn",
+            code: "TEACHER_DUPLICATE_SEMANTICS",
+            message: `المعلم ${id} يحتوي teacherType و isAI معًا`,
+            docId: id
+          });
+        }
+
+        if (hasTeacherType) {
+          const tt = String(data.teacherType).trim().toLowerCase();
+          if (!["human", "ai", "assistant", "teacher"].includes(tt)) {
+            issues.push({
+              severity: "warn",
+              code: "TEACHER_TYPE_UNUSUAL",
+              message: `قيمة teacherType غير معتادة في المعلم ${id}: ${data.teacherType}`,
+              docId: id
+            });
+          }
+        }
+      });
+      return issues;
+    }
+
+    function detectDuplicateByKeys(docs, keys, label){
+      const map = new Map();
+      const issues = [];
+
+      docs.forEach(({id, data}) => {
+        const composite = keys.map(k => normalizeValue(data[k])).join(" | ");
+        if (!map.has(composite)) map.set(composite, []);
+        map.get(composite).push(id);
+      });
+
+      for (const [value, ids] of map.entries()) {
+        if (value.includes("undefined") || value.includes("null")) continue;
+        if (ids.length > 1) {
+          issues.push({
+            severity: "warn",
+            code: `DUPLICATE_${label}`,
+            message: `تكرار محتمل في ${label}: ${value}`,
+            docIds: ids
+          });
+        }
+      }
+
+      return issues;
+    }
+
+    function collectionKnownDuplicateChecks(collectionName, docs){
+      if (collectionName === "users") {
+        return detectDuplicateByKeys(docs, ["email", "schoolId"], "USERS_EMAIL_SCHOOL");
+      }
+      if (collectionName === "teachers") {
+        return [
+          ...detectDuplicateByKeys(docs, ["name", "schoolId"], "TEACHERS_NAME_SCHOOL"),
+          ...detectTeacherInconsistency(docs),
+        ];
+      }
+      if (collectionName === "classSubjects") {
+        return detectDuplicateByKeys(docs, ["classId", "subjectId", "schoolId"], "CLASS_SUBJECTS");
+      }
+      if (collectionName === "schedules") {
+        return detectDuplicateByKeys(docs, ["schoolId", "classId", "day", "period"], "SCHEDULES_SLOT");
+      }
+      return [];
+    }
+
+    function buildCollectionCardHtml(result){
+      const issuesHtml = result.issues.length
+        ? result.issues.map(issue => `
+          <div class="issue ${issue.severity}">
+            <strong>[${escapeHtml(issue.severity.toUpperCase())}] ${escapeHtml(issue.code)}</strong>
+            <div>${escapeHtml(issue.message)}</div>
+            ${
+              issue.docId
+                ? `<div class="small muted mono">docId: ${escapeHtml(issue.docId)}</div>`
+                : ""
+            }
+            ${
+              issue.docIds
+                ? `<div class="small muted mono">docIds: ${escapeHtml(issue.docIds.join(", "))}</div>`
+                : ""
+            }
+          </div>
+        `).join("")
+        : `<div class="issue good"><strong>OK</strong><div>لا توجد مشاكل واضحة في هذه المجموعة.</div></div>`;
+
+      const fieldsChips = result.fields.length
+        ? result.fields.map(f => `<span class="chip mono">${escapeHtml(f)}</span>`).join("")
+        : `<span class="chip">لا توجد حقول</span>`;
+
+      const valuesHtml = Object.entries(result.interestingValues).map(([key, values]) => `
+        <div class="item">
+          <div class="item-head">
+            <div class="item-title mono">${escapeHtml(key)}</div>
+            <div class="small muted">Distinct Values</div>
+          </div>
+          <div class="chips">
+            ${
+              values.length
+                ? values.map(v => `<span class="chip">${escapeHtml(v)}</span>`).join("")
+                : `<span class="chip muted">—</span>`
+            }
+          </div>
+        </div>
+      `).join("");
+
+      const sampleRows = result.sampleDocs.map(doc => `
+        <tr>
+          <td class="mono">${escapeHtml(doc.id)}</td>
+          <td>${escapeHtml(doc.missingRequired.join(", ") || "—")}</td>
+          <td><div class="code">${escapeHtml(safePreview(doc.data))}</div></td>
+        </tr>
+      `).join("");
+
+      return `
+        <div class="item">
+          <div class="item-head">
+            <div class="item-title mono">${escapeHtml(result.collection)}</div>
+            <div>
+              ${
+                result.error
+                  ? `<span class="status bad">خطأ</span>`
+                  : result.issues.length
+                    ? `<span class="status warn">${result.issues.length} issue(s)</span>`
+                    : `<span class="status good">سليم ظاهريًا</span>`
+              }
+            </div>
+          </div>
+
+          <div class="row" style="margin-bottom:12px;">
+            <div class="item">
+              <div class="small muted">Docs</div>
+              <div style="font-size:24px;font-weight:800">${result.docsCount}</div>
+            </div>
+            <div class="item">
+              <div class="small muted">Missing Required Rows</div>
+              <div style="font-size:24px;font-weight:800">${result.missingRequiredRows}</div>
+            </div>
+          </div>
+
+          ${result.error ? `
+            <div class="issue bad">
+              <strong>READ_ERROR</strong>
+              <div>${escapeHtml(result.error)}</div>
+            </div>
+          ` : ""}
+
+          <div class="section">
+            <h3>Fields</h3>
+            <div class="chips">${fieldsChips}</div>
+          </div>
+
+          <div class="section">
+            <h3>Issues</h3>
+            ${issuesHtml}
+          </div>
+
+          <div class="section">
+            <h3>Interesting Values</h3>
+            <div class="list">${valuesHtml}</div>
+          </div>
+
+          <div class="section">
+            <h3>Sample Docs</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Doc ID</th>
+                    <th>Missing Required</th>
+                    <th>Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${sampleRows || `<tr><td colspan="3">لا توجد سجلات</td></tr>`}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSummary(report){
+      els.kpiSchool.textContent = report.schoolId || "—";
+      els.kpiCollections.textContent = report.collectionsChecked;
+      els.kpiDocs.textContent = report.totalDocuments;
+      els.kpiWarnings.textContent = report.warnings;
+      els.kpiErrors.textContent = report.errors;
+
+      if (!report.summaryIssues.length) {
+        els.summaryIssues.innerHTML = `
+          <div class="issue good">
+            <strong>نتيجة عامة جيدة</strong>
+            <div>لم يتم العثور على مشاكل حرجة واضحة ضمن الفحص الحالي.</div>
+          </div>
+        `;
+      } else {
+        els.summaryIssues.innerHTML = report.summaryIssues.map((item, index) => `
+          <div class="issue ${item.severity}">
+            <strong>${index + 1}. [${escapeHtml(item.severity.toUpperCase())}] ${escapeHtml(item.scope)}</strong>
+            <div>${escapeHtml(item.message)}</div>
+          </div>
+        `).join("");
+      }
+
+      els.collectionsResults.innerHTML = report.collections.map(buildCollectionCardHtml).join("");
+      els.rawReport.textContent = JSON.stringify(report, null, 2);
+    }
+
+    async function tryInitFirebase(){
+      try{
+        if (getApps().length) {
+          app = getApp();
+        } else if (POSSIBLE_FIREBASE_CONFIGS.length) {
+          app = initializeApp(POSSIBLE_FIREBASE_CONFIGS[0]);
+        } else {
+          throw new Error("لم يتم العثور على Firebase config داخل window.__firebaseConfig أو window.firebaseConfig.");
+        }
+
+        db = getFirestore(app);
+        auth = getAuth(app);
+
+        setStatus(els.firebaseStatus, "good", "Firebase: جاهز");
+        setStatus(els.dbStatus, "good", "Firestore: جاهز");
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            setStatus(els.authStatus, "good", `Auth: ${user.email || user.uid}`);
+          } else {
+            setStatus(els.authStatus, "warn", "Auth: لا يوجد مستخدم مسجّل");
+          }
+        });
+
+        return true;
+      } catch (error) {
+        console.error(error);
+        setStatus(els.firebaseStatus, "bad", "Firebase: فشل التهيئة");
+        setStatus(els.dbStatus, "bad", "Firestore: غير متاح");
+        setTopMessage("error", `
+          <strong>فشل تهيئة Firebase.</strong><br>
+          السبب: ${escapeHtml(error.message || String(error))}<br><br>
+          هذا يعني أن الصفحة لا ترى إعدادات Firebase الحالية.
+          إذا ظهر لك هذا الخطأ، أرسل لي ملف الربط الحالي لـ Firebase من المشروع وسأربطها لك فورًا.
+        `);
+        return false;
+      }
+    }
+
+    async function readCollectionDocs(collectionName, schoolId, sampleLimit, strictSchoolFilter){
+      const colRef = collection(db, collectionName);
+
+      let docs = [];
+      let usedFilter = false;
+
+      try{
+        if (strictSchoolFilter === "yes" && schoolId && collectionName !== "schools") {
+          const q = query(colRef, where("schoolId", "==", schoolId), limit(500));
+          const snap = await getDocs(q);
+          docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+          usedFilter = true;
+        } else {
+          const snap = await getDocs(query(colRef, limit(500)));
+          docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+        }
+      } catch (e) {
+        if (strictSchoolFilter === "yes" && schoolId) {
+          try{
+            const snap = await getDocs(query(colRef, limit(500)));
+            docs = snap.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+            usedFilter = false;
+          } catch (err2) {
+            throw err2;
+          }
+        } else {
+          throw e;
+        }
+      }
+
+      let filteredDocs = docs;
+      if (!usedFilter && schoolId && collectionName !== "schools" && strictSchoolFilter === "yes") {
+        filteredDocs = docs.filter(doc => {
+          const data = doc.data || {};
+          return data.schoolId === schoolId;
+        });
+      }
+
+      const fields = uniqueSorted(
+        filteredDocs.flatMap(({data}) => Object.keys(data || {}))
+      );
+
+      const sampleDocs = filteredDocs.slice(0, sampleLimit).map(doc => ({
+        id: doc.id,
+        data: doc.data,
+        missingRequired: getMissingRequiredFields(collectionName, doc.data)
+      }));
+
+      const missingRequiredRows = filteredDocs.filter(doc => (
+        getMissingRequiredFields(collectionName, doc.data).length > 0
+      )).length;
+
+      const issues = [];
+
+      filteredDocs.forEach(doc => {
+        const missing = getMissingRequiredFields(collectionName, doc.data);
+        if (missing.length) {
+          issues.push({
+            severity: "warn",
+            code: "MISSING_REQUIRED_FIELDS",
+            message: `الوثيقة ${doc.id} ناقص فيها: ${missing.join(", ")}`,
+            docId: doc.id
+          });
+        }
+      });
+
+      if (schoolId && collectionName !== "schools") {
+        const withoutSchool = filteredDocs.filter(doc => !doc.data?.schoolId);
+        withoutSchool.forEach(doc => {
+          issues.push({
+            severity: "warn",
+            code: "MISSING_SCHOOL_ID",
+            message: `الوثيقة ${doc.id} لا تحتوي schoolId`,
+            docId: doc.id
+          });
+        });
+      }
+
+      ["classId", "subjectId", "teacherId"].forEach(refField => {
+        filteredDocs.forEach(doc => {
+          if (
+            ["classSubjects", "schedules"].includes(collectionName) &&
+            !(refField in (doc.data || {}))
+          ) {
+            issues.push({
+              severity: "warn",
+              code: `MISSING_${refField.toUpperCase()}`,
+              message: `الوثيقة ${doc.id} لا تحتوي ${refField}`,
+              docId: doc.id
+            });
+          }
+        });
+      });
+
+      issues.push(...collectionKnownDuplicateChecks(collectionName, filteredDocs));
+
+      return {
+        collection: collectionName,
+        docsCount: filteredDocs.length,
+        missingRequiredRows,
+        fields,
+        interestingValues: pickInterestingValues(filteredDocs),
+        sampleDocs,
+        issues,
+        error: null
+      };
+    }
+   async function runAudit(){
+      const schoolId = els.schoolIdInput.value.trim();
+      const collections = els.collectionsInput.value
+        .split(/\n|,/)
+        .map(v => v.trim())
+        .filter(Boolean);
+
+      const sampleLimit = Math.max(1, Math.min(50, Number(els.sampleLimitInput.value || 10)));
+      const strictSchoolFilter = els.strictSchoolFilter.value;
+
+      if (!collections.length) {
+        setTopMessage("error", "أدخل Collection واحدة على الأقل.");
+        return;
+      }
+
+      setTopMessage("ok", "جارٍ فحص Firebase... انتظر قليلًا.");
+      els.summaryIssues.innerHTML = "";
+      els.collectionsResults.innerHTML = "";
+      els.rawReport.textContent = "{}";
+
+      const report = {
+        generatedAt: new Date().toISOString(),
+        schoolId,
+        collectionsChecked: 0,
+        totalDocuments: 0,
+        warnings: 0,
+        errors: 0,
+        summaryIssues: [],
+        collections: []
+      };
+
+      for (const collectionName of collections) {
+        try{
+          const result = await readCollectionDocs(collectionName, schoolId, sampleLimit, strictSchoolFilter);
+          report.collections.push(result);
+          report.collectionsChecked += 1;
+          report.totalDocuments += result.docsCount;
+
+          const warns = result.issues.filter(i => i.severity === "warn").length;
+          const errs = result.issues.filter(i => i.severity === "bad").length;
+          report.warnings += warns;
+          report.errors += errs;
+
+          if (result.missingRequiredRows > 0) {
+            report.summaryIssues.push({
+              severity: "warn",
+              scope: collectionName,
+              message: `يوجد ${result.missingRequiredRows} سجل ناقص الحقول الأساسية في ${collectionName}`
+            });
+          }
+
+          const teacherSemanticDup = result.issues.find(i => i.code === "TEACHER_DUPLICATE_SEMANTICS");
+          if (teacherSemanticDup) {
+            report.summaryIssues.push({
+              severity: "warn",
+              scope: collectionName,
+              message: `يوجد ازدواج محتمل بين teacherType و isAI داخل ${collectionName}`
+            });
+          }
+
+          const dupIssue = result.issues.find(i => i.code.startsWith("DUPLICATE_"));
+          if (dupIssue) {
+            report.summaryIssues.push({
+              severity: "warn",
+              scope: collectionName,
+              message: `يوجد تكرار محتمل في بعض سجلات ${collectionName}`
+            });
+          }
+        } catch (error) {
+          console.error(`Error reading ${collectionName}:`, error);
+
+          report.collections.push({
+            collection: collectionName,
+            docsCount: 0,
+            missingRequiredRows: 0,
+            fields: [],
+            interestingValues: {},
+            sampleDocs: [],
+            issues: [],
+            error: error.message || String(error)
+          });
+
+          report.collectionsChecked += 1;
+          report.errors += 1;
+          report.summaryIssues.push({
+            severity: "bad",
+            scope: collectionName,
+            message: `فشل قراءة ${collectionName}: ${error.message || String(error)}`
+          });
+        }
+      }
+
+      currentAuditReport = report;
+      renderSummary(report);
+
+      if (report.errors > 0) {
+        setTopMessage("error", `
+          <strong>اكتمل الفحص مع وجود أخطاء أو قيود قراءة.</strong><br>
+          راجع تفاصيل كل Collection في الأسفل.
+        `);
+      } else if (report.warnings > 0) {
+        setTopMessage("ok", `
+          <strong>اكتمل الفحص.</strong><br>
+          تم العثور على ملاحظات تحتاج توحيد أو تنظيف بيانات، لكنها ليست فشلًا تقنيًا بحد ذاتها.
+        `);
+      } else {
+        setTopMessage("ok", `
+          <strong>اكتمل الفحص بنجاح.</strong><br>
+          لا توجد مشاكل ظاهرة ضمن النطاق الحالي.
+        `);
+      }
+    }
+
+    function clearResults(){
+      currentAuditReport = null;
+      els.kpiSchool.textContent = "—";
+      els.kpiCollections.textContent = "0";
+      els.kpiDocs.textContent = "0";
+      els.kpiWarnings.textContent = "0";
+      els.kpiErrors.textContent = "0";
+      els.summaryIssues.innerHTML = "";
+      els.collectionsResults.innerHTML = "";
+      els.rawReport.textContent = "{}";
+      setTopMessage("ok", "تم مسح النتائج. الصفحة جاهزة لفحص جديد.");
+    }
+
+    async function copyReport(){
+      if (!currentAuditReport) {
+        alert("لا يوجد تقرير لنسخه بعد.");
+        return;
+      }
+
+      const text = JSON.stringify(currentAuditReport, null, 2);
+      try{
+        await navigator.clipboard.writeText(text);
+        alert("تم نسخ التقرير.");
+      }catch{
+        alert("فشل النسخ التلقائي. انسخ التقرير من مربع التقرير الخام.");
+      }
+    }
+
+    function downloadReport(){
+      if (!currentAuditReport) {
+        alert("لا يوجد تقرير لتنزيله بعد.");
+        return;
+      }
+
+      const blob = new Blob(
+        [JSON.stringify(currentAuditReport, null, 2)],
+        { type: "application/json;charset=utf-8" }
+      );
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const schoolPart = currentAuditReport.schoolId || "all";
+      a.href = url;
+      a.download = `firebase-audit-${schoolPart}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function tryReadSchoolIdFromUrl(){
+      const params = new URLSearchParams(location.search);
+      const schoolId = params.get("schoolId") || params.get("sid") || "";
+      if (schoolId) {
+        els.schoolIdInput.value = schoolId;
+      }
+    }
+
+    function attachEvents(){
+      els.runAuditBtn.addEventListener("click", runAudit);
+      els.clearBtn.addEventListener("click", clearResults);
+      els.copyReportBtn.addEventListener("click", copyReport);
+      els.downloadReportBtn.addEventListener("click", downloadReport);
+    }
+
+    async function boot(){
+      tryReadSchoolIdFromUrl();
+      attachEvents();
+      await tryInitFirebase();
+    }
+
+    boot();
+  </script>
+</body>
+</html> 
