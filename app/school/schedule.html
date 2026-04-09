@@ -3,138 +3,237 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الجدول الدراسي | Madaris AI</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <title>عرض الجدول المدرسي | Madaris AI</title>
 
   <style>
-    *{
+    :root{
+      --bg:#051227;
+      --panel:#0b1d3f;
+      --panel-2:#10244d;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.12);
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --soft:rgba(255,255,255,.58);
+      --primary:#2f6bff;
+      --primary-2:#5f8fff;
+      --success:#10b981;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+      --shadow:0 18px 45px rgba(0,0,0,.30);
+      --radius:22px;
+      --radius-sm:16px;
+      --radius-xs:12px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html,body{
       margin:0;
       padding:0;
-      box-sizing:border-box;
-      font-family:'Cairo',sans-serif;
-    }
-
-    :root{
-      --bg:#0b1220;
-      --panel:#111827;
-      --panel-2:#0f172a;
-      --panel-3:#1f2937;
-      --line:rgba(255,255,255,.06);
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.65);
-      --primary:#2563eb;
-      --success:#10b981;
-      --danger:#ef4444;
-      --warning:#f59e0b;
-      --shadow:0 20px 50px rgba(0,0,0,.28);
-      --radius:18px;
-    }
-
-    body{
-      background:linear-gradient(180deg,#09101c 0%, #0b1220 100%);
+      min-height:100%;
       color:var(--text);
-      min-height:100vh;
+      font-family:"Cairo","Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(47,107,255,.15), transparent 28%),
+        linear-gradient(180deg, #041126 0%, #06152f 38%, #051227 100%);
     }
 
-    .header{
+    a{ color:inherit; text-decoration:none; }
+
+    .container{
+      width:min(1220px, calc(100% - 28px));
+      margin:20px auto 48px;
+    }
+
+    .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
-      padding:18px 20px;
-      background:rgba(15,23,42,.92);
-      border-bottom:1px solid var(--line);
-      position:sticky;
-      top:0;
-      z-index:20;
-      backdrop-filter:blur(8px);
-    }
-
-    .header-side{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      gap:14px;
       flex-wrap:wrap;
+      background:rgba(8,20,46,.86);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+      position:sticky;
+      top:12px;
+      z-index:30;
     }
 
     .brand{
-      font-size:22px;
-      font-weight:800;
-      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
     }
 
-    .school-badge{
-      font-size:13px;
+    .brand-mark{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      font-size:20px;
+      font-weight:900;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 12px 25px rgba(47,107,255,.28);
+      flex:0 0 auto;
+    }
+
+    .brand-text h1{
+      margin:0;
+      font-size:28px;
+      font-weight:900;
+      line-height:1.1;
+    }
+
+    .brand-text p{
+      margin:6px 0 0;
       color:var(--muted);
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      padding:8px 12px;
-      border-radius:999px;
+      font-size:14px;
+    }
+
+    .top-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
     }
 
     .btn{
       border:none;
       outline:none;
+      border-radius:16px;
+      padding:13px 18px;
+      min-height:48px;
+      font-size:15px;
+      font-weight:900;
       cursor:pointer;
-      border-radius:12px;
-      padding:11px 16px;
-      font-size:14px;
-      font-weight:700;
       transition:.18s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    .btn:hover{ transform:translateY(-1px); }
+    .btn:disabled{ opacity:.65; cursor:not-allowed; transform:none; }
+
+    .btn-primary{
       color:#fff;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 12px 28px rgba(47,107,255,.24);
     }
 
-    .btn:hover{
-      transform:translateY(-1px);
-    }
-
-    .btn-back{ background:var(--primary); }
-    .btn-add{ background:var(--success); }
-    .btn-logout{ background:var(--danger); }
     .btn-secondary{
-      background:#334155;
+      color:#fff;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line-2);
     }
 
-    .container{
-      max-width:1450px;
-      margin:0 auto;
-      padding:24px;
+    .btn-danger{
+      color:#fff;
+      background:linear-gradient(135deg, var(--danger), #dc2626);
+      box-shadow:0 12px 28px rgba(239,68,68,.20);
     }
 
     .hero{
+      margin-top:18px;
       display:grid;
-      grid-template-columns:1.35fr .95fr;
-      gap:20px;
-      margin-bottom:24px;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
     }
 
-    .hero-card,
-    .panel,
-    .table-wrap,
-    .day-board{
-      background:linear-gradient(180deg, rgba(17,24,39,.98), rgba(15,23,42,.98));
+    .panel{
+      background:linear-gradient(180deg, rgba(12,29,63,.95), rgba(8,21,47,.94));
       border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
+      overflow:hidden;
     }
 
-    .hero-card{
+    .panel-head{
+      padding:22px 22px 0;
+    }
+
+    .panel-body{
       padding:22px;
     }
 
-    .hero-title{
-      font-size:28px;
-      font-weight:800;
-      margin-bottom:8px;
+    .title-xl{
+      margin:0;
+      font-size:32px;
+      font-weight:900;
+      line-height:1.2;
+      letter-spacing:.2px;
     }
 
-    .hero-subtitle{
+    .subtitle{
+      margin:10px 0 0;
       color:var(--muted);
       line-height:1.9;
       font-size:15px;
+    }
+
+    .school-box{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:8px;
+      height:100%;
+      min-height:188px;
+      padding:22px;
+      background:
+        radial-gradient(circle at top left, rgba(95,143,255,.16), transparent 36%),
+        linear-gradient(180deg, rgba(15,36,77,.92), rgba(10,24,52,.96));
+      border-right:1px solid var(--line);
+    }
+
+    .school-label{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .school-name{
+      font-size:30px;
+      font-weight:900;
+      line-height:1.35;
+    }
+
+    .school-meta{
+      color:var(--soft);
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .message{
+      display:none;
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:16px;
+      font-size:15px;
+      line-height:1.9;
+      border:1px solid transparent;
+    }
+
+    .message.show{ display:block; }
+    .message.info{
+      background:rgba(47,107,255,.12);
+      border-color:rgba(47,107,255,.24);
+      color:#dce7ff;
+    }
+    .message.success{
+      background:rgba(16,185,129,.12);
+      border-color:rgba(16,185,129,.24);
+      color:#dcfff1;
+    }
+    .message.error{
+      background:rgba(239,68,68,.12);
+      border-color:rgba(239,68,68,.24);
+      color:#ffe2e2;
     }
 
     .stats{
@@ -145,324 +244,57 @@
     }
 
     .stat{
-      background:rgba(255,255,255,.03);
+      background:linear-gradient(180deg, rgba(14,32,69,.96), rgba(10,23,49,.96));
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:16px;
+      border-radius:20px;
+      padding:18px;
+      min-height:132px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      box-shadow:var(--shadow);
     }
 
     .stat-label{
-      font-size:13px;
       color:var(--muted);
-      margin-bottom:8px;
+      font-size:15px;
+      font-weight:800;
     }
 
     .stat-value{
-      font-size:28px;
-      font-weight:800;
-    }
-
-    .hero-side{
-      padding:20px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      justify-content:center;
-    }
-
-    .hero-side h3{
-      font-size:18px;
-      margin-bottom:2px;
-    }
-
-    .hero-side p{
-      color:var(--muted);
-      line-height:1.9;
-      font-size:14px;
-    }
-
-    .quick-list{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:6px;
-    }
-
-    .quick-item{
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .quick-item strong{
-      display:block;
-      margin-bottom:6px;
-      font-size:15px;
-    }
-
-    .toolbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom:18px;
-      flex-wrap:wrap;
-    }
-
-    .toolbar-right,
-    .toolbar-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    .input,
-    .select{
-      width:100%;
-      background:#0f172a;
-      color:#fff;
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:12px 14px;
-      font-size:14px;
-      outline:none;
-    }
-
-    .input::placeholder{
-      color:rgba(255,255,255,.42);
-    }
-
-    .search{
-      min-width:280px;
-    }
-
-    .filter{
-      min-width:180px;
-    }
-
-    .section-title{
-      font-size:19px;
-      font-weight:800;
-      margin-bottom:14px;
-    }
-
-    .table-wrap{
-      overflow:hidden;
-      margin-bottom:24px;
-    }
-
-    .table-scroller{
-      overflow:auto;
-      width:100%;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:980px;
-    }
-
-    thead th{
-      background:#0f172a;
-      color:#dbeafe;
-      font-size:14px;
-      text-align:right;
-      padding:16px;
-      border-bottom:1px solid var(--line);
-      white-space:nowrap;
-    }
-
-    tbody td{
-      padding:16px;
-      border-bottom:1px solid var(--line);
-      font-size:14px;
-      vertical-align:middle;
-    }
-
-    tbody tr:hover{
-      background:rgba(255,255,255,.025);
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:92px;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:700;
-      border:1px solid transparent;
-      white-space:nowrap;
-    }
-
-    .badge-day{
-      background:rgba(37,99,235,.12);
-      color:#bfdbfe;
-      border-color:rgba(37,99,235,.22);
-    }
-
-    .badge-period{
-      background:rgba(245,158,11,.12);
-      color:#fde68a;
-      border-color:rgba(245,158,11,.22);
-    }
-
-    .badge-empty{
-      background:rgba(148,163,184,.12);
-      color:#cbd5e1;
-      border-color:rgba(148,163,184,.2);
-    }
-
-    .actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .btn-sm{
-      border:none;
-      padding:8px 12px;
-      border-radius:10px;
-      cursor:pointer;
-      font-size:12px;
-      font-weight:700;
-      color:#fff;
-    }
-
-    .btn-delete{
-      background:var(--danger);
-    }
-
-    .btn-view{
-      background:#475569;
-    }
-
-    .empty-state{
-      padding:34px 22px;
-      text-align:center;
-      color:var(--muted);
-      line-height:1.9;
-    }
-
-    .day-boards{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px;
-    }
-
-    .day-board{
-      overflow:hidden;
-    }
-
-    .day-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:16px 18px;
-      background:#0f172a;
-      border-bottom:1px solid var(--line);
-    }
-
-    .day-head h3{
-      font-size:17px;
-    }
-
-    .day-count{
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .day-body{
-      padding:16px;
-      display:grid;
-      gap:12px;
-    }
-
-    .slot{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.025);
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .slot-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:8px;
-      flex-wrap:wrap;
-    }
-
-    .slot-title{
-      font-weight:800;
-      font-size:15px;
-    }
-
-    .slot-meta{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.8;
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.68);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      z-index:100;
-    }
-
-    .modal.show{
-      display:flex;
-    }
-
-    .modal-box{
-      width:min(760px,100%);
-      background:linear-gradient(180deg,#111827 0%, #0f172a 100%);
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .modal-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:18px 20px;
-      border-bottom:1px solid var(--line);
-      background:#0f172a;
-    }
-
-    .modal-head h3{
-      font-size:19px;
-    }
-
-    .modal-close{
-      background:transparent;
-      border:none;
-      color:#fff;
-      font-size:24px;
-      cursor:pointer;
+      font-size:42px;
+      font-weight:900;
       line-height:1;
     }
 
-    .modal-body{
-      padding:20px;
+    .stat-note{
+      color:var(--soft);
+      font-size:13px;
+      line-height:1.7;
     }
 
-    .form-grid{
+    .section{
+      margin-top:18px;
+    }
+
+    .section-title{
+      margin:0;
+      font-size:23px;
+      font-weight:900;
+      line-height:1.2;
+    }
+
+    .section-subtitle{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .filters{
+      margin-top:18px;
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:repeat(4,1fr);
       gap:14px;
     }
 
@@ -472,58 +304,300 @@
       gap:8px;
     }
 
-    .field label{
-      font-size:14px;
-      color:#dbeafe;
-      font-weight:700;
+    .field.search-field{
+      grid-column:span 2;
     }
 
-    .modal-actions{
+    .label{
+      color:#fff;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .control{
+      width:100%;
+      border-radius:15px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      padding:14px 14px;
+      font-size:15px;
+      outline:none;
+      transition:.18s ease;
+    }
+
+    .control:focus{
+      border-color:rgba(95,143,255,.65);
+      box-shadow:0 0 0 3px rgba(95,143,255,.14);
+      background:rgba(255,255,255,.06);
+    }
+
+    .control option{ color:#111827; }
+
+    .toolbar{
       display:flex;
-      justify-content:flex-end;
-      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
       margin-top:18px;
+    }
+
+    .toolbar-actions{
+      display:flex;
+      gap:10px;
       flex-wrap:wrap;
     }
 
-    .message{
-      display:none;
-      margin-bottom:16px;
-      padding:13px 15px;
-      border-radius:14px;
+    .overview{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .quick-block{
+      background:rgba(255,255,255,.03);
       border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .quick-block h3{
+      margin:0 0 12px;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.07);
+      color:#fff;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .empty{
+      color:var(--soft);
+      font-size:14px;
+      line-height:1.9;
+    }
+
+    .schedule-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
+    }
+
+    .day-card{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .day-head{
+      padding:16px 18px;
+      background:linear-gradient(180deg, rgba(16,36,77,.98), rgba(12,28,61,.98));
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .day-title{
+      font-size:19px;
+      font-weight:900;
+    }
+
+    .day-count{
+      color:var(--muted);
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .day-body{
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height:150px;
+    }
+
+    .lesson-item{
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:16px;
+      padding:14px;
+      background:rgba(255,255,255,.03);
+    }
+
+    .lesson-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+
+    .lesson-subject{
+      font-size:18px;
+      font-weight:900;
+      line-height:1.4;
+    }
+
+    .period-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(47,107,255,.14);
+      color:#e3ebff;
+      border:1px solid rgba(47,107,255,.22);
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .lesson-meta{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:8px 12px;
+      margin-top:10px;
+    }
+
+    .lesson-meta div{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    .lesson-meta strong{
+      color:#fff;
+      font-weight:800;
+    }
+
+    .table-wrap{
+      width:100%;
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.02);
+      margin-top:18px;
+    }
+
+    table{
+      width:100%;
+      min-width:1120px;
+      border-collapse:collapse;
+    }
+
+    th,td{
+      padding:14px 12px;
+      text-align:right;
+      border-bottom:1px solid rgba(255,255,255,.07);
+      vertical-align:top;
       font-size:14px;
       line-height:1.8;
     }
 
-    .message.show{
-      display:block;
+    th{
+      position:sticky;
+      top:0;
+      z-index:1;
+      background:#10244d;
+      color:#fff;
+      font-size:13px;
+      font-weight:900;
+      white-space:nowrap;
     }
 
-    .message.info{
-      background:rgba(59,130,246,.12);
-      color:#dbeafe;
+    tr:hover td{
+      background:rgba(255,255,255,.02);
     }
 
-    .message.success{
-      background:rgba(16,185,129,.12);
-      color:#d1fae5;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
     }
 
-    .message.error{
-      background:rgba(239,68,68,.12);
-      color:#fecaca;
+    .badge-success{
+      background:rgba(16,185,129,.13);
+      color:#d9fff2;
+      border:1px solid rgba(16,185,129,.20);
     }
 
-    .loading{
-      padding:40px 20px;
+    .badge-muted{
+      background:rgba(255,255,255,.06);
+      color:#edf2ff;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .loading-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(3,10,24,.52);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:100;
+      padding:18px;
+    }
+
+    .loading-overlay.show{
+      display:flex;
+    }
+
+    .loading-box{
+      width:min(360px, 100%);
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(12,29,63,.98), rgba(8,21,47,.98));
+      box-shadow:var(--shadow);
+      padding:24px;
       text-align:center;
-      color:var(--muted);
-      line-height:1.9;
     }
 
-    @media (max-width:1100px){
-      .hero{
+    .spinner{
+      width:52px;
+      height:52px;
+      margin:0 auto 14px;
+      border-radius:50%;
+      border:4px solid rgba(255,255,255,.14);
+      border-top-color:#7ea3ff;
+      animation:spin .9s linear infinite;
+    }
+
+    @keyframes spin{
+      to{ transform:rotate(360deg); }
+    }
+
+    @media (max-width: 1080px){
+      .hero,
+      .overview,
+      .schedule-grid{
         grid-template-columns:1fr;
       }
 
@@ -531,806 +605,759 @@
         grid-template-columns:repeat(2,1fr);
       }
 
-      .day-boards{
-        grid-template-columns:1fr;
+      .filters{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .field.search-field{
+        grid-column:1 / -1;
       }
     }
 
-    @media (max-width:700px){
+    @media (max-width: 720px){
       .container{
-        padding:16px;
+        width:min(100% - 18px, 100%);
+        margin:12px auto 36px;
       }
 
-      .header{
-        padding:14px 16px;
+      .topbar{
+        border-radius:22px;
+        padding:14px;
       }
 
-      .hero-title{
-        font-size:23px;
+      .brand-text h1{
+        font-size:22px;
       }
 
-      .stats{
-        grid-template-columns:1fr 1fr;
+      .title-xl{
+        font-size:25px;
       }
 
-      .form-grid{
+      .school-name{
+        font-size:24px;
+      }
+
+      .stats,
+      .filters{
         grid-template-columns:1fr;
       }
 
-      .search,
-      .filter{
-        min-width:100%;
-      }
-
-      .toolbar{
+      .toolbar,
+      .top-actions{
         align-items:stretch;
       }
 
-      .toolbar-right,
-      .toolbar-left{
+      .toolbar-actions,
+      .top-actions{
         width:100%;
       }
 
-      .toolbar-left .btn,
-      .toolbar-right .input,
-      .toolbar-right .select{
-        width:100%;
+      .toolbar-actions .btn,
+      .top-actions .btn{
+        flex:1 1 auto;
+      }
+
+      .lesson-meta{
+        grid-template-columns:1fr;
       }
     }
   </style>
 </head>
-
 <body>
-  <header class="header">
-    <div class="header-side">
-      <button class="btn btn-back" onclick="goBack()">رجوع</button>
-      <div>
-        <div class="brand">Madaris AI</div>
-      </div>
-    </div>
-
-    <div class="header-side">
-      <div class="school-badge" id="schoolBadge">المدرسة: ...</div>
-      <button class="btn btn-logout" id="logoutBtn">تسجيل الخروج</button>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <div class="hero-card">
-        <h1 class="hero-title">الجدول الدراسي</h1>
-        <p class="hero-subtitle">
-          إدارة الجدول الدراسي بشكل منظم ومباشر من داخل المنصة، مع عرض الحصص حسب اليوم وربط كل حصة بالصف والمادة والمعلم.
-        </p>
-
-        <div class="stats">
-          <div class="stat">
-            <div class="stat-label">إجمالي الحصص</div>
-            <div class="stat-value" id="totalSchedules">0</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-label">عدد الأيام المستخدمة</div>
-            <div class="stat-value" id="totalDays">0</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-label">عدد الصفوف</div>
-            <div class="stat-value" id="totalClasses">0</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-label">عدد المعلمين</div>
-            <div class="stat-value" id="totalTeachers">0</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-side panel">
-        <h3>ملخص سريع</h3>
-        <p>
-          هذه الصفحة تعرض الجدول الحالي للمدرسة، وتسمح بالإضافة والحذف والبحث والتصفية حسب اليوم. كما تعرض ربط كل حصة مع الصف والمادة والمعلم.
-        </p>
-
-        <div class="quick-list">
-          <div class="quick-item">
-            <strong>قراءة مباشرة</strong>
-            <span>تقرأ بيانات المدرسة من الجلسة الحالية وFirestore.</span>
-          </div>
-          <div class="quick-item">
-            <strong>إدارة منظمة</strong>
-            <span>إضافة حصة جديدة مع التحقق من الحقول الأساسية قبل الحفظ.</span>
-          </div>
-          <div class="quick-item">
-            <strong>عرض يومي</strong>
-            <span>تلخيص الحصص حسب اليوم لسهولة المتابعة السريعة.</span>
-          </div>
-          <div class="quick-item">
-            <strong>متوافق</strong>
-            <span>متوافق مع session-guard.js و login.js الجديدين.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div id="pageMessage" class="message info"></div>
-
-    <section class="toolbar">
-      <div class="toolbar-right">
-        <input
-          type="text"
-          id="searchInput"
-          class="input search"
-          placeholder="ابحث باسم الصف أو المادة أو المعلم أو اليوم"
-        />
-
-        <select id="dayFilter" class="select filter">
-          <option value="">كل الأيام</option>
-          <option value="saturday">السبت</option>
-          <option value="sunday">الأحد</option>
-          <option value="monday">الاثنين</option>
-          <option value="tuesday">الثلاثاء</option>
-          <option value="wednesday">الأربعاء</option>
-          <option value="thursday">الخميس</option>
-          <option value="friday">الجمعة</option>
-        </select>
-      </div>
-
-      <div class="toolbar-left">
-        <button class="btn btn-secondary" id="refreshBtn">تحديث</button>
-        <button class="btn btn-add" id="openAddModalBtn">إضافة حصة</button>
-      </div>
-    </section>
-
-    <section class="table-wrap">
-      <div class="table-scroller">
-        <table>
-          <thead>
-            <tr>
-              <th>اليوم</th>
-              <th>الحصة</th>
-              <th>الصف</th>
-              <th>المادة</th>
-              <th>المعلم</th>
-              <th>ملاحظات</th>
-              <th>إجراءات</th>
-            </tr>
-          </thead>
-          <tbody id="scheduleTableBody">
-            <tr>
-              <td colspan="7" class="loading">جار تحميل الجدول...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">عرض الحصص حسب اليوم</h2>
-      <div class="day-boards" id="dayBoards">
-        <div class="day-board">
-          <div class="day-head">
-            <h3>...</h3>
-            <span class="day-count">...</span>
-          </div>
-          <div class="day-body">
-            <div class="loading">جار التحميل...</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div class="modal" id="scheduleModal">
-    <div class="modal-box">
-      <div class="modal-head">
-        <h3>إضافة حصة جديدة</h3>
-        <button class="modal-close" type="button" id="closeModalBtn">&times;</button>
-      </div>
-
-      <div class="modal-body">
-        <div id="modalMessage" class="message info"></div>
-
-        <div class="form-grid">
-          <div class="field">
-            <label for="dayInput">اليوم</label>
-            <select id="dayInput" class="select">
-              <option value="">اختر اليوم</option>
-              <option value="saturday">السبت</option>
-              <option value="sunday">الأحد</option>
-              <option value="monday">الاثنين</option>
-              <option value="tuesday">الثلاثاء</option>
-              <option value="wednesday">الأربعاء</option>
-              <option value="thursday">الخميس</option>
-              <option value="friday">الجمعة</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="periodInput">رقم الحصة</label>
-            <input id="periodInput" class="input" type="number" min="1" placeholder="مثال: 1" />
-          </div>
-
-          <div class="field">
-            <label for="classInput">الصف</label>
-            <select id="classInput" class="select">
-              <option value="">اختر الصف</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="subjectInput">المادة</label>
-            <select id="subjectInput" class="select">
-              <option value="">اختر المادة</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="teacherInput">المعلم</label>
-            <select id="teacherInput" class="select">
-              <option value="">اختر المعلم</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="notesInput">ملاحظات</label>
-            <input id="notesInput" class="input" type="text" placeholder="اختياري" />
-          </div>
-        </div>
-
-        <div class="modal-actions">
-          <button class="btn btn-secondary" type="button" id="cancelModalBtn">إلغاء</button>
-          <button class="btn btn-add" type="button" id="saveScheduleBtn">حفظ الحصة</button>
-        </div>
-      </div>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <div id="loadingText">جارِ تحميل الجدول المدرسي...</div>
     </div>
   </div>
 
-  <script src="session-guard.js"></script>
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div class="brand-text">
+          <h1>Madaris AI</h1>
+          <p>عرض شامل للجدول المدرسي: الحصص، المواد، المعلمون، الصفوف، والأيام.</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="/app/school/index.html">رجوع للوحة المدرسة</a>
+        <a class="btn btn-primary" href="/app/school/manage-schedule.html">إدارة الجدول</a>
+        <button class="btn btn-danger" id="logoutBtn" type="button">خروج</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="title-xl">عرض الجدول المدرسي</h2>
+          <p class="subtitle">
+            هذه الصفحة تعرض الجدول الفعلي للمدرسة الحالية من Firebase، مع إمكانية التصفية حسب اليوم أو الصف أو المعلم،
+            بالإضافة إلى عرض الحصص حسب الأيام وبشكل جدولي كامل.
+          </p>
+          <div id="pageMessage" class="message info"></div>
+        </div>
+
+        <div class="panel-body">
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-label">إجمالي الحصص</div>
+              <div class="stat-value" id="lessonsCount">0</div>
+              <div class="stat-note">كل الحصص الموجودة ضمن جدول المدرسة</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">الأيام المستخدمة</div>
+              <div class="stat-value" id="daysCount">0</div>
+              <div class="stat-note">عدد الأيام التي تحتوي على حصص فعلية</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">الصفوف الظاهرة</div>
+              <div class="stat-value" id="classesCount">0</div>
+              <div class="stat-note">عدد الصفوف الموجودة داخل الجدول الحالي</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-label">المعلمون</div>
+              <div class="stat-value" id="teachersCount">0</div>
+              <div class="stat-note">عدد المعلمين المرتبطين بحصص الجدول</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel">
+        <div class="school-box">
+          <div class="school-label">المدرسة الحالية</div>
+          <div class="school-name" id="schoolName">...</div>
+          <div class="school-meta" id="schoolMeta">جارِ تحميل بيانات الجلسة...</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel section">
+      <div class="panel-head">
+        <h2 class="section-title">أدوات العرض والتصفية</h2>
+        <p class="section-subtitle">
+          استخدم هذه الفلاتر لتضييق عرض الجدول حسب اليوم أو الصف أو المعلم أو البحث النصي.
+        </p>
+      </div>
+
+      <div class="panel-body">
+        <div class="filters">
+          <div class="field">
+            <label class="label" for="dayFilter">اليوم</label>
+            <select class="control" id="dayFilter">
+              <option value="all">كل الأيام</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="classFilter">الصف</label>
+            <select class="control" id="classFilter">
+              <option value="all">كل الصفوف</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="teacherFilter">المعلم</label>
+            <select class="control" id="teacherFilter">
+              <option value="all">كل المعلمين</option>
+            </select>
+          </div>
+
+          <div class="field search-field">
+            <label class="label" for="searchInput">بحث</label>
+            <input
+              class="control"
+              id="searchInput"
+              type="text"
+              placeholder="ابحث باسم المادة أو المعلم أو الصف أو اليوم أو رقم الحصة..."
+            />
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <div>
+            <h3 style="margin:0;font-size:18px;font-weight:900;">النتيجة الحالية</h3>
+            <p style="margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.8;">
+              يتم تحديث الجدول مباشرة عند تغيير التصفية أو البحث.
+            </p>
+          </div>
+
+          <div class="toolbar-actions">
+            <button class="btn btn-secondary" id="clearFiltersBtn" type="button">مسح التصفية</button>
+            <button class="btn btn-secondary" id="refreshBtn" type="button">تحديث البيانات</button>
+          </div>
+        </div>
+
+        <div class="overview">
+          <div class="quick-block">
+            <h3>المواد المستخدمة في الجدول</h3>
+            <div class="chips" id="subjectsPreview"></div>
+          </div>
+
+          <div class="quick-block">
+            <h3>الصفوف الموجودة في الجدول</h3>
+            <div class="chips" id="classesPreview"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section">
+      <div class="panel-head">
+        <h2 class="section-title">عرض الحصص حسب اليوم</h2>
+        <p class="section-subtitle">
+          هنا ترى كل يوم على شكل بطاقة مستقلة، وداخلها الحصص المرتبة حسب رقم الحصة.
+        </p>
+      </div>
+
+      <div class="panel-body">
+        <div class="schedule-grid" id="dayCards">
+          <div class="day-card">
+            <div class="day-head">
+              <div class="day-title">جارِ التحميل...</div>
+              <div class="day-count">...</div>
+            </div>
+            <div class="day-body">
+              <div class="empty">انتظر قليلًا حتى يتم تحميل بيانات الجدول.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+              </section>
+            <section class="panel section">
+      <div class="panel-head">
+        <h2 class="section-title">الجدول التفصيلي الكامل</h2>
+        <p class="section-subtitle">
+          عرض جدولي كامل لكل الحصص الظاهرة بعد التصفية الحالية.
+        </p>
+      </div>
+
+      <div class="panel-body">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>اليوم</th>
+                <th>الحصة</th>
+                <th>الصف</th>
+                <th>المادة</th>
+                <th>المعلم</th>
+                <th>من</th>
+                <th>إلى</th>
+                <th>الحالة</th>
+                <th>ملاحظة</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTableBody">
+              <tr>
+                <td colspan="9" class="empty">جارِ تحميل البيانات...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/app/school/session-guard.js"></script>
   <script type="module">
-    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
     import {
       getFirestore,
       collection,
-      addDoc,
-      getDocs,
       query,
       where,
-      deleteDoc,
-      doc,
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9pt9yA4Au9G7Cw".replace("AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9pt9yA4Au9G7Cw","AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw"),
       authDomain: "madaris-ai.firebaseapp.com",
       projectId: "madaris-ai",
-      storageBucket: "madaris-ai.appspot.com",
+      storageBucket: "madaris-ai.firebasestorage.app",
       messagingSenderId: "915394447224",
-      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+      measurementId: "G-SC7VE6F20S",
     };
 
     const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const DAY_LABELS = {
-      saturday: "السبت",
-      sunday: "الأحد",
-      monday: "الاثنين",
-      tuesday: "الثلاثاء",
-      wednesday: "الأربعاء",
-      thursday: "الخميس",
-      friday: "الجمعة",
+    const DAYS = ["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس"];
+    const DAY_ORDER = Object.fromEntries(DAYS.map((day, index) => [day, index]));
+    const STATUS_LABELS = {
+      active: "نشط",
+      inactive: "غير نشط"
     };
 
-    const DAY_ORDER = [
-      "saturday",
-      "sunday",
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-    ];
+    const state = {
+      session: null,
+      schoolId: "",
+      schoolName: "",
+      lessons: [],
+      filteredLessons: []
+    };
 
-    let schoolSession = null;
-    let schoolId = "";
-    let schoolName = "";
-
-    let classesMap = new Map();
-    let subjectsMap = new Map();
-    let teachersMap = new Map();
-
-    let classesList = [];
-    let subjectsList = [];
-    let teachersList = [];
-    let schedulesList = [];
-
-    const els = {
-      schoolBadge: document.getElementById("schoolBadge"),
-      logoutBtn: document.getElementById("logoutBtn"),
-      totalSchedules: document.getElementById("totalSchedules"),
-      totalDays: document.getElementById("totalDays"),
-      totalClasses: document.getElementById("totalClasses"),
-      totalTeachers: document.getElementById("totalTeachers"),
+    const el = {
+      loadingOverlay: document.getElementById("loadingOverlay"),
+      loadingText: document.getElementById("loadingText"),
       pageMessage: document.getElementById("pageMessage"),
-      searchInput: document.getElementById("searchInput"),
+      schoolName: document.getElementById("schoolName"),
+      schoolMeta: document.getElementById("schoolMeta"),
+      lessonsCount: document.getElementById("lessonsCount"),
+      daysCount: document.getElementById("daysCount"),
+      classesCount: document.getElementById("classesCount"),
+      teachersCount: document.getElementById("teachersCount"),
       dayFilter: document.getElementById("dayFilter"),
+      classFilter: document.getElementById("classFilter"),
+      teacherFilter: document.getElementById("teacherFilter"),
+      searchInput: document.getElementById("searchInput"),
+      clearFiltersBtn: document.getElementById("clearFiltersBtn"),
       refreshBtn: document.getElementById("refreshBtn"),
-      openAddModalBtn: document.getElementById("openAddModalBtn"),
-      scheduleTableBody: document.getElementById("scheduleTableBody"),
-      dayBoards: document.getElementById("dayBoards"),
-      scheduleModal: document.getElementById("scheduleModal"),
-      closeModalBtn: document.getElementById("closeModalBtn"),
-      cancelModalBtn: document.getElementById("cancelModalBtn"),
-      saveScheduleBtn: document.getElementById("saveScheduleBtn"),
-      modalMessage: document.getElementById("modalMessage"),
-      dayInput: document.getElementById("dayInput"),
-      periodInput: document.getElementById("periodInput"),
-      classInput: document.getElementById("classInput"),
-      subjectInput: document.getElementById("subjectInput"),
-      teacherInput: document.getElementById("teacherInput"),
-      notesInput: document.getElementById("notesInput"),
+      logoutBtn: document.getElementById("logoutBtn"),
+      subjectsPreview: document.getElementById("subjectsPreview"),
+      classesPreview: document.getElementById("classesPreview"),
+      dayCards: document.getElementById("dayCards"),
+      scheduleTableBody: document.getElementById("scheduleTableBody")
     };
 
-    function text(value) {
+    function normalize(value) {
       if (value === null || value === undefined) return "";
       return String(value).trim();
     }
 
-    function lower(value) {
-      return text(value).toLowerCase();
-    }
-
-    function numberValue(value) {
-      const n = Number(value);
-      return Number.isFinite(n) ? n : 0;
+    function normalizeLower(value) {
+      return normalize(value).toLowerCase();
     }
 
     function escapeHtml(value) {
-      return text(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+      return normalize(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
     function showMessage(message, type = "info") {
-      els.pageMessage.className = `message ${type} show`;
-      els.pageMessage.textContent = message;
+      el.pageMessage.className = `message ${type} show`;
+      el.pageMessage.textContent = message;
     }
 
     function hideMessage() {
-      els.pageMessage.className = "message info";
-      els.pageMessage.textContent = "";
+      el.pageMessage.className = "message info";
+      el.pageMessage.textContent = "";
+      el.pageMessage.classList.remove("show");
     }
 
-    function showModalMessage(message, type = "info") {
-      els.modalMessage.className = `message ${type} show`;
-      els.modalMessage.textContent = message;
+    function setLoading(show, text = "جارِ تحميل البيانات...") {
+      el.loadingText.textContent = text;
+      el.loadingOverlay.classList.toggle("show", !!show);
     }
 
-    function hideModalMessage() {
-      els.modalMessage.className = "message info";
-      els.modalMessage.textContent = "";
+    function goToLogin() {
+      window.location.replace("/app/login.html");
     }
 
-    function goBack() {
-      window.location.href = "index.html";
+    async function logout() {
+      try {
+        if (window.MadarisSession && typeof window.MadarisSession.logoutToLogin === "function") {
+          window.MadarisSession.logoutToLogin();
+          return;
+        }
+
+        try { await signOut(auth); } catch (_error) {}
+
+        const keys = [
+          "madarisai_session","schoolSession","school_session","madaris_user_session","madaris_session",
+          "session","userSession","schoolId","schoolName","userRole","userName","email"
+        ];
+
+        keys.forEach((key) => {
+          try { localStorage.removeItem(key); } catch (_error) {}
+          try { sessionStorage.removeItem(key); } catch (_error) {}
+        });
+
+        goToLogin();
+      } catch (_error) {
+        goToLogin();
+      }
     }
 
-    window.goBack = goBack;
+    function getSession() {
+      if (window.MadarisSession && typeof window.MadarisSession.getSession === "function") {
+        return window.MadarisSession.getSession();
+      }
 
-    function openModal() {
-      hideModalMessage();
-      els.scheduleModal.classList.add("show");
+      try {
+        const raw =
+          localStorage.getItem("madarisai_session") ||
+          sessionStorage.getItem("madarisai_session") ||
+          localStorage.getItem("schoolSession") ||
+          sessionStorage.getItem("schoolSession");
+
+        return raw ? JSON.parse(raw) : null;
+      } catch (_error) {
+        return null;
+      }
     }
 
-    function closeModal() {
-      els.scheduleModal.classList.remove("show");
-      hideModalMessage();
-      resetForm();
+    function resolveSchoolId(session) {
+      return normalize(
+        session?.schoolId ||
+        session?.schoolID ||
+        session?.school_id ||
+        session?.school?.id ||
+        session?.school?.schoolId
+      );
     }
 
-    function resetForm() {
-      els.dayInput.value = "";
-      els.periodInput.value = "";
-      els.classInput.value = "";
-      els.subjectInput.value = "";
-      els.teacherInput.value = "";
-      els.notesInput.value = "";
+    function resolveSchoolName(session) {
+      return normalize(
+        session?.schoolName ||
+        session?.school_name ||
+        session?.school?.name ||
+        session?.school?.schoolName ||
+        "مدرسة غير معروفة"
+      );
     }
 
-    function getDayLabel(dayKey) {
-      return DAY_LABELS[lower(dayKey)] || text(dayKey) || "غير محدد";
+    function sortByDayAndPeriod(items) {
+      return [...items].sort((a, b) => {
+        const dayA = DAY_ORDER[normalize(a.day)] ?? 999;
+        const dayB = DAY_ORDER[normalize(b.day)] ?? 999;
+        if (dayA !== dayB) return dayA - dayB;
+
+        const periodA = Number(a.periodNumber || 0);
+        const periodB = Number(b.periodNumber || 0);
+        if (periodA !== periodB) return periodA - periodB;
+
+        return normalize(a.className).localeCompare(normalize(b.className), "ar");
+      });
     }
 
-    function getClassName(classId) {
-      return classesMap.get(text(classId))?.name || "غير معروف";
-    }
-
-    function getSubjectName(subjectId) {
-      const subject = subjectsMap.get(text(subjectId));
-      return subject?.name || subject?.title || subject?.subject || "غير معروف";
-    }
-
-    function getTeacherName(teacherId) {
-      const teacher = teachersMap.get(text(teacherId));
-      return teacher?.name || teacher?.fullName || "غير معروف";
-    }
-
-    function normalizeSchedule(docItem) {
-      const item = { id: docItem.id, ...docItem.data() };
-
-      const normalizedDay = lower(item.day);
-      const normalizedPeriod = numberValue(item.period);
-      const classId = text(item.classId || item.classID || item.class_id);
-      const subjectId = text(item.subjectId || item.subjectID || item.subject_id);
-      const teacherId = text(item.teacherId || item.teacherID || item.teacher_id);
-      const notes = text(item.notes || item.note || "");
-      const className = getClassName(classId);
-      const subjectName = getSubjectName(subjectId);
-      const teacherName = getTeacherName(teacherId);
-
+    function normalizeLesson(item) {
       return {
-        id: item.id,
-        schoolId: text(item.schoolId),
-        day: normalizedDay,
-        dayLabel: getDayLabel(normalizedDay),
-        period: normalizedPeriod,
-        classId,
-        className,
-        subjectId,
-        subjectName,
-        teacherId,
-        teacherName,
-        notes,
-        createdAt: item.createdAt || null,
+        id: normalize(item.id),
+        schoolId: normalize(item.schoolId || item.schoolID || item.school_id),
+        schoolName: normalize(item.schoolName || item.school_name),
+        classId: normalize(item.classId || item.classID || item.class_id),
+        className: normalize(item.className || item.class_name || item.classTitle),
+        subjectId: normalize(item.subjectId || item.subjectID || item.subject_id),
+        subjectName: normalize(item.subjectName || item.subject_name || item.materialName),
+        teacherId: normalize(item.teacherId || item.teacherID || item.teacher_id),
+        teacherName: normalize(item.teacherName || item.teacher_name || item.teacherFullName),
+        day: normalize(item.day || item.dayName || item.day_label),
+        periodNumber: Number(item.periodNumber || item.period || item.lessonNumber || item.slot || 0),
+        startTime: normalize(item.startTime || item.from || item.start || ""),
+        endTime: normalize(item.endTime || item.to || item.end || ""),
+        status: normalizeLower(item.status || "active") || "active",
+        notes: normalize(item.notes || item.note || item.description || "")
       };
     }
 
-    async function loadReferenceCollection(collectionName) {
-      const q = query(collection(db, collectionName), where("schoolId", "==", schoolId));
-      const snap = await getDocs(q);
-      return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    async function loadLessons() {
+      const candidates = ["schedules", "scheduleEntries", "lessons"];
+      let rows = [];
+
+      for (const collectionName of candidates) {
+        for (const field of ["schoolId", "schoolID", "school_id"]) {
+          try {
+            const q = query(collection(db, collectionName), where(field, "==", state.schoolId));
+            const res = await getDocs(q);
+            if (!res.empty) {
+              rows = res.docs.map((item) => ({ id: item.id, ...item.data() }));
+              break;
+            }
+          } catch (_error) {}
+        }
+        if (rows.length) break;
+      }
+
+      state.lessons = sortByDayAndPeriod(rows.map(normalizeLesson));
     }
 
-    function fillSelect(selectEl, list, placeholder, getLabel) {
-      selectEl.innerHTML = `<option value="">${placeholder}</option>`;
-      for (const item of list) {
+    function buildUniqueOptions(values) {
+      return [...new Set(values.map(normalize).filter(Boolean))];
+    }
+
+    function fillSelect(selectEl, values, firstLabel) {
+      const current = selectEl.value;
+      selectEl.innerHTML = `<option value="all">${firstLabel}</option>`;
+
+      values.forEach((value) => {
         const option = document.createElement("option");
-        option.value = item.id;
-        option.textContent = getLabel(item);
+        option.value = value;
+        option.textContent = value;
         selectEl.appendChild(option);
+      });
+
+      if ([...selectEl.options].some((opt) => opt.value === current)) {
+        selectEl.value = current;
       }
+    }
+
+    function renderChips(container, values, emptyText) {
+      container.innerHTML = "";
+
+      if (!values.length) {
+        container.innerHTML = `<div class="empty">${escapeHtml(emptyText)}</div>`;
+        return;
+      }
+
+      values.slice(0, 18).forEach((value) => {
+        const span = document.createElement("span");
+        span.className = "chip";
+        span.textContent = value;
+        container.appendChild(span);
+      });
+    }
+
+    function updateCounters() {
+      const daySet = new Set(state.filteredLessons.map((item) => normalize(item.day)).filter(Boolean));
+      const classSet = new Set(state.filteredLessons.map((item) => normalize(item.className)).filter(Boolean));
+      const teacherSet = new Set(state.filteredLessons.map((item) => normalize(item.teacherName)).filter(Boolean));
+
+      el.lessonsCount.textContent = String(state.filteredLessons.length);
+      el.daysCount.textContent = String(daySet.size);
+      el.classesCount.textContent = String(classSet.size);
+      el.teachersCount.textContent = String(teacherSet.size);
     }
 
     function renderTable(items) {
       if (!items.length) {
-        els.scheduleTableBody.innerHTML = `
+        el.scheduleTableBody.innerHTML = `
           <tr>
-            <td colspan="7">
-              <div class="empty-state">
-                لا توجد حصص مطابقة حالياً.<br>
-                أضف حصة جديدة أو غيّر البحث والتصفية.
-              </div>
-            </td>
+            <td colspan="9" class="empty">لا توجد حصص مطابقة للتصفية الحالية.</td>
           </tr>
         `;
         return;
       }
 
-      els.scheduleTableBody.innerHTML = items.map((item) => `
-        <tr>
-          <td><span class="badge badge-day">${escapeHtml(item.dayLabel)}</span></td>
-          <td><span class="badge badge-period">الحصة ${escapeHtml(item.period)}</span></td>
-          <td>${escapeHtml(item.className)}</td>
-          <td>${escapeHtml(item.subjectName)}</td>
-          <td>${escapeHtml(item.teacherName)}</td>
-          <td>${item.notes ? escapeHtml(item.notes) : '<span class="badge badge-empty">لا يوجد</span>'}</td>
-          <td>
-            <div class="actions">
-              <button class="btn-sm btn-view" onclick="viewSchedule('${item.id}')">عرض</button>
-              <button class="btn-sm btn-delete" onclick="deleteSchedule('${item.id}')">حذف</button>
-            </div>
-          </td>
-        </tr>
-      `).join("");
-    }
-
-    function renderDayBoards(items) {
-      const grouped = new Map();
-      for (const day of DAY_ORDER) grouped.set(day, []);
-
-      for (const item of items) {
-        const day = lower(item.day);
-        if (!grouped.has(day)) grouped.set(day, []);
-        grouped.get(day).push(item);
-      }
-
-      for (const [day, arr] of grouped.entries()) {
-        arr.sort((a, b) => numberValue(a.period) - numberValue(b.period));
-      }
-
-      els.dayBoards.innerHTML = DAY_ORDER.map((day) => {
-        const list = grouped.get(day) || [];
-        const body = list.length
-          ? list.map((item) => `
-              <div class="slot">
-                <div class="slot-top">
-                  <div class="slot-title">الحصة ${escapeHtml(item.period)} — ${escapeHtml(item.subjectName)}</div>
-                  <span class="badge badge-day">${escapeHtml(item.className)}</span>
-                </div>
-                <div class="slot-meta">
-                  المعلم: ${escapeHtml(item.teacherName)}<br>
-                  ${item.notes ? `ملاحظات: ${escapeHtml(item.notes)}` : "بدون ملاحظات"}
-                </div>
-              </div>
-            `).join("")
-          : `<div class="empty-state">لا توجد حصص لهذا اليوم.</div>`;
+      el.scheduleTableBody.innerHTML = items.map((lesson) => {
+        const statusClass = lesson.status === "active" ? "badge-success" : "badge-muted";
+        const statusLabel = STATUS_LABELS[lesson.status] || "غير محدد";
 
         return `
-          <div class="day-board">
-            <div class="day-head">
-              <h3>${escapeHtml(getDayLabel(day))}</h3>
-              <span class="day-count">${list.length} حصة</span>
-            </div>
-            <div class="day-body">
-              ${body}
-            </div>
-          </div>
+          <tr>
+            <td>${escapeHtml(lesson.day || "-")}</td>
+            <td>الحصة ${escapeHtml(String(lesson.periodNumber || "-"))}</td>
+            <td>${escapeHtml(lesson.className || "-")}</td>
+            <td>${escapeHtml(lesson.subjectName || "-")}</td>
+            <td>${escapeHtml(lesson.teacherName || "-")}</td>
+            <td>${escapeHtml(lesson.startTime || "-")}</td>
+            <td>${escapeHtml(lesson.endTime || "-")}</td>
+            <td><span class="badge ${statusClass}">${escapeHtml(statusLabel)}</span></td>
+            <td>${escapeHtml(lesson.notes || "-")}</td>
+          </tr>
         `;
       }).join("");
     }
 
-    function updateStats(items) {
-      const daysUsed = new Set(items.map((item) => lower(item.day)).filter(Boolean)).size;
-      els.totalSchedules.textContent = items.length;
-      els.totalDays.textContent = daysUsed;
-      els.totalClasses.textContent = classesList.length;
-      els.totalTeachers.textContent = teachersList.length;
-    }
+    function renderDayCards(items) {
+      el.dayCards.innerHTML = "";
 
-    function getFilteredSchedules() {
-      const keyword = lower(els.searchInput.value);
-      const selectedDay = lower(els.dayFilter.value);
-
-      return schedulesList.filter((item) => {
-        const byDay = !selectedDay || lower(item.day) === selectedDay;
-        const haystack = [
-          item.dayLabel,
-          item.className,
-          item.subjectName,
-          item.teacherName,
-          item.notes,
-          item.period,
-        ].map((v) => lower(v)).join(" ");
-        const bySearch = !keyword || haystack.includes(keyword);
-        return byDay && bySearch;
-      }).sort((a, b) => {
-        const dayDiff = DAY_ORDER.indexOf(lower(a.day)) - DAY_ORDER.indexOf(lower(b.day));
-        if (dayDiff !== 0) return dayDiff;
-        return numberValue(a.period) - numberValue(b.period);
+      const daysToRender = DAYS.filter((day) => {
+        if (normalize(el.dayFilter.value) === "all") return true;
+        return normalize(el.dayFilter.value) === day;
       });
-    }
 
-    function renderAll() {
-      const filtered = getFilteredSchedules();
-      renderTable(filtered);
-      renderDayBoards(filtered);
-      updateStats(filtered);
-    }
+      daysToRender.forEach((day) => {
+        const dayItems = items
+          .filter((lesson) => normalize(lesson.day) === day)
+          .sort((a, b) => Number(a.periodNumber || 0) - Number(b.periodNumber || 0));
 
-    async function loadData() {
-      hideMessage();
-      els.scheduleTableBody.innerHTML = `
-        <tr>
-          <td colspan="7" class="loading">جار تحميل الجدول...</td>
-        </tr>
-      `;
-      els.dayBoards.innerHTML = `
-        <div class="day-board">
-          <div class="day-head">
-            <h3>جار التحميل</h3>
-            <span class="day-count">...</span>
-          </div>
-          <div class="day-body">
-            <div class="loading">جار تحميل الحصص حسب اليوم...</div>
-          </div>
-        </div>
-      `;
+        const card = document.createElement("div");
+        card.className = "day-card";
 
-      try {
-        const [classes, subjects, teachers, schedulesSnap] = await Promise.all([
-          loadReferenceCollection("classes"),
-          loadReferenceCollection("subjects"),
-          loadReferenceCollection("teachers"),
-          getDocs(query(collection(db, "schedules"), where("schoolId", "==", schoolId))),
-        ]);
-
-        classesList = classes;
-        subjectsList = subjects;
-        teachersList = teachers;
-
-        classesMap = new Map(classes.map((item) => [item.id, item]));
-        subjectsMap = new Map(subjects.map((item) => [item.id, item]));
-        teachersMap = new Map(teachers.map((item) => [item.id, item]));
-
-        schedulesList = schedulesSnap.docs.map(normalizeSchedule);
-
-        fillSelect(els.classInput, classesList, "اختر الصف", (item) => item.name || item.title || item.id);
-        fillSelect(els.subjectInput, subjectsList, "اختر المادة", (item) => item.name || item.title || item.subject || item.id);
-        fillSelect(els.teacherInput, teachersList, "اختر المعلم", (item) => item.name || item.fullName || item.id);
-
-        renderAll();
-      } catch (error) {
-        console.error("Load schedule error:", error);
-        showMessage("حدث خطأ أثناء تحميل الجدول الدراسي.", "error");
-        els.scheduleTableBody.innerHTML = `
-          <tr>
-            <td colspan="7">
-              <div class="empty-state">تعذر تحميل البيانات حالياً.</div>
-            </td>
-          </tr>
-        `;
-        els.dayBoards.innerHTML = `
-          <div class="day-board">
+        if (!dayItems.length) {
+          card.innerHTML = `
             <div class="day-head">
-              <h3>خطأ</h3>
-              <span class="day-count">!</span>
+              <div class="day-title">${escapeHtml(day)}</div>
+              <div class="day-count">0 حصة</div>
             </div>
             <div class="day-body">
-              <div class="empty-state">تعذر تحميل العرض اليومي.</div>
+              <div class="empty">لا توجد حصص لهذا اليوم ضمن التصفية الحالية.</div>
+            </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <div class="day-head">
+              <div class="day-title">${escapeHtml(day)}</div>
+              <div class="day-count">${dayItems.length} حصة</div>
+            </div>
+            <div class="day-body">
+              ${dayItems.map((lesson) => `
+                <div class="lesson-item">
+                  <div class="lesson-top">
+                    <div class="lesson-subject">${escapeHtml(lesson.subjectName || "-")}</div>
+                    <div class="period-badge">الحصة ${escapeHtml(String(lesson.periodNumber || "-"))}</div>
+                  </div>
+
+                  <div class="lesson-meta">
+                    <div><strong>الصف:</strong> ${escapeHtml(lesson.className || "-")}</div>
+                    <div><strong>المعلم:</strong> ${escapeHtml(lesson.teacherName || "-")}</div>
+                    <div><strong>الوقت:</strong> ${escapeHtml(lesson.startTime || "-")} → ${escapeHtml(lesson.endTime || "-")}</div>
+                    <div><strong>الحالة:</strong> ${escapeHtml(STATUS_LABELS[lesson.status] || "غير محدد")}</div>
+                  </div>
+
+                  ${lesson.notes ? `<div style="margin-top:10px;color:var(--muted);font-size:13px;line-height:1.8;"><strong style="color:#fff;">ملاحظة:</strong> ${escapeHtml(lesson.notes)}</div>` : ""}
+                </div>
+              `).join("")}
+            </div>
+          `;
+        }
+
+        el.dayCards.appendChild(card);
+      });
+
+      if (!daysToRender.length) {
+        el.dayCards.innerHTML = `
+          <div class="day-card">
+            <div class="day-head">
+              <div class="day-title">لا توجد نتائج</div>
+              <div class="day-count">0</div>
+            </div>
+            <div class="day-body">
+              <div class="empty">لا توجد أيام مطابقة للعرض الحالي.</div>
             </div>
           </div>
         `;
       }
     }
 
-    async function saveSchedule() {
-      hideModalMessage();
+    function getFilteredLessons() {
+      const day = normalize(el.dayFilter.value);
+      const className = normalize(el.classFilter.value);
+      const teacherName = normalize(el.teacherFilter.value);
+      const search = normalizeLower(el.searchInput.value);
 
-      const day = lower(els.dayInput.value);
-      const period = numberValue(els.periodInput.value);
-      const classId = text(els.classInput.value);
-      const subjectId = text(els.subjectInput.value);
-      const teacherId = text(els.teacherInput.value);
-      const notes = text(els.notesInput.value);
+      return state.lessons.filter((lesson) => {
+        const matchDay = day === "all" ? true : normalize(lesson.day) === day;
+        const matchClass = className === "all" ? true : normalize(lesson.className) === className;
+        const matchTeacher = teacherName === "all" ? true : normalize(lesson.teacherName) === teacherName;
 
-      if (!day) {
-        showModalMessage("اختر اليوم.", "error");
-        return;
-      }
+        const blob = normalizeLower([
+          lesson.day,
+          lesson.className,
+          lesson.subjectName,
+          lesson.teacherName,
+          `الحصة ${lesson.periodNumber}`,
+          lesson.startTime,
+          lesson.endTime,
+          lesson.notes
+        ].join(" "));
 
-      if (!period || period < 1) {
-        showModalMessage("ادخل رقم حصة صحيح.", "error");
-        return;
-      }
+        const matchSearch = !search ? true : blob.includes(search);
 
-      if (!classId) {
-        showModalMessage("اختر الصف.", "error");
-        return;
-      }
+        return matchDay && matchClass && matchTeacher && matchSearch;
+      });
+    }
 
-      if (!subjectId) {
-        showModalMessage("اختر المادة.", "error");
-        return;
-      }
+    function renderPreviews(items) {
+      const subjects = buildUniqueOptions(items.map((item) => item.subjectName));
+      const classes = buildUniqueOptions(items.map((item) => item.className));
 
-      if (!teacherId) {
-        showModalMessage("اختر المعلم.", "error");
-        return;
-      }
+      renderChips(el.subjectsPreview, subjects, "لا توجد مواد ظاهرة في الجدول الحالي.");
+      renderChips(el.classesPreview, classes, "لا توجد صفوف ظاهرة في الجدول الحالي.");
+    }
 
+    function applyFiltersAndRender() {
+      state.filteredLessons = sortByDayAndPeriod(getFilteredLessons());
+      updateCounters();
+      renderPreviews(state.filteredLessons);
+      renderDayCards(state.filteredLessons);
+      renderTable(state.filteredLessons);
+    }
+
+    function fillFilterOptions() {
+      const dayOptions = buildUniqueOptions(state.lessons.map((item) => item.day)).sort((a, b) => {
+        return (DAY_ORDER[a] ?? 999) - (DAY_ORDER[b] ?? 999);
+      });
+      const classOptions = buildUniqueOptions(state.lessons.map((item) => item.className)).sort((a, b) => a.localeCompare(b, "ar"));
+      const teacherOptions = buildUniqueOptions(state.lessons.map((item) => item.teacherName)).sort((a, b) => a.localeCompare(b, "ar"));
+
+      fillSelect(el.dayFilter, dayOptions, "كل الأيام");
+      fillSelect(el.classFilter, classOptions, "كل الصفوف");
+      fillSelect(el.teacherFilter, teacherOptions, "كل المعلمين");
+    }
+
+    function clearFilters() {
+      el.dayFilter.value = "all";
+      el.classFilter.value = "all";
+      el.teacherFilter.value = "all";
+      el.searchInput.value = "";
+      applyFiltersAndRender();
+    }
+
+    async function refreshAll() {
       try {
-        els.saveScheduleBtn.disabled = true;
-        els.saveScheduleBtn.textContent = "جار الحفظ...";
+        hideMessage();
+        setLoading(true, "جارِ تحميل الجدول المدرسي...");
+        await loadLessons();
+        fillFilterOptions();
+        applyFiltersAndRender();
 
-        await addDoc(collection(db, "schedules"), {
-          schoolId,
-          day,
-          period,
-          classId,
-          subjectId,
-          teacherId,
-          notes,
-          createdAt: Date.now(),
-        });
-
-        showMessage("تمت إضافة الحصة بنجاح.", "success");
-        closeModal();
-        await loadData();
+        if (!state.lessons.length) {
+          showMessage("لا توجد حصص محفوظة لهذه المدرسة حتى الآن. انتقل إلى إدارة الجدول لإضافة الحصص.", "info");
+        }
       } catch (error) {
-        console.error("Save schedule error:", error);
-        showModalMessage("فشل حفظ الحصة.", "error");
+        console.error("refreshAll error:", error);
+        showMessage("حدث خطأ أثناء تحميل الجدول المدرسي", "error");
       } finally {
-        els.saveScheduleBtn.disabled = false;
-        els.saveScheduleBtn.textContent = "حفظ الحصة";
+        setLoading(false);
       }
     }
-
-    async function deleteSchedule(id) {
-      const confirmed = window.confirm("هل تريد حذف هذه الحصة من الجدول؟");
-      if (!confirmed) return;
-
-      try {
-        await deleteDoc(doc(db, "schedules", id));
-        showMessage("تم حذف الحصة بنجاح.", "success");
-        await loadData();
-      } catch (error) {
-        console.error("Delete schedule error:", error);
-        showMessage("فشل حذف الحصة.", "error");
-      }
-    }
-
-    function viewSchedule(id) {
-      const item = schedulesList.find((x) => x.id === id);
-      if (!item) return;
-
-      const lines = [
-        `اليوم: ${item.dayLabel}`,
-        `الحصة: ${item.period}`,
-        `الصف: ${item.className}`,
-        `المادة: ${item.subjectName}`,
-        `المعلم: ${item.teacherName}`,
-        `الملاحظات: ${item.notes || "لا يوجد"}`
-      ];
-
-      window.alert(lines.join("\n"));
-    }
-
-    window.deleteSchedule = deleteSchedule;
-    window.viewSchedule = viewSchedule;
 
     function bindEvents() {
-      els.logoutBtn.addEventListener("click", () => {
-        if (window.MadarisSession && typeof window.MadarisSession.logoutToLogin === "function") {
-          window.MadarisSession.logoutToLogin();
-        } else {
-          window.location.href = "/app/login.html";
-        }
-      });
-
-      els.openAddModalBtn.addEventListener("click", openModal);
-      els.closeModalBtn.addEventListener("click", closeModal);
-      els.cancelModalBtn.addEventListener("click", closeModal);
-      els.saveScheduleBtn.addEventListener("click", saveSchedule);
-      els.refreshBtn.addEventListener("click", loadData);
-      els.searchInput.addEventListener("input", renderAll);
-      els.dayFilter.addEventListener("change", renderAll);
-
-      els.scheduleModal.addEventListener("click", (event) => {
-        if (event.target === els.scheduleModal) {
-          closeModal();
-        }
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && els.scheduleModal.classList.contains("show")) {
-          closeModal();
-        }
-      });
+      el.dayFilter.addEventListener("change", applyFiltersAndRender);
+      el.classFilter.addEventListener("change", applyFiltersAndRender);
+      el.teacherFilter.addEventListener("change", applyFiltersAndRender);
+      el.searchInput.addEventListener("input", applyFiltersAndRender);
+      el.clearFiltersBtn.addEventListener("click", clearFilters);
+      el.refreshBtn.addEventListener("click", refreshAll);
+      el.logoutBtn.addEventListener("click", logout);
     }
 
     async function init() {
-      if (!window.MadarisSession || typeof window.MadarisSession.requireSchoolSession !== "function") {
-        window.location.replace("/app/login.html");
+      state.session = getSession();
+
+      if (!state.session) {
+        showMessage("انتهت الجلسة أو لم يتم العثور عليها. سيتم تحويلك إلى صفحة الدخول.", "error");
+        setTimeout(goToLogin, 900);
         return;
       }
 
-      schoolSession = window.MadarisSession.requireSchoolSession();
-      if (!schoolSession) return;
+      state.schoolId = resolveSchoolId(state.session);
+      state.schoolName = resolveSchoolName(state.session);
 
-      schoolId = text(schoolSession.schoolId);
-      schoolName = text(schoolSession.schoolName) || "المدرسة";
+      if (!state.schoolId) {
+        showMessage("تعذر تحديد المدرسة الحالية من الجلسة. سيتم تحويلك إلى صفحة الدخول.", "error");
+        setTimeout(goToLogin, 900);
+        return;
+      }
 
-      els.schoolBadge.textContent = `المدرسة: ${schoolName}`;
+      el.schoolName.textContent = state.schoolName;
+      el.schoolMeta.textContent = `معرّف المدرسة: ${state.schoolId}`;
 
       bindEvents();
-      await loadData();
+      await refreshAll();
+
+      window.SchoolSchedulePage = {
+        state,
+        refreshAll,
+        clearFilters
+      };
     }
 
     init();
   </script>
 </body>
-</html>
+</html>  
