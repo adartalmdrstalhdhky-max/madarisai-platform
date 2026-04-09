@@ -940,15 +940,31 @@
         gender: uniqueSorted(docs.map((d) => d.gender)),
         role: uniqueSorted(docs.map((d) => d.role))
       };
+const required = REQUIRED_FIELDS[collectionName] || [];
 
-      const required = REQUIRED_FIELDS[collectionName] || [];
-      const missingRequired = docs
-        .filter((doc) => required.some((field) => !text(doc[field])))
-        .map((doc) => ({
-          id: doc.id,
-          missing: required.filter((field) => !text(doc[field]))
-        }));
-
+const missingRequired = docs
+  .filter((doc) =>
+    required.some((field) => {
+      const value = doc[field];
+      return (
+        value === undefined ||
+        value === null ||
+        (typeof value === "string" && value.trim() === "")
+      );
+    })
+  )
+  .map((doc) => ({
+    id: doc.id,
+    missing: required.filter((field) => {
+      const value = doc[field];
+      return (
+        value === undefined ||
+        value === null ||
+        (typeof value === "string" && value.trim() === "")
+      );
+    })
+  }));
+      
       const sampleDocs = docs.slice(0, 5).map((doc) => {
         const sample = {};
         Object.keys(doc).forEach((key) => {
