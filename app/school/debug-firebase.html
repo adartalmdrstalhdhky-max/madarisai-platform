@@ -722,15 +722,70 @@
     ];
 
     const REQUIRED_FIELDS = {
-      schools: ["name", "schoolId", "status"],
-      users: ["email", "role"],
-      students: ["name", "schoolId", "classId"],
-      teachers: ["name", "schoolId", "subjectId"],
-      classes: ["name", "schoolId", "grade"],
-      subjects: ["name", "schoolId"],
-      schedules: ["schoolId", "classId", "subjectId", "teacherId", "day", "period"],
-      classSubjects: ["classId", "subjectId"]
-    };
+  schools: [
+    "id",
+    "name",
+    "managerName",
+    "managerEmail",
+    "status"
+  ],
+
+  users: [
+    "id",
+    "name",
+    "email",
+    "role",
+    "schoolId",
+    "status"
+  ],
+
+  students: [
+    "id",
+    "name",
+    "schoolId",
+    "classId",
+    "status"
+  ],
+
+  teachers: [
+    "id",
+    "name",
+    "schoolId",
+    "teacherType",
+    "status"
+  ],
+
+  classes: [
+    "id",
+    "name",
+    "schoolId",
+    "status"
+  ],
+
+  subjects: [
+    "id",
+    "name",
+    "schoolId",
+    "status"
+  ],
+
+  schedules: [
+    "id",
+    "classId",
+    "subjectId",
+    "teacherId",
+    "schoolId",
+    "status"
+  ],
+
+  classSubjects: [
+    "id",
+    "classId",
+    "subjectId",
+    "schoolId",
+    "status"
+  ]
+};
 
     const els = {
       schoolBadge: document.getElementById("schoolBadge"),
