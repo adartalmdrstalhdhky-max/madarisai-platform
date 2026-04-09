@@ -1012,6 +1012,27 @@
       inactive: "غير نشط"
     };
 
+   
+const STATUS_NORMALIZER = {
+  active: "active",
+  inactive: "inactive",
+  "نشط": "active",
+  "غير نشط": "inactive"
+};
+
+const TEACHER_TYPE_NORMALIZER = {
+  ai: "ai",
+  human: "human",
+  "معلم ذكي": "ai",
+  "معلم بشري": "human",
+  "ai teacher": "ai",
+  teacher: "human"
+};
+
+const TEACHER_TYPE_LABELS = {
+  ai: "معلم ذكي",
+  human: "معلم بشري"
+}; 
     const state = {
       session: null,
       schoolId: "",
@@ -1067,6 +1088,15 @@
     function normalizeLower(value) {
       return normalize(value).toLowerCase();
     }
+function normalizeStatusValue(value) {
+  const key = normalizeLower(value);
+  return STATUS_NORMALIZER[key] || "active";
+}
+
+function normalizeTeacherTypeValue(value) {
+  const key = normalizeLower(value);
+  return TEACHER_TYPE_NORMALIZER[key] || "human";
+}
 
     function escapeHtml(value) {
       return normalize(value)
