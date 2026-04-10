@@ -242,10 +242,11 @@ appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 function go(page){
-window.location.href = page;
+  window.location.href = page;
 }
+
+window.go = go;
 
 
 document.getElementById("logoutBtn").addEventListener("click",()=>{
