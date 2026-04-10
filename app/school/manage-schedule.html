@@ -849,7 +849,7 @@
                   <option value="7">الحصة 7</option>
                   <option value="8">الحصة 8</option>
                 </select>
-                  <div class="hint">الترتيب يستخدم أيضًا في الفرز داخل الجدول.</div>
+                       <div class="hint">الترتيب يستخدم أيضًا في الفرز داخل الجدول.</div>
               </div>
 
               <div class="field">
@@ -1011,28 +1011,25 @@
       active: "نشط",
       inactive: "غير نشط"
     };
+    const STATUS_NORMALIZER = {
+      active: "active",
+      inactive: "inactive",
+      "نشط": "active",
+      "غير نشط": "inactive"
+    };
+    const TEACHER_TYPE_NORMALIZER = {
+      ai: "ai",
+      human: "human",
+      "معلم ذكي": "ai",
+      "معلم بشري": "human",
+      "ai teacher": "ai",
+      teacher: "human"
+    };
+    const TEACHER_TYPE_LABELS = {
+      ai: "معلم ذكي",
+      human: "معلم بشري"
+    };
 
-   
-const STATUS_NORMALIZER = {
-  active: "active",
-  inactive: "inactive",
-  "نشط": "active",
-  "غير نشط": "inactive"
-};
-
-const TEACHER_TYPE_NORMALIZER = {
-  ai: "ai",
-  human: "human",
-  "معلم ذكي": "ai",
-  "معلم بشري": "human",
-  "ai teacher": "ai",
-  teacher: "human"
-};
-
-const TEACHER_TYPE_LABELS = {
-  ai: "معلم ذكي",
-  human: "معلم بشري"
-}; 
     const state = {
       session: null,
       schoolId: "",
@@ -1088,15 +1085,16 @@ const TEACHER_TYPE_LABELS = {
     function normalizeLower(value) {
       return normalize(value).toLowerCase();
     }
-function normalizeStatusValue(value) {
-  const key = normalizeLower(value);
-  return STATUS_NORMALIZER[key] || "active";
-}
 
-function normalizeTeacherTypeValue(value) {
-  const key = normalizeLower(value);
-  return TEACHER_TYPE_NORMALIZER[key] || "human";
-}
+    function normalizeStatusValue(value) {
+      const key = normalizeLower(value);
+      return STATUS_NORMALIZER[key] || "active";
+    }
+
+    function normalizeTeacherTypeValue(value) {
+      const key = normalizeLower(value);
+      return TEACHER_TYPE_NORMALIZER[key] || "human";
+    }
 
     function escapeHtml(value) {
       return normalize(value)
@@ -1134,8 +1132,7 @@ function normalizeTeacherTypeValue(value) {
           sessionStorage.getItem("madarisai_session") ||
           localStorage.getItem("schoolSession") ||
           sessionStorage.getItem("schoolSession");
-
-        return raw ? JSON.parse(raw) : null;
+          return raw ? JSON.parse(raw) : null;
       } catch (_error) {
         return null;
       }
@@ -1369,13 +1366,12 @@ function normalizeTeacherTypeValue(value) {
         startTime: normalize(item.startTime || item.from || item.start || ""),
         endTime: normalize(item.endTime || item.to || item.end || ""),
         status: normalizeStatusValue(item.status || "active"),
-teacherType: normalizeTeacherTypeValue(
-  item.teacherType ||
-  item.teacher_type ||
-  item.teacherRoleLevel ||
-  ""
-),
-        
+        teacherType: normalizeTeacherTypeValue(
+          item.teacherType ||
+          item.teacher_type ||
+          item.teacherRoleLevel ||
+          ""
+        ),
         notes: normalize(item.notes || item.note || item.description || ""),
         createdAt: item.createdAt || null,
         updatedAt: item.updatedAt || null
@@ -1430,26 +1426,28 @@ teacherType: normalizeTeacherTypeValue(
       const option = selectEl.options[selectEl.selectedIndex];
       return normalize(option?.dataset?.name || option?.textContent);
     }
-function getTeacherMetaById(teacherId) {
-  const found = state.teachers.find((entry) => normalize(entry.id) === normalize(teacherId));
-  const raw = found?.raw || {};
 
-  return {
-    teacherType: normalizeTeacherTypeValue(
-      raw.teacherType ||
-      raw.teacher_type ||
-      raw.type ||
-      raw.teacherRoleLevel ||
-      ""
-    ),
-    teacherRoleLevel: normalize(
-      raw.roleLevel ||
-      raw.teacherRoleLevel ||
-      raw.role ||
-      "teacher"
-    )
-  };
-}
+    function getTeacherMetaById(teacherId) {
+      const found = state.teachers.find((entry) => normalize(entry.id) === normalize(teacherId));
+      const raw = found?.raw || found || {};
+
+      return {
+        teacherType: normalizeTeacherTypeValue(
+          raw.teacherType ||
+          raw.teacher_type ||
+          raw.type ||
+          raw.teacherRoleLevel ||
+          ""
+        ),
+        teacherRoleLevel: normalize(
+          raw.roleLevel ||
+          raw.teacherRoleLevel ||
+          raw.role ||
+          "teacher"
+        )
+      };
+    }
+
     function buildLessonPayload() {
       const editingId = normalize(el.editingId.value);
       const classId = normalize(el.classSelect.value);
@@ -1457,7 +1455,7 @@ function getTeacherMetaById(teacherId) {
       const teacherId = normalize(el.teacherSelect.value);
       const day = normalize(el.daySelect.value);
       const periodNumber = Number(el.periodSelect.value || 0);
-      const status = normalizeLower(el.statusSelect.value || "active") || "active";
+      const status = normalizeStatusValue(el.statusSelect.value || "active");
       const startTime = normalize(el.startTime.value);
       const endTime = normalize(el.endTime.value);
       const notes = normalize(el.notesInput.value);
@@ -1488,6 +1486,8 @@ function getTeacherMetaById(teacherId) {
           subjectName,
           teacherId,
           teacherName,
+          teacherType: teacherMeta.teacherType,
+          teacherRoleLevel: teacherMeta.teacherRoleLevel,
           day,
           periodNumber,
           startTime,
@@ -1622,7 +1622,7 @@ function getTeacherMetaById(teacherId) {
 
       return state.lessons.filter((lesson) => {
         const matchesDay = dayFilter === "all" ? true : normalize(lesson.day) === dayFilter;
-        const matchesStatus = statusFilter === "all" ? true : normalizeLower(lesson.status) === statusFilter;
+        const matchesStatus = statusFilter === "all" ? true : normalizeStatusValue(lesson.status) === statusFilter;
 
         const blob = normalizeLower([
           lesson.className,
@@ -1652,8 +1652,9 @@ function getTeacherMetaById(teacherId) {
       }
 
       el.lessonsTableBody.innerHTML = items.map((lesson) => {
-        const statusClass = lesson.status === "active" ? "badge-success" : "badge-muted";
-        const statusLabel = STATUS_LABELS[lesson.status] || "غير محدد";
+        const normalizedStatus = normalizeStatusValue(lesson.status);
+        const statusClass = normalizedStatus === "active" ? "badge-success" : "badge-muted";
+        const statusLabel = STATUS_LABELS[normalizedStatus] || "غير محدد";
 
         return `
           <tr>
@@ -1693,6 +1694,7 @@ function getTeacherMetaById(teacherId) {
             <h3>${escapeHtml(day)}</h3>
             <div class="empty">لا توجد حصص لهذا اليوم.</div>
           `;
+          
         } else {
           const inner = dayItems.map((lesson) => `
             <div class="lesson-item">
@@ -1804,4 +1806,3 @@ function getTeacherMetaById(teacherId) {
   </script>
 </body>
 </html>
-    
