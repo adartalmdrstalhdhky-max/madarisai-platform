@@ -1465,6 +1465,7 @@ function getTeacherMetaById(teacherId) {
       const className = getSelectedOptionName(el.classSelect);
       const subjectName = getSelectedOptionName(el.subjectSelect);
       const teacherName = getSelectedOptionName(el.teacherSelect);
+      const teacherMeta = getTeacherMetaById(teacherId);
 
       if (!classId) throw new Error("اختر الصف");
       if (!subjectId) throw new Error("اختر المادة");
