@@ -1383,7 +1383,12 @@ function updateSubjectSelectByClass(selectedSubjectId = "") {
   }
 
   const allowedIds = new Set(getAllowedSubjectIdsForClass(classId));
-
+console.log("===== Madaris Debug =====");
+console.log("Selected classId:", classId);
+console.log("Allowed subject IDs:", [...allowedIds]);
+console.log("All subjects:", state.subjects);
+console.log("ClassSubjects:", state.classSubjects);
+console.log("=========================");
   const filteredSubjects = state.subjects.filter((item) =>
     allowedIds.has(normalize(item.id))
   );
