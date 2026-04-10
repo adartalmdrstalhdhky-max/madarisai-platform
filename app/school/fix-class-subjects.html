@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI - Fix Class Subjects</title>
+  <style>
+    :root{
+      --bg:#06142b;
+      --panel:#0c1f3f;
+      --panel-2:#10264b;
+      --text:#eef4ff;
+      --muted:#9fb0d1;
+      --blue:#4f86ff;
+      --green:#19b27b;
+      --red:#ef4444;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Arabic","Noto Kufi Arabic",Arial,sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(79,134,255,.18), transparent 30%),
+        linear-gradient(180deg, #04101f 0%, #071833 100%);
+      color:var(--text);
+      min-height:100vh;
+      padding:20px;
+    }
+
+    .container{
+      width:min(980px,100%);
+      margin:0 auto;
+    }
+
+    .hero,
+    .panel{
+      background:linear-gradient(180deg, rgba(12,31,63,.96), rgba(9,24,49,.96));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      padding:24px;
+      margin-bottom:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:10px;
+    }
+
+    .brand-mark{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      background:linear-gradient(135deg, #6aa2ff, #4f86ff);
+      display:grid;
+      place-items:center;
+      font-size:28px;
+      font-weight:800;
+      color:white;
+      box-shadow:0 8px 24px rgba(79,134,255,.35);
+      flex:0 0 auto;
+    }
+
+    h1,h2,h3,p{margin:0}
+    h1{font-size:34px; font-weight:900}
+    h2{font-size:26px; font-weight:900}
+    p.desc{
+      margin-top:8px;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:17px;
+    }
+
+    .panel{
+      padding:22px;
+      margin-bottom:18px;
+    }
+
+    .grid{
+      display:grid;
+      gap:16px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .label{
+      font-size:15px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .control{
+      width:100%;
+      border:none;
+      outline:none;
+      background:#08162f;
+      color:var(--text);
+      border:1px solid rgba(124,151,201,.18);
+      border-radius:18px;
+      padding:16px 18px;
+      font-size:18px;
+      min-height:56px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    .hint{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .btn{
+      border:none;
+      outline:none;
+      border-radius:18px;
+      min-height:54px;
+      padding:0 22px;
+      font-size:18px;
+      font-weight:800;
+      cursor:pointer;
+      color:white;
+      transition:.18s ease;
+      box-shadow:var(--shadow);
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+    .btn:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    .btn-primary{background:linear-gradient(135deg,#4f86ff,#3f74eb)}
+    .btn-success{background:linear-gradient(135deg,#1bbc83,#129b6b)}
+    .btn-muted{background:linear-gradient(135deg,#334a73,#2a3f64)}
+    .btn-danger{background:linear-gradient(135deg,#ef4444,#d93636)}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:18px;
+      min-height:116px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .stat .title{
+      color:var(--muted);
+      font-size:15px;
+      font-weight:700;
+    }
+
+    .stat .value{
+      font-size:38px;
+      font-weight:900;
+      line-height:1;
+    }
+
+    .section-title{
+      margin-bottom:14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .log{
+      background:#08162f;
+      border:1px solid rgba(124,151,201,.18);
+      border-radius:18px;
+      padding:16px;
+      min-height:220px;
+      max-height:420px;
+      overflow:auto;
+      white-space:pre-wrap;
+      line-height:1.9;
+      font-size:15px;
+      color:#dce8ff;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      padding:8px 14px;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .badge-blue{background:rgba(79,134,255,.14); color:#8cb3ff}
+    .badge-green{background:rgba(25,178,123,.14); color:#64d4aa}
+    .badge-red{background:rgba(239,68,68,.14); color:#ff8c8c}
+    .badge-muted{background:rgba(255,255,255,.08); color:#d0dbf6}
+
+    .footer-note{
+      margin-top:14px;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    @media (max-width: 760px){
+      .grid,
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      h1{font-size:28px}
+      h2{font-size:23px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div>
+          <h1>Madaris AI</h1>
+          <p class="desc">
+            أداة إصلاح تلقائي لربط المواد بالصفوف داخل
+            <strong>classSubjects</strong>.
+            هذه الصفحة لا تلمس الجداول أو الحصص، بل تنشئ فقط الربط الناقص بين
+            <strong>classes</strong> و <strong>subjects</strong> للمدرسة المحددة.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>الإعدادات</h2>
+        <span class="badge badge-blue" id="statusBadge">جاهز</span>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label class="label" for="schoolIdInput">School ID</label>
+          <input
+            id="schoolIdInput"
+            class="control"
+            type="text"
+            value="6kQchuZCyFHEkMgQxHoV"
+            placeholder="أدخل schoolId"
+          />
+          <div class="hint">
+            ضع هنا معرّف المدرسة الذي تعمل عليه.
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="modeSelect">طريقة الإنشاء</label>
+          <select id="modeSelect" class="control">
+            <option value="all">إنشاء كل الربط الناقص لكل الصفوف × كل المواد</option>
+            <option value="preview">معاينة فقط بدون إنشاء</option>
+          </select>
+          <div class="hint">
+            الوضع الافتراضي سينشئ فقط السجلات الناقصة، ولن يكرر السجلات الموجودة.
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="scanBtn">فحص البيانات</button>
+        <button class="btn btn-success" id="runBtn">إنشاء الربط الناقص تلقائيًا</button>
+        <button class="btn btn-muted" id="fillSchoolBtn">ملء schoolId الناقص في المواد</button>
+        <button class="btn btn-danger" id="clearLogBtn">مسح التقرير</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="title">عدد الصفوف</div>
+          <div class="value" id="classesCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="title">عدد المواد</div>
+          <div class="value" id="subjectsCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="title">الربط الحالي</div>
+          <div class="value" id="linksCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="title">الربط الناقص</div>
+          <div class="value" id="missingCount">0</div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        ملاحظة: إذا كان عندك 10 صفوف و6 مواد، فالعدد الكامل المتوقع للربط هو 60 سجلًا
+        داخل <strong>classSubjects</strong> إذا كنت تريد كل مادة متاحة لكل صف.
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>التقرير</h2>
+        <span class="badge badge-muted" id="resultBadge">لا يوجد تنفيذ بعد</span>
+      </div>
+
+      <div id="logBox" class="log">جاهز لبدء الفحص...</div>
+    </section>
+  </div>
+
+  <script type="module">
+    import {
+      collection,
+      getDocs,
+      addDoc,
+      updateDoc,
+      doc,
+      query,
+      where,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    import { db } from "../firebase-config.js";
+
+    const el = {
+      schoolIdInput: document.getElementById("schoolIdInput"),
+      modeSelect: document.getElementById("modeSelect"),
+      scanBtn: document.getElementById("scanBtn"),
+      runBtn: document.getElementById("runBtn"),
+      fillSchoolBtn: document.getElementById("fillSchoolBtn"),
+      clearLogBtn: document.getElementById("clearLogBtn"),
+      classesCount: document.getElementById("classesCount"),
+      subjectsCount: document.getElementById("subjectsCount"),
+      linksCount: document.getElementById("linksCount"),
+      missingCount: document.getElementById("missingCount"),
+      logBox: document.getElementById("logBox"),
+      statusBadge: document.getElementById("statusBadge"),
+      resultBadge: document.getElementById("resultBadge")
+    };
+
+    const state = {
+      schoolId: "",
+      classes: [],
+      subjects: [],
+      classSubjects: [],
+      missingLinks: []
+    };
+
+    function normalize(value) {
+      return (value ?? "").toString().trim();
+    }
+
+    function nowText() {
+      return new Date().toLocaleString("ar");
+    }
+
+    function setStatus(text, variant = "blue") {
+      el.statusBadge.className = `badge badge-${variant}`;
+      el.statusBadge.textContent = text;
+    }
+
+    function setResult(text, variant = "muted") {
+      el.resultBadge.className = `badge badge-${variant}`;
+      el.resultBadge.textContent = text;
+    }
+
+    function log(message = "") {
+      el.logBox.textContent += `\n${message}`;
+      el.logBox.scrollTop = el.logBox.scrollHeight;
+    }
+
+    function resetLog(message = "جاهز لبدء الفحص...") {
+      el.logBox.textContent = message;
+    }
+
+    function setBusy(isBusy) {
+      el.scanBtn.disabled = isBusy;
+      el.runBtn.disabled = isBusy;
+      el.fillSchoolBtn.disabled = isBusy;
+      el.schoolIdInput.disabled = isBusy;
+      el.modeSelect.disabled = isBusy;
+    }
+
+    function updateStats() {
+      el.classesCount.textContent = String(state.classes.length);
+      el.subjectsCount.textContent = String(state.subjects.length);
+      el.linksCount.textContent = String(state.classSubjects.length);
+      el.missingCount.textContent = String(state.missingLinks.length);
+    }
+
+    function makeLinkKey(classId, subjectId) {
+      return `${normalize(classId)}__${normalize(subjectId)}`;
+    }
+
+    function schoolScopedRows(docs) {
+      return docs.map((snap) => ({
+        id: snap.id,
+        ...snap.data()
+      }));
+    }
+
+    async function getSchoolRows(collectionName, schoolId) {
+      const q = query(collection(db, collectionName), where("schoolId", "==", schoolId));
+      const snap = await getDocs(q);
+      return schoolScopedRows(snap.docs);
+    }
+    
+async function getAllRows(collectionName) {
+      const snap = await getDocs(collection(db, collectionName));
+      return schoolScopedRows(snap.docs);
+    }
+
+    async function scanData() {
+      state.schoolId = normalize(el.schoolIdInput.value);
+      if (!state.schoolId) {
+        throw new Error("أدخل schoolId أولًا");
+      }
+
+      setStatus("جاري الفحص", "blue");
+      setResult("فحص", "blue");
+      resetLog(`بدء الفحص: ${nowText()}\n`);
+
+      log(`School ID: ${state.schoolId}`);
+      log("جاري قراءة classes...");
+      state.classes = await getSchoolRows("classes", state.schoolId);
+
+      log(`تم العثور على ${state.classes.length} صف/صفوف`);
+      log("جاري قراءة subjects...");
+      state.subjects = await getSchoolRows("subjects", state.schoolId);
+
+      log(`تم العثور على ${state.subjects.length} مادة/مواد`);
+      log("جاري قراءة classSubjects...");
+      state.classSubjects = await getSchoolRows("classSubjects", state.schoolId);
+
+      log(`تم العثور على ${state.classSubjects.length} سجل ربط حالي`);
+
+      const existing = new Set(
+        state.classSubjects.map((item) => makeLinkKey(item.classId, item.subjectId))
+      );
+
+      const missing = [];
+
+      for (const classItem of state.classes) {
+        for (const subjectItem of state.subjects) {
+          const key = makeLinkKey(classItem.id, subjectItem.id);
+          if (!existing.has(key)) {
+            missing.push({
+              classId: classItem.id,
+              className: normalize(classItem.name),
+              subjectId: subjectItem.id,
+              subjectName: normalize(subjectItem.name),
+              schoolId: state.schoolId,
+              status: "active"
+            });
+          }
+        }
+      }
+
+      state.missingLinks = missing;
+      updateStats();
+
+      log("");
+      log("=== الملخص ===");
+      log(`الصفوف: ${state.classes.length}`);
+      log(`المواد: ${state.subjects.length}`);
+      log(`الربط الحالي: ${state.classSubjects.length}`);
+      log(`الربط الناقص: ${state.missingLinks.length}`);
+
+      if (!state.classes.length) {
+        log("تحذير: لا توجد صفوف لهذه المدرسة.");
+      }
+
+      if (!state.subjects.length) {
+        log("تحذير: لا توجد مواد لهذه المدرسة.");
+      }
+
+      if (state.missingLinks.length) {
+        log("");
+        log("=== أمثلة من الربط الناقص ===");
+        state.missingLinks.slice(0, 12).forEach((item, index) => {
+          log(
+            `${index + 1}. الصف: ${item.className || item.classId} ← المادة: ${item.subjectName || item.subjectId}`
+          );
+        });
+      } else {
+        log("");
+        log("لا يوجد ربط ناقص. كل الصفوف مرتبطة بكل المواد الموجودة.");
+      }
+
+      setStatus("اكتمل الفحص", "green");
+      setResult(
+        state.missingLinks.length ? "يوجد ربط ناقص" : "لا يوجد ربط ناقص",
+        state.missingLinks.length ? "red" : "green"
+      );
+    }
+
+    async function createMissingLinks() {
+      const mode = normalize(el.modeSelect.value);
+
+      if (!state.schoolId) {
+        state.schoolId = normalize(el.schoolIdInput.value);
+      }
+
+      if (!state.missingLinks.length) {
+        await scanData();
+      }
+
+      if (!state.missingLinks.length) {
+        log("");
+        log("لا يوجد شيء لإنشائه.");
+        setResult("لا يوجد شيء جديد", "green");
+        return;
+      }
+
+      if (mode === "preview") {
+        log("");
+        log("وضع المعاينة فقط: لم يتم إنشاء أي سجل.");
+        setResult("معاينة فقط", "blue");
+        return;
+      }
+
+      setStatus("جاري الإنشاء", "blue");
+      setResult("جاري الإنشاء", "blue");
+
+      log("");
+      log(`بدء إنشاء ${state.missingLinks.length} سجل/سجلات ناقصة...`);
+
+      let created = 0;
+
+      for (const item of state.missingLinks) {
+        await addDoc(collection(db, "classSubjects"), {
+          classId: item.classId,
+          subjectId: item.subjectId,
+          schoolId: item.schoolId,
+          status: "active",
+          createdAt: serverTimestamp()
+        });
+
+        created += 1;
+        log(
+          `تم إنشاء ${created}/${state.missingLinks.length}: ${item.className || item.classId} ← ${item.subjectName || item.subjectId}`
+        );
+      }
+
+      log("");
+      log(`اكتمل الإنشاء. تم إنشاء ${created} سجل/سجلات بنجاح.`);
+
+      await scanData();
+
+      setStatus("تم الإنشاء", "green");
+      setResult(`تم إنشاء ${created}`, "green");
+    }
+
+    async function fillMissingSchoolIdInSubjects() {
+      state.schoolId = normalize(el.schoolIdInput.value);
+      if (!state.schoolId) {
+        throw new Error("أدخل schoolId أولًا");
+      }
+
+      setStatus("جاري إصلاح subjects", "blue");
+      setResult("إصلاح subjects", "blue");
+      resetLog(`بدء إصلاح schoolId في subjects: ${nowText()}\n`);
+
+      const allSubjects = await getAllRows("subjects");
+      const targets = allSubjects.filter((item) => {
+        const schoolId = normalize(item.schoolId);
+        return !schoolId;
+      });
+
+      log(`إجمالي المواد في subjects: ${allSubjects.length}`);
+      log(`المواد الناقصة schoolId: ${targets.length}`);
+
+      if (!targets.length) {
+        log("لا توجد مواد ناقصة schoolId.");
+        setStatus("لا يوجد نقص", "green");
+        setResult("subjects سليمة", "green");
+        return;
+      }
+
+      let updated = 0;
+
+      for (const item of targets) {
+        await updateDoc(doc(db, "subjects", item.id), {
+          schoolId: state.schoolId
+        });
+
+        updated += 1;
+        log(`تم تحديث المادة ${updated}/${targets.length}: ${normalize(item.name) || item.id}`);
+      }
+
+      log("");
+      log(`اكتمل إصلاح subjects. تم تحديث ${updated} سجل/سجلات.`);
+
+      setStatus("تم إصلاح subjects", "green");
+      setResult(`تم تحديث ${updated}`, "green");
+    }
+
+    async function handleScan() {
+      try {
+        setBusy(true);
+        await scanData();
+      } catch (error) {
+        console.error(error);
+        log("");
+        log(`خطأ: ${error.message || error}`);
+        setStatus("فشل", "red");
+        setResult("خطأ", "red");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function handleRun() {
+      try {
+        setBusy(true);
+        await createMissingLinks();
+      } catch (error) {
+        console.error(error);
+        log("");
+        log(`خطأ: ${error.message || error}`);
+        setStatus("فشل", "red");
+        setResult("خطأ", "red");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function handleFillSchoolId() {
+      try {
+        setBusy(true);
+        await fillMissingSchoolIdInSubjects();
+      } catch (error) {
+        console.error(error);
+        log("");
+        log(`خطأ: ${error.message || error}`);
+        setStatus("فشل", "red");
+        setResult("خطأ", "red");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    function bindEvents() {
+      el.scanBtn.addEventListener("click", handleScan);
+      el.runBtn.addEventListener("click", handleRun);
+      el.fillSchoolBtn.addEventListener("click", handleFillSchoolId);
+      el.clearLogBtn.addEventListener("click", () => {
+        resetLog("تم مسح التقرير. جاهز لتنفيذ جديد...");
+        setStatus("جاهز", "blue");
+        setResult("لا يوجد تنفيذ بعد", "muted");
+      });
+    }
+
+    function boot() {
+      bindEvents();
+      resetLog("جاهز. اضغط \"فحص البيانات\" أولًا.");
+      updateStats();
+    }
+
+    boot();
+  </script>
+</body>
+</html>
