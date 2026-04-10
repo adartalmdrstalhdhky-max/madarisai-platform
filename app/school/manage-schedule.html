@@ -814,6 +814,15 @@
                 <div class="hint">اختر مادة من المواد المسجلة في المدرسة.</div>
               </div>
 
+<div class="field">
+  <label class="label">تشخيص ربط المواد بالصف</label>
+  <div
+    id="subjectDebugBox"
+    class="control"
+    style="min-height:120px;white-space:pre-wrap;line-height:1.8;padding:14px"
+  >لم يتم الفحص بعد.</div>
+</div>
+              
               <div class="field">
                 <label class="label" for="teacherSelect">المعلم</label>
                 <select class="control" id="teacherSelect" required>
@@ -1360,6 +1369,20 @@ async function loadLinkedData() {
   updateCounters();
   updatePreviews();
 }
+function updateSubjectDebug(info = {}) {
+  if (!el.subjectDebugBox) return;
+
+  const lines = [
+    `classId المختار: ${info.classId || "-"}`,
+    `عدد روابط classSubjects لهذا الصف: ${info.linkCount ?? 0}`,
+    `عدد المواد بعد الفلترة: ${info.subjectCount ?? 0}`,
+    `subjectIds المسموح بها: ${info.allowedIds?.length ? info.allowedIds.join(", ") : "-"}`,
+    `أسماء المواد بعد الفلترة: ${info.subjectNames?.length ? info.subjectNames.join(" | ") : "لا توجد مواد"}`
+  ];
+
+  el.subjectDebugBox.textContent = lines.join("\n");
+}
+  
     function getAllowedSubjectIdsForClass(classId) {
   const cleanClassId = normalize(classId);
   if (!cleanClassId) return [];
@@ -1373,6 +1396,20 @@ async function loadLinkedData() {
     .filter(Boolean);
 }
 
+function updateSubjectDebug(info = {}) {
+  if (!el.subjectDebugBox) return;
+
+  const lines = [
+    `classId المختار: ${info.classId || "-"}`,
+    `عدد روابط classSubjects لهذا الصف: ${info.linkCount ?? 0}`,
+    `عدد المواد بعد الفلترة: ${info.subjectCount ?? 0}`,
+    `subjectIds المسموح بها: ${info.allowedIds?.length ? info.allowedIds.join(", ") : "-"}`,
+    `أسماء المواد بعد الفلترة: ${info.subjectNames?.length ? info.subjectNames.join(" | ") : "لا توجد مواد"}`
+  ];
+
+  el.subjectDebugBox.textContent = lines.join("\n");
+    }  
+    
 function updateSubjectSelectByClass(selectedSubjectId = "") {
   const classId = normalize(el.classSelect.value);
   const selected = normalize(selectedSubjectId);
