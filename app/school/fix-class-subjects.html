@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fix Class Subjects</title>
+
+<style>
+body{background:#071a35;color:white;font-family:system-ui;padding:20px}
+button{padding:14px;border-radius:10px;border:none;margin:6px 0;width:100%;font-size:16px}
+.blue{background:#3b82f6;color:white}
+.green{background:#10b981;color:white}
+.card{background:#0c2548;padding:18px;border-radius:14px;margin-bottom:14px}
+.log{background:black;padding:12px;border-radius:8px;height:200px;overflow:auto}
+</style>
+
+</head>
+<body>
+
+<h2>Fix Class Subjects</h2>
+
+<div class="card">
+<input id="schoolId" value="6kQchuZCyFHEkMgQxHoV">
+<button class="blue" onclick="scan()">فحص البيانات</button>
+<button class="green" onclick="fix()">إنشاء الربط الناقص</button>
+</div>
+
+<div class="card">
+عدد الصفوف: <span id="classes">0</span><br>
+عدد المواد: <span id="subjects">0</span><br>
+الربط الحالي: <span id="links">0</span><br>
+الناقص: <span id="missing">0</span>
+</div>
+
+<div class="card">
+<div id="log" class="log"></div>
+</div>
+
+<script type="module">
+
+import {
+collection,
+getDocs,
+addDoc,
+query,
+where
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+
+import { db } from "../firebase-config.js"
+
+const logBox=document.getElementById("log")
+
+function log(t){
+logBox.innerHTML+=t+"<br>"
+}
+
+async function scan(){
+
+const schoolId=document.getElementById("schoolId").value
+
+const classesSnap=await getDocs(
+query(collection(db,"classes"),where("schoolId","==",schoolId))
+)
+
+const subjectsSnap=await getDocs(
+query(collection(db,"subjects"),where("schoolId","==",schoolId))
+)
+
+const linksSnap=await getDocs(
+query(collection(db,"classSubjects"),where("schoolId","==",schoolId))
+)
+
+const classes=[...classesSnap.docs].map(d=>({id:d.id,...d.data()}))
+const subjects=[...subjectsSnap.docs].map(d=>({id:d.id,...d.data()}))
+const links=[...linksSnap.docs].map(d=>d.data())
+
+document.getElementById("classes").innerText=classes.length
+document.getElementById("subjects").innerText=subjects.length
+document.getElementById("links").innerText=links.length
+
+let missing=0
+
+for(const c of classes){
+for(const s of subjects){
+
+const exist=links.find(l=>
+l.classId==c.id &&
+l.subjectId==s.id
+)
+
+if(!exist) missing++
+
+}
+}
+
+document.getElementById("missing").innerText=missing
+
+window._classes=classes
+window._subjects=subjects
+window._links=links
+
+log("انتهى الفحص")
+
+}
+
+async function fix(){
+
+const schoolId=document.getElementById("schoolId").value
+
+const classes=window._classes||[]
+const subjects=window._subjects||[]
+const links=window._links||[]
+
+for(const c of classes){
+for(const s of subjects){
+
+const exist=links.find(l=>
+l.classId==c.id &&
+l.subjectId==s.id
+)
+
+if(!exist){
+
+await addDoc(collection(db,"classSubjects"),{
+classId:c.id,
+subjectId:s.id,
+schoolId:schoolId,
+status:"active"
+})
+
+log("تم إنشاء ربط")
+
+}
+
+}
+}
+
+scan()
+
+}
+
+</script>
+
+</body>
+</html>
