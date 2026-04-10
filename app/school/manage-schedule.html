@@ -1029,17 +1029,17 @@
       ai: "معلم ذكي",
       human: "معلم بشري"
     };
-
-    const state = {
-      session: null,
-      schoolId: "",
-      schoolName: "",
-      subjects: [],
-      teachers: [],
-      classes: [],
-      lessons: [],
-      filteredLessons: []
-    };
+const state = {
+  session: null,
+  schoolId: "",
+  schoolName: "",
+  subjects: [],
+  teachers: [],
+  classes: [],
+  classSubjects: [],
+  lessons: [],
+  filteredLessons: []
+};
 
     const el = {
       schoolName: document.getElementById("schoolName"),
@@ -1322,30 +1322,79 @@
         raw: item
       };
     }
+async function loadLinkedData() {
+  const [subjectsPack, teachersPack, classesPack, classSubjectsPack] = await Promise.all([
+    getSchoolScopedCollection(["subjects", "materials"], state.schoolId),
+    getSchoolScopedCollection(["teachers", "staff"], state.schoolId),
+    getSchoolScopedCollection(["classes", "grades", "sections"], state.schoolId),
+    getSchoolScopedCollection(["classSubjects"], state.schoolId)
+  ]);
 
-    async function loadLinkedData() {
-      const [subjectsPack, teachersPack, classesPack] = await Promise.all([
-        getSchoolScopedCollection(["subjects", "materials"], state.schoolId),
-        getSchoolScopedCollection(["teachers", "staff"], state.schoolId),
-        getSchoolScopedCollection(["classes", "grades", "sections"], state.schoolId)
-      ]);
+  state.subjects = subjectsPack.rows
+    .map((item) => normalizeEntity(item, "subject"))
+    .filter((item) => item.id);
 
-      state.subjects = subjectsPack.rows.map((item) => normalizeEntity(item, "subject")).filter((item) => item.id);
-      state.teachers = teachersPack.rows
-        .map((item) => normalizeEntity(item, "teacher"))
-        .filter((item) => item.id)
-        .filter((item) => normalize(item.name));
+  state.teachers = teachersPack.rows
+    .map((item) => normalizeEntity(item, "teacher"))
+    .filter((item) => item.id)
+    .filter((item) => normalize(item.name));
 
-      state.classes = classesPack.rows.map((item) => normalizeEntity(item, "class")).filter((item) => item.id);
+  state.classes = classesPack.rows
+    .map((item) => normalizeEntity(item, "class"))
+    .filter((item) => item.id);
 
-      fillSelect(el.subjectSelect, state.subjects, "اختر المادة");
-      fillSelect(el.teacherSelect, state.teachers, "اختر المعلم");
-      fillSelect(el.classSelect, state.classes, "اختر الصف");
+  state.classSubjects = classSubjectsPack.rows
+    .map((item) => ({
+      id: normalize(item.id),
+      classId: normalize(item.classId || item.classID || item.class_id),
+      subjectId: normalize(item.subjectId || item.subjectID || item.subject_id),
+      schoolId: normalize(item.schoolId || item.schoolID || item.school_id),
+      status: normalizeStatusValue(item.status || "active")
+    }))
+    .filter((item) => item.classId && item.subjectId);
 
-      updateCounters();
-      updatePreviews();
-    }
+  fillSelect(el.teacherSelect, state.teachers, "اختر المعلم");
+  fillSelect(el.classSelect, state.classes, "اختر الصف");
+  updateSubjectSelectByClass();
 
+  updateCounters();
+  updatePreviews();
+}
+    function getAllowedSubjectIdsForClass(classId) {
+  const cleanClassId = normalize(classId);
+  if (!cleanClassId) return [];
+
+  return state.classSubjects
+    .filter((item) =>
+      normalize(item.classId) === cleanClassId &&
+      normalizeStatusValue(item.status) === "active"
+    )
+    .map((item) => normalize(item.subjectId))
+    .filter(Boolean);
+}
+
+function updateSubjectSelectByClass(selectedSubjectId = "") {
+  const classId = normalize(el.classSelect.value);
+  const selected = normalize(selectedSubjectId);
+
+  if (!classId) {
+    fillSelect(el.subjectSelect, [], "اختر المادة");
+    return;
+  }
+
+  const allowedIds = new Set(getAllowedSubjectIdsForClass(classId));
+
+  const filteredSubjects = state.subjects.filter((item) =>
+    allowedIds.has(normalize(item.id))
+  );
+
+  fillSelect(el.subjectSelect, filteredSubjects, "اختر المادة");
+
+  if (selected && filteredSubjects.some((item) => normalize(item.id) === selected)) {
+    el.subjectSelect.value = selected;
+  }
+}
+  
     function normalizeLesson(item) {
       const classId = normalize(item.classId || item.classID || item.class_id);
       const subjectId = normalize(item.subjectId || item.subjectID || item.subject_id);
@@ -1529,7 +1578,7 @@
 
       el.editingId.value = lesson.id;
       el.classSelect.value = lesson.classId;
-      el.subjectSelect.value = lesson.subjectId;
+      updateSubjectSelectByClass(lesson.subjectId);
       el.teacherSelect.value = lesson.teacherId;
       el.daySelect.value = lesson.day;
       el.periodSelect.value = String(lesson.periodNumber || "");
@@ -1748,7 +1797,7 @@
       el.resetBtn.addEventListener("click", resetForm);
       el.refreshBtn.addEventListener("click", refreshAll);
       el.logoutBtn.addEventListener("click", logout);
-
+      el.classSelect.addEventListener("change", () => updateSubjectSelectByClass());
       el.dayFilter.addEventListener("change", applyFiltersAndRender);
       el.statusFilter.addEventListener("change", applyFiltersAndRender);
       el.searchInput.addEventListener("input", applyFiltersAndRender);
