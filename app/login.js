@@ -1,14 +1,14 @@
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { auth, db } from "./core/firebase/app-firebase.js";
+
 import {
-  getAuth,
   signInWithEmailAndPassword,
   setPersistence,
   browserLocalPersistence,
   onAuthStateChanged,
   signOut,
-} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+
 import {
-  getFirestore,
   doc,
   getDoc,
   collection,
@@ -16,21 +16,12 @@ import {
   where,
   getDocs,
   limit,
-} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
-  authDomain: "madaris-ai.firebaseapp.com",
-  projectId: "madaris-ai",
-  storageBucket: "madaris-ai.firebasestorage.app",
-  messagingSenderId: "915394447224",
-  appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
-  measurementId: "G-SC7VE6F20S",
-};
-
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+import {
+  getSession,
+  saveSession,
+} from "./core/session/session-service.js";
 
 const LOGIN_REDIRECT = "/app/school/index.html";
 const LOGIN_PAGE_PATH = "/app/login.html";
@@ -48,20 +39,8 @@ function normalizeEmail(value) {
   return normalizeLower(value);
 }
 
-function nowIso() {
-  return new Date().toISOString();
-}
-
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function safeJsonParse(value) {
-  try {
-    return JSON.parse(value);
-  } catch (_error) {
-    return null;
-  }
 }
 
 function pickFirstNonEmpty(...values) {
@@ -80,12 +59,6 @@ function pickEmail(...values) {
   return "";
 }
 
-function getSessionApi() {
-  return window.MadarisSession && typeof window.MadarisSession === "object"
-    ? window.MadarisSession
-    : null;
-}
-
 function getCurrentPath() {
   try {
     return window.location.pathname || "";
@@ -96,7 +69,11 @@ function getCurrentPath() {
 
 function isLoginPage() {
   const path = getCurrentPath();
-  return path === LOGIN_PAGE_PATH || path.endsWith("/app/login.html") || path.endsWith("/login.html");
+  return (
+    path === LOGIN_PAGE_PATH ||
+    path.endsWith("/app/login.html") ||
+    path.endsWith("/login.html")
+  );
 }
 
 function redirectToSchool() {
@@ -195,8 +172,10 @@ function setLoadingState(isLoading) {
 
   if (submitButton) {
     if (!submitButton.dataset.originalText) {
-      submitButton.dataset.originalText = submitButton.textContent || "تسجيل الدخول";
+      submitButton.dataset.originalText =
+        submitButton.textContent || "تسجيل الدخول";
     }
+
     submitButton.disabled = isLoading;
     submitButton.style.opacity = isLoading ? "0.75" : "1";
     submitButton.style.cursor = isLoading ? "wait" : "pointer";
@@ -228,6 +207,7 @@ function clearLegacySessionKeys() {
     "schoolAuth",
     "authUser",
     "currentSchool",
+    "uid",
   ];
 
   for (const key of keys) {
@@ -240,153 +220,12 @@ function clearLegacySessionKeys() {
   }
 }
 
-function normalizeSessionCandidate(session) {
-  if (!session || typeof session !== "object") return null;
-
-  const uid = pickFirstNonEmpty(session.uid, session.userId, session.id);
-  const schoolId = pickFirstNonEmpty(
-    session.schoolId,
-    session.schoolID,
-    session.school_id,
-    session.school?.id,
-    session.school?.schoolId
-  );
-  const schoolName = pickFirstNonEmpty(
-    session.schoolName,
-    session.school_name,
-    session.school?.name,
-    session.school?.schoolName
-  );
-  const role = normalizeLower(session.role || session.userRole || session.type);
-  const email = pickEmail(session.email, session.userEmail, session.mail);
-  const fullName = pickFirstNonEmpty(
-    session.fullName,
-    session.userName,
-    session.name,
-    session.displayName
-  );
-  const status = normalizeLower(
-    session.status || session.schoolStatus || session.school?.status || "active"
-  );
-
-  if (!uid && !schoolId && !email) return null;
-
-  return {
-    uid,
-    userId: pickFirstNonEmpty(session.userId, uid),
-    email,
-    fullName: fullName || "مستخدم المدرسة",
-    userName: fullName || "مستخدم المدرسة",
-    role: role || "school",
-    schoolId,
-    schoolName,
-    status: status || "active",
-    schoolStatus: status || "active",
-    createdAt: pickFirstNonEmpty(session.createdAt, nowIso()),
-    school: {
-      id: schoolId,
-      schoolId,
-      name: schoolName,
-      schoolName,
-      status: status || "active",
-    },
-  };
-}
-
-function saveSession(session) {
-  const normalized = normalizeSessionCandidate(session);
-  if (!normalized) {
-    throw new Error("تعذر إنشاء الجلسة");
-  }
-
-  const sessionApi = getSessionApi();
-  if (sessionApi && typeof sessionApi.saveSession === "function") {
-    try {
-      return sessionApi.saveSession(normalized);
-    } catch (_error) {}
-  }
-
-  const payload = JSON.stringify(normalized);
-
-  localStorage.setItem("madarisai_session", payload);
-  sessionStorage.setItem("madarisai_session", payload);
-
-  localStorage.setItem("schoolSession", payload);
-  sessionStorage.setItem("schoolSession", payload);
-
-  localStorage.setItem("schoolId", normalized.schoolId);
-  sessionStorage.setItem("schoolId", normalized.schoolId);
-
-  localStorage.setItem("schoolName", normalized.schoolName);
-  sessionStorage.setItem("schoolName", normalized.schoolName);
-
-  localStorage.setItem("userRole", normalized.role);
-  sessionStorage.setItem("userRole", normalized.role);
-
-  localStorage.setItem("userName", normalized.fullName);
-  sessionStorage.setItem("userName", normalized.fullName);
-
-  localStorage.setItem("email", normalized.email);
-  sessionStorage.setItem("email", normalized.email);
-
-  return normalized;
-}
-
-function getExistingSession() {
-  const sessionApi = getSessionApi();
-  if (sessionApi && typeof sessionApi.getSession === "function") {
-    try {
-      const session = sessionApi.getSession();
-      return normalizeSessionCandidate(session);
-    } catch (_error) {}
-  }
-
-  const rawCandidates = [
-    localStorage.getItem("madarisai_session"),
-    sessionStorage.getItem("madarisai_session"),
-    localStorage.getItem("schoolSession"),
-    sessionStorage.getItem("schoolSession"),
-  ];
-
-  for (const raw of rawCandidates) {
-    if (!raw) continue;
-    const parsed = safeJsonParse(raw);
-    const normalized = normalizeSessionCandidate(parsed);
-    if (normalized) return normalized;
-  }
-
-  const legacySchoolId = pickFirstNonEmpty(
-    localStorage.getItem("schoolId"),
-    sessionStorage.getItem("schoolId")
-  );
-
-  if (!legacySchoolId) return null;
-
-  return normalizeSessionCandidate({
-    uid: pickFirstNonEmpty(localStorage.getItem("uid"), sessionStorage.getItem("uid")),
-    userId: pickFirstNonEmpty(localStorage.getItem("uid"), sessionStorage.getItem("uid")),
-    email: pickEmail(localStorage.getItem("email"), sessionStorage.getItem("email")),
-    fullName: pickFirstNonEmpty(
-      localStorage.getItem("userName"),
-      sessionStorage.getItem("userName")
-    ),
-    role: pickFirstNonEmpty(localStorage.getItem("userRole"), sessionStorage.getItem("userRole"), "school"),
-    schoolId: legacySchoolId,
-    schoolName: pickFirstNonEmpty(
-      localStorage.getItem("schoolName"),
-      sessionStorage.getItem("schoolName")
-    ),
-    status: "active",
-  });
-}
-
 function hasValidSchoolSession(session) {
-  const normalized = normalizeSessionCandidate(session);
-  if (!normalized) return false;
+  if (!session || typeof session !== "object") return false;
 
-  const role = normalizeLower(normalized.role);
-  const schoolId = normalize(normalized.schoolId);
-  const status = normalizeLower(normalized.status || normalized.schoolStatus || "active");
+  const role = normalizeLower(session.role);
+  const schoolId = pickFirstNonEmpty(session.schoolId, session.school?.id);
+  const status = normalizeLower(session.status || "active");
 
   if (role && role !== "school") return false;
   if (!schoolId) return false;
@@ -414,9 +253,15 @@ async function queryFirstByField(collectionName, field, value) {
   if (!normalizedValue) return null;
 
   try {
-    const q = query(collection(db, collectionName), where(field, "==", value), limit(1));
+    const q = query(
+      collection(db, collectionName),
+      where(field, "==", value),
+      limit(1)
+    );
+
     const res = await getDocs(q);
     if (res.empty) return null;
+
     const first = res.docs[0];
     return { id: first.id, ...first.data() };
   } catch (_error) {
@@ -433,11 +278,12 @@ async function queryFirstByFieldLower(collectionName, field, value) {
 
   const lowered = normalizeLower(raw);
   if (lowered && lowered !== raw) {
-    return await queryFirstByField(collectionName, field, lowered);
+    return queryFirstByField(collectionName, field, lowered);
   }
 
   return null;
-  }
+}
+
 async function findUser(uid, email) {
   const normalizedUid = normalize(uid);
   const normalizedEmail = normalizeEmail(email);
@@ -449,7 +295,11 @@ async function findUser(uid, email) {
 
   const emailFields = ["email", "userEmail", "mail"];
   for (const field of emailFields) {
-    const byEmail = await queryFirstByFieldLower("users", field, normalizedEmail);
+    const byEmail = await queryFirstByFieldLower(
+      "users",
+      field,
+      normalizedEmail
+    );
     if (byEmail) return byEmail;
   }
 
@@ -497,7 +347,6 @@ async function findSchool(userDoc, email, uid) {
 
   return null;
 }
-
 function getUserRole(userDoc) {
   return normalizeLower(
     userDoc?.role ||
@@ -509,18 +358,21 @@ function getUserRole(userDoc) {
 }
 
 function getSchoolStatus(schoolDoc) {
-  return normalizeLower(
-    schoolDoc?.status ||
-      schoolDoc?.schoolStatus ||
-      schoolDoc?.state ||
-      "active"
-  ) || "active";
+  return (
+    normalizeLower(
+      schoolDoc?.status ||
+        schoolDoc?.schoolStatus ||
+        schoolDoc?.state ||
+        "active"
+    ) || "active"
+  );
 }
 
 function buildSession(authUser, userDoc, schoolDoc) {
-  const uid = pickFirstNonEmpty(authUser?.uid, userDoc?.id);
+  const userId = pickFirstNonEmpty(authUser?.uid, userDoc?.id);
   const email = pickEmail(authUser?.email, userDoc?.email, userDoc?.userEmail);
-  const fullName =
+
+  const displayName =
     pickFirstNonEmpty(
       userDoc?.name,
       userDoc?.fullName,
@@ -546,17 +398,17 @@ function buildSession(authUser, userDoc, schoolDoc) {
   const schoolStatus = getSchoolStatus(schoolDoc);
 
   return {
-    uid,
-    userId: pickFirstNonEmpty(userDoc?.id, uid),
+    userId,
+    uid: userId,
     email,
-    fullName,
-    userName: fullName,
     role: "school",
     schoolId,
     schoolName,
+    displayName,
+    userName: displayName,
+    name: displayName,
     status: schoolStatus,
-    schoolStatus,
-    createdAt: nowIso(),
+    loginAt: Date.now(),
     school: {
       id: schoolId,
       schoolId,
@@ -584,12 +436,15 @@ function getErrorMessage(error) {
   if (code === "auth/user-not-found") return "الحساب غير موجود";
   if (code === "auth/wrong-password") return "كلمة المرور غير صحيحة";
   if (code === "auth/invalid-credential") return "بيانات الدخول غير صحيحة";
-  if (code === "auth/too-many-requests") return "تمت محاولات كثيرة، حاول لاحقًا";
+  if (code === "auth/too-many-requests")
+    return "تمت محاولات كثيرة، حاول لاحقًا";
   if (code === "auth/network-request-failed") return "فشل الاتصال بالشبكة";
   if (code === "auth/user-disabled") return "تم تعطيل هذا الحساب";
 
-  if (message.includes("لم يتم العثور على المستخدم")) return "لم يتم العثور على المستخدم";
-  if (message.includes("لم يتم العثور على المدرسة")) return "لم يتم العثور على المدرسة";
+  if (message.includes("لم يتم العثور على المستخدم"))
+    return "لم يتم العثور على المستخدم";
+  if (message.includes("لم يتم العثور على المدرسة"))
+    return "لم يتم العثور على المدرسة";
   if (message.includes("ليس حساب مدرسة")) return "هذا الحساب ليس حساب مدرسة";
   if (message.includes("غير نشط")) return "حساب المدرسة غير نشط حاليًا";
 
@@ -608,9 +463,13 @@ async function performLogin(email, password) {
     throw new Error("ادخل كلمة المرور");
   }
 
-  const credential = await signInWithEmailAndPassword(auth, normalizedEmail, normalizedPassword);
-  const authUser = credential?.user;
+  const credential = await signInWithEmailAndPassword(
+    auth,
+    normalizedEmail,
+    normalizedPassword
+  );
 
+  const authUser = credential?.user;
   if (!authUser) {
     throw new Error("تعذر قراءة بيانات الحساب");
   }
@@ -627,7 +486,12 @@ async function performLogin(email, password) {
     throw new Error("هذا الحساب ليس حساب مدرسة");
   }
 
-  const schoolDoc = await findSchool(userDoc, authUser.email || normalizedEmail, authUser.uid);
+  const schoolDoc = await findSchool(
+    userDoc,
+    authUser.email || normalizedEmail,
+    authUser.uid
+  );
+
   if (!schoolDoc) {
     await forceCleanAuthIfNeeded();
     throw new Error("لم يتم العثور على المدرسة");
@@ -640,6 +504,7 @@ async function performLogin(email, password) {
   }
 
   clearLegacySessionKeys();
+
   const session = buildSession(authUser, userDoc, schoolDoc);
   return saveSession(session);
 }
@@ -647,7 +512,7 @@ async function performLogin(email, password) {
 async function tryAutoLoginFromAuthUser(authUser) {
   if (!authUser || !isLoginPage()) return false;
 
-  const existing = getExistingSession();
+  const existing = getSession();
   if (hasValidSchoolSession(existing)) {
     showMessage("جارٍ فتح لوحة المدرسة...", "info");
     await delay(200);
@@ -669,6 +534,7 @@ async function tryAutoLoginFromAuthUser(authUser) {
     if (schoolStatus && schoolStatus !== "active") return false;
 
     clearLegacySessionKeys();
+
     const session = buildSession(authUser, userDoc, schoolDoc);
     saveSession(session);
 
@@ -683,7 +549,7 @@ async function tryAutoLoginFromAuthUser(authUser) {
 }
 
 async function ensureCleanLoginPageState() {
-  const existing = getExistingSession();
+  const existing = getSession();
   if (hasValidSchoolSession(existing)) {
     redirectToSchool();
     return;
@@ -761,28 +627,22 @@ function setupAutoLogin() {
   });
 }
 
-function exposeForDebug() {
-  window.MadarisLogin = {
-    app,
-    auth,
-    db,
-    performLogin,
-    findUser,
-    findSchool,
-    buildSession,
-    saveSession,
-    getExistingSession,
-    clearLegacySessionKeys,
-    tryAutoLoginFromAuthUser,
-    forceCleanAuthIfNeeded,
-  };
-}
+async function boot() {
+  try {
+    await ensureCleanLoginPageState();
+  } catch (error) {
+    console.warn("Madaris login boot warning:", error);
+  }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  exposeForDebug();
   bindLogin();
   setupAutoLogin();
-  await ensureCleanLoginPageState();
-});
+}
 
-export { auth, db, performLogin };
+boot();
+
+window.MadarisLoginDebug = {
+  auth,
+  db,
+  getSession,
+  performLogin,
+};
