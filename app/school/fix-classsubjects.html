@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madaris AI | Fix Class Subjects</title>
+
+  <style>
+    :root{
+      --bg:#06152f;
+      --panel:#0b1f46;
+      --panel-2:#102b60;
+      --line:rgba(255,255,255,.10);
+      --line-2:rgba(255,255,255,.16);
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --soft:rgba(255,255,255,.55);
+      --primary:#4f8cff;
+      --primary-2:#76a7ff;
+      --success:#10b981;
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --shadow:0 18px 45px rgba(0,0,0,.30);
+      --radius:24px;
+      --radius-sm:16px;
+      --radius-xs:12px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html,body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      background:
+        radial-gradient(circle at top right, rgba(79,140,255,.18), transparent 24%),
+        linear-gradient(180deg, #041126 0%, #06152f 40%, #04101f 100%);
+      color:var(--text);
+      font-family:"Cairo","Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+    }
+
+    body{
+      padding:20px 14px 42px;
+    }
+
+    .container{
+      width:min(1100px, calc(100% - 8px));
+      margin:0 auto;
+    }
+
+    .hero,
+    .panel,
+    .stat-card{
+      background:linear-gradient(180deg, rgba(11,31,70,.96), rgba(7,22,50,.94));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(8px);
+    }
+
+    .hero{
+      padding:22px 18px;
+      margin-bottom:18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:auto -40px -40px auto;
+      width:180px;
+      height:180px;
+      background:radial-gradient(circle, rgba(79,140,255,.30), transparent 65%);
+      pointer-events:none;
+    }
+
+    .hero-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:10px;
+    }
+
+    .brand-wrap h1{
+      margin:0;
+      font-size:clamp(28px, 6vw, 46px);
+      line-height:1.1;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    .brand-wrap p{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:15px;
+    }
+
+    .brand-mark{
+      width:74px;
+      height:74px;
+      border-radius:22px;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:34px;
+      font-weight:900;
+      box-shadow:0 16px 36px rgba(79,140,255,.25);
+      flex:0 0 auto;
+    }
+
+    .grid{
+      display:grid;
+      gap:16px;
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-4{
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+    }
+
+    .panel{
+      padding:18px;
+      margin-top:16px;
+    }
+
+    .section-title{
+      margin:0 0 10px;
+      font-size:28px;
+      font-weight:900;
+      line-height:1.2;
+    }
+
+    .section-desc{
+      margin:0;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:15px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .label{
+      font-size:14px;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .hint{
+      font-size:13px;
+      color:var(--soft);
+      line-height:1.8;
+    }
+
+    .control{
+      width:100%;
+      min-height:54px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(5,16,39,.72);
+      color:#fff;
+      outline:none;
+      padding:14px 16px;
+      font-size:16px;
+      transition:.18s ease;
+    }
+
+    .control:focus{
+      border-color:rgba(79,140,255,.85);
+      box-shadow:0 0 0 4px rgba(79,140,255,.14);
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      outline:none;
+      border-radius:18px;
+      min-height:52px;
+      padding:0 20px;
+      color:#fff;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      transition:transform .16s ease, opacity .16s ease, box-shadow .16s ease;
+      box-shadow:0 14px 28px rgba(0,0,0,.18);
+    }
+
+    .btn:hover{ transform:translateY(-1px); }
+    .btn:active{ transform:translateY(0); }
+    .btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .btn-primary{ background:linear-gradient(135deg, #3b82f6, #5b8fff); }
+    .btn-success{ background:linear-gradient(135deg, #0ea76f, #10b981); }
+    .btn-warning{ background:linear-gradient(135deg, #d48a07, #f59e0b); }
+    .btn-danger{ background:linear-gradient(135deg, #dc2626, #ef4444); }
+
+    .stat-card{
+      padding:18px;
+      min-height:148px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .stat-value{
+      font-size:54px;
+      line-height:1;
+      font-weight:900;
+      letter-spacing:.5px;
+    }
+
+    .stat-note{
+      color:var(--soft);
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    .report{
+      min-height:260px;
+      max-height:540px;
+      overflow:auto;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(4,13,30,.64);
+      padding:14px;
+      margin-top:14px;
+      white-space:pre-wrap;
+      line-height:1.9;
+      font-size:14px;
+    }
+
+    .report.empty{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--soft);
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:38px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .dot{
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:#9ca3af;
+      flex:0 0 auto;
+    }
+
+    .dot.ok{ background:var(--success); }
+    .dot.warn{ background:var(--warning); }
+    .dot.bad{ background:var(--danger); }
+
+    .loading-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(2,8,23,.58);
+      backdrop-filter:blur(4px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      padding:20px;
+    }
+
+    .loading-overlay.show{ display:flex; }
+
+    .loading-box{
+      width:min(420px, 100%);
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(11,31,70,.98), rgba(7,22,50,.98));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      padding:22px;
+      text-align:center;
+    }
+
+    .spinner{
+      width:46px;
+      height:46px;
+      border-radius:999px;
+      border:4px solid rgba(255,255,255,.12);
+      border-top-color:#fff;
+      margin:0 auto 14px;
+      animation:spin 1s linear infinite;
+    }
+
+    @keyframes spin{
+      to{ transform:rotate(360deg); }
+    }
+
+    .footer-note{
+      margin-top:12px;
+      color:var(--soft);
+      font-size:14px;
+      line-height:1.9;
+    }
+
+    @media (max-width:920px){
+      .grid-4{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+      .grid-2{ grid-template-columns:1fr; }
+    }
+
+    @media (max-width:640px){
+      body{ padding:14px 10px 34px; }
+      .hero,.panel,.stat-card{ border-radius:20px; }
+      .hero-top{ align-items:flex-start; }
+      .brand-mark{
+        width:64px;
+        height:64px;
+        border-radius:18px;
+        font-size:28px;
+      }
+      .section-title{ font-size:24px; }
+      .stat-value{ font-size:44px; }
+      .actions .btn{ width:100%; }
+      .grid-4{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <div id="loadingText">جارٍ تنفيذ العملية...</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <section class="hero">
+      <div class="hero-top">
+        <div class="brand-wrap">
+          <h1>Madaris AI</h1>
+          <p>
+            أداة احترافية لإصلاح ربط المواد بالصفوف داخل
+            <strong>classSubjects</strong>
+            وفحص السجلات الناقصة من أجل أن تظهر المواد مباشرة داخل صفحة
+            <strong>إدارة الجدول</strong>
+            عند اختيار أي صف.
+          </p>
+        </div>
+        <div class="brand-mark">M</div>
+      </div>
+
+      <div class="pill-row">
+        <div class="pill"><span class="dot ok"></span> فحص الصفوف</div>
+        <div class="pill"><span class="dot ok"></span> فحص المواد</div>
+        <div class="pill"><span class="dot warn"></span> كشف الربط الناقص</div>
+        <div class="pill"><span class="dot ok"></span> إصلاح بدون تكرار</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">الإعدادات</h2>
+      <p class="section-desc">
+        هذه الصفحة لا تعدل الحصص ولا الجداول. هي فقط مخصصة لفحص وربط
+        <strong>classes</strong>
+        مع
+        <strong>subjects</strong>
+        داخل
+        <strong>classSubjects</strong>
+        للمدرسة المحددة.
+      </p>
+
+      <div class="grid grid-2">
+        <div class="field">
+          <label class="label" for="schoolIdInput">School ID</label>
+          <input
+            id="schoolIdInput"
+            class="control"
+            type="text"
+            value="6kQchuZCyFHEkMgQxHoV"
+            placeholder="أدخل schoolId"
+          />
+          <div class="hint">ضع هنا معرف المدرسة الذي تعمل عليه.</div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="modeSelect">طريقة الإصلاح</label>
+          <select id="modeSelect" class="control">
+            <option value="all">إنشاء كل الربط الناقص لكل الصفوف × كل المواد</option>
+            <option value="preview">فحص فقط بدون إنشاء</option>
+          </select>
+          <div class="hint">
+            الوضع الافتراضي سيقوم بإنشاء السجلات الناقصة فقط ولن يكرر السجلات الموجودة.
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="scanBtn">فحص البيانات</button>
+        <button class="btn btn-warning" id="fillSubjectsBtn">ملء schoolId الناقص في المواد</button>
+        <button class="btn btn-success" id="fixBtn">إنشاء الربط الناقص تلقائيًا</button>
+        <button class="btn btn-danger" id="clearBtn">مسح التقرير</button>
+      </div>
+    </section>
+
+    <section class="grid grid-4" style="margin-top:16px;">
+      <article class="stat-card">
+        <div class="stat-label">عدد الصفوف</div>
+        <div class="stat-value" id="classesCount">0</div>
+        <div class="stat-note">الصفوف الخاصة بهذه المدرسة فقط.</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-label">عدد المواد</div>
+        <div class="stat-value" id="subjectsCount">0</div>
+        <div class="stat-note">المواد الصالحة للربط مع المدرسة الحالية.</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-label">الربط الحالي</div>
+        <div class="stat-value" id="linksCount">0</div>
+        <div class="stat-note">عدد السجلات الموجودة حاليًا داخل classSubjects.</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-label">الربط الناقص</div>
+        <div class="stat-value" id="missingCount">0</div>
+        <div class="stat-note">عدد السجلات التي تحتاج إنشاء حتى تظهر المواد حسب الصف.</div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">التقرير</h2>
+      <p class="section-desc">
+        ستظهر هنا تفاصيل الفحص، وعدد السجلات المنشأة، والمواد الناقصة، وأي ملاحظات مهمة.
+      </p>
+
+      <div class="report empty" id="reportBox">جاهز لبدء الفحص...</div>
+
+      <div class="footer-note">
+        ملاحظة: إذا كان عندك 10 صفوف و 7 مواد، فالربط الكامل المتوقع هو 70 سجلًا داخل
+        <strong>classSubjects</strong>
+        إذا كنت تريد كل مادة متاحة لكل صف.
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      doc,
+      updateDoc,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      authDomain: "madaris-ai.firebaseapp.com",
+      projectId: "madaris-ai",
+      storageBucket: "madaris-ai.firebasestorage.app",
+      messagingSenderId: "915394447224",
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d",
+      measurementId: "G-SC7VE6F20S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const el = {
+      schoolIdInput: document.getElementById("schoolIdInput"),
+      modeSelect: document.getElementById("modeSelect"),
+      scanBtn: document.getElementById("scanBtn"),
+      fillSubjectsBtn: document.getElementById("fillSubjectsBtn"),
+      fixBtn: document.getElementById("fixBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      classesCount: document.getElementById("classesCount"),
+      subjectsCount: document.getElementById("subjectsCount"),
+      linksCount: document.getElementById("linksCount"),
+      missingCount: document.getElementById("missingCount"),
+      reportBox: document.getElementById("reportBox"),
+      loadingOverlay: document.getElementById("loadingOverlay"),
+      loadingText: document.getElementById("loadingText")
+    };
+
+    const state = {
+      schoolId: "",
+      classes: [],
+      subjects: [],
+      classSubjects: [],
+      missingLinks: [],
+      duplicateLinks: [],
+      subjectSchoolIdMissing: []
+    };
+
+    function normalize(value) {
+      if (value === null || value === undefined) return "";
+      return String(value).trim();
+    }
+
+    function normalizeStatus(value) {
+      const clean = normalize(value).toLowerCase();
+      return clean || "active";
+    }
+
+    function showLoading(text = "جارٍ التنفيذ...") {
+      el.loadingText.textContent = text;
+      el.loadingOverlay.classList.add("show");
+    }
+
+    function hideLoading() {
+      el.loadingOverlay.classList.remove("show");
+    }
+
+    function resetReport() {
+      el.reportBox.classList.add("empty");
+      el.reportBox.textContent = "جاهز لبدء الفحص...";
+    }
+
+    function setReport(text) {
+      el.reportBox.classList.remove("empty");
+      el.reportBox.textContent = text;
+    }
+
+    function appendReport(text) {
+      if (el.reportBox.classList.contains("empty")) {
+        el.reportBox.classList.remove("empty");
+        el.reportBox.textContent = "";
+      }
+
+      const current = el.reportBox.textContent;
+      el.reportBox.textContent = current ? `${current}\n${text}` : text;
+      el.reportBox.scrollTop = el.reportBox.scrollHeight;
+    }
+
+    function setCounters({
+      classes = 0,
+      subjects = 0,
+      links = 0,
+      missing = 0
+    } = {}) {
+      el.classesCount.textContent = classes;
+      el.subjectsCount.textContent = subjects;
+      el.linksCount.textContent = links;
+      el.missingCount.textContent = missing;
+    }
+
+    function getSchoolId() {
+      return normalize(el.schoolIdInput.value);
+    }
+
+    function makePairKey(classId, subjectId) {
+      return `${normalize(classId)}__${normalize(subjectId)}`;
+    }
+
+    function mapDoc(snapshotDoc) {
+      return {
+        id: snapshotDoc.id,
+        ...snapshotDoc.data()
+      };
+    }
+
+    async function loadAll() {
+      const schoolId = getSchoolId();
+
+      if (!schoolId) {
+        throw new Error("أدخل School ID أولًا.");
+      }
+
+      state.schoolId = schoolId;
+
+      const [classesSnap, subjectsSnap, classSubjectsSnap] = await Promise.all([
+        getDocs(collection(db, "classes")),
+        getDocs(collection(db, "subjects")),
+        getDocs(collection(db, "classSubjects"))
+      ]);
+
+      const allClasses = classesSnap.docs.map(mapDoc);
+      const allSubjects = subjectsSnap.docs.map(mapDoc);
+      const allClassSubjects = classSubjectsSnap.docs.map(mapDoc);
+
+      state.classes = allClasses.filter((item) => {
+        return normalize(item.schoolId) === schoolId && normalizeStatus(item.status) === "active";
+      });
+
+      state.subjects = allSubjects.filter((item) => {
+        const itemSchoolId = normalize(item.schoolId);
+        const sameSchool = !itemSchoolId || itemSchoolId === schoolId;
+        return sameSchool && normalizeStatus(item.status) === "active";
+      });
+
+      state.classSubjects = allClassSubjects.filter((item) => {
+        return normalize(item.schoolId) === schoolId && normalizeStatus(item.status) === "active";
+      });
+
+      state.subjectSchoolIdMissing = allSubjects.filter((item) => {
+        const itemSchoolId = normalize(item.schoolId);
+        return !itemSchoolId && normalizeStatus(item.status) === "active";
+      });
+    }
+    function analyzeLinks() {
+      const existingMap = new Map();
+      const duplicates = [];
+
+      for (const item of state.classSubjects) {
+        const key = makePairKey(item.classId, item.subjectId);
+
+        if (existingMap.has(key)) {
+          duplicates.push(item);
+        } else {
+          existingMap.set(key, item);
+        }
+      }
+
+      const missing = [];
+
+      for (const classItem of state.classes) {
+        for (const subjectItem of state.subjects) {
+          const key = makePairKey(classItem.id, subjectItem.id);
+
+          if (!existingMap.has(key)) {
+            missing.push({
+              classId: classItem.id,
+              className: normalize(classItem.name) || normalize(classItem.title) || "بدون اسم",
+              subjectId: subjectItem.id,
+              subjectName: normalize(subjectItem.name) || normalize(subjectItem.title) || "بدون اسم"
+            });
+          }
+        }
+      }
+
+      state.missingLinks = missing;
+      state.duplicateLinks = duplicates;
+
+      setCounters({
+        classes: state.classes.length,
+        subjects: state.subjects.length,
+        links: state.classSubjects.length,
+        missing: state.missingLinks.length
+      });
+    }
+
+    function buildSummaryText() {
+      const lines = [];
+
+      lines.push("نتيجة فحص classSubjects");
+      lines.push("=".repeat(36));
+      lines.push(`School ID: ${state.schoolId}`);
+      lines.push("");
+      lines.push(`عدد الصفوف: ${state.classes.length}`);
+      lines.push(`عدد المواد: ${state.subjects.length}`);
+      lines.push(`عدد الربط الحالي: ${state.classSubjects.length}`);
+      lines.push(`عدد الربط الناقص: ${state.missingLinks.length}`);
+      lines.push(`عدد التكرارات داخل classSubjects: ${state.duplicateLinks.length}`);
+      lines.push(`عدد المواد التي ينقصها schoolId: ${state.subjectSchoolIdMissing.length}`);
+      lines.push("");
+
+      if (!state.classes.length) {
+        lines.push("تحذير: لا توجد صفوف نشطة لهذه المدرسة داخل collection classes.");
+      }
+
+      if (!state.subjects.length) {
+        lines.push("تحذير: لا توجد مواد نشطة قابلة للربط لهذه المدرسة داخل collection subjects.");
+      }
+
+      if (state.subjectSchoolIdMissing.length) {
+        lines.push("");
+        lines.push("مواد ينقصها schoolId:");
+        state.subjectSchoolIdMissing.slice(0, 20).forEach((item, index) => {
+          const subjectName = normalize(item.name) || "بدون اسم";
+          lines.push(`${index + 1}) ${subjectName} | ${item.id}`);
+        });
+
+        if (state.subjectSchoolIdMissing.length > 20) {
+          lines.push(`... وهناك ${state.subjectSchoolIdMissing.length - 20} مادة أخرى.`);
+        }
+      }
+
+      if (state.missingLinks.length) {
+        lines.push("");
+        lines.push("أمثلة من الربط الناقص:");
+        state.missingLinks.slice(0, 25).forEach((item, index) => {
+          lines.push(
+            `${index + 1}) الصف: ${item.className} | المادة: ${item.subjectName}`
+          );
+        });
+
+        if (state.missingLinks.length > 25) {
+          lines.push(`... وهناك ${state.missingLinks.length - 25} ربطًا ناقصًا آخر.`);
+        }
+      } else {
+        lines.push("");
+        lines.push("ممتاز: لا يوجد ربط ناقص حاليًا.");
+      }
+
+      if (state.duplicateLinks.length) {
+        lines.push("");
+        lines.push("ملاحظة: توجد تكرارات داخل classSubjects. هذه الصفحة لا تحذف التكرارات، لكنها تكشفها فقط.");
+      }
+
+      return lines.join("\n");
+    }
+
+    async function scanData() {
+      showLoading("جارٍ فحص البيانات...");
+      try {
+        await loadAll();
+        analyzeLinks();
+        setReport(buildSummaryText());
+      } catch (error) {
+        setReport(`فشل الفحص:\n${error.message || error}`);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    async function fillMissingSubjectSchoolIds() {
+      showLoading("جارٍ ملء schoolId الناقص في المواد...");
+      try {
+        await loadAll();
+
+        if (!state.subjectSchoolIdMissing.length) {
+          analyzeLinks();
+          setReport(
+            `${buildSummaryText()}\n\nلا توجد مواد ينقصها schoolId.`
+          );
+          return;
+        }
+
+        let updated = 0;
+
+        for (const item of state.subjectSchoolIdMissing) {
+          const ref = doc(db, "subjects", item.id);
+          await updateDoc(ref, {
+            schoolId: state.schoolId
+          });
+          updated++;
+        }
+
+        await loadAll();
+        analyzeLinks();
+
+        setReport(
+          `${buildSummaryText()}\n\nتم تحديث schoolId داخل ${updated} مادة بنجاح.`
+        );
+      } catch (error) {
+        setReport(`فشل تحديث المواد:\n${error.message || error}`);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    async function createMissingLinks() {
+      showLoading("جارٍ إنشاء الربط الناقص...");
+      try {
+        await loadAll();
+        analyzeLinks();
+
+        const mode = normalize(el.modeSelect.value);
+
+        if (mode === "preview") {
+          setReport(
+            `${buildSummaryText()}\n\nالوضع الحالي Preview فقط. لم يتم إنشاء أي سجل.`
+          );
+          return;
+        }
+
+        if (!state.classes.length) {
+          throw new Error("لا توجد صفوف نشطة لهذه المدرسة، لذلك لا يمكن إنشاء الربط.");
+        }
+
+        if (!state.subjects.length) {
+          throw new Error("لا توجد مواد نشطة لهذه المدرسة، لذلك لا يمكن إنشاء الربط.");
+        }
+
+        if (!state.missingLinks.length) {
+          setReport(
+            `${buildSummaryText()}\n\nلا يوجد ربط ناقص ليتم إنشاؤه.`
+          );
+          return;
+        }
+
+        let created = 0;
+
+        for (const item of state.missingLinks) {
+          await addDoc(collection(db, "classSubjects"), {
+            schoolId: state.schoolId,
+            classId: item.classId,
+            subjectId: item.subjectId,
+            status: "active",
+            createdAt: serverTimestamp()
+          });
+          created++;
+        }
+
+        await loadAll();
+        analyzeLinks();
+
+        setReport(
+          `${buildSummaryText()}\n\nتم إنشاء ${created} سجل ربط جديد داخل classSubjects بنجاح.`
+        );
+      } catch (error) {
+        setReport(`فشل إنشاء الربط:\n${error.message || error}`);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function bindEvents() {
+      el.scanBtn.addEventListener("click", scanData);
+      el.fillSubjectsBtn.addEventListener("click", fillMissingSubjectSchoolIds);
+      el.fixBtn.addEventListener("click", createMissingLinks);
+      el.clearBtn.addEventListener("click", resetReport);
+    }
+
+    async function init() {
+      bindEvents();
+      resetReport();
+
+      try {
+        await scanData();
+      } catch (_) {
+        // already handled inside scanData
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
