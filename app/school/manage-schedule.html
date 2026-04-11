@@ -258,17 +258,16 @@
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      box-shadow:var(--shadow);
     }
 
     .stat-label{
       color:var(--muted);
-      font-size:15px;
+      font-size:14px;
       font-weight:700;
     }
 
     .stat-value{
-      font-size:42px;
+      font-size:44px;
       font-weight:900;
       line-height:1;
       letter-spacing:.5px;
@@ -277,148 +276,171 @@
     .stat-note{
       color:var(--soft);
       font-size:13px;
+      line-height:1.8;
     }
 
     .grid{
       display:grid;
-      grid-template-columns:1fr 1.08fr;
+      grid-template-columns:1fr 1fr;
       gap:16px;
       margin-top:18px;
-      align-items:start;
     }
 
     .section-title{
       margin:0;
-      font-size:23px;
+      font-size:26px;
       font-weight:900;
-      line-height:1.2;
+      line-height:1.25;
     }
 
     .section-subtitle{
-      margin:8px 0 0;
+      margin:10px 0 0;
       color:var(--muted);
       font-size:14px;
-      line-height:1.8;
+      line-height:1.9;
     }
 
     .quick-lists{
       display:grid;
-      grid-template-columns:1fr;
+      grid-template-columns:repeat(3,1fr);
       gap:14px;
-      margin-top:16px;
     }
 
     .mini-card{
-      background:rgba(255,255,255,.03);
+      min-height:180px;
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(15,35,76,.94), rgba(9,21,47,.95));
+      padding:18px;
     }
 
     .mini-card h3{
       margin:0 0 12px;
-      font-size:18px;
-      font-weight:800;
+      font-size:22px;
+      font-weight:900;
     }
 
     .chips{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
+      align-items:flex-start;
     }
 
     .chip{
       display:inline-flex;
       align-items:center;
-      gap:6px;
-      padding:10px 12px;
+      justify-content:center;
+      min-height:38px;
+      padding:8px 14px;
       border-radius:999px;
       background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.07);
+      border:1px solid var(--line-2);
       color:#fff;
       font-size:14px;
       font-weight:700;
     }
 
-    .empty{
-      color:var(--soft);
+    .footer-note{
+      margin-top:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:14px 16px;
+      color:var(--muted);
       font-size:14px;
       line-height:1.9;
     }
 
     .form-grid{
       display:grid;
-      grid-template-columns:repeat(2,1fr);
+      grid-template-columns:repeat(2, minmax(0,1fr));
       gap:14px;
-      margin-top:18px;
     }
 
     .field{
       display:flex;
       flex-direction:column;
-      gap:8px;
+      gap:10px;
+      min-width:0;
     }
 
-    .field.field-full{
-      grid-column:1 / -1;
-    }
+    .field-full{ grid-column:1 / -1; }
 
     .label{
-      color:#fff;
-      font-size:14px;
+      font-size:15px;
       font-weight:800;
     }
 
     .control,
     .textarea{
       width:100%;
-      border-radius:15px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
+      border-radius:18px;
+      border:1px solid var(--line-2);
+      background:rgba(255,255,255,.04);
       color:#fff;
-      padding:14px 14px;
-      font-size:15px;
       outline:none;
       transition:.18s ease;
+      font-size:15px;
+    }
+
+    .control{
+      min-height:54px;
+      padding:0 16px;
+    }
+
+    .textarea{
+      min-height:120px;
+      padding:14px 16px;
+      resize:vertical;
+      line-height:1.9;
     }
 
     .control:focus,
     .textarea:focus{
-      border-color:rgba(95,143,255,.65);
-      box-shadow:0 0 0 3px rgba(95,143,255,.14);
-      background:rgba(255,255,255,.06);
+      border-color:rgba(95,143,255,.66);
+      box-shadow:0 0 0 4px rgba(47,107,255,.12);
     }
 
-    .control option{
+    select.control{
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.65) 50%),
+        linear-gradient(135deg, rgba(255,255,255,.65) 50%, transparent 50%);
+      background-position:
+        calc(18px) calc(50% - 3px),
+        calc(10px) calc(50% - 3px);
+      background-size:8px 8px, 8px 8px;
+      background-repeat:no-repeat;
+      padding-left:34px;
+    }
+
+    option{
       color:#111827;
-    }
-
-    .textarea{
-      min-height:112px;
-      resize:vertical;
-      line-height:1.8;
+      background:#fff;
     }
 
     .hint{
       color:var(--soft);
-      font-size:12px;
-      line-height:1.7;
+      font-size:13px;
+      line-height:1.8;
     }
 
     .form-actions{
       display:flex;
-      gap:10px;
       flex-wrap:wrap;
+      gap:10px;
       margin-top:18px;
     }
 
     .toolbar{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:12px;
+      gap:16px;
+      align-items:flex-end;
       flex-wrap:wrap;
-      margin-bottom:16px;
     }
 
     .toolbar-actions{
@@ -429,108 +451,111 @@
 
     .filter-row{
       display:grid;
-      grid-template-columns:220px 220px 1fr;
-      gap:12px;
-      margin-bottom:16px;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+      margin-bottom:18px;
     }
 
+    .field-full-search{ grid-column:span 1; }
+
     .table-wrap{
-      width:100%;
       overflow:auto;
       border:1px solid var(--line);
-      border-radius:18px;
-      background:rgba(255,255,255,.02);
+      border-radius:20px;
     }
 
     table{
       width:100%;
-      min-width:1120px;
       border-collapse:collapse;
+      min-width:980px;
     }
 
-    th,td{
+    thead th{
+      background:rgba(47,107,255,.18);
+      color:#fff;
+      font-size:14px;
+      font-weight:800;
       padding:14px 12px;
       text-align:right;
-      border-bottom:1px solid rgba(255,255,255,.07);
-      vertical-align:top;
-      font-size:14px;
-      line-height:1.8;
-    }
-
-    th{
-      position:sticky;
-      top:0;
-      z-index:1;
-      background:#10244d;
-      color:#fff;
-      font-size:13px;
-      font-weight:900;
+      border-bottom:1px solid var(--line);
       white-space:nowrap;
     }
 
-    td{
-      color:#f3f6ff;
+    tbody td{
+      padding:14px 12px;
+      font-size:14px;
+      line-height:1.8;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+      color:var(--muted);
     }
 
-    tr:hover td{
-      background:rgba(255,255,255,.02);
+    tbody tr:hover{
+      background:rgba(255,255,255,.03);
     }
 
     .badge{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:6px 10px;
+      min-height:34px;
+      padding:6px 12px;
       border-radius:999px;
-      font-size:12px;
-      font-weight:900;
-      white-space:nowrap;
+      font-size:13px;
+      font-weight:800;
+      border:1px solid transparent;
     }
 
     .badge-success{
-      background:rgba(16,185,129,.13);
-      color:#d9fff2;
-      border:1px solid rgba(16,185,129,.20);
+      background:rgba(16,185,129,.14);
+      border-color:rgba(16,185,129,.22);
+      color:#d9fff0;
     }
 
     .badge-muted{
-      background:rgba(255,255,255,.06);
-      color:#edf2ff;
-      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.08);
+      border-color:var(--line-2);
+      color:#e6ecff;
     }
 
     .actions{
       display:flex;
-      gap:8px;
       flex-wrap:wrap;
+      gap:8px;
     }
 
     .btn-sm{
       min-height:38px;
-      padding:9px 12px;
-      border-radius:12px;
+      padding:8px 12px;
       font-size:13px;
-      font-weight:900;
+      border-radius:14px;
+    }
+
+    .empty{
+      padding:18px;
+      color:var(--soft);
+      font-size:14px;
+      text-align:center;
     }
 
     .day-group{
-      margin-top:18px;
+      margin-top:16px;
       display:grid;
-      grid-template-columns:repeat(2,1fr);
+      grid-template-columns:repeat(3, minmax(0,1fr));
       gap:14px;
     }
 
     .day-card{
+      min-height:170px;
+      border-radius:20px;
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
-      background:rgba(255,255,255,.03);
-      min-height:144px;
+      background:linear-gradient(180deg, rgba(15,35,76,.94), rgba(9,21,47,.95));
+      padding:18px;
     }
 
     .day-card h3{
-      margin:0 0 10px;
-      font-size:18px;
+      margin:0 0 12px;
+      font-size:22px;
       font-weight:900;
     }
 
@@ -541,141 +566,87 @@
     }
 
     .lesson-item{
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:14px;
+      display:flex;
+      flex-direction:column;
+      gap:5px;
       padding:12px;
+      border-radius:16px;
+      border:1px solid var(--line);
       background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.8;
     }
 
     .lesson-item strong{
-      display:block;
-      font-size:15px;
-      margin-bottom:4px;
-    }
-
-    .lesson-item span{
-      display:block;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.7;
-    }
-
-    .footer-note{
-      margin-top:18px;
-      color:var(--soft);
-      font-size:13px;
-      line-height:1.9;
+      color:#fff;
+      font-size:14px;
     }
 
     .loading-overlay{
       position:fixed;
       inset:0;
-      background:rgba(3,10,24,.52);
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:100;
+      background:rgba(3,10,25,.62);
+      backdrop-filter:blur(6px);
+      z-index:70;
       padding:18px;
     }
 
-    .loading-overlay.show{
-      display:flex;
-    }
+    .loading-overlay.show{ display:flex; }
 
     .loading-box{
-      width:min(360px, 100%);
-      border-radius:22px;
-      border:1px solid var(--line);
+      width:min(420px, 100%);
+      border-radius:24px;
       background:linear-gradient(180deg, rgba(12,29,63,.98), rgba(8,21,47,.98));
+      border:1px solid var(--line);
       box-shadow:var(--shadow);
-      padding:24px;
+      padding:22px;
       text-align:center;
     }
 
     .spinner{
-      width:52px;
-      height:52px;
-      margin:0 auto 14px;
+      width:54px;
+      height:54px;
       border-radius:50%;
-      border:4px solid rgba(255,255,255,.14);
-      border-top-color:#7ea3ff;
-      animation:spin .9s linear infinite;
+      border:4px solid rgba(255,255,255,.12);
+      border-top-color:var(--primary-2);
+      margin:0 auto 14px;
+      animation:spin .8s linear infinite;
     }
 
     @keyframes spin{
       to{ transform:rotate(360deg); }
     }
 
-    @media (max-width: 1080px){
-      .hero,
-      .grid{
-        grid-template-columns:1fr;
-      }
-
-      .stats{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .filter-row{
-        grid-template-columns:1fr 1fr;
-      }
-
-      .filter-row .field.field-full-search{
-        grid-column:1 / -1;
-      }
-
-      .day-group{
-        grid-template-columns:1fr;
-      }
+    @media (max-width: 1100px){
+      .hero{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns:1fr; }
+      .quick-lists{ grid-template-columns:1fr; }
+      .stats{ grid-template-columns:repeat(2,1fr); }
+      .day-group{ grid-template-columns:repeat(2,1fr); }
     }
 
-    @media (max-width: 720px){
-      .container{
-        width:min(100% - 18px, 100%);
-        margin:12px auto 36px;
-      }
-
-      .topbar{
-        border-radius:22px;
-        padding:14px;
-      }
-
-      .brand-text h1{
-        font-size:22px;
-      }
-
-      .title-xl{
-        font-size:25px;
-      }
-
-      .school-name{
-        font-size:24px;
-      }
-
-      .stats{
-        grid-template-columns:1fr;
-      }
-
-      .form-grid,
-      .filter-row{
-        grid-template-columns:1fr;
-      }
-
-      .toolbar{
-        align-items:stretch;
-      }
-
-      .toolbar-actions,
-      .top-actions,
-      .form-actions{
-        width:100%;
-      }
-
-      .top-actions .btn,
-      .toolbar-actions .btn,
-      .form-actions .btn{
-        flex:1 1 auto;
-      }
+    @media (max-width: 760px){
+      .container{ width:min(100%, calc(100% - 18px)); margin:14px auto 34px; }
+      .topbar{ border-radius:24px; padding:14px; }
+      .title-xl{ font-size:26px; }
+      .school-name{ font-size:24px; }
+      .stats{ grid-template-columns:1fr; }
+      .form-grid{ grid-template-columns:1fr; }
+      .filter-row{ grid-template-columns:1fr; }
+      .field-full-search{ grid-column:auto; }
+      .day-group{ grid-template-columns:1fr; }
+      .panel-head, .panel-body{ padding:18px; }
+      .brand-text h1{ font-size:24px; }
+      .btn{ width:100%; }
+      .top-actions{ width:100%; }
+      .top-actions > *{ flex:1 1 100%; }
+      .toolbar-actions{ width:100%; }
+      .toolbar-actions > *{ flex:1 1 100%; }
+      .form-actions > *{ flex:1 1 100%; }
     }
   </style>
 </head>
@@ -814,15 +785,15 @@
                 <div class="hint">اختر مادة من المواد المسجلة في المدرسة.</div>
               </div>
 
-<div class="field">
-  <label class="label">تشخيص ربط المواد بالصف</label>
-  <div
-    id="subjectDebugBox"
-    class="control"
-    style="min-height:120px;white-space:pre-wrap;line-height:1.8;padding:14px"
-  >لم يتم الفحص بعد.</div>
-</div>
-              
+              <div class="field">
+                <label class="label">تشخيص ربط المواد بالصف</label>
+                <div
+                  id="subjectDebugBox"
+                  class="control"
+                  style="min-height:120px;white-space:pre-wrap;line-height:1.8;padding:14px"
+                >لم يتم الفحص بعد.</div>
+              </div>
+
               <div class="field">
                 <label class="label" for="teacherSelect">المعلم</label>
                 <select class="control" id="teacherSelect" required>
@@ -858,7 +829,7 @@
                   <option value="7">الحصة 7</option>
                   <option value="8">الحصة 8</option>
                 </select>
-                       <div class="hint">الترتيب يستخدم أيضًا في الفرز داخل الجدول.</div>
+                <div class="hint">الترتيب يستخدم أيضًا في الفرز داخل الجدول.</div>
               </div>
 
               <div class="field">
@@ -996,7 +967,6 @@
       updateDoc,
       deleteDoc,
       serverTimestamp,
-      orderBy,
       limit
     } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
@@ -1014,17 +984,20 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const DAYS = ["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس"];
+    const DAYS = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
     const DAY_ORDER = Object.fromEntries(DAYS.map((day, index) => [day, index]));
-    const STATUS_LABELS = {
-      active: "نشط",
-      inactive: "غير نشط"
-    };
+    const STATUS_LABELS = { active: "نشط", inactive: "غير نشط" };
     const STATUS_NORMALIZER = {
       active: "active",
       inactive: "inactive",
       "نشط": "active",
-      "غير نشط": "inactive"
+      "غير نشط": "inactive",
+      enabled: "active",
+      disabled: "inactive",
+      true: "active",
+      false: "inactive",
+      1: "active",
+      0: "inactive"
     };
     const TEACHER_TYPE_NORMALIZER = {
       ai: "ai",
@@ -1034,21 +1007,24 @@
       "ai teacher": "ai",
       teacher: "human"
     };
-    const TEACHER_TYPE_LABELS = {
-      ai: "معلم ذكي",
-      human: "معلم بشري"
+
+    const state = {
+      session: null,
+      schoolId: "",
+      schoolName: "",
+      subjects: [],
+      teachers: [],
+      classes: [],
+      classSubjects: [],
+      lessons: [],
+      filteredLessons: [],
+      sourceInfo: {
+        subjects: "-",
+        teachers: "-",
+        classes: "-",
+        classSubjects: "-"
+      }
     };
-const state = {
-  session: null,
-  schoolId: "",
-  schoolName: "",
-  subjects: [],
-  teachers: [],
-  classes: [],
-  classSubjects: [],
-  lessons: [],
-  filteredLessons: []
-};
 
     const el = {
       schoolName: document.getElementById("schoolName"),
@@ -1083,7 +1059,8 @@ const state = {
       statusFilter: document.getElementById("statusFilter"),
       searchInput: document.getElementById("searchInput"),
       lessonsTableBody: document.getElementById("lessonsTableBody"),
-      daySummary: document.getElementById("daySummary")
+      daySummary: document.getElementById("daySummary"),
+      subjectDebugBox: document.getElementById("subjectDebugBox")
     };
 
     function normalize(value) {
@@ -1096,6 +1073,7 @@ const state = {
     }
 
     function normalizeStatusValue(value) {
+      if (typeof value === "boolean") return value ? "active" : "inactive";
       const key = normalizeLower(value);
       return STATUS_NORMALIZER[key] || "active";
     }
@@ -1114,6 +1092,68 @@ const state = {
         .replaceAll("'", "&#039;");
     }
 
+    function uniqueBy(items, keyBuilder) {
+      const map = new Map();
+      items.forEach((item) => {
+        const key = keyBuilder(item);
+        if (!key || map.has(key)) return;
+        map.set(key, item);
+      });
+      return [...map.values()];
+    }
+
+    function asArray(value) {
+      if (Array.isArray(value)) return value;
+      if (value === null || value === undefined || value === "") return [];
+      return [value];
+    }
+
+    function firstNonEmpty(...values) {
+      for (const value of values) {
+        if (value === null || value === undefined) continue;
+        if (Array.isArray(value)) {
+          for (const item of value) {
+            const normalized = normalize(item);
+            if (normalized) return normalized;
+          }
+          continue;
+        }
+        const normalized = normalize(value);
+        if (normalized) return normalized;
+      }
+      return "";
+    }
+
+    function getNested(obj, path) {
+      try {
+        return path.split('.').reduce((acc, key) => acc?.[key], obj);
+      } catch (_error) {
+        return undefined;
+      }
+    }
+
+    function extractIdCandidate(value) {
+      if (!value) return "";
+      if (typeof value === "string" || typeof value === "number") return normalize(value);
+      if (typeof value === "object") {
+        return firstNonEmpty(value.id, value.uid, value.docId, value.value, value.refId, value.key);
+      }
+      return "";
+    }
+
+    function extractIdsFromAny(value) {
+      const ids = [];
+      asArray(value).forEach((entry) => {
+        if (Array.isArray(entry)) {
+          extractIdsFromAny(entry).forEach((id) => ids.push(id));
+          return;
+        }
+        const id = extractIdCandidate(entry);
+        if (id) ids.push(id);
+      });
+      return uniqueBy(ids.map((id) => ({ id })), (item) => item.id).map((item) => item.id);
+    }
+
     function showMessage(message, type = "info") {
       el.pageMessage.className = `message ${type} show`;
       el.pageMessage.textContent = message;
@@ -1126,6 +1166,7 @@ const state = {
     }
 
     function setLoading(show, text = "جارِ تنفيذ الطلب...") {
+      if (!el.loadingOverlay || !el.loadingText) return;
       el.loadingText.textContent = text;
       el.loadingOverlay.classList.toggle("show", !!show);
     }
@@ -1141,7 +1182,7 @@ const state = {
           sessionStorage.getItem("madarisai_session") ||
           localStorage.getItem("schoolSession") ||
           sessionStorage.getItem("schoolSession");
-          return raw ? JSON.parse(raw) : null;
+        return raw ? JSON.parse(raw) : null;
       } catch (_error) {
         return null;
       }
@@ -1181,8 +1222,8 @@ const state = {
         try { await signOut(auth); } catch (_error) {}
 
         const keys = [
-          "madarisai_session","schoolSession","school_session","madaris_user_session","madaris_session",
-          "session","userSession","schoolId","schoolName","userRole","userName","email"
+          "madarisai_session", "schoolSession", "school_session", "madaris_user_session", "madaris_session",
+          "session", "userSession", "schoolId", "schoolName", "userRole", "userName", "email"
         ];
         keys.forEach((key) => {
           try { localStorage.removeItem(key); } catch (_error) {}
@@ -1225,7 +1266,7 @@ const state = {
     }
 
     function fillSelect(selectEl, items, emptyLabel) {
-      const current = selectEl.value;
+      const current = normalize(selectEl.value);
       selectEl.innerHTML = `<option value="">${emptyLabel}</option>`;
 
       items.forEach((item) => {
@@ -1236,7 +1277,7 @@ const state = {
         selectEl.appendChild(option);
       });
 
-      if ([...selectEl.options].some(opt => opt.value === current)) {
+      if (current && [...selectEl.options].some((opt) => normalize(opt.value) === current)) {
         selectEl.value = current;
       }
     }
@@ -1250,7 +1291,8 @@ const state = {
 
     function updatePreviews() {
       makePreview(el.subjectsPreview, state.subjects, "لا توجد مواد مرتبطة بهذه المدرسة حتى الآن.");
-      makePreview(el.teachersPreview, state.teachers, "لا يوجد معلمون مرتبطون بهذه المدرسة حتى الآن.");
+
+    makePreview(el.teachersPreview, state.teachers, "لا يوجد معلمون مرتبطون بهذه المدرسة حتى الآن.");
       makePreview(el.classesPreview, state.classes, "لا توجد صفوف مرتبطة بهذه المدرسة حتى الآن.");
     }
 
@@ -1314,15 +1356,79 @@ const state = {
     }
 
     function normalizeEntity(item, type) {
-      const id = normalize(item.id || item.docId || item.uid);
-      let name = "";
+      const id = firstNonEmpty(
+        item.id,
+        item.docId,
+        item.uid,
+        item.classId,
+        item.classID,
+        item.class_id,
+        item.subjectId,
+        item.subjectID,
+        item.subject_id,
+        item.teacherId,
+        item.teacherID,
+        item.teacher_id,
+        item.userId,
+        item.userID,
+        item.user_id,
+        item.gradeId,
+        item.gradeID,
+        item.grade_id,
+        item.sectionId,
+        item.sectionID,
+        item.section_id,
+        item.code,
+        item.slug,
+        getNested(item, 'class.id'),
+        getNested(item, 'subject.id'),
+        getNested(item, 'teacher.id'),
+        getNested(item, 'schoolClass.id')
+      );
 
+      let name = "";
       if (type === "subject") {
-        name = normalize(item.name || item.subjectName || item.title || item.label || item.materialName);
+        name = firstNonEmpty(
+          item.name,
+          item.subjectName,
+          item.subject_name,
+          item.title,
+          item.label,
+          item.materialName,
+          item.material_name,
+          item.courseName,
+          item.course_name,
+          item.displayName,
+          item.code
+        );
       } else if (type === "teacher") {
-        name = normalize(item.name || item.teacherName || item.fullName || item.userName || item.displayName);
+        name = firstNonEmpty(
+          item.name,
+          item.teacherName,
+          item.teacher_name,
+          item.fullName,
+          item.full_name,
+          item.userName,
+          item.user_name,
+          item.displayName,
+          item.display_name,
+          getNested(item, 'profile.name')
+        );
       } else if (type === "class") {
-        name = normalize(item.name || item.className || item.title || item.gradeName || item.sectionName);
+        name = firstNonEmpty(
+          item.name,
+          item.className,
+          item.class_name,
+          item.title,
+          item.gradeName,
+          item.grade_name,
+          item.sectionName,
+          item.section_name,
+          item.levelName,
+          item.level_name,
+          item.classLabel,
+          item.label
+        );
       }
 
       return {
@@ -1331,138 +1437,257 @@ const state = {
         raw: item
       };
     }
-async function loadLinkedData() {
-  const [subjectsPack, teachersPack, classesPack, classSubjectsPack] = await Promise.all([
-    getSchoolScopedCollection(["subjects", "materials"], state.schoolId),
-    getSchoolScopedCollection(["teachers", "staff"], state.schoolId),
-    getSchoolScopedCollection(["classes", "grades", "sections"], state.schoolId),
-    getSchoolScopedCollection(["classSubjects"], state.schoolId)
-  ]);
 
-  state.subjects = subjectsPack.rows
-    .map((item) => normalizeEntity(item, "subject"))
-    .filter((item) => item.id);
+    function normalizeClassSubject(item) {
+      const classId = firstNonEmpty(
+        item.classId,
+        item.classID,
+        item.class_id,
+        item.gradeId,
+        item.gradeID,
+        item.grade_id,
+        item.sectionId,
+        item.sectionID,
+        item.section_id,
+        getNested(item, 'class.id'),
+        getNested(item, 'class.classId'),
+        getNested(item, 'grade.id'),
+        getNested(item, 'section.id'),
+        extractIdCandidate(item.classRef),
+        extractIdCandidate(item.class)
+      );
+     const subjectId = firstNonEmpty(
+        item.subjectId,
+        item.subjectID,
+        item.subject_id,
+        item.materialId,
+        item.materialID,
+        item.material_id,
+        item.courseId,
+        item.courseID,
+        item.course_id,
+        getNested(item, 'subject.id'),
+        getNested(item, 'material.id'),
+        getNested(item, 'course.id'),
+        extractIdCandidate(item.subjectRef),
+        extractIdCandidate(item.subject),
+        extractIdCandidate(item.material)
+      );
+      return {
+        id: normalize(item.id),
+        classId,
+        subjectId,
+        schoolId: normalize(item.schoolId || item.schoolID || item.school_id),
+        status: normalizeStatusValue(item.status ?? item.active ?? 'active')
+      };
+    }
 
-  state.teachers = teachersPack.rows
-    .map((item) => normalizeEntity(item, "teacher"))
-    .filter((item) => item.id)
-    .filter((item) => normalize(item.name));
+    function deriveClassSubjectLinks() {
+      const links = [];
 
-  state.classes = classesPack.rows
-    .map((item) => normalizeEntity(item, "class"))
-    .filter((item) => item.id);
+      state.classes.forEach((classItem) => {
+        const raw = classItem.raw || {};
+        const subjectIds = [
+          ...extractIdsFromAny(raw.subjectIds),
+          ...extractIdsFromAny(raw.subjects),
+          ...extractIdsFromAny(raw.materials),
+          ...extractIdsFromAny(raw.materialIds),
+          ...extractIdsFromAny(raw.courses),
+          ...extractIdsFromAny(raw.courseIds)
+        ];
+        subjectIds.forEach((subjectId) => {
+          links.push({
+            id: `${classItem.id}__${subjectId}__derived_class`,
+            classId: classItem.id,
+            subjectId,
+            schoolId: state.schoolId,
+            status: 'active'
+          });
+        });
+      });
 
-  state.classSubjects = classSubjectsPack.rows
-    .map((item) => ({
-      id: normalize(item.id),
-      classId: normalize(item.classId || item.classID || item.class_id),
-      subjectId: normalize(item.subjectId || item.subjectID || item.subject_id),
-      schoolId: normalize(item.schoolId || item.schoolID || item.school_id),
-      status: normalizeStatusValue(item.status || "active")
-    }))
-    .filter((item) => item.classId && item.subjectId);
+      state.lessons.forEach((lesson) => {
+        if (lesson.classId && lesson.subjectId) {
+          links.push({
+            id: `${lesson.classId}__${lesson.subjectId}__derived_lesson`,
+            classId: lesson.classId,
+            subjectId: lesson.subjectId,
+            schoolId: state.schoolId,
+            status: 'active'
+          });
+        }
+      });
 
-  fillSelect(el.teacherSelect, state.teachers, "اختر المعلم");
-  fillSelect(el.classSelect, state.classes, "اختر الصف");
-  updateSubjectSelectByClass();
+      return uniqueBy(links, (item) => `${item.classId}__${item.subjectId}`);
+    }
 
-  updateCounters();
-  updatePreviews();
-}
-function updateSubjectDebug(info = {}) {
-  if (!el.subjectDebugBox) return;
+    async function loadLinkedData() {
+      const [subjectsPack, teachersPack, classesPack, classSubjectsPack] = await Promise.all([
+        getSchoolScopedCollection(["subjects", "materials"], state.schoolId),
+        getSchoolScopedCollection(["teachers", "staff", "users"], state.schoolId),
+        getSchoolScopedCollection(["classes", "grades", "sections"], state.schoolId),
+        getSchoolScopedCollection(["classSubjects", "class_subjects", "classSubjectLinks"], state.schoolId)
+      ]);
 
-  const lines = [
-    `classId المختار: ${info.classId || "-"}`,
-    `عدد روابط classSubjects لهذا الصف: ${info.linkCount ?? 0}`,
-    `عدد المواد بعد الفلترة: ${info.subjectCount ?? 0}`,
-    `subjectIds المسموح بها: ${info.allowedIds?.length ? info.allowedIds.join(", ") : "-"}`,
-    `أسماء المواد بعد الفلترة: ${info.subjectNames?.length ? info.subjectNames.join(" | ") : "لا توجد مواد"}`
-  ];
+      state.sourceInfo.subjects = subjectsPack.collectionName;
+      state.sourceInfo.teachers = teachersPack.collectionName;
+      state.sourceInfo.classes = classesPack.collectionName;
+      state.sourceInfo.classSubjects = classSubjectsPack.collectionName;
 
-  el.subjectDebugBox.textContent = lines.join("\n");
-}
-  
+      state.subjects = uniqueBy(
+        subjectsPack.rows
+          .map((item) => normalizeEntity(item, "subject"))
+          .filter((item) => item.id && normalize(item.name)),
+        (item) => item.id
+      ).sort((a, b) => a.name.localeCompare(b.name, "ar"));
+
+      state.teachers = uniqueBy(
+        teachersPack.rows
+          .map((item) => normalizeEntity(item, "teacher"))
+          .filter((item) => item.id && normalize(item.name)),
+        (item) => item.id
+      ).sort((a, b) => a.name.localeCompare(b.name, "ar"));
+
+      state.classes = uniqueBy(
+        classesPack.rows
+          .map((item) => normalizeEntity(item, "class"))
+          .filter((item) => item.id && normalize(item.name)),
+        (item) => item.id
+      ).sort((a, b) => a.name.localeCompare(b.name, "ar"));
+
+      state.classSubjects = uniqueBy(
+        classSubjectsPack.rows
+          .map(normalizeClassSubject)
+          .filter((item) => item.classId && item.subjectId),
+        (item) => `${item.classId}__${item.subjectId}`
+      );
+
+      fillSelect(el.teacherSelect, state.teachers, "اختر المعلم");
+      fillSelect(el.classSelect, state.classes, "اختر الصف");
+      updateSubjectSelectByClass();
+      updateCounters();
+      updatePreviews();
+    }
+
+    function updateSubjectDebug(info = {}) {
+      if (!el.subjectDebugBox) return;
+
+      const lines = [
+        `مصدر المواد: ${state.sourceInfo.subjects}`,
+        `مصدر المعلمين: ${state.sourceInfo.teachers}`,
+        `مصدر الصفوف: ${state.sourceInfo.classes}`,
+        `مصدر الربط: ${state.sourceInfo.classSubjects}`,
+        `classId المختار: ${info.classId || "-"}`,
+        `عدد الصفوف المقروءة: ${state.classes.length}`,
+        `عدد المواد المقروءة: ${state.subjects.length}`,
+        `عدد المعلمين المقروءة: ${state.teachers.length}`,
+        `عدد روابط classSubjects الخام: ${state.classSubjects.length}`,
+        `عدد روابط هذا الصف: ${info.linkCount ?? 0}`,
+        `هل استُخدم fallback؟ ${info.fallbackUsed ? "نعم" : "لا"}`,
+        `subjectIds المسموح بها: ${info.allowedIds?.length ? info.allowedIds.join(", ") : "-"}`,
+        `أسماء المواد بعد الفلترة: ${info.subjectNames?.length ? info.subjectNames.join(" | ") : "لا توجد مواد"}`
+      ];
+
+      el.subjectDebugBox.textContent = lines.join("\n");
+    }
+
     function getAllowedSubjectIdsForClass(classId) {
-  const cleanClassId = normalize(classId);
-  if (!cleanClassId) return [];
+      const cleanClassId = normalize(classId);
+      if (!cleanClassId) return [];
 
-  return state.classSubjects
-    .filter((item) =>
-      normalize(item.classId) === cleanClassId &&
-      normalizeStatusValue(item.status) === "active"
-    )
-    .map((item) => normalize(item.subjectId))
-    .filter(Boolean);
-}
+      const directLinks = state.classSubjects
+        .filter((item) => normalize(item.classId) === cleanClassId && normalizeStatusValue(item.status) === "active")
+        .map((item) => normalize(item.subjectId))
+        .filter(Boolean);
 
-function updateSubjectDebug(info = {}) {
-  if (!el.subjectDebugBox) return;
+      if (directLinks.length) {
+        return [...new Set(directLinks)];
+      }
 
-  const lines = [
-    `classId المختار: ${info.classId || "-"}`,
-    `عدد روابط classSubjects لهذا الصف: ${info.linkCount ?? 0}`,
-    `عدد المواد بعد الفلترة: ${info.subjectCount ?? 0}`,
-    `subjectIds المسموح بها: ${info.allowedIds?.length ? info.allowedIds.join(", ") : "-"}`,
-    `أسماء المواد بعد الفلترة: ${info.subjectNames?.length ? info.subjectNames.join(" | ") : "لا توجد مواد"}`
-  ];
+      const derivedLinks = deriveClassSubjectLinks()
+        .filter((item) => normalize(item.classId) === cleanClassId)
+        .map((item) => normalize(item.subjectId))
+        .filter(Boolean);
 
-  el.subjectDebugBox.textContent = lines.join("\n");
-    }  
-    
-function updateSubjectSelectByClass(selectedSubjectId = "") {
-  const classId = normalize(el.classSelect.value);
-  const selected = normalize(selectedSubjectId);
+      return [...new Set(derivedLinks)];
+    }
 
-  if (!classId) {
-    fillSelect(el.subjectSelect, [], "اختر المادة");
-    return;
-  }
+    function updateSubjectSelectByClass(selectedSubjectId = "") {
+      const classId = normalize(el.classSelect.value);
+      const selected = normalize(selectedSubjectId);
 
-  const allowedIds = new Set(getAllowedSubjectIdsForClass(classId));
-console.log("===== Madaris Debug =====");
-console.log("Selected classId:", classId);
-console.log("Allowed subject IDs:", [...allowedIds]);
-console.log("All subjects:", state.subjects);
-console.log("ClassSubjects:", state.classSubjects);
-console.log("=========================");
-  const filteredSubjects = state.subjects.filter((item) =>
-    allowedIds.has(normalize(item.id))
-  );
+      if (!classId) {
+        fillSelect(el.subjectSelect, state.subjects, "اختر المادة");
+        updateSubjectDebug({
+          classId: "-",
+          linkCount: 0,
+          fallbackUsed: false,
+          allowedIds: [],
+          subjectCount: state.subjects.length,
+          subjectNames: state.subjects.map((item) => item.name)
+        });
+        if (selected && state.subjects.some((item) => normalize(item.id) === selected)) {
+          el.subjectSelect.value = selected;
+        }
+        return;
+      }
 
-  fillSelect(el.subjectSelect, filteredSubjects, "اختر المادة");
+      const directLinks = state.classSubjects.filter((item) => normalize(item.classId) === classId && normalizeStatusValue(item.status) === "active");
+      let allowedIds = directLinks.map((item) => normalize(item.subjectId)).filter(Boolean);
+      let fallbackUsed = false;
 
-  if (selected && filteredSubjects.some((item) => normalize(item.id) === selected)) {
-    el.subjectSelect.value = selected;
-  }
-}
-  
+      if (!allowedIds.length) {
+        allowedIds = getAllowedSubjectIdsForClass(classId);
+        fallbackUsed = true;
+      }
+
+      let filteredSubjects = [];
+      if (allowedIds.length) {
+        const allowedSet = new Set(allowedIds);
+        filteredSubjects = state.subjects.filter((item) => allowedSet.has(normalize(item.id)));
+      }
+
+      if (!filteredSubjects.length) {
+        filteredSubjects = [...state.subjects];
+        fallbackUsed = true;
+      }
+
+      fillSelect(el.subjectSelect, filteredSubjects, "اختر المادة");
+      if (selected && filteredSubjects.some((item) => normalize(item.id) === selected)) {
+        el.subjectSelect.value = selected;
+      }
+
+      updateSubjectDebug({
+        classId,
+        linkCount: directLinks.length,
+        fallbackUsed,
+        allowedIds,
+        subjectCount: filteredSubjects.length,
+        subjectNames: filteredSubjects.map((item) => item.name)
+      });
+    }
+
     function normalizeLesson(item) {
       const classId = normalize(item.classId || item.classID || item.class_id);
-      const subjectId = normalize(item.subjectId || item.subjectID || item.subject_id);
-      const teacherId = normalize(item.teacherId || item.teacherID || item.teacher_id);
+      const subjectId = normalize(item.subjectId || item.subjectID || item.subject_id || item.materialId || item.material_id);
+      const teacherId = normalize(item.teacherId || item.teacherID || item.teacher_id || item.staffId || item.staff_id);
 
       const normalized = {
         id: normalize(item.id),
         schoolId: normalize(item.schoolId || item.schoolID || item.school_id),
         schoolName: normalize(item.schoolName || item.school_name),
         classId,
-        className: normalize(item.className || item.class_name || item.classTitle),
+        className: normalize(item.className || item.class_name || item.classTitle || item.gradeName),
         subjectId,
-        subjectName: normalize(item.subjectName || item.subject_name || item.materialName),
+        subjectName: normalize(item.subjectName || item.subject_name || item.materialName || item.material_name),
         teacherId,
-        teacherName: normalize(item.teacherName || item.teacher_name || item.teacherFullName),
+        teacherName: normalize(item.teacherName || item.teacher_name || item.teacherFullName || item.staffName),
         day: normalize(item.day || item.dayName || item.day_label),
         periodNumber: Number(item.periodNumber || item.period || item.lessonNumber || item.slot || 0),
         startTime: normalize(item.startTime || item.from || item.start || ""),
         endTime: normalize(item.endTime || item.to || item.end || ""),
         status: normalizeStatusValue(item.status || "active"),
-        teacherType: normalizeTeacherTypeValue(
-          item.teacherType ||
-          item.teacher_type ||
-          item.teacherRoleLevel ||
-          ""
-        ),
+        teacherType: normalizeTeacherTypeValue(item.teacherType || item.teacher_type || item.teacherRoleLevel || ""),
         notes: normalize(item.notes || item.note || item.description || ""),
         createdAt: item.createdAt || null,
         updatedAt: item.updatedAt || null
@@ -1472,12 +1697,10 @@ console.log("=========================");
         const foundClass = state.classes.find((entry) => entry.id === classId);
         if (foundClass) normalized.className = foundClass.name;
       }
-
       if (!normalized.subjectName && subjectId) {
         const foundSubject = state.subjects.find((entry) => entry.id === subjectId);
         if (foundSubject) normalized.subjectName = foundSubject.name;
       }
-
       if (!normalized.teacherName && teacherId) {
         const foundTeacher = state.teachers.find((entry) => entry.id === teacherId);
         if (foundTeacher) normalized.teacherName = foundTeacher.name;
@@ -1504,15 +1727,11 @@ console.log("=========================");
         if (rows.length) break;
       }
 
-      if (!rows.length) {
-        state.lessons = [];
-      } else {
-        state.lessons = sortByArabicDayAndPeriod(rows.map(normalizeLesson));
-      }
-
+      state.lessons = rows.length ? sortByArabicDayAndPeriod(rows.map(normalizeLesson)) : [];
       updateCounters();
       applyFiltersAndRender();
     }
+
     function getSelectedOptionName(selectEl) {
       const option = selectEl.options[selectEl.selectedIndex];
       return normalize(option?.dataset?.name || option?.textContent);
@@ -1523,19 +1742,8 @@ console.log("=========================");
       const raw = found?.raw || found || {};
 
       return {
-        teacherType: normalizeTeacherTypeValue(
-          raw.teacherType ||
-          raw.teacher_type ||
-          raw.type ||
-          raw.teacherRoleLevel ||
-          ""
-        ),
-        teacherRoleLevel: normalize(
-          raw.roleLevel ||
-          raw.teacherRoleLevel ||
-          raw.role ||
-          "teacher"
-        )
+        teacherType: normalizeTeacherTypeValue(raw.teacherType || raw.teacher_type || raw.type || raw.teacherRoleLevel || ""),
+        teacherRoleLevel: normalize(raw.roleLevel || raw.teacherRoleLevel || raw.role || "teacher")
       };
     }
 
@@ -1561,7 +1769,6 @@ console.log("=========================");
       if (!teacherId) throw new Error("اختر المعلم");
       if (!day) throw new Error("اختر اليوم");
       if (!periodNumber) throw new Error("اختر رقم الحصة");
-
       if (startTime && endTime && startTime >= endTime) {
         throw new Error("وقت البداية يجب أن يكون قبل وقت النهاية");
       }
@@ -1592,7 +1799,6 @@ console.log("=========================");
     function detectConflict(payload, editingId = "") {
       return state.lessons.find((lesson) => {
         if (editingId && lesson.id === editingId) return false;
-
         return (
           normalize(lesson.schoolId) === normalize(payload.schoolId) &&
           normalize(lesson.classId) === normalize(payload.classId) &&
@@ -1608,6 +1814,7 @@ console.log("=========================");
       el.statusSelect.value = "active";
       el.formTitle.textContent = "إضافة / تعديل حصة";
       el.saveBtn.textContent = "حفظ الحصة";
+      updateSubjectSelectByClass();
       hideMessage();
     }
 
@@ -1637,7 +1844,6 @@ console.log("=========================");
 
     async function saveLesson(event) {
       event.preventDefault();
-
       try {
         hideMessage();
         setLoading(true, "جارِ حفظ الحصة...");
@@ -1648,16 +1854,14 @@ console.log("=========================");
           throw new Error(`يوجد تضارب: الصف ${conflict.className} لديه بالفعل ${conflict.day} - الحصة ${conflict.periodNumber}`);
         }
 
-        const targetCollection = "schedules";
-
         if (editingId) {
-          await updateDoc(doc(db, targetCollection, editingId), {
+          await updateDoc(doc(db, "schedules", editingId), {
             ...payload,
             updatedAt: serverTimestamp()
           });
           showMessage("تم تحديث الحصة بنجاح", "success");
         } else {
-          await addDoc(collection(db, targetCollection), {
+          await addDoc(collection(db, "schedules"), {
             ...payload,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
@@ -1685,18 +1889,13 @@ console.log("=========================");
       const ok = window.confirm(
         `هل تريد حذف هذه الحصة نهائيًا؟\n\nالصف: ${lesson.className}\nالمادة: ${lesson.subjectName}\nالمعلم: ${lesson.teacherName}\nاليوم: ${lesson.day}\nالحصة: ${lesson.periodNumber}`
       );
-
       if (!ok) return;
 
       try {
         setLoading(true, "جارِ حذف الحصة...");
         await deleteDoc(doc(db, "schedules", lessonId));
         showMessage("تم حذف الحصة بنجاح", "success");
-
-        if (normalize(el.editingId.value) === lessonId) {
-          resetForm();
-        }
-
+        if (normalize(el.editingId.value) === lessonId) resetForm();
         await loadLessons();
       } catch (error) {
         console.error("deleteLesson error:", error);
@@ -1714,7 +1913,6 @@ console.log("=========================");
       return state.lessons.filter((lesson) => {
         const matchesDay = dayFilter === "all" ? true : normalize(lesson.day) === dayFilter;
         const matchesStatus = statusFilter === "all" ? true : normalizeStatusValue(lesson.status) === statusFilter;
-
         const blob = normalizeLower([
           lesson.className,
           lesson.subjectName,
@@ -1725,9 +1923,7 @@ console.log("=========================");
           lesson.startTime,
           lesson.endTime
         ].join(" "));
-
         const matchesSearch = !search ? true : blob.includes(search);
-
         return matchesDay && matchesStatus && matchesSearch;
       });
     }
@@ -1746,7 +1942,6 @@ console.log("=========================");
         const normalizedStatus = normalizeStatusValue(lesson.status);
         const statusClass = normalizedStatus === "active" ? "badge-success" : "badge-muted";
         const statusLabel = STATUS_LABELS[normalizedStatus] || "غير محدد";
-
         return `
           <tr>
             <td>${escapeHtml(lesson.className || "-")}</td>
@@ -1768,10 +1963,8 @@ console.log("=========================");
         `;
       }).join("");
     }
-
-    function renderDaySummary(items) {
+function renderDaySummary(items) {
       el.daySummary.innerHTML = "";
-
       DAYS.forEach((day) => {
         const dayItems = items
           .filter((lesson) => normalize(lesson.day) === day)
@@ -1781,11 +1974,7 @@ console.log("=========================");
         card.className = "day-card";
 
         if (!dayItems.length) {
-          card.innerHTML = `
-            <h3>${escapeHtml(day)}</h3>
-            <div class="empty">لا توجد حصص لهذا اليوم.</div>
-          `;
-          
+          card.innerHTML = `<h3>${escapeHtml(day)}</h3><div class="empty">لا توجد حصص لهذا اليوم.</div>`;
         } else {
           const inner = dayItems.map((lesson) => `
             <div class="lesson-item">
@@ -1795,13 +1984,8 @@ console.log("=========================");
               <span>الوقت: ${escapeHtml(lesson.startTime || "-")} → ${escapeHtml(lesson.endTime || "-")}</span>
             </div>
           `).join("");
-
-          card.innerHTML = `
-            <h3>${escapeHtml(day)} (${dayItems.length})</h3>
-            <div class="day-list">${inner}</div>
-          `;
+          card.innerHTML = `<h3>${escapeHtml(day)} (${dayItems.length})</h3><div class="day-list">${inner}</div>`;
         }
-
         el.daySummary.appendChild(card);
       });
     }
@@ -1816,13 +2000,13 @@ console.log("=========================");
       try {
         hideMessage();
         setLoading(true, "جارِ تحميل البيانات المرتبطة بالمدرسة...");
-
         await loadLinkedData();
         await loadLessons();
+        updateSubjectSelectByClass(el.subjectSelect.value);
 
         if (!state.subjects.length || !state.teachers.length || !state.classes.length) {
           showMessage(
-            "تم تحميل الصفحة، لكن بعض البيانات الأساسية ناقصة. إذا أردت إضافة حصص بشكل كامل، تأكد أن المدرسة تحتوي على مواد ومعلمين وصفوف داخل Firebase.",
+            "تم تحميل الصفحة، لكن بعض البيانات الأساسية ناقصة. تأكد من وجود مواد ومعلمين وصفوف داخل Firebase للمدرسة الحالية.",
             "info"
           );
         }
@@ -1847,10 +2031,8 @@ console.log("=========================");
       el.lessonsTableBody.addEventListener("click", (event) => {
         const target = event.target.closest("button[data-action]");
         if (!target) return;
-
         const action = target.dataset.action;
         const id = normalize(target.dataset.id);
-
         if (action === "edit") {
           fillFormForEdit(id);
         } else if (action === "delete") {
@@ -1861,7 +2043,6 @@ console.log("=========================");
 
     async function init() {
       state.session = getSession();
-
       if (!state.session) {
         showMessage("انتهت الجلسة أو لم يتم العثور عليها. سيتم تحويلك إلى صفحة الدخول.", "error");
         setTimeout(goToLogin, 900);
@@ -1870,7 +2051,6 @@ console.log("=========================");
 
       state.schoolId = resolveSchoolId(state.session);
       state.schoolName = resolveSchoolName(state.session);
-
       if (!state.schoolId) {
         showMessage("تعذر تحديد المدرسة الحالية من الجلسة. سيتم تحويلك إلى صفحة الدخول.", "error");
         setTimeout(goToLogin, 900);
@@ -1889,7 +2069,8 @@ console.log("=========================");
         loadLessons,
         loadLinkedData,
         fillFormForEdit,
-        resetForm
+        resetForm,
+        updateSubjectSelectByClass
       };
     }
 
@@ -1897,3 +2078,4 @@ console.log("=========================");
   </script>
 </body>
 </html>
+          
