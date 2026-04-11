@@ -1,484 +1,483 @@
-(function () {
-  "use strict";
+// ============================================================
+// Madaris AI
+// app/school/session-guard.js
+// Wrapper over shared core session service
+// Backward-compatible for legacy school pages
+// ============================================================
 
-  /**
-   * Madaris AI - Unified School Session Guard
-   * ---------------------------------------------------------
-   * الهدف:
-   * - قراءة الجلسة من جميع المفاتيح القديمة والجديدة
-   * - تطبيعها إلى صيغة واحدة ثابتة
-   * - إعادة حفظها بالمفتاح الرسمي
-   * - توفير أدوات موحدة لباقي صفحات المدرسة
-   */
+import {
+  getSession as coreGetSession,
+  requireSchoolSession as coreRequireSchoolSession,
+  saveSession as coreSaveSession,
+  logout as coreLogout,
+} from "../core/session/session-service.js";
 
-  const PRIMARY_SESSION_KEY = "madarisai_session";
+// ------------------------------------------------------------
+// Constants
+// ------------------------------------------------------------
 
-  const LEGACY_SESSION_KEYS = [
+const LOGIN_URL = "/app/login.html";
+
+// ------------------------------------------------------------
+// Small helpers
+// ------------------------------------------------------------
+
+function normalize(value) {
+  if (value === null || value === undefined) return "";
+  return String(value).trim();
+}
+
+function normalizeLower(value) {
+  return normalize(value).toLowerCase();
+}
+
+function pickFirstNonEmpty(...values) {
+  for (const value of values) {
+    const normalized = normalize(value);
+    if (normalized) return normalized;
+  }
+  return "";
+}
+
+function safeClone(value) {
+  try {
+    return JSON.parse(JSON.stringify(value));
+  } catch (_error) {
+    return value;
+  }
+}
+
+function safeParseJson(value) {
+  if (!value || typeof value !== "string") return null;
+
+  try {
+    return JSON.parse(value);
+  } catch (_error) {
+    return null;
+  }
+}
+
+function redirectToLogin() {
+  window.location.replace(LOGIN_URL);
+}
+
+function readStorage(key) {
+  try {
+    const fromLocal = localStorage.getItem(key);
+    if (fromLocal) return fromLocal;
+  } catch (_error) {}
+
+  try {
+    const fromSession = sessionStorage.getItem(key);
+    if (fromSession) return fromSession;
+  } catch (_error) {}
+
+  return null;
+}
+
+function writeStorage(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (_error) {}
+
+  try {
+    sessionStorage.setItem(key, value);
+  } catch (_error) {}
+}
+
+function removeStorage(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (_error) {}
+
+  try {
+    sessionStorage.removeItem(key);
+  } catch (_error) {}
+}
+
+// ------------------------------------------------------------
+// Legacy compatibility mapping
+// ------------------------------------------------------------
+
+function toLegacyCompatibleSession(coreSession) {
+  if (!coreSession || typeof coreSession !== "object") return null;
+
+  const userId = pickFirstNonEmpty(coreSession.userId, coreSession.uid);
+  const displayName = pickFirstNonEmpty(
+    coreSession.displayName,
+    coreSession.userName,
+    coreSession.name,
+    coreSession.fullName,
+    "مستخدم المدرسة"
+  );
+
+  const schoolId = pickFirstNonEmpty(
+    coreSession.schoolId,
+    coreSession.school?.id,
+    coreSession.school?.schoolId
+  );
+
+  const schoolName = pickFirstNonEmpty(
+    coreSession.schoolName,
+    coreSession.school?.name,
+    coreSession.school?.schoolName,
+    "مدرسة بدون اسم"
+  );
+
+  const status = pickFirstNonEmpty(
+    coreSession.status,
+    coreSession.schoolStatus,
+    coreSession.school?.status,
+    "active"
+  );
+
+  const normalized = {
+    // official core-facing shape
+    userId,
+    uid: userId,
+    email: pickFirstNonEmpty(coreSession.email),
+    role: "school",
+    schoolId,
+    schoolName,
+    displayName,
+    status,
+    loginAt: Number(coreSession.loginAt || Date.now()),
+
+    // legacy fields expected by older pages
+    userName: displayName,
+    name: displayName,
+    fullName: displayName,
+    schoolStatus: status,
+
+    school: {
+      id: schoolId,
+      schoolId,
+      name: schoolName,
+      schoolName,
+      status,
+    },
+  };
+
+  return normalized;
+}
+
+function ensureLegacyStorage(session) {
+  if (!session) return;
+
+  const serialized = JSON.stringify(session);
+
+  writeStorage("madarisai_session", serialized);
+  writeStorage("schoolSession", serialized);
+  writeStorage("school_session", serialized);
+  writeStorage("madaris_school_session", serialized);
+
+  writeStorage("schoolId", session.schoolId || "");
+  writeStorage("schoolName", session.schoolName || "");
+  writeStorage("userRole", session.role || "school");
+  writeStorage("userName", session.displayName || session.userName || "");
+  writeStorage("uid", session.userId || session.uid || "");
+  writeStorage("email", session.email || "");
+}
+
+function clearLegacyStorage() {
+  const keys = [
     "madarisai_session",
     "schoolSession",
     "school_session",
-    "madaris_user_session",
+    "madaris_school_session",
     "madaris_session",
-    "session",
     "userSession",
+    "session",
+    "schoolId",
+    "schoolName",
+    "userRole",
+    "userName",
+    "uid",
+    "email",
+    "school_id",
+    "schoolID",
+    "school_name",
+    "schoolAuth",
+    "authUser",
+    "currentSchool",
   ];
 
-  const EXTRA_VALUE_KEYS = {
-    schoolId: ["schoolId", "school_id", "schoolID"],
-    schoolName: ["schoolName", "school_name"],
-    userRole: ["userRole", "role"],
-    userName: ["userName", "fullName", "name"],
-    email: ["email", "userEmail"],
-  };
-
-  const LOGIN_PATH = "/app/login.html";
-
-  function isObject(value) {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
+  for (const key of keys) {
+    removeStorage(key);
   }
+}
 
-  function isNonEmptyString(value) {
-    return typeof value === "string" && value.trim().length > 0;
-  }
+// ------------------------------------------------------------
+// Fallback rescue for very old stored sessions
+// ------------------------------------------------------------
 
-  function toStringSafe(value) {
-    if (value === null || value === undefined) return "";
-    return String(value).trim();
-  }
+function readLegacyCandidates() {
+  const keys = [
+    "madarisai_session",
+    "schoolSession",
+    "school_session",
+    "madaris_school_session",
+    "madaris_session",
+    "userSession",
+    "session",
+  ];
 
-  function toLowerSafe(value) {
-    return toStringSafe(value).toLowerCase();
-  }
+  const candidates = [];
 
-  function nowIso() {
-    return new Date().toISOString();
-  }
-
-  function safeParse(raw) {
-    if (!isNonEmptyString(raw)) return null;
-    try {
-      return JSON.parse(raw);
-    } catch (_error) {
-      return null;
+  for (const key of keys) {
+    const raw = readStorage(key);
+    const parsed = safeParseJson(raw);
+    if (parsed && typeof parsed === "object") {
+      candidates.push(parsed);
     }
   }
 
-  function readStorageValue(storage, key) {
-    try {
-      return storage.getItem(key);
-    } catch (_error) {
-      return null;
-    }
-  }
+  return candidates;
+}
 
-  function writeStorageValue(storage, key, value) {
-    try {
-      storage.setItem(key, value);
-      return true;
-    } catch (_error) {
-      return false;
-    }
-  }
+function normalizeLegacyCandidate(candidate) {
+  if (!candidate || typeof candidate !== "object") return null;
 
-  function removeStorageValue(storage, key) {
-    try {
-      storage.removeItem(key);
-      return true;
-    } catch (_error) {
-      return false;
-    }
-  }
+  const role = normalizeLower(
+    candidate.role || candidate.userRole || candidate.sessionRole || "school"
+  );
 
-  function getFirstNonEmptyFromObject(obj, keys) {
-    if (!isObject(obj)) return "";
-    for (const key of keys) {
-      const value = obj[key];
-      if (isNonEmptyString(value)) return value.trim();
-      if (typeof value === "number" || typeof value === "boolean") {
-        return String(value);
-      }
-    }
-    return "";
-  }
+  const schoolId = pickFirstNonEmpty(
+    candidate.schoolId,
+    candidate.school?.id,
+    candidate.school?.schoolId,
+    candidate.schoolID,
+    candidate.school_id
+  );
 
-  function getFirstNonEmptyNested(obj, paths) {
-    if (!isObject(obj)) return "";
-    for (const path of paths) {
-      let current = obj;
-      let failed = false;
+  if (!schoolId) return null;
+  if (role && role !== "school") return null;
 
-      for (const segment of path) {
-        if (!isObject(current) || !(segment in current)) {
-          failed = true;
-          break;
-        }
-        current = current[segment];
-      }
+  const schoolName = pickFirstNonEmpty(
+    candidate.schoolName,
+    candidate.school?.name,
+    candidate.school?.schoolName,
+    candidate.school_name,
+    "مدرسة بدون اسم"
+  );
 
-      if (!failed) {
-        if (isNonEmptyString(current)) return current.trim();
-        if (typeof current === "number" || typeof current === "boolean") {
-          return String(current);
-        }
-      }
-    }
-    return "";
-  }
+  const displayName = pickFirstNonEmpty(
+    candidate.displayName,
+    candidate.userName,
+    candidate.name,
+    candidate.fullName,
+    "مستخدم المدرسة"
+  );
 
-  function getFromLooseSources(base, fieldName) {
-    if (!isObject(base)) return "";
+  const status = pickFirstNonEmpty(
+    candidate.status,
+    candidate.schoolStatus,
+    candidate.school?.status,
+    "active"
+  );
 
-    switch (fieldName) {
-      case "uid":
-        return (
-          getFirstNonEmptyFromObject(base, ["uid", "userId", "id"]) ||
-          getFirstNonEmptyNested(base, [["user", "uid"], ["auth", "uid"]])
-        );
-
-      case "email":
-        return (
-          getFirstNonEmptyFromObject(base, ["email"]) ||
-          getFirstNonEmptyNested(base, [["user", "email"], ["account", "email"]])
-        );
-
-      case "fullName":
-        return (
-          getFirstNonEmptyFromObject(base, [
-            "fullName",
-            "userName",
-            "name",
-            "displayName",
-          ]) ||
-          getFirstNonEmptyNested(base, [
-            ["user", "name"],
-            ["user", "fullName"],
-            ["school", "managerName"],
-          ])
-        );
-
-      case "role":
-        return (
-          getFirstNonEmptyFromObject(base, ["role", "userRole"]) ||
-          getFirstNonEmptyNested(base, [["user", "role"]])
-        );
-
-      case "schoolId":
-        return (
-          getFirstNonEmptyFromObject(base, ["schoolId", "schoolID", "school_id"]) ||
-          getFirstNonEmptyNested(base, [
-            ["school", "id"],
-            ["school", "schoolId"],
-            ["meta", "schoolId"],
-          ])
-        );
-
-      case "schoolName":
-        return (
-          getFirstNonEmptyFromObject(base, ["schoolName"]) ||
-          getFirstNonEmptyNested(base, [
-            ["school", "name"],
-            ["school", "schoolName"],
-            ["meta", "schoolName"],
-          ])
-        );
-
-      case "status":
-        return (
-          getFirstNonEmptyFromObject(base, ["status", "schoolStatus"]) ||
-          getFirstNonEmptyNested(base, [["school", "status"]])
-        );
-
-      case "createdAt":
-        return (
-          getFirstNonEmptyFromObject(base, ["createdAt", "created", "loginAt"]) ||
-          getFirstNonEmptyNested(base, [["meta", "createdAt"]])
-        );
-
-      case "userId":
-        return (
-          getFirstNonEmptyFromObject(base, ["userId"]) ||
-          getFirstNonEmptyNested(base, [["user", "id"]])
-        );
-
-      default:
-        return "";
-    }
-  }
-
-  function collectPrimitiveFallbacks() {
-    const out = {
-      schoolId: "",
-      schoolName: "",
-      userRole: "",
-      userName: "",
-      email: "",
-    };
-
-    for (const [target, keys] of Object.entries(EXTRA_VALUE_KEYS)) {
-      for (const key of keys) {
-        const fromLocal = readStorageValue(localStorage, key);
-        if (isNonEmptyString(fromLocal)) {
-          out[target] = fromLocal.trim();
-          break;
-        }
-
-        const fromSession = readStorageValue(sessionStorage, key);
-        if (isNonEmptyString(fromSession)) {
-          out[target] = fromSession.trim();
-          break;
-        }
-      }
-    }
-
-    return out;
-  }
-
-  function normalizeSession(input) {
-    const fallback = collectPrimitiveFallbacks();
-    const base = isObject(input) ? input : {};
-
-    const uid = toStringSafe(getFromLooseSources(base, "uid"));
-    const email = toLowerSafe(getFromLooseSources(base, "email") || fallback.email);
-    const fullName = toStringSafe(
-      getFromLooseSources(base, "fullName") || fallback.userName
-    );
-    const role = toLowerSafe(getFromLooseSources(base, "role") || fallback.userRole);
-    const schoolId = toStringSafe(
-      getFromLooseSources(base, "schoolId") || fallback.schoolId
-    );
-    const schoolName = toStringSafe(
-      getFromLooseSources(base, "schoolName") || fallback.schoolName
-    );
-    const status = toStringSafe(getFromLooseSources(base, "status") || "active");
-    const createdAt = toStringSafe(getFromLooseSources(base, "createdAt") || nowIso());
-    const userId = toStringSafe(getFromLooseSources(base, "userId") || uid);
-    const normalized = {
-      uid,
-      userId,
-      email,
-      fullName,
-      userName: fullName,
-      role,
+  return {
+    userId: pickFirstNonEmpty(candidate.userId, candidate.uid, candidate.id),
+    uid: pickFirstNonEmpty(candidate.userId, candidate.uid, candidate.id),
+    email: pickFirstNonEmpty(candidate.email),
+    role: "school",
+    schoolId,
+    schoolName,
+    displayName,
+    userName: displayName,
+    name: displayName,
+    fullName: displayName,
+    status,
+    schoolStatus: status,
+    loginAt: Number(candidate.loginAt || Date.now()),
+    school: {
+      id: schoolId,
       schoolId,
+      name: schoolName,
       schoolName,
       status,
-      schoolStatus: status,
-      createdAt,
+    },
+  };
+}
 
-      // شكل إضافي منظم ليسهل الاستعمال لاحقًا
-      school: {
-        id: schoolId,
-        schoolId: schoolId,
-        name: schoolName,
-        schoolName: schoolName,
-        status: status,
-      },
+function rescueLegacySessionIntoCore() {
+  const candidates = readLegacyCandidates();
+
+  for (const candidate of candidates) {
+    const normalized = normalizeLegacyCandidate(candidate);
+    if (!normalized) continue;
+
+    try {
+      const saved = coreSaveSession(normalized);
+      const compat = toLegacyCompatibleSession(saved);
+      ensureLegacyStorage(compat);
+      return compat;
+    } catch (_error) {
+      // continue to next candidate
+    }
+  }
+
+  return null;
+}
+// ------------------------------------------------------------
+// Public API
+// ------------------------------------------------------------
+
+function getSession() {
+  const coreSession = coreGetSession();
+
+  if (coreSession) {
+    const compat = toLegacyCompatibleSession(coreSession);
+    ensureLegacyStorage(compat);
+    return compat;
+  }
+
+  const rescued = rescueLegacySessionIntoCore();
+  if (rescued) return rescued;
+
+  return null;
+}
+
+function saveSession(sessionLike) {
+  const saved = coreSaveSession(sessionLike);
+  const compat = toLegacyCompatibleSession(saved);
+  ensureLegacyStorage(compat);
+  return compat;
+}
+
+function updateSession(patch) {
+  const current = getSession();
+  if (!current) return null;
+
+  const merged = {
+    ...safeClone(current),
+    ...safeClone(patch || {}),
+  };
+
+  if (patch && typeof patch === "object" && patch.school && current.school) {
+    merged.school = {
+      ...safeClone(current.school),
+      ...safeClone(patch.school),
     };
-
-    if (!normalized.uid) return null;
-    if (!normalized.role) return null;
-    if (normalized.role !== "school") return null;
-    if (!normalized.schoolId) return null;
-
-    return normalized;
   }
 
-  function persistSessionEverywhere(session) {
-    const normalized = normalizeSession(session);
-    if (!normalized) {
-      throw new Error("INVALID_SESSION");
-    }
+  return saveSession(merged);
+}
 
-    const payload = JSON.stringify(normalized);
+function clearSession() {
+  clearLegacyStorage();
+}
 
-    // المفتاح الرسمي الجديد
-    writeStorageValue(localStorage, PRIMARY_SESSION_KEY, payload);
-    writeStorageValue(sessionStorage, PRIMARY_SESSION_KEY, payload);
+function logoutToLogin() {
+  clearLegacyStorage();
+  coreLogout();
+}
 
-    // توافق مع login.js الحالي
-    writeStorageValue(localStorage, "schoolSession", payload);
-    writeStorageValue(sessionStorage, "schoolSession", payload);
+function requireSchoolSession(options = {}) {
+  const {
+    redirect = true,
+    allowInactive = false,
+  } = options;
 
-    writeStorageValue(localStorage, "schoolId", normalized.schoolId);
-    writeStorageValue(sessionStorage, "schoolId", normalized.schoolId);
+  let session = null;
 
-    writeStorageValue(localStorage, "schoolName", normalized.schoolName);
-    writeStorageValue(sessionStorage, "schoolName", normalized.schoolName);
-
-    writeStorageValue(localStorage, "userRole", normalized.role);
-    writeStorageValue(sessionStorage, "userRole", normalized.role);
-
-    writeStorageValue(localStorage, "userName", normalized.fullName);
-    writeStorageValue(sessionStorage, "userName", normalized.fullName);
-
-    writeStorageValue(localStorage, "email", normalized.email);
-    writeStorageValue(sessionStorage, "email", normalized.email);
-
-    return normalized;
+  try {
+    session = getSession();
+  } catch (_error) {
+    session = null;
   }
 
-  function readCandidateSessions() {
-    const candidates = [];
-
-    for (const key of LEGACY_SESSION_KEYS) {
-      const rawLocal = readStorageValue(localStorage, key);
-      const parsedLocal = safeParse(rawLocal);
-      if (parsedLocal) {
-        candidates.push(parsedLocal);
-      }
-
-      const rawSession = readStorageValue(sessionStorage, key);
-      const parsedSession = safeParse(rawSession);
-      if (parsedSession) {
-        candidates.push(parsedSession);
-      }
-    }
-
-    return candidates;
-  }
-
-  function getSession() {
-    const candidates = readCandidateSessions();
-
-    for (const candidate of candidates) {
-      const normalized = normalizeSession(candidate);
-      if (!normalized) continue;
-
-      // بمجرد أن نجد جلسة صالحة، نعيد حفظها بالشكل الرسمي الموحد
-      persistSessionEverywhere(normalized);
-      return normalized;
-    }
-
-    // محاولة أخيرة من المفاتيح المفردة فقط
-    const fallbackOnly = normalizeSession({});
-    if (fallbackOnly) {
-      persistSessionEverywhere(fallbackOnly);
-      return fallbackOnly;
-    }
-
+  if (!session) {
+    if (redirect) redirectToLogin();
     return null;
   }
 
-  function saveSession(session) {
-    return persistSessionEverywhere(session);
+  const role = normalizeLower(session.role || "school");
+  const schoolId = pickFirstNonEmpty(
+    session.schoolId,
+    session.school?.id,
+    session.school?.schoolId
+  );
+  const status = normalizeLower(
+    session.status || session.schoolStatus || session.school?.status || "active"
+  );
+
+  if (role !== "school") {
+    if (redirect) redirectToLogin();
+    return null;
   }
 
-  function updateSession(patch) {
-    const current = getSession();
-    if (!current) {
-      throw new Error("SESSION_NOT_FOUND");
-    }
-
-    const next = {
-      ...current,
-      ...(isObject(patch) ? patch : {}),
-      school: {
-        ...(isObject(current.school) ? current.school : {}),
-        ...(isObject(patch?.school) ? patch.school : {}),
-      },
-    };
-
-    return persistSessionEverywhere(next);
+  if (!schoolId) {
+    if (redirect) redirectToLogin();
+    return null;
   }
 
-  function clearSession() {
-    for (const key of LEGACY_SESSION_KEYS) {
-      removeStorageValue(localStorage, key);
-      removeStorageValue(sessionStorage, key);
-    }
-
-    const extraKeys = [
-      "schoolId",
-      "schoolName",
-      "userRole",
-      "userName",
-      "email",
-      "school_id",
-      "schoolID",
-      "school_name",
-      "madaris_school_id",
-      "madaris_school_name",
-    ];
-
-    for (const key of extraKeys) {
-      removeStorageValue(localStorage, key);
-      removeStorageValue(sessionStorage, key);
-    }
+  if (!allowInactive && status && status !== "active") {
+    if (redirect) redirectToLogin();
+    return null;
   }
 
-  function redirectToLogin() {
-    window.location.replace(LOGIN_PATH);
-  }
+  return session;
+}
 
-  function logoutToLogin() {
-    clearSession();
+// ------------------------------------------------------------
+// Auto-protect school pages on load
+// ------------------------------------------------------------
+
+function shouldProtectCurrentPage() {
+  const path = window.location.pathname || "";
+
+  if (!path.includes("/app/school/")) return false;
+  if (path.endsWith("/app/login.html")) return false;
+
+  return true;
+}
+
+function bootGuard() {
+  if (!shouldProtectCurrentPage()) return;
+
+  const session = requireSchoolSession({ redirect: false });
+
+  if (!session) {
     redirectToLogin();
+    return;
   }
 
-  function requireSchoolSession(options) {
-    const config = isObject(options) ? options : {};
-    const allowInactive = Boolean(config.allowInactive);
-    const redirectOnFail = config.redirectOnFail !== false;
+  // refresh legacy aliases so older pages keep working
+  ensureLegacyStorage(session);
+}
 
-    const session = getSession();
+// ------------------------------------------------------------
+// Expose compatibility globals for old pages
+// ------------------------------------------------------------
 
-    if (!session) {
-      if (redirectOnFail) redirectToLogin();
-      return null;
-    }
+const MadarisSession = {
+  getSession,
+  saveSession,
+  updateSession,
+  clearSession,
+  requireSchoolSession,
+  logoutToLogin,
+};
 
-    if (session.role !== "school") {
-      clearSession();
-      if (redirectOnFail) redirectToLogin();
-      return null;
-    }
+window.MadarisSession = MadarisSession;
+window.getSchoolSession = getSession;
+window.saveSchoolSession = saveSession;
+window.requireSchoolSession = requireSchoolSession;
+window.logoutToLogin = logoutToLogin;
 
-    const normalizedStatus = toLowerSafe(session.status || session.schoolStatus || "active");
-    if (!allowInactive && normalizedStatus && normalizedStatus !== "active") {
-      clearSession();
-      if (redirectOnFail) redirectToLogin();
-      return null;
-    }
+// ------------------------------------------------------------
+// Start
+// ------------------------------------------------------------
 
-    return session;
-  }
+bootGuard();
 
-  function isLoggedIn() {
-    return !!getSession();
-  }
-
-  function getSchoolId() {
-    const session = getSession();
-    return session ? session.schoolId : "";
-  }
-
-  function getSchoolName() {
-    const session = getSession();
-    return session ? session.schoolName : "";
-  }
-
-  function getUserDisplayName() {
-    const session = getSession();
-    return session ? session.fullName || session.userName || "" : "";
-  }
-
-  // API عامة لباقي الصفحات
-  window.MadarisSession = {
-    PRIMARY_SESSION_KEY,
-    getSession,
-    saveSession,
-    updateSession,
-    clearSession,
-    redirectToLogin,
-    logoutToLogin,
-    requireSchoolSession,
-    isLoggedIn,
-    getSchoolId,
-    getSchoolName,
-    getUserDisplayName,
-  };
-
-  // توافق إضافي مع أي كود قديم
-  window.requireSchoolSession = requireSchoolSession;
-  window.logoutToLogin = logoutToLogin;
-})();
+export {
+  getSession,
+  saveSession,
+  updateSession,
+  clearSession,
+  requireSchoolSession,
+  logoutToLogin,
+  MadarisSession,
+};
