@@ -1,0 +1,5 @@
+[33m5626921[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mstabilize/web-core-v1[m[33m, [m[1;31morigin/stabilize/web-core-v1[m[33m)[m core(data): add shared school data access repositories
+[33m9b8378c[m core(web): introduce session layer and firestore schema contracts
+[33m9288e14[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Update manage-schedule.html
+[33md7578fb[m Create fix-classsubjects.html
+[33m827cefe[m Update manage-schedule.html
