@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>Madaris AI | Ultimate Diagnostic</title>
+
+  <style>
+    :root{
+      --bg:#061226;
+      --bg2:#0a1a34;
+      --card:#11264a;
+      --card2:#16315d;
+      --line:rgba(255,255,255,.10);
+      --text:#eef5ff;
+      --muted:#9db3d1;
+      --ok:#10b981;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --info:#60a5fa;
+      --cyan:#67e8f9;
+      --btn:#7dd3fc;
+      --btnText:#03223f;
+      --pink:#f472b6;
+      --shadow:0 10px 30px rgba(0,0,0,.28);
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      background:
+        radial-gradient(circle at top right, rgba(96,165,250,.16), transparent 24%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      color:var(--text);
+      font-family: "Tahoma", "Arial", sans-serif;
+      min-height:100%;
+    }
+
+    body{
+      padding:18px 14px 40px;
+    }
+
+    .container{
+      width:min(1200px,100%);
+      margin:0 auto;
+    }
+
+    .hero,
+    .card{
+      background:linear-gradient(180deg, rgba(24,55,104,.95), rgba(11,28,59,.96));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      padding:22px 18px;
+      margin-bottom:18px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      top:-60px;
+      left:-60px;
+      width:180px;
+      height:180px;
+      background:radial-gradient(circle, rgba(103,232,249,.18), transparent 70%);
+      pointer-events:none;
+    }
+
+    .hero-top{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    .brand-wrap{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex:1 1 320px;
+      min-width:0;
+    }
+
+    .logo{
+      width:84px;
+      height:84px;
+      border-radius:28px;
+      background:linear-gradient(135deg, #7dd3fc, #c4b5fd);
+      box-shadow:0 0 30px rgba(125,211,252,.28);
+      flex:none;
+    }
+
+    .hero h1{
+      margin:0 0 8px;
+      font-size:clamp(28px, 5vw, 46px);
+      line-height:1.1;
+    }
+
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:15px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    button, .link-btn{
+      border:none;
+      border-radius:18px;
+      padding:14px 18px;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:.2s ease;
+      min-height:50px;
+    }
+
+    .btn-primary{
+      background:var(--btn);
+      color:var(--btnText);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .btn-danger{
+      background:linear-gradient(135deg, #fb7185, #f43f5e);
+      color:white;
+    }
+
+    button:hover, .link-btn:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.03);
+    }
+
+    .notice{
+      margin:0 0 18px;
+      padding:16px 18px;
+      border-radius:20px;
+      border:1px solid var(--line);
+      font-weight:700;
+      line-height:1.9;
+    }
+
+    .notice.ok{background:rgba(16,185,129,.12); color:#d1fae5; border-color:rgba(16,185,129,.28)}
+    .notice.warn{background:rgba(245,158,11,.12); color:#fef3c7; border-color:rgba(245,158,11,.28)}
+    .notice.bad{background:rgba(239,68,68,.14); color:#fee2e2; border-color:rgba(239,68,68,.28)}
+    .notice.info{background:rgba(96,165,250,.12); color:#dbeafe; border-color:rgba(96,165,250,.28)}
+
+    .grid{
+      display:grid;
+      gap:16px;
+    }
+
+    .stats-grid{
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      margin-bottom:18px;
+    }
+
+    .card{
+      padding:18px;
+      overflow:hidden;
+    }
+
+    .stat .label{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:10px;
+    }
+
+    .stat .value{
+      font-size:36px;
+      font-weight:800;
+      color:var(--cyan);
+      line-height:1.1;
+    }
+
+    .stat .sub{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    .section-title{
+      margin:0 0 14px;
+      font-size:26px;
+      line-height:1.3;
+    }
+
+    .section-desc{
+      margin:0 0 16px;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:14px;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:16px;
+      margin-bottom:18px;
+    }
+
+    .kv{
+      display:grid;
+      gap:12px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .kv-item{
+      background:rgba(255,255,255,.035);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      min-height:92px;
+    }
+
+    .kv-item .k{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:10px;
+    }
+
+    .kv-item .v{
+      font-size:20px;
+      font-weight:800;
+      word-break:break-word;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:800;
+      border:1px solid var(--line);
+      margin:4px 6px 0 0;
+      white-space:nowrap;
+    }
+
+    .status-ok{background:rgba(16,185,129,.12); color:#d1fae5}
+    .status-warn{background:rgba(245,158,11,.12); color:#fef3c7}
+    .status-bad{background:rgba(239,68,68,.14); color:#fee2e2}
+    .status-info{background:rgba(96,165,250,.12); color:#dbeafe}
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:13px;
+      direction:ltr;
+      text-align:left;
+    }
+
+    .scroll-x{
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+
+    table{
+      width:100%;
+      min-width:760px;
+      border-collapse:collapse;
+    }
+
+    th,td{
+      padding:13px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      text-align:right;
+      vertical-align:top;
+      font-size:14px;
+    }
+
+    th{
+      color:#dbeafe;
+      background:rgba(255,255,255,.04);
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+
+    td{
+      color:var(--text);
+    }
+
+    tr:last-child td{
+      border-bottom:none;
+    }
+
+    .tiny{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .list{
+      display:grid;
+      gap:10px;
+    }
+
+    .list-item{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:12px 14px;
+      line-height:1.9;
+    }
+
+    .codebox{
+      background:#07101f;
+      color:#dbeafe;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      overflow:auto;
+      white-space:pre-wrap;
+      word-break:break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size:12px;
+      line-height:1.9;
+    }
+
+    .footer-note{
+      margin-top:18px;
+      color:var(--muted);
+      text-align:center;
+      line-height:1.9;
+      font-size:13px;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    @media (max-width: 980px){
+      .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .split{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 640px){
+      body{padding:12px 10px 30px}
+      .hero,.card{border-radius:22px}
+      .stats-grid{grid-template-columns:1fr 1fr}
+      .kv{grid-template-columns:1fr}
+      .hero h1{font-size:34px}
+      .section-title{font-size:24px}
+      .stat .value{font-size:30px}
+      button,.link-btn{width:100%}
+      .actions{display:grid; grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-top">
+        <div class="brand-wrap">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>Madaris AI<br>التشخيص النهائي الشامل</h1>
+            <p>
+              هذه الصفحة لا تعدّل أي شيء داخل قاعدة البيانات. دورها فقط أن تكشف السبب الحقيقي:
+              هل المشكلة من الجلسة؟ من المسار؟ من القراءة؟ من ربط <span class="mono">schoolId</span>؟
+              أم من كون الصفوف والمواد والمعلمين محفوظة في مكان مختلف عن الذي تقرأ منه الصفحة؟
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="runBtn" class="btn-primary">تشغيل الفحص الشامل الآن</button>
+        <button id="reloadBtn" class="btn-secondary">إعادة التحميل</button>
+        <a class="link-btn btn-secondary" href="/app/school/index.html">رجوع للوحة المدرسة</a>
+        <button id="logoutBtn" class="btn-danger">تسجيل الخروج</button>
+      </div>
+    </section>
+
+    <div id="topNotice" class="notice info">
+      الصفحة جاهزة. اضغط "تشغيل الفحص الشامل الآن".
+    </div>
+
+    <section class="grid stats-grid">
+      <div class="card stat">
+        <div class="label">إجمالي الأخطاء الحرجة</div>
+        <div id="criticalCount" class="value">0</div>
+        <div class="sub">أخطاء تمنع القراءة أو تجعلها ترجع صفر.</div>
+      </div>
+
+      <div class="card stat">
+        <div class="label">إجمالي التحذيرات</div>
+        <div id="warningCount" class="value">0</div>
+        <div class="sub">أمور تعمل جزئياً لكنها غير مستقرة أو مضللة.</div>
+      </div>
+
+      <div class="card stat">
+        <div class="label">الصفوف المكتشفة</div>
+        <div id="finalClassesCount" class="value">0</div>
+        <div class="sub">بعد التوحيد بين جميع المسارات المحتملة.</div>
+      </div>
+
+      <div class="card stat">
+        <div class="label">المواد المكتشفة</div>
+        <div id="finalSubjectsCount" class="value">0</div>
+        <div class="sub">بعد التوحيد بين جميع المسارات المحتملة.</div>
+      </div>
+
+      <div class="card stat">
+        <div class="label">المعلمون المكتشفون</div>
+        <div id="finalTeachersCount" class="value">0</div>
+        <div class="sub">بعد التوحيد بين جميع المسارات المحتملة.</div>
+      </div>
+
+      <div class="card stat">
+        <div class="label">الحصص المكتشفة</div>
+        <div id="schedulesCount" class="value">0</div>
+        <div class="sub">عدد السجلات المقروءة فعلياً من الجداول.</div>
+      </div>
+
+      <div class="card stat">
+        <div class="label">المراجع المكسورة</div>
+        <div id="brokenRefsCount" class="value">0</div>
+        <div class="sub">حصص تشير إلى صف/مادة/معلم غير موجود.</div>
+      </div>
+
+      <div class="card stat">
+        <div class="label">حالة الجلسة</div>
+        <div id="sessionStatusBig" class="value">...</div>
+        <div class="sub">سنحدد هل الجلسة سليمة ومربوطة بالمدرسة أم لا.</div>
+      </div>
+    </section>
+
+    <section class="split">
+      <div class="card">
+        <h2 class="section-title">بيانات الجلسة والمسار</h2>
+        <p class="section-desc">
+          هذا القسم يكشف هل الصفحة تقرأ جلسة المدرسة بشكل صحيح، وهل
+          <span class="mono">session-guard.js</span> محمّل فعلاً، وهل
+          <span class="mono">MadarisSession</span> موجودة في الصفحة.
+        </p>
+
+        <div class="kv">
+          <div class="kv-item">
+            <div class="k">اسم المدرسة</div>
+            <div id="schoolNameBox" class="v">...</div>
+          </div>
+          <div class="kv-item">
+            <div class="k">School ID</div>
+            <div id="schoolIdBox" class="v mono">...</div>
+          </div>
+          <div class="kv-item">
+            <div class="k">المستخدم</div>
+            <div id="userNameBox" class="v">...</div>
+          </div>
+          <div class="kv-item">
+            <div class="k">البريد الإلكتروني</div>
+            <div id="userEmailBox" class="v mono">...</div>
+          </div>
+          <div class="kv-item">
+            <div class="k">الدور</div>
+            <div id="userRoleBox" class="v">...</div>
+          </div>
+          <div class="kv-item">
+            <div class="k">حالة الجلسة</div>
+            <div id="sessionStateBox" class="v">...</div>
+          </div>
+          <div class="kv-item">
+            <div class="k">المسار الحالي</div>
+            <div id="pathBox" class="v mono">...</div>
+          </div>
+          <div class="kv-item">
+            <div class="k">آخر تحديث فحص</div>
+            <div id="runTimeBox" class="v">...</div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <span id="guardStatusPill" class="status-pill status-info">session-guard: لم يُفحص بعد</span>
+          <span id="madarisSessionPill" class="status-pill status-info">MadarisSession: لم يُفحص بعد</span>
+          <span id="firebasePill" class="status-pill status-info">Firebase: لم يُفحص بعد</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">الحكم النهائي السريع</h2>
+        <p class="section-desc">
+          هذا الصندوق يلخص السبب الحقيقي بجملة مباشرة بدون لف ودوران.
+        </p>
+        <div id="finalVerdict" class="notice info" style="margin:0">
+          لم يبدأ الفحص بعد.
+        </div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom:18px">
+      <h2 class="section-title">الملخص الفعلي للقراءة</h2>
+      <p class="section-desc">
+        هذه الأرقام مأخوذة من القراءة الفعلية الآن، وليس من عدادات قديمة محفوظة داخل وثيقة المدرسة.
+      </p>
+
+      <div class="grid stats-grid">
+        <div class="card stat">
+          <div class="label">top-level classes</div>
+          <div id="topClassesCount" class="value">0</div>
+          <div class="sub">المسار: <span class="mono">classes</span></div>
+        </div>
+        <div class="card stat">
+          <div class="label">top-level subjects</div>
+          <div id="topSubjectsCount" class="value">0</div>
+          <div class="sub">المسار: <span class="mono">subjects</span></div>
+        </div>
+        <div class="card stat">
+          <div class="label">top-level teachers</div>
+          <div id="topTeachersCount" class="value">0</div>
+          <div class="sub">المسار: <span class="mono">teachers</span></div>
+        </div>
+        <div class="card stat">
+          <div class="label">top-level schedules</div>
+          <div id="topSchedulesCount" class="value">0</div>
+          <div class="sub">المسار: <span class="mono">schedules</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="label">schools/{schoolId}/classes</div>
+          <div id="nestedClassesCount" class="value">0</div>
+          <div class="sub">الصفوف داخل المدرسة الحالية.</div>
+        </div>
+        <div class="card stat">
+          <div class="label">schools/{schoolId}/subjects</div>
+          <div id="nestedSubjectsCount" class="value">0</div>
+          <div class="sub">المواد داخل المدرسة الحالية.</div>
+        </div>
+        <div class="card stat">
+          <div class="label">schools/{schoolId}/teachers</div>
+          <div id="nestedTeachersCount" class="value">0</div>
+          <div class="sub">المعلمون داخل المدرسة الحالية.</div>
+        </div>
+        <div class="card stat">
+          <div class="label">schools/{schoolId}/schedules</div>
+          <div id="nestedSchedulesCount" class="value">0</div>
+          <div class="sub">الجداول داخل المدرسة الحالية.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="split">
+      <div class="card">
+        <h2 class="section-title">المسارات التي تمت قراءتها</h2>
+        <p class="section-desc">
+          سنعرض هنا كل Collection أو Subcollection حاولنا قراءتها، وهل نجحت أم فشلت، وكم رجّعت من السجلات.
+        </p>
+        <div id="pathsList" class="list">
+          <div class="list-item">جاري تجهيز قائمة المسارات...</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">البيانات المكتشفة</h2>
+        <p class="section-desc">
+          عرض مختصر للأسماء النهائية بعد التوحيد. إذا كانت هذه القوائم فارغة فالمشكلة ليست في واجهة
+          <span class="mono">manage-schedule.html</span>
+          بل في القراءة نفسها.
+        </p>
+        <div class="list">
+          <div class="list-item">
+            <div class="k">الصفوف</div>
+            <div id="classesPreview" class="v">...</div>
+          </div>
+          <div class="list-item">
+            <div class="k">المواد</div>
+            <div id="subjectsPreview" class="v">...</div>
+          </div>
+          <div class="list-item">
+            <div class="k">المعلمون</div>
+            <div id="teachersPreview" class="v">...</div>
+          </div>
+          <div class="list-item">
+            <div class="k">أيام الجدول</div>
+            <div id="scheduleDaysPreview" class="v">...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom:18px">
+      <h2 class="section-title">فحص المراجع المكسورة داخل الجدول</h2>
+      <p class="section-desc">
+        هذا الجدول يوضح هل كل سطر في <span class="mono">schedules</span> يشير إلى
+        <span class="mono">classId</span> و <span class="mono">subjectId</span> و <span class="mono">teacherId</span>
+        موجودة فعلاً أم لا.
+      </p>
+
+      <div class="scroll-x">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>اليوم</th>
+              <th>الحصة</th>
+              <th>الصف</th>
+              <th>المادة</th>
+              <th>المعلم</th>
+              <th>نتيجة الفحص</th>
+            </tr>
+          </thead>
+          <tbody id="brokenRefsBody">
+            <tr>
+              <td colspan="7">جاري الفحص...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" style="margin-bottom:18px">
+      <h2 class="section-title">عينة الحصص المقروءة فعلياً</h2>
+      <p class="section-desc">
+        هذا ليس تشخيصاً نظرياً. هذه عينة مباشرة مما قرأناه من Firestore حالياً.
+      </p>
+
+      <div class="scroll-x">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>اليوم</th>
+              <th>الحصة</th>
+              <th>من</th>
+              <th>إلى</th>
+              <th>الصف</th>
+              <th>المادة</th>
+              <th>المعلم</th>
+              <th>schoolId</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleSampleBody">
+            <tr>
+              <td colspan="9">جاري تحميل الحصص...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">سجل الفحص الخام</h2>
+      <p class="section-desc">
+        هذا السجل مهم إذا أردنا لاحقاً إصلاح الملف النهائي بسرعة وبدقة، لأننا سنعرف المكان الحقيقي للخلل بدون تخمين.
+      </p>
+      <div id="logBox" class="codebox">[READY] Ultimate diagnostic is ready.</div>
+    </section>
+
+    <p class="footer-note">
+      ملف التشخيص النهائي — Madaris AI — يقرأ فقط ولا يكتب أو يعدّل أي شيء داخل قاعدة البيانات.
+    </p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      getDoc,
+      getDocs,
+      query,
+      where,
+      limit
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzQKhPMSZNevhb6LlNh9pt9yA4Au9G7Cw",
+      authDomain: "madaris-ai.firebaseapp.com",
+      projectId: "madaris-ai",
+      storageBucket: "madaris-ai.appspot.com",
+      messagingSenderId: "915394447224",
+      appId: "1:915394447224:web:3d7750a7fcd3f41bedaa8d"
+    };
+
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const state = {
+      critical: [],
+      warnings: [],
+      infos: [],
+      pathReads: [],
+      raw: {
+        topClasses: [],
+        topSubjects: [],
+        topTeachers: [],
+        topSchedules: [],
+        nestedClasses: [],
+        nestedSubjects: [],
+        nestedTeachers: [],
+        nestedSchedules: []
+      },
+      final: {
+        classes: [],
+        subjects: [],
+        teachers: [],
+        schedules: []
+      },
+      session: null,
+      sessionGuardOk: false,
+      madarisSessionOk: false
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    const els = {
+      topNotice: $("topNotice"),
+      criticalCount: $("criticalCount"),
+      warningCount: $("warningCount"),
+      finalClassesCount: $("finalClassesCount"),
+      finalSubjectsCount: $("finalSubjectsCount"),
+      finalTeachersCount: $("finalTeachersCount"),
+      schedulesCount: $("schedulesCount"),
+      brokenRefsCount: $("brokenRefsCount"),
+      sessionStatusBig: $("sessionStatusBig"),
+
+      schoolNameBox: $("schoolNameBox"),
+      schoolIdBox: $("schoolIdBox"),
+      userNameBox: $("userNameBox"),
+      userEmailBox: $("userEmailBox"),
+      userRoleBox: $("userRoleBox"),
+      sessionStateBox: $("sessionStateBox"),
+      pathBox: $("pathBox"),
+      runTimeBox: $("runTimeBox"),
+
+      guardStatusPill: $("guardStatusPill"),
+      madarisSessionPill: $("madarisSessionPill"),
+      firebasePill: $("firebasePill"),
+      finalVerdict: $("finalVerdict"),
+
+      topClassesCount: $("topClassesCount"),
+      topSubjectsCount: $("topSubjectsCount"),
+      topTeachersCount: $("topTeachersCount"),
+      topSchedulesCount: $("topSchedulesCount"),
+
+      nestedClassesCount: $("nestedClassesCount"),
+      nestedSubjectsCount: $("nestedSubjectsCount"),
+      nestedTeachersCount: $("nestedTeachersCount"),
+      nestedSchedulesCount: $("nestedSchedulesCount"),
+
+      pathsList: $("pathsList"),
+      classesPreview: $("classesPreview"),
+      subjectsPreview: $("subjectsPreview"),
+      teachersPreview: $("teachersPreview"),
+      scheduleDaysPreview: $("scheduleDaysPreview"),
+
+      brokenRefsBody: $("brokenRefsBody"),
+      scheduleSampleBody: $("scheduleSampleBody"),
+      logBox: $("logBox"),
+
+      runBtn: $("runBtn"),
+      reloadBtn: $("reloadBtn"),
+      logoutBtn: $("logoutBtn")
+    };
+
+    function nowText(){
+      return new Date().toLocaleString("ar-EG");
+    }
+
+    function log(message, type = "info"){
+      const prefix =
+        type === "bad" ? "[ERROR]" :
+        type === "warn" ? "[WARN]" :
+        type === "ok" ? "[OK]" : "[INFO]";
+      els.logBox.textContent += `\n${prefix} ${message}`;
+      els.logBox.scrollTop = els.logBox.scrollHeight;
+    }
+
+    function resetState(){
+      state.critical = [];
+      state.warnings = [];
+      state.infos = [];
+      state.pathReads = [];
+      state.raw = {
+        topClasses: [],
+        topSubjects: [],
+        topTeachers: [],
+        topSchedules: [],
+        nestedClasses: [],
+        nestedSubjects: [],
+        nestedTeachers: [],
+        nestedSchedules: []
+      };
+      state.final = {
+        classes: [],
+        subjects: [],
+        teachers: [],
+        schedules: []
+      };
+      state.session = null;
+      state.sessionGuardOk = false;
+      state.madarisSessionOk = false;
+
+      els.logBox.textContent = "[READY] Starting full diagnostic...";
+      els.pathsList.innerHTML = `<div class="list-item">جاري القراءة...</div>`;
+      els.brokenRefsBody.innerHTML = `<tr><td colspan="7">جاري الفحص...</td></tr>`;
+      els.scheduleSampleBody.innerHTML = `<tr><td colspan="9">جاري تحميل الحصص...</td></tr>`;
+      els.classesPreview.textContent = "...";
+      els.subjectsPreview.textContent = "...";
+      els.teachersPreview.textContent = "...";
+      els.scheduleDaysPreview.textContent = "...";
+      els.runTimeBox.textContent = nowText();
+      els.pathBox.textContent = window.location.pathname;
+
+      [
+        "criticalCount","warningCount","finalClassesCount","finalSubjectsCount","finalTeachersCount",
+        "schedulesCount","brokenRefsCount","topClassesCount","topSubjectsCount","topTeachersCount",
+        "topSchedulesCount","nestedClassesCount","nestedSubjectsCount","nestedTeachersCount","nestedSchedulesCount"
+      ].forEach((id) => { els[id].textContent = "0"; });
+
+      els.sessionStatusBig.textContent = "...";
+      els.schoolNameBox.textContent = "...";
+      els.schoolIdBox.textContent = "...";
+      els.userNameBox.textContent = "...";
+      els.userEmailBox.textContent = "...";
+      els.userRoleBox.textContent = "...";
+      els.sessionStateBox.textContent = "...";
+
+      els.guardStatusPill.className = "status-pill status-info";
+      els.guardStatusPill.textContent = "session-guard: جاري الفحص";
+
+      els.madarisSessionPill.className = "status-pill status-info";
+      els.madarisSessionPill.textContent = "MadarisSession: جاري الفحص";
+
+      els.firebasePill.className = "status-pill status-info";
+      els.firebasePill.textContent = "Firebase: جاهز";
+
+      els.finalVerdict.className = "notice info";
+      els.finalVerdict.textContent = "جاري استخراج السبب الحقيقي...";
+      els.topNotice.className = "notice info";
+      els.topNotice.textContent = "بدأ الفحص الشامل الآن...";
+    }
+
+    function addCritical(msg){
+      state.critical.push(msg);
+      log(msg, "bad");
+    }
+
+    function addWarning(msg){
+      state.warnings.push(msg);
+      log(msg, "warn");
+    }
+
+    function addInfo(msg){
+      state.infos.push(msg);
+      log(msg, "info");
+    }
+
+    function addOk(msg){
+      log(msg, "ok");
+    }
+
+    function setPill(el, type, text){
+      el.className = `status-pill ${type}`;
+      el.textContent = text;
+    }
+
+    function normalize(value){
+      if (value === null || value === undefined) return "";
+      return String(value).trim();
+    }
+
+    function normalizeLower(value){
+      return normalize(value).toLowerCase();
+    }
+
+    function firstNonEmpty(...values){
+      for (const value of values){
+        if (typeof value === "string" && value.trim()) return value.trim();
+        if (typeof value === "number" && Number.isFinite(value)) return String(value);
+      }
+      return "";
+    }
+
+    function safeJsonParse(value){
+      try{
+        return JSON.parse(value);
+      }catch{
+        return null;
+      }
+    }
+
+    function safeClone(value){
+      try{
+        return JSON.parse(JSON.stringify(value));
+      }catch{
+        return value;
+      }
+    }
+
+    function uniqBy(list, getKey){
+      const map = new Map();
+      for (const item of list){
+        const key = getKey(item);
+        if (!key) continue;
+        if (!map.has(key)) map.set(key, item);
+      }
+      return Array.from(map.values());
+    }
+
+    function summarizeNames(list, key = "name", max = 8){
+      const names = list
+        .map(item => firstNonEmpty(item?.[key], item?.displayName, item?.fullName, item?.title))
+        .filter(Boolean);
+
+      if (!names.length) return "لا يوجد";
+      const sliced = names.slice(0, max);
+      return names.length > max
+        ? `${sliced.join("، ")} ...`
+        : sliced.join("، ");
+    }
+
+    function scheduleDayName(item){
+      return firstNonEmpty(item.day, item.dayName, item.weekday, item.dayLabel, "غير محدد");
+    }
+
+    function schedulePeriod(item){
+      return firstNonEmpty(
+        item.period,
+        item.periodNumber,
+        item.slot,
+        item.order,
+        item.lessonNumber,
+        "—"
+      );
+    }
+
+    function scheduleFrom(item){
+      return firstNonEmpty(item.from, item.start, item.startTime, item.timeFrom, "—");
+    }
+
+    function scheduleTo(item){
+      return firstNonEmpty(item.to, item.end, item.endTime, item.timeTo, "—");
+    }
+
+    function classKey(item){
+      return firstNonEmpty(
+        item.id,
+        item.classId,
+        item.code,
+        item.classCode,
+        item.name
+      );
+    }
+
+    function subjectKey(item){
+      return firstNonEmpty(
+        item.id,
+        item.subjectId,
+        item.code,
+        item.subjectCode,
+        item.name
+      );
+    }
+
+    function teacherKey(item){
+      return firstNonEmpty(
+        item.id,
+        item.teacherId,
+        item.uid,
+        item.email,
+        item.name
+      );
+    }
+
+    function className(item){
+      return firstNonEmpty(item.name, item.className, item.title, item.label, item.code, "—");
+    }
+
+    function subjectName(item){
+      return firstNonEmpty(item.name, item.subjectName, item.title, item.label, item.code, "—");
+    }
+
+    function teacherName(item){
+      return firstNonEmpty(
+        item.name,
+        item.teacherName,
+        item.fullName,
+        item.displayName,
+        item.email,
+        "—"
+      );
+    }
+
+    function normalizeClass(docId, data, sourcePath){
+      return {
+        __source: sourcePath,
+        __docId: docId,
+        id: firstNonEmpty(docId, data.id, data.classId, data.uid),
+        classId: firstNonEmpty(data.classId, data.id, docId),
+        name: firstNonEmpty(data.name, data.className, data.title, data.label, data.code, "بدون اسم"),
+        code: firstNonEmpty(data.code, data.classCode),
+        schoolId: firstNonEmpty(data.schoolId, data.school?.id, data.school?.schoolId),
+        raw: safeClone(data)
+      };
+    }
+
+    function normalizeSubject(docId, data, sourcePath){
+      return {
+        __source: sourcePath,
+        __docId: docId,
+        id: firstNonEmpty(docId, data.id, data.subjectId, data.uid),
+        subjectId: firstNonEmpty(data.subjectId, data.id, docId),
+        name: firstNonEmpty(data.name, data.subjectName, data.title, data.label, data.code, "بدون اسم"),
+        code: firstNonEmpty(data.code, data.subjectCode),
+        schoolId: firstNonEmpty(data.schoolId, data.school?.id, data.school?.schoolId),
+        raw: safeClone(data)
+      };
+    }
+
+    function normalizeTeacher(docId, data, sourcePath){
+      return {
+        __source: sourcePath,
+        __docId: docId,
+        id: firstNonEmpty(docId, data.id, data.teacherId, data.uid),
+        teacherId: firstNonEmpty(data.teacherId, data.id, docId, data.uid),
+        name: firstNonEmpty(data.name, data.teacherName, data.fullName, data.displayName, "بدون اسم"),
+        email: firstNonEmpty(data.email),
+        subject: firstNonEmpty(data.subject, data.subjectName),
+        schoolId: firstNonEmpty(data.schoolId, data.school?.id, data.school?.schoolId),
+        raw: safeClone(data)
+      };
+    }
+
+    function normalizeSchedule(docId, data, sourcePath){
+      return {
+        __source: sourcePath,
+        __docId: docId,
+        id: firstNonEmpty(docId, data.id),
+        day: firstNonEmpty(data.day, data.dayName, data.weekday),
+        period: firstNonEmpty(data.period, data.periodNumber, data.slot, data.order),
+        from: firstNonEmpty(data.from, data.start, data.startTime, data.timeFrom),
+        to: firstNonEmpty(data.to, data.end, data.endTime, data.timeTo),
+        classId: firstNonEmpty(data.classId, data.class?.id, data.class?.classId),
+        className: firstNonEmpty(data.className, data.class?.name),
+        subjectId: firstNonEmpty(data.subjectId, data.subject?.id, data.subject?.subjectId),
+        subjectName: firstNonEmpty(data.subjectName, data.subject?.name),
+        teacherId: firstNonEmpty(data.teacherId, data.teacher?.id, data.teacher?.teacherId, data.teacher?.uid),
+        teacherName: firstNonEmpty(data.teacherName, data.teacher?.name, data.teacher?.fullName),
+        schoolId: firstNonEmpty(data.schoolId, data.school?.id, data.school?.schoolId),
+        raw: safeClone(data)
+      };
+    }
+
+    async function readCollectionByQuery(pathLabel, qBuilder, normalizer){
+      try{
+        const snap = await getDocs(qBuilder());
+        const rows = snap.docs.map(d => normalizer(d.id, d.data(), pathLabel));
+        state.pathReads.push({ path: pathLabel, ok: true, count: rows.length, error: "" });
+        addOk(`نجحت قراءة ${pathLabel} وعددها ${rows.length}`);
+        return rows;
+      }catch(error){
+        state.pathReads.push({ path: pathLabel, ok: false, count: 0, error: error?.message || String(error) });
+        addWarning(`فشل قراءة ${pathLabel}: ${error?.message || error}`);
+        return [];
+      }
+    }
+
+    async function readSingleDoc(pathLabel, refBuilder){
+      try{
+        const snap = await getDoc(refBuilder());
+        const exists = snap.exists();
+        state.pathReads.push({ path: pathLabel, ok: true, count: exists ? 1 : 0, error: exists ? "" : "NOT_FOUND" });
+        addOk(`فحص المستند ${pathLabel}: ${exists ? "موجود" : "غير موجود"}`);
+        return exists ? snap.data() : null;
+      }catch(error){
+        state.pathReads.push({ path: pathLabel, ok: false, count: 0, error: error?.message || String(error) });
+        addWarning(`فشل فحص المستند ${pathLabel}: ${error?.message || error}`);
+        return null;
+      }
+    }
+
+    function resolveSessionFromMadarisSession(){
+      if (!window.MadarisSession){
+        state.madarisSessionOk = false;
+        setPill(els.madarisSessionPill, "status-bad", "MadarisSession: غير موجود");
+        addCritical("الصفحة الحالية لا تحتوي على window.MadarisSession.");
+        return null;
+      }
+
+      state.madarisSessionOk = true;
+      setPill(els.madarisSessionPill, "status-ok", "MadarisSession: موجود");
+
+      try{
+        const session = window.MadarisSession.getSession?.() || null;
+        if (!session){
+          addCritical("MadarisSession موجودة لكن getSession() رجعت null.");
+          return null;
+        }
+
+        addOk("تمت قراءة الجلسة عبر MadarisSession.getSession().");
+        return session;
+      }catch(error){
+        addCritical(`فشل تنفيذ MadarisSession.getSession(): ${error?.message || error}`);
+        return null;
+      }
+    }
+
+    function resolveSessionFromStorageFallback(){
+      const candidates = [
+        localStorage.getItem("madarisai_session"),
+        sessionStorage.getItem("madarisai_session"),
+        localStorage.getItem("schoolSession"),
+        sessionStorage.getItem("schoolSession"),
+        localStorage.getItem("madaris_school_session"),
+        sessionStorage.getItem("madaris_school_session"),
+        localStorage.getItem("school_session"),
+        sessionStorage.getItem("school_session")
+      ].map(safeJsonParse).filter(Boolean);
+
+      if (!candidates.length){
+        addWarning("لم نجد أي جلسة احتياطية داخل LocalStorage/SessionStorage.");
+        return null;
+      }
+
+      const candidate = candidates[0];
+      addInfo("تم العثور على جلسة احتياطية داخل التخزين المحلي.");
+      return candidate;
+    }
+
+    function normalizeSession(input){
+      if (!input || typeof input !== "object") return null;
+
+      const role = normalizeLower(firstNonEmpty(input.role, input.userRole, input.sessionRole));
+      const schoolId = firstNonEmpty(
+        input.schoolId,
+        input.school?.id,
+        input.school?.schoolId,
+        input.schoolID,
+        input.school_id
+      );
+
+      return {
+        userId: firstNonEmpty(input.userId, input.uid, input.id),
+        email: firstNonEmpty(input.email),
+        role,
+        schoolId,
+        schoolName: firstNonEmpty(input.schoolName, input.school?.name, input.school?.schoolName, "مدرسة"),
+        displayName: firstNonEmpty(input.displayName, input.userName, input.name, input.fullName, "المستخدم"),
+        status: firstNonEmpty(input.status, input.schoolStatus, input.school?.status, "active"),
+        raw: safeClone(input)
+      };
+    }
+    function renderSession(session){
+      els.schoolNameBox.textContent = session?.schoolName || "غير معروف";
+      els.schoolIdBox.textContent = session?.schoolId || "غير معروف";
+      els.userNameBox.textContent = session?.displayName || "غير معروف";
+      els.userEmailBox.textContent = session?.email || "غير معروف";
+      els.userRoleBox.textContent = session?.role || "غير معروف";
+      els.sessionStateBox.textContent = session?.status || "غير معروف";
+      els.sessionStatusBig.textContent = session?.schoolId ? "OK" : "FAIL";
+    }
+
+    function renderPaths(){
+      if (!state.pathReads.length){
+        els.pathsList.innerHTML = `<div class="list-item">لا توجد قراءات مسجلة.</div>`;
+        return;
+      }
+
+      els.pathsList.innerHTML = state.pathReads.map(item => {
+        const badgeClass = item.ok
+          ? (item.count > 0 ? "status-ok" : "status-warn")
+          : "status-bad";
+
+        const badgeText = item.ok
+          ? (item.count > 0 ? `نجح (${item.count})` : `صفر (${item.count})`)
+          : `فشل`;
+
+        return `
+          <div class="list-item">
+            <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+              <strong class="mono">${item.path}</strong>
+              <span class="status-pill ${badgeClass}">${badgeText}</span>
+            </div>
+            <div class="tiny mono" style="margin-top:8px">
+              ${item.error ? escapeHtml(item.error) : "بدون أخطاء"}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function escapeHtml(value){
+      return normalize(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function renderCounts(){
+      els.criticalCount.textContent = String(state.critical.length);
+      els.warningCount.textContent = String(state.warnings.length);
+
+      els.topClassesCount.textContent = String(state.raw.topClasses.length);
+      els.topSubjectsCount.textContent = String(state.raw.topSubjects.length);
+      els.topTeachersCount.textContent = String(state.raw.topTeachers.length);
+      els.topSchedulesCount.textContent = String(state.raw.topSchedules.length);
+
+      els.nestedClassesCount.textContent = String(state.raw.nestedClasses.length);
+      els.nestedSubjectsCount.textContent = String(state.raw.nestedSubjects.length);
+      els.nestedTeachersCount.textContent = String(state.raw.nestedTeachers.length);
+      els.nestedSchedulesCount.textContent = String(state.raw.nestedSchedules.length);
+
+      els.finalClassesCount.textContent = String(state.final.classes.length);
+      els.finalSubjectsCount.textContent = String(state.final.subjects.length);
+      els.finalTeachersCount.textContent = String(state.final.teachers.length);
+      els.schedulesCount.textContent = String(state.final.schedules.length);
+    }
+
+    function chooseFinalData(){
+      state.final.classes = uniqBy(
+        [...state.raw.topClasses, ...state.raw.nestedClasses],
+        item => classKey(item)
+      );
+
+      state.final.subjects = uniqBy(
+        [...state.raw.topSubjects, ...state.raw.nestedSubjects],
+        item => subjectKey(item)
+      );
+
+      state.final.teachers = uniqBy(
+        [...state.raw.topTeachers, ...state.raw.nestedTeachers],
+        item => teacherKey(item)
+      );
+
+      state.final.schedules = uniqBy(
+        [...state.raw.topSchedules, ...state.raw.nestedSchedules],
+        item => item.id
+      );
+    }
+
+    function renderPreviewLists(){
+      els.classesPreview.textContent = summarizeNames(state.final.classes, "name");
+      els.subjectsPreview.textContent = summarizeNames(state.final.subjects, "name");
+      els.teachersPreview.textContent = summarizeNames(state.final.teachers, "name");
+
+      const days = uniqBy(
+        state.final.schedules.map(s => ({ name: scheduleDayName(s) })),
+        item => item.name
+      ).map(item => item.name);
+
+      els.scheduleDaysPreview.textContent = days.length ? days.join("، ") : "لا يوجد";
+    }
+
+    function renderScheduleSample(){
+      if (!state.final.schedules.length){
+        els.scheduleSampleBody.innerHTML = `<tr><td colspan="9">لا توجد حصص مقروءة فعليًا.</td></tr>`;
+        return;
+      }
+
+      els.scheduleSampleBody.innerHTML = state.final.schedules.slice(0, 20).map((item, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${escapeHtml(scheduleDayName(item))}</td>
+          <td>${escapeHtml(schedulePeriod(item))}</td>
+          <td>${escapeHtml(scheduleFrom(item))}</td>
+          <td>${escapeHtml(scheduleTo(item))}</td>
+          <td>${escapeHtml(firstNonEmpty(item.className, item.classId, "—"))}</td>
+          <td>${escapeHtml(firstNonEmpty(item.subjectName, item.subjectId, "—"))}</td>
+          <td>${escapeHtml(firstNonEmpty(item.teacherName, item.teacherId, "—"))}</td>
+          <td class="mono">${escapeHtml(item.schoolId || "—")}</td>
+        </tr>
+      `).join("");
+    }
+
+    function buildLookupMap(list, keyFn){
+      const map = new Map();
+      list.forEach(item => {
+        const key = keyFn(item);
+        if (key) map.set(key, item);
+      });
+      return map;
+    }
+
+    function renderBrokenRefs(){
+      if (!state.final.schedules.length){
+        els.brokenRefsBody.innerHTML = `<tr><td colspan="7">لا توجد حصص لفحص المراجع.</td></tr>`;
+        els.brokenRefsCount.textContent = "0";
+        return;
+      }
+
+      const classMap = buildLookupMap(state.final.classes, classKey);
+      const subjectMap = buildLookupMap(state.final.subjects, subjectKey);
+      const teacherMap = buildLookupMap(state.final.teachers, teacherKey);
+
+      const broken = [];
+      const rows = [];
+
+      state.final.schedules.forEach((s, index) => {
+        const classExists = !s.classId || classMap.has(s.classId);
+        const subjectExists = !s.subjectId || subjectMap.has(s.subjectId);
+        const teacherExists = !s.teacherId || teacherMap.has(s.teacherId);
+
+        const messages = [];
+        if (!classExists) messages.push("classId مكسور");
+        if (!subjectExists) messages.push("subjectId مكسور");
+        if (!teacherExists) messages.push("teacherId مكسور");
+
+        if (messages.length){
+          broken.push({
+            id: s.id,
+            day: scheduleDayName(s),
+            period: schedulePeriod(s),
+            className: firstNonEmpty(s.className, s.classId, "—"),
+            subjectName: firstNonEmpty(s.subjectName, s.subjectId, "—"),
+            teacherName: firstNonEmpty(s.teacherName, s.teacherId, "—"),
+            result: messages.join(" + ")
+          });
+        }
+
+        rows.push(`
+          <tr>
+            <td>${index + 1}</td>
+            <td>${escapeHtml(scheduleDayName(s))}</td>
+            <td>${escapeHtml(schedulePeriod(s))}</td>
+            <td>${escapeHtml(firstNonEmpty(s.className, s.classId, "—"))}</td>
+            <td>${escapeHtml(firstNonEmpty(s.subjectName, s.subjectId, "—"))}</td>
+            <td>${escapeHtml(firstNonEmpty(s.teacherName, s.teacherId, "—"))}</td>
+            <td>
+              ${
+                messages.length
+                  ? `<span class="status-pill status-bad">${escapeHtml(messages.join("، "))}</span>`
+                  : `<span class="status-pill status-ok">سليم</span>`
+              }
+            </td>
+          </tr>
+        `);
+      });
+
+      els.brokenRefsBody.innerHTML = rows.join("");
+      els.brokenRefsCount.textContent = String(broken.length);
+
+      if (broken.length){
+        addWarning(`تم اكتشاف ${broken.length} مرجع/مراجع مكسورة داخل الجداول.`);
+      }else{
+        addOk("لم نكتشف مراجع مكسورة داخل الجداول المقروءة.");
+      }
+    }
+
+    function renderVerdict(){
+      const hasSession = !!state.session?.schoolId;
+      const hasAnyData =
+        state.final.classes.length ||
+        state.final.subjects.length ||
+        state.final.teachers.length ||
+        state.final.schedules.length;
+
+      let verdict = "";
+      let cls = "info";
+
+      if (!hasSession){
+        verdict = "السبب الحقيقي: الجلسة غير سليمة أو schoolId غير متاح. أي صفحة تعتمد على المدرسة ستفشل أو سترجع صفر.";
+        cls = "bad";
+      } else if (!hasAnyData){
+        verdict = "السبب الحقيقي: الجلسة سليمة لكن القراءة الفعلية من Firestore رجعت صفر في جميع المسارات. المشكلة في مكان البيانات أو طريقة الحفظ أو أسماء المسارات.";
+        cls = "bad";
+      } else if (state.final.classes.length && state.final.subjects.length && state.final.teachers.length && !state.final.schedules.length){
+        verdict = "السبب الحقيقي: الصفوف والمواد والمعلمون موجودون، لكن الجداول نفسها غير موجودة أو محفوظة في مسار مختلف.";
+        cls = "warn";
+      } else if (Number(els.brokenRefsCount.textContent) > 0){
+        verdict = "السبب الحقيقي: البيانات موجودة لكن هناك مراجع مكسورة داخل الجداول. بعض الحصص تشير إلى صفوف/مواد/معلمين غير موجودين أو محفوظين بمفاتيح مختلفة.";
+        cls = "warn";
+      } else {
+        verdict = "الوضع العام جيد: الجلسة سليمة والبيانات الأساسية مقروءة. إذا بقي خلل في صفحة معينة فالأرجح أنه في منطق الواجهة نفسها وليس في الجلسة أو القراءة.";
+        cls = "ok";
+      }
+
+      els.finalVerdict.className = `notice ${cls}`;
+      els.finalVerdict.textContent = verdict;
+
+      els.topNotice.className = `notice ${cls}`;
+      els.topNotice.textContent = verdict;
+    }
+
+    async function checkSessionGuard(){
+      try{
+        if (!window.MadarisSession){
+          setPill(els.guardStatusPill, "status-bad", "session-guard: غير شغال");
+          addCritical("window.MadarisSession غير موجودة. هذا يعني أن session-guard.js لم يعمل بشكل صحيح.");
+          return false;
+        }
+
+        setPill(els.guardStatusPill, "status-ok", "session-guard: شغال");
+        addOk("window.MadarisSession موجودة.");
+        state.sessionGuardOk = true;
+        return true;
+      }catch(error){
+        setPill(els.guardStatusPill, "status-bad", "session-guard: فشل");
+        addCritical(`فشل فحص session-guard: ${error?.message || error}`);
+        return false;
+      }
+    }
+
+    async function collectSession(){
+      const hasGuard = await checkSessionGuard();
+
+      let session = null;
+
+      if (hasGuard){
+        session = resolveSessionFromMadarisSession();
+      }
+
+      if (!session){
+        session = resolveSessionFromStorageFallback();
+      }
+
+      session = normalizeSession(session);
+      state.session = session;
+
+      if (!session){
+        addCritical("تعذر استخراج جلسة صالحة نهائيًا.");
+        renderSession({
+          schoolName: "غير موجود",
+          schoolId: "",
+          displayName: "غير معروف",
+          email: "",
+          role: "",
+          status: "غير صالح"
+        });
+        return;
+      }
+
+      renderSession(session);
+
+      if (!session.schoolId){
+        addCritical("تم استخراج جلسة لكن schoolId فارغ.");
+      } else {
+        addOk(`School ID الحالي: ${session.schoolId}`);
+      }
+
+      if (normalizeLower(session.role) !== "school"){
+        addWarning(`الدور الحالي ليس school: ${session.role}`);
+      }
+
+      setPill(els.madarisSessionPill, "status-ok", "MadarisSession/Storage: تمت القراءة");
+    }
+
+    async function collectData(){
+      if (!state.session?.schoolId){
+        addCritical("لن نبدأ قراءة البيانات لأن schoolId غير متاح.");
+        return;
+      }
+
+      const sid = state.session.schoolId;
+
+      const schoolDoc = await readSingleDoc(
+        `schools/${sid}`,
+        () => doc(db, "schools", sid)
+      );
+
+      if (!schoolDoc){
+        addWarning(`وثيقة المدرسة نفسها غير موجودة أو لا يمكن قراءتها: schools/${sid}`);
+      } else {
+        addOk(`تمت قراءة وثيقة المدرسة schools/${sid}.`);
+      }
+
+      state.raw.topClasses = await readCollectionByQuery(
+        `classes where schoolId == ${sid}`,
+        () => query(collection(db, "classes"), where("schoolId", "==", sid), limit(300)),
+        normalizeClass
+      );
+
+      state.raw.topSubjects = await readCollectionByQuery(
+        `subjects where schoolId == ${sid}`,
+        () => query(collection(db, "subjects"), where("schoolId", "==", sid), limit(300)),
+        normalizeSubject
+      );
+
+      state.raw.topTeachers = await readCollectionByQuery(
+        `teachers where schoolId == ${sid}`,
+        () => query(collection(db, "teachers"), where("schoolId", "==", sid), limit(300)),
+        normalizeTeacher
+      );
+
+      state.raw.topSchedules = await readCollectionByQuery(
+        `schedules where schoolId == ${sid}`,
+        () => query(collection(db, "schedules"), where("schoolId", "==", sid), limit(500)),
+        normalizeSchedule
+      );
+
+      state.raw.nestedClasses = await readCollectionByQuery(
+        `schools/${sid}/classes`,
+        () => collection(doc(db, "schools", sid), "classes"),
+        normalizeClass
+      );
+
+      state.raw.nestedSubjects = await readCollectionByQuery(
+        `schools/${sid}/subjects`,
+        () => collection(doc(db, "schools", sid), "subjects"),
+        normalizeSubject
+      );
+
+      state.raw.nestedTeachers = await readCollectionByQuery(
+        `schools/${sid}/teachers`,
+        () => collection(doc(db, "schools", sid), "teachers"),
+        normalizeTeacher
+      );
+
+      state.raw.nestedSchedules = await readCollectionByQuery(
+        `schools/${sid}/schedules`,
+        () => collection(doc(db, "schools", sid), "schedules"),
+        normalizeSchedule
+      );
+    }
+
+    async function runAll(){
+      resetState();
+
+      try{
+        await collectSession();
+        await collectData();
+        chooseFinalData();
+        renderCounts();
+        renderPaths();
+        renderPreviewLists();
+        renderScheduleSample();
+        renderBrokenRefs();
+
+        if (!state.session?.schoolId){
+          setPill(els.firebasePill, "status-bad", "Firebase/Firestore: متوقف بسبب الجلسة");
+        } else {
+          setPill(els.firebasePill, "status-ok", "Firebase/Firestore: تم الفحص");
+        }
+
+        if (!state.final.classes.length){
+          addWarning("الصفوف النهائية صفر.");
+        }
+        if (!state.final.subjects.length){
+          addWarning("المواد النهائية صفر.");
+        }
+        if (!state.final.teachers.length){
+          addWarning("المعلمون النهائيون صفر.");
+        }
+        if (!state.final.schedules.length){
+          addWarning("الحصص النهائية صفر.");
+        }
+
+        renderVerdict();
+      }catch(error){
+        addCritical(`فشل الفحص العام: ${error?.message || error}`);
+        renderCounts();
+        renderPaths();
+        renderVerdict();
+      }
+    }
+
+    function logout(){
+      try{
+        localStorage.clear();
+        sessionStorage.clear();
+      }catch{}
+      window.location.href = "/app/login.html";
+    }
+
+    els.runBtn.addEventListener("click", runAll);
+    els.reloadBtn.addEventListener("click", () => window.location.reload());
+    els.logoutBtn.addEventListener("click", logout);
+
+    els.pathBox.textContent = window.location.pathname;
+    els.runTimeBox.textContent = nowText();
+    log("Press the run button to start the full diagnostic.");
+  </script>
+</body>
+</html>
